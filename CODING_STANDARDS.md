@@ -55,7 +55,7 @@ out/          - Output documents and run reports
 | Interfaces | IPascalCase | `IDocumentReader` |
 | Methods | PascalCase | `ProcessDocument()` |
 | Properties | PascalCase | `DocumentPath` |
-| Fields | camelCase (private) | `_documentCache` |
+| Fields | camelCase (private), **no underscore prefix** | `documentCache` |
 | Parameters | camelCase | `documentPath` |
 | Constants | PascalCase | `MaxRetryCount` |
 | Static readonly | PascalCase | `DefaultTimeout` |
@@ -64,6 +64,7 @@ out/          - Output documents and run reports
 
 - One class per file (except partial classes)
 - File name matches class name
+- Private fields have no underscore prefix. Use `this.` only where a parameter has the same name as a field.
 - Use file-scoped namespaces
 - Order usings: System first, then external libraries, then project usings
 
@@ -76,9 +77,9 @@ Use `var` for local variables wherever the language allows it, whether or not th
 
 ### Use expression-bodied members for simple methods:
 ```csharp
-public string GetName() => _name;
+public string GetName() => name;
 
-public int GetCount() => _items.Count;
+public int GetCount() => items.Count;
 ```
 
 ### Use pattern matching:
@@ -88,7 +89,7 @@ public bool IsDocument(string path) => path.EndsWith(".pdf", StringComparison.Or
 
 ### Use null-coalescing for null checks:
 ```csharp
-public string GetPath() => _cachedPath ??= Path.Combine(_config.OutputDir, "output.pdf");
+public string GetPath() => cachedPath ??= Path.Combine(config.OutputDir, "output.pdf");
 ```
 
 ### Braces: always, and always on a new line
@@ -153,8 +154,8 @@ public class RedactionPipeline(
 // Bad - unnecessary boilerplate
 public class RedactionPipeline(IEnumerable<IDocumentReader> readers, IEntityDetector detector)
 {
-    private readonly IEnumerable<IDocumentReader> _readers = readers;
-    private readonly IEntityDetector _detector = detector;
+    private readonly IEnumerable<IDocumentReader> readers = readers;
+    private readonly IEntityDetector detector = detector;
 }
 ```
 
@@ -239,7 +240,7 @@ var found = text.IndexOf(needle, StringComparison.OrdinalIgnoreCase);
 ### Use the null-coalescing assignment operator:
 ```csharp
 // Good
-_cachedPath ??= Path.Combine(_config.OutputDir, "output.pdf");
+cachedPath ??= Path.Combine(config.OutputDir, "output.pdf");
 
 // Good for null checks
 var value = options?.Value ?? defaultValue;
