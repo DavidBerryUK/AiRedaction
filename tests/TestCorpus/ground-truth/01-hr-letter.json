@@ -1,0 +1,108 @@
+{
+  "id": "01-hr-letter",
+  "title": "HR letter",
+  "formats": [
+    "txt",
+    "docx",
+    "pdf",
+    "scan"
+  ],
+  "scanKinds": [
+    "clean",
+    "degraded",
+    "pdf"
+  ],
+  "entities": [
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Brightwater Analytics Ltd",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "Unit 4, Kingfisher House, 22 Wharf Road, Leeds LS1 4ZZ",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PHONE",
+      "text": "0113 496 0123",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "EMAIL",
+      "text": "people@brightwater-analytics.example",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "GENDER",
+      "text": "Ms",
+      "occurrences": 2
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Eleanor Whitcombe",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "14 Marlowe Court, Headingley, Leeds LS6 2QT",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Whitcombe",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "DATE_OF_BIRTH",
+      "text": "12 March 1986",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "AGE",
+      "text": "39",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ID_NUMBER",
+      "text": "QQ 12 34 56 C",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PHONE",
+      "text": "07700 900123",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "EMAIL",
+      "text": "marcus.delaney@brightwater-analytics.example",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Marcus Delaney",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Brightwater Analytics",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

@@ -1,0 +1,78 @@
+{
+  "id": "04-meeting-notes",
+  "title": "Meeting notes",
+  "formats": [
+    "md",
+    "docx"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "CONTEXTUAL",
+      "text": "Kestrel",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Priya Natarajan",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Corvid Logistics PLC",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Marcus Delaney",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Jonas Eriksen",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Nordlys Consulting AS",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Jonas",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "AGE",
+      "text": "in her forties",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Priya",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "EMAIL",
+      "text": "jonas.eriksen@nordlys.example",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Nordlys",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

@@ -1,0 +1,71 @@
+{
+  "id": "12-hygiene-docx",
+  "title": "Word document with hidden content",
+  "formats": [
+    "docx"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Gareth Lloyd",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Corvid Logistics PLC",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "EMAIL",
+      "text": "hr@corvid-logistics.example",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "Harbourside Works, 7 Quay Lane, Bristol BS1 5TT",
+      "occurrences": 1
+    },
+    {
+      "where": "header",
+      "type": "COMPANY",
+      "text": "Corvid Logistics PLC",
+      "occurrences": 1
+    },
+    {
+      "where": "footer",
+      "type": "PERSON",
+      "text": "Priya Natarajan",
+      "occurrences": 1
+    },
+    {
+      "where": "comment",
+      "type": "PERSON",
+      "text": "Dev Patel",
+      "occurrences": 1
+    },
+    {
+      "where": "comment",
+      "type": "PHONE",
+      "text": "07700 900999",
+      "occurrences": 1
+    },
+    {
+      "where": "tracked-deletion",
+      "type": "SECRET",
+      "text": "Tr1cky-Gl4cier!",
+      "occurrences": 1
+    },
+    {
+      "where": "metadata",
+      "type": "PERSON",
+      "text": "Priya Natarajan",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

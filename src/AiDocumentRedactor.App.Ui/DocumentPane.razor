@@ -1,0 +1,66 @@
+@* Renders text with highlighted spans. Each span is <mark data-id data-start data-len> so the page can
+   scroll to it, flash it, and (later) map a text selection back to offsets. *@
+<div class="doc-scroll" id="@Id">
+    @if (Busy)
+    {
+        <div class="empty busy" role="status" aria-live="polite"><span class="spinner" aria-hidden="true"></span><div>@Message</div></div>
+    }
+    else if (!string.IsNullOrEmpty(Message))
+    {
+        <div class="empty @MessageClass">@Message</div>
+    }
+    else if (Text is not null)
+    {
+        <pre class="doc">@foreach (var seg in Segments()) {
+            if (seg.Chunk is { } cn) { <span class="chunk-mark" data-chunk="@cn" title="Sent to the model as call @cn. Click to inspect." @onclick="() => OnChunkClick.InvokeAsync(cn)">Chunk @cn</span> }
+            else if (seg.Mark is null) { @seg.Text }
+            else { <mark class="m t-@seg.Mark.Type @(seg.Mark.Live ? "live" : "") @(seg.Mark.Conf == "Low" ? "lowconf" : "") @(SelectedId == seg.Mark.Id ? "sel" : "")" data-id="@seg.Mark.Id" data-start="@seg.Mark.Start" data-len="@seg.Mark.Length" title="@seg.Mark.Type" @onclick="() => OnMarkClick.InvokeAsync(seg.Mark.Id)">@seg.Text</mark> }
+        }</pre>
+    }
+</div>
+
+@code {
+    // Inputs: DOM id (used by scripts), the text, spans to highlight, an optional message to show instead, and a click callback.
+    [Parameter] public string Id { get; set; } = "";
+    [Parameter] public string? Text { get; set; }
+    [Parameter] public IReadOnlyList<PaneMark> Marks { get; set; } = [];
+    /// <summary>The edit currently selected in the edits list: its highlight stays strongly emphasised until another is chosen.</summary>
+    [Parameter] public int? SelectedId { get; set; }
+    /// <summary>Show a spinner with the message (a run is in progress) instead of the text.</summary>
+    [Parameter] public bool Busy { get; set; }
+    [Parameter] public string? Message { get; set; }
+    [Parameter] public string MessageClass { get; set; } = "";
+    [Parameter] public EventCallback<int> OnMarkClick { get; set; }
+    /// <summary>Where to draw chunk boundaries (empty = none) and what to do when one is clicked.</summary>
+    [Parameter] public IReadOnlyList<ChunkMarker> Chunks { get; set; } = [];
+    [Parameter] public EventCallback<int> OnChunkClick { get; set; }
+
+    /// <summary>A piece of the pane: plain text, a highlighted span, or a chunk-boundary marker.</summary>
+    record Seg(string Text, PaneMark? Mark, int? Chunk = null);
+
+    /// <summary>Cuts the text into plain, highlighted and chunk-marker pieces in order, skipping overlapping or out-of-range spans.
+    /// A chunk boundary inside a highlight is drawn straight after it, so highlights are never split.</summary>
+    IEnumerable<Seg> Segments()
+    {
+        var t = Text ?? "";
+        var chunks = Chunks.Where(c => c.Start >= 0 && c.Start <= t.Length).OrderBy(c => c.Start).ToList();
+        var ci = 0; var pos = 0;
+        IEnumerable<Seg> Plain(int to)   // plain text up to 'to', with any chunk markers that fall in it
+        {
+            while (ci < chunks.Count && chunks[ci].Start <= to)
+            {
+                if (chunks[ci].Start > pos) { yield return new(t[pos..chunks[ci].Start], null); pos = chunks[ci].Start; }
+                yield return new("", null, chunks[ci].Number); ci++;
+            }
+            if (to > pos) { yield return new(t[pos..to], null); pos = to; }
+        }
+        foreach (var m in Marks.Where(m => m.Start >= 0 && m.Start + m.Length <= t.Length).OrderBy(m => m.Start))
+        {
+            if (m.Start < pos) continue;
+            foreach (var x in Plain(m.Start)) yield return x;
+            yield return new(t.Substring(m.Start, m.Length), m); pos = m.Start + m.Length;
+            while (ci < chunks.Count && chunks[ci].Start < pos) { yield return new("", null, chunks[ci].Number); ci++; }
+        }
+        foreach (var x in Plain(t.Length)) yield return x;
+    }
+}

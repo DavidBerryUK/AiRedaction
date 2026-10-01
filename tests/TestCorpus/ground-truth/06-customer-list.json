@@ -1,0 +1,125 @@
+{
+  "id": "06-customer-list",
+  "title": "Customer list (CSV)",
+  "formats": [
+    "csv"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Eleanor Whitcombe",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "EMAIL",
+      "text": "e.whitcombe@example.net",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PHONE",
+      "text": "07700 900111",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "DATE_OF_BIRTH",
+      "text": "1986-03-12",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Brightwater Analytics Ltd",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Tomasz Kowalczyk",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "EMAIL",
+      "text": "t.kowalczyk@example.org",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PHONE",
+      "text": "07700 900222",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "DATE_OF_BIRTH",
+      "text": "1964-07-30",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Fernleigh Parcels Ltd",
+      "occurrences": 2
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Aisha Rahman",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "EMAIL",
+      "text": "a.rahman@example.com",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PHONE",
+      "text": "07700 900333",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "DATE_OF_BIRTH",
+      "text": "1991-11-02",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Jonas Eriksen",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "EMAIL",
+      "text": "j.eriksen@nordlys.example",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PHONE",
+      "text": "07700 900444",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "DATE_OF_BIRTH",
+      "text": "1978-01-19",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Nordlys Consulting AS",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

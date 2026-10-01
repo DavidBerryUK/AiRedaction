@@ -1,0 +1,54 @@
+@* Models & confidence dialog: every model with its download status, and tick boxes for which models vote on confidence. *@
+@inject RedactionSession S
+
+<div class="overlay" @onclick="Close">
+    <div class="dialog" role="dialog" aria-modal="true" aria-label="Models and confidence" @onclick:stopPropagation>
+        <div class="dialog-head">
+            <h2>Models &amp; confidence</h2>
+            <button class="btn icon" @onclick="Close" aria-label="Close">✕</button>
+        </div>
+        <p class="dialog-note">
+            Confidence is graded by <strong>agreement</strong>: each edit is compared with what the ticked models found.
+            Press <em>Redact</em> and the picker's model runs first, then every ticked model, each adding a result tab.
+            More models give a better grade but take longer (each ticked model adds one run).
+        </p>
+        <table class="models">
+            <thead><tr><th>Use for confidence</th><th>Model</th><th>Status</th><th>Size</th><th>Role</th></tr></thead>
+            <tbody>
+            @foreach (var c in S.Choices)
+            {
+                var isPrimary = c.Name == S.SelectedModel;
+                <tr class="@(c.Available ? "" : "unavail")">
+                    <td class="center">
+                        <input type="checkbox" aria-label="Use @c.Name for confidence" checked="@S.IsConfidenceModel(c.Name)"
+                               disabled="@(!c.Available && !S.IsConfidenceModel(c.Name))"
+                               @onchange="e => S.SetConfidenceModel(c.Name, (bool)(e.Value ?? false))" />
+                    </td>
+                    <td><strong>@c.Name</strong>@if (c.Available) { <div class="sub">@c.Info!.ParameterSize · @c.Info.Quantization · @c.Info.ContextLabel</div> }</td>
+                    <td>
+                        @if (c.Available) { <span class="chip st-ok">✔ Downloaded</span> }
+                        else { <span class="chip st-bad">✖ Unavailable</span><div class="sub"><code>@c.PullCommand</code></div> }
+                        @if (!c.Available && S.IsConfidenceModel(c.Name)) { <div class="sub warn">Ticked, but skipped until downloaded</div> }
+                    </td>
+                    <td>@(c.Available ? c.Info!.SizeLabel : "—")</td>
+                    <td>@if (isPrimary) { <span class="chip primary-role">Primary (next run)</span> }
+                        else if (S.IsConfidenceModel(c.Name) && c.Available) { <span class="chip">Confidence</span> }</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+        <div class="dialog-foot">
+            <span class="muted">@S.AvailableCount of @S.Choices.Count downloaded · next run: @S.PlannedModels.Count model@(S.PlannedModels.Count == 1 ? "" : "s") (@string.Join(", ", S.PlannedModels))</span>
+            <span class="spacer"></span>
+            <button class="btn" @onclick="S.LoadModelsAsync">⟳ Re-check Ollama</button>
+            <button class="btn primary" @onclick="Close">Done</button>
+        </div>
+    </div>
+</div>
+
+@code {
+    // Raised when the dialog should close.
+    [Parameter] public EventCallback OnClose { get; set; }
+    /// <summary>Closes the dialog.</summary>
+    Task Close() => OnClose.InvokeAsync();
+}

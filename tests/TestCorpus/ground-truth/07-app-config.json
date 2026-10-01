@@ -1,0 +1,35 @@
+{
+  "id": "07-app-config",
+  "title": "Application config (JSON)",
+  "formats": [
+    "json"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "EMAIL",
+      "text": "ops@brightwater-analytics.example",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "SECRET",
+      "text": "Tr1cky-Gl4cier!",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "SECRET",
+      "text": "sk-test-4f9a1c7e2b8d4a6f9c3e5b7a1d2c4e6f",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Dev Patel",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

@@ -1,0 +1,5 @@
+Incident 2025-117: exposed credentials
+
+Reported by Dev Patel on behalf of Brightwater Analytics Ltd. An engineer pasted the following into a public chat: the database connection string was Server=db01.internal;User Id=svc_reports;Password=Tr1cky-Gl4cier! and the cloud key was AKIAIOSFODNN7EXAMPLE.
+
+The request came from 203.0.113.45 using the handle @dpatel_dev. The bearer token eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vIn0.c2lnbmF0dXJl has been revoked. Call Dev Patel on 01632 960001 with questions.

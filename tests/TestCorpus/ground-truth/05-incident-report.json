@@ -1,0 +1,59 @@
+{
+  "id": "05-incident-report",
+  "title": "Incident report with credentials",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Dev Patel",
+      "occurrences": 2
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Brightwater Analytics Ltd",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "SECRET",
+      "text": "Server=db01.internal;User Id=svc_reports;Password=Tr1cky-Gl4cier!",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "SECRET",
+      "text": "AKIAIOSFODNN7EXAMPLE",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ONLINE_ID",
+      "text": "203.0.113.45",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ONLINE_ID",
+      "text": "@dpatel_dev",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "SECRET",
+      "text": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vIn0.c2lnbmF0dXJl",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PHONE",
+      "text": "01632 960001",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

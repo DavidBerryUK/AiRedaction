@@ -1,0 +1,83 @@
+@* Prompt inspector: the Prompt tab shows what the model is told; the Last run tab shows every call made for the
+   viewed result (what was sent, the raw reply, and what was kept or discarded). Shows document text; memory only. *@
+@inject RedactionSession S
+
+<aside class="drawer" aria-label="Prompt inspector">
+    <div class="drawer-head">
+        <div class="tabs" role="tablist">
+            <button role="tab" class="tab @(Tab == "prompt" ? "active" : "")" @onclick='() => TabChanged.InvokeAsync("prompt")'>Prompt</button>
+            <button role="tab" class="tab @(Tab == "run" ? "active" : "")" @onclick='() => TabChanged.InvokeAsync("run")'>Last run @(Calls.Count > 0 ? $"({Calls.Count})" : "")</button>
+        </div>
+        <button class="btn icon" @onclick="OnClose" aria-label="Close inspector">✕</button>
+    </div>
+
+    @if (Tab == "prompt")
+    {
+        var p = S.Prompt();
+        <div class="drawer-body">
+            <p class="muted">Everything sent to <strong>@p.Model</strong> for each chunk of a document. Built from the config, so it changes if you change the categories or allow-list.</p>
+            <h4>System message <span class="muted">(same for every chunk)</span></h4>
+            <pre class="prompt">@p.SystemPrompt</pre>
+            <h4>User message <span class="muted">(one per chunk)</span></h4>
+            <pre class="prompt">@p.UserMessageTemplate</pre>
+            <h4>Reply format <span class="muted">(the model is forced to answer in this shape)</span></h4>
+            <pre class="prompt">@p.SchemaJson</pre>
+            <h4>Settings</h4>
+            <p class="muted">@p.Settings</p>
+        </div>
+    }
+    else
+    {
+        <div class="drawer-body">
+            @if (S.ActiveResult is not { } r)
+            {
+                <p class="muted">Run a document to see each call made to the model.</p>
+            }
+            else if (Calls.Count == 0)
+            {
+                <p class="muted">This result did not record its calls.</p>
+            }
+            else
+            {
+                <div class="warn-banner">Contains document text. Held in memory only; never saved.</div>
+                <p class="muted"><strong>@r.Model</strong> · @Calls.Count call@(Calls.Count == 1 ? "" : "s") · @Calls.Sum(c => c.PromptTokens) tokens in / @Calls.Sum(c => c.OutputTokens) out · @r.Elapsed.ToString(@"mm\:ss")
+                    · the document was split into @Calls.Count chunk@(Calls.Count == 1 ? "" : "s"); each chunk is a separate call and the model never sees the others.</p>
+                @foreach (var c in Calls)
+                {
+                    <details class="call" open="@(Selected == c.Number)" id="call-@c.Number">
+                        <summary>
+                            <strong>Call @c.Number of @Calls.Count</strong> · @c.ChunkLength.ToString("N0") chars
+                            · @c.PromptTokens in / @c.OutputTokens out · @c.Elapsed.TotalSeconds.ToString("0.0") s
+                            · <span class="kept">@c.Items.Count(i => i.Kept) kept</span>
+                            @if (c.Items.Count(i => !i.Kept) > 0) { <span> · <span class="dropped">@c.Items.Count(i => !i.Kept) dropped</span></span> }
+                            @if (c.Attempts > 1) { <span> · <span class="dropped">retried</span></span> }
+                        </summary>
+                        <h5>Sent (user message)</h5>
+                        <pre class="prompt tall">@c.UserMessage</pre>
+                        <h5>Raw reply from the model</h5>
+                        <pre class="prompt">@c.RawReply</pre>
+                        <h5>What the app did with each item</h5>
+                        <table class="outcomes">
+                            @foreach (var i in c.Items)
+                            {
+                                <tr class="@(i.Kept ? "o-kept" : "o-dropped")"><td><span class="chip type t-@i.Type">@i.Type</span></td><td class="o-text">@i.Text</td><td>@(i.Kept ? "✔" : "✖") @i.Outcome</td></tr>
+                            }
+                            @if (c.Items.Count == 0) { <tr><td colspan="3" class="muted">The model returned nothing for this chunk.</td></tr> }
+                        </table>
+                    </details>
+                }
+            }
+        </div>
+    }
+</aside>
+
+@code {
+    // Which tab is showing ("prompt" or "run"), and which call is expanded (chunk marker click).
+    [Parameter] public string Tab { get; set; } = "prompt";
+    [Parameter] public EventCallback<string> TabChanged { get; set; }
+    [Parameter] public int? Selected { get; set; }
+    [Parameter] public EventCallback OnClose { get; set; }
+
+    /// <summary>The model calls recorded for the result being viewed.</summary>
+    IReadOnlyList<ModelCall> Calls => S.ActiveResult?.Calls ?? [];
+}

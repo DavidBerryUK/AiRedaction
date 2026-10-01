@@ -1,0 +1,47 @@
+{
+  "id": "10-contextual-profile",
+  "title": "Profile with indirect identifiers",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Corvid Logistics PLC",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "CONTEXTUAL",
+      "text": "2019 data breach at the Bristol depot",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "CONTEXTUAL",
+      "text": "GBP 92,000",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "CONTEXTUAL",
+      "text": "head of compliance at Harbourside Credit Union",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Gareth Lloyd",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "CONTEXTUAL",
+      "text": "Merriweather Grammar School",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

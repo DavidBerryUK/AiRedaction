@@ -1,0 +1,60 @@
+{
+  "id": "03-customer-email",
+  "title": "Customer email thread",
+  "formats": [
+    "txt",
+    "md"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Tomasz Kowalczyk",
+      "occurrences": 2
+    },
+    {
+      "where": "body",
+      "type": "EMAIL",
+      "text": "tomasz.kowalczyk@example.org",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "3 Orchard Close, Norwich NR2 3AB",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PHONE",
+      "text": "07700 900456",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "SECRET",
+      "text": "Winter-Harbour-42!",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Aisha Rahman",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Fernleigh Parcels Ltd",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Kowalczyk",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

@@ -1,0 +1,430 @@
+@* The whole screen: top bar (model banner, picker, Redact), document list, original pane, redacted pane
+   with one tab per model, edits list with confidence, status bar, and the Models dialog.
+   All state and actions live in RedactionSession; this component only draws it and forwards clicks. *@
+@implements IDisposable
+@inject RedactionSession S
+@inject IJSRuntime JS
+
+<div class="app">
+    @* Top bar: app name, which model is in use and where it runs, model picker, Models button, Redact/Cancel *@
+    <header class="topbar">
+        <div class="brand"><svg viewBox="0 0 31 29" aria-hidden="true" focusable="false"><path clip-rule="evenodd" fill-rule="evenodd" d="m6.50179 12.808c-.343.812-6.114997 14.372-6.376997 14.961-.361.816.113 1.231.724 1.231h5.112997c.565 0 1.178-.297 1.422-.837.154-.34 2.016-4.704 2.016-4.704.341-.75.566-.969 1.96801-.969h4.57c.633 0 1.048-.346.742-1.064-.247-.583-3.435-8.09-3.706-8.725-.294-.61-.814-.814-1.357-.814h-3.73001c-.6 0-1.064.159-1.385.921zm13.01001-12.046c-.224-.462-.667-.762-1.154-.762h-5.555c-.68 0-1.031.393-1.405 1.247 0 0-2.09301 5.096-2.34001 5.631-.27.59-.022 1.088.77 1.112.034.006 4.41101 0 4.41101 0 .953.008 1.173.605 1.543 1.41l7.832 18.404c.338.758.86 1.196 1.675 1.196h4.891c.94 0 1.053-.721.724-1.48-.296-.685-11.119-26.144-11.392-26.759"/></svg><span>Redaction Demo</span></div>
+
+        <div class="model-banner" aria-label="Models in use">
+            @if (S.ModelsError is not null)
+            {
+                <span class="warn">⚠ @S.ModelsError</span>
+            }
+            else if (BannerModel is { } mi)
+            {
+                <span class="mb-label">Detection model</span>
+                <strong>@mi.Name</strong>
+                <span class="mb-detail">@mi.Summary · digest @mi.ShortDigest · @mi.SizeLabel</span>
+            }
+            else
+            {
+                <span class="warn">⚠ Model “@S.SelectedModel” is not installed. Run: ollama pull @S.SelectedModel</span>
+            }
+            <span class="chip @(S.IsLoopback ? "ok" : "bad")" title="@S.Endpoint">@(S.IsLoopback ? "● Local (localhost)" : "⚠ REMOTE endpoint")</span>
+            @if (S.OcrEngineName is { } ocrName) { <span class="chip" title="Reads scanned PDFs and images, on this machine">OCR: @ocrName</span> }
+        </div>
+
+        <div class="run-controls">
+            @if (S.Options.Ui.PromptInspector)
+            {
+                <button class="btn icon models-btn" title="See the prompt sent to the model and what came back" @onclick='() => OpenPrompt("prompt", null)'>🔍 Prompt</button>
+            }
+            <button class="btn icon models-btn" title="Choose which models run for confidence, and see which are downloaded" @onclick="() => showModels = true">⚙ Models</button>
+            <label class="picker">Next run
+                <select @onchange="OnModelChanged" value="@S.SelectedModel" aria-label="Model for the next run">
+                    @foreach (var c in S.Choices)
+                    {
+                        <option value="@c.Name" disabled="@(!c.Available)" selected="@(c.Name == S.SelectedModel)"
+                                title="@(c.Available ? "Installed and ready" : $"Not installed — run: {c.PullCommand}")">
+                            @(c.Available ? "✔" : "✖") @c.Name · @(c.Available ? $"{c.Info!.ParameterSize} · {c.Info.SizeLabel} · available" : "unavailable (not installed)")
+                        </option>
+                    }
+                </select>
+                <button class="btn icon" title="Check Ollama for newly installed models" @onclick="S.LoadModelsAsync">⟳</button>
+            </label>
+            @if (S.IsRunning)
+            {
+                <button class="btn danger" @onclick="S.Cancel">Cancel</button>
+            }
+            else if (confirmReplace)
+            {
+                <span class="confirm">Replace the existing @(S.PlannedModels.Count == 1 ? S.SelectedModel + " result" : "results")?
+                    <button class="btn primary" @onclick="Run">Replace</button>
+                    <button class="btn" @onclick="() => confirmReplace = false">Keep</button></span>
+            }
+            else
+            {
+                <button class="btn primary" disabled="@(!CanRun)" title="@(RunBlocked ?? "")" @onclick="RunClicked">
+                    @RunLabel
+                </button>
+                @if (RunBlocked is { } why && !S.IsRunning) { <span class="blocked-hint" role="status">@why</span> }
+            }
+        </div>
+    </header>
+
+    @* Left: search, sort and refresh, then the document list with a status for each file *@
+    <aside class="docs">
+        <div class="docs-tools">
+            <input type="search" class="search" placeholder="Search documents…" aria-label="Search documents"
+                   value="@S.Documents.SearchText" @oninput="OnSearch" />
+            <select aria-label="Filter by document type" @onchange="OnTypeFilter">
+                <option value="">All types (@S.Documents.TotalCount)</option>
+                @foreach (var (type, count) in S.Documents.AvailableTypes)
+                {
+                    <option value="@type" selected="@(S.Documents.TypeFilter == type)">@type (@count)</option>
+                }
+            </select>
+            <div class="row">
+                <select aria-label="Sort by" @onchange="OnSort">
+                    <option value="Name" selected="@(S.Documents.SortBy == DocumentSort.Name)">Sort: name</option>
+                    <option value="Type" selected="@(S.Documents.SortBy == DocumentSort.Type)">Sort: type</option>
+                </select>
+                <button class="btn icon" title="Reverse order" @onclick="ToggleDirection">@(S.Documents.SortDescending ? "↓ Z–A" : "↑ A–Z")</button>
+                <button class="btn icon" title="Rescan the source folder" @onclick="S.Refresh">⟳ Refresh</button>
+            </div>
+        </div>
+        <ul class="doclist">
+            @foreach (var d in S.Documents.Items)
+            {
+                <li class="doc-item @(S.Selected?.FullPath == d.FullPath ? "selected" : "")" @onclick="() => S.SelectAsync(d)" title="@(d.ErrorMessage ?? d.RelativePath)">
+                    <div class="doc-name">@d.Name</div>
+                    <div class="doc-meta">
+                        <span class="type">@d.Type</span>
+                        <span class="folder">@FolderOf(d)</span>
+                        <span class="status s-@d.Status">@Icon(d.Status) @d.StatusText</span>
+                    </div>
+                    @if (d.Status == DocumentStatus.Error && d.ErrorMessage is not null)
+                    {
+                        <div class="doc-error">@d.ErrorMessage</div>
+                    }
+                </li>
+            }
+            @if (S.Documents.Items.Count == 0)
+            {
+                <li class="empty-list">No documents match.</li>
+            }
+        </ul>
+        <div class="docs-summary">@S.Documents.Summary</div>
+    </aside>
+
+    @* Original document with every detected item highlighted *@
+    <section class="pane">
+        <div class="pane-head"><span>ORIGINAL</span>
+            @if (S.Options.Ui.PromptInspector && ChunkMarkers.Count > 0)
+            {
+                <label class="sync chunks-toggle"><input type="checkbox" checked="@showChunks" @onchange="e => showChunks = (bool)(e.Value ?? false)" /> Show chunks</label>
+            }
+            @if (PagesAvailable)
+            {
+                <span class="view-toggle" role="group" aria-label="View mode">
+                    <button class="seg @(!viewPages ? "active" : "")" @onclick="() => viewPages = false">Text</button>
+                    <button class="seg @(viewPages ? "active" : "")" @onclick="() => viewPages = true" title="See the actual PDF pages: the original on the left, the redacted PDF as it will be saved on the right">Pages</button>
+                </span>
+            }
+            @if (S.OcrConfidence is { } oc)
+            {
+                <span class="chip @(S.LowOcrConfidence ? "bad" : "ok")" title="@(S.LowOcrConfidence ? "Low confidence: words may be misread or missed, so check the result carefully." : "How sure the OCR engine is of the words it read.")">OCR @((oc * 100).ToString("0"))%@(S.LowOcrConfidence ? " · low" : "")</span>
+            }
+            <label class="sync"><input type="checkbox" checked @onchange="OnSyncChanged" /> Sync scrolling</label>
+        </div>
+        @if (S.PreviewOnly && S.Selected is { } pd)
+        {
+            @* PDF / scan: shown with the browser's own viewer. Reading and redacting these is not built yet. *@
+            <div class="doc-scroll preview" id="pane-original">
+                <div class="preview-note">@(S.PreviewNote ?? $"Preview only. Redacting {(pd.IsPdf ? "PDFs" : "scanned images")} isn't available yet.")</div>
+                @if (pd.IsPdf) { <iframe class="viewer" title="@pd.Name" src="@RedactionSession.FileUrl(pd)"></iframe> }
+                else { <img class="viewer-img" alt="@pd.Name" src="@RedactionSession.FileUrl(pd)" /> }
+            </div>
+        }
+        else if (PagesMode && S.Selected is { } po)
+        {
+            <div class="doc-scroll preview" id="pane-original">
+                <div class="preview-note">@(po.IsPdf ? "Original PDF" : "Original image")</div>
+                @if (po.IsPdf) { <iframe class="viewer" title="@po.Name" src="@RedactionSession.FileUrl(po)"></iframe> }
+                else { <img class="viewer-img" alt="@po.Name" src="@RedactionSession.FileUrl(po)" /> }
+            </div>
+        }
+        else
+        {
+                    <DocumentPane Id="pane-original" Text="@S.OriginalText" Marks="OriginalMarks" Busy="S.IsReading" Message="@OriginalMessage"
+                      MessageClass="@(S.LoadError is not null ? "error" : "")" OnMarkClick="OnMarkClicked" SelectedId="selectedBookmark"
+                      Chunks="@(showChunks ? ChunkMarkers : [])" OnChunkClick='n => OpenPrompt("run", n)' />
+        }
+    </section>
+
+    @* Redacted document, with one tab per model result and a button to choose which result is saved *@
+    <section class="pane">
+        <div class="pane-head">
+            <span>REDACTED</span>
+            <div class="segments" role="tablist" aria-label="Results by model">
+                @foreach (var r in S.ResultsForSelected)
+                {
+                    <button role="tab" class="seg @(r.Id == S.ActiveResultId ? "active" : "")" aria-selected="@(r.Id == S.ActiveResultId)" disabled="@Processing"
+                            title="@r.Model · @r.Info?.Summary · @r.Elapsed.ToString(@"mm\:ss") · @r.PromptTokens in / @r.OutputTokens out"
+                            @onclick="() => S.SelectResult(r.Id)">
+                        @r.Model <span class="count">@r.EditCount</span>@if (r.Id == S.OutputResultId) { <span class="saved" title="Saved output">✔</span> }
+                    </button>
+                }
+                @if (S.IsRunning && S.RunningPath == S.Selected?.FullPath && S.ResultsForSelected.All(r => r.Model != S.RunningModel))
+                {
+                    <button class="seg running" disabled><span class="spin">⟳</span> @S.RunningModel</button>
+                }
+            </div>
+            @if (!Processing && S.ActiveResult is { } ar && ar.Id != S.OutputResultId)
+            {
+                <button class="btn small" title="Write this result to the output folder" @onclick="() => S.UseAsOutputAsync(ar.Id)">Use as output</button>
+            }
+        </div>
+        @if (PagesMode && !Processing && S.ActiveResult is { } pr)
+        {
+            @* The redacted PDF exactly as it will be saved: black boxes over redacted words, no text layer. Rendered in memory on request. *@
+            <div class="doc-scroll preview" id="pane-redacted">
+                <div class="preview-note">@(S.Selected!.IsPdf ? "Redacted PDF as saved: black boxes, no text layer" : "Redacted image as saved: black boxes, no metadata")</div>
+                @if (S.Selected.IsPdf) { <iframe class="viewer" title="Redacted PDF" src="/results/@pr.Id/redacted"></iframe> }
+                else { <img class="viewer-img" alt="Redacted image" src="/results/@pr.Id/redacted" /> }
+            </div>
+        }
+        else
+        {
+        <DocumentPane Id="pane-redacted" Text="@(Processing ? null : S.ActiveResult?.Result.RedactedText)" Marks="@(Processing ? [] : RedactedMarks)" Busy="Processing" Message="@RedactedMessage"
+                      OnMarkClick="OnMarkClicked" SelectedId="selectedBookmark" />
+        }
+    </section>
+
+    @* Right: every edit as a bookmark with category, confidence badge and a snippet; click to jump to it *@
+    <aside class="bookmarks">
+        <div class="pane-head"><span>EDITS (@Visible.Count@(IsFiltered ? $" of {AllBookmarks.Count}" : ""))</span>
+            @if (!Processing && S.ActiveResult is not null)
+            {
+                var cc = S.ConfidenceCounts();
+                <span class="conf-summary" title="Confidence by agreement between models">
+                    <span class="chip conf-High">@cc.High</span><span class="chip conf-Medium">@cc.Medium</span><span class="chip conf-Low">@cc.Low</span>
+                </span>
+            }
+        </div>
+        <div class="bm-tools">
+            <select aria-label="Filter by category" @onchange="e => typeFilter = e.Value?.ToString() ?? string.Empty">
+                <option value="">All categories</option>
+                @foreach (var t in AllBookmarks.Select(b => b.Type).Distinct().Order())
+                {
+                    <option value="@t" selected="@(typeFilter == t)">@t</option>
+                }
+            </select>
+            <select aria-label="Filter by confidence" @onchange="e => confFilter = e.Value?.ToString() ?? string.Empty">
+                <option value="">All confidence</option>
+                <option value="Low" selected="@(confFilter == "Low")">Low only</option>
+                <option value="Medium" selected="@(confFilter == "Medium")">Medium only</option>
+                <option value="High" selected="@(confFilter == "High")">High only</option>
+            </select>
+            <select aria-label="Sort edits" @onchange="OnEditSort">
+                <option value="doc" selected="@(!sortByConfidence)">Document order</option>
+                <option value="conf" selected="@sortByConfidence">Lowest confidence first</option>
+            </select>
+        </div>
+        <ul class="bm-list">
+            @foreach (var b in Visible)
+            {
+                <li class="bm @(selectedBookmark == b.Id ? "selected" : "")" @onclick="() => OnMarkClicked(b.Id)">
+                    <div class="bm-top"><span class="chip type t-@b.Type">@b.Type</span><span class="chip conf-@b.Confidence.Level" title="@b.Confidence.Reason">@b.Confidence.Level</span><span class="bm-line">line @b.Line</span></div>
+                    <div class="bm-snippet">@b.Snippet</div>
+                    @if (b.Confidence.Level != ConfidenceLevel.High && b.Confidence.Reason != "") { <div class="bm-reason">@b.Confidence.Reason</div> }
+                </li>
+            }
+            @if (Visible.Count == 0)
+            {
+                <li class="empty-list">@(Processing ? "Processing…" : S.ActiveResult is null ? "No result yet." : "No edits.")</li>
+            }
+        </ul>
+    </aside>
+
+    @* Bottom: live progress while running, otherwise a summary of the viewed result *@
+    <footer class="status">
+        @if (S.IsRunning && S.Progress is { } p)
+        {
+            <div class="progress-wrap">
+                <span class="stage">@p.Stage</span> <span>@p.Message</span>
+                <span class="muted">@(S.RunTotal > 1 ? $"· model {S.RunIndex} of {S.RunTotal}" : "") · @p.ItemsFoundSoFar found · @p.Elapsed.ToString(@"mm\:ss") · @S.RunningModel</span>
+                <progress max="@(p.TotalSteps > 0 ? p.TotalSteps : 1)" value="@(p.TotalSteps > 0 ? p.Step : null)"></progress>
+            </div>
+        }
+        else if (S.IsRunning)
+        {
+            <span class="stage">Starting</span> <span>Loading model…</span><progress></progress>
+        }
+        else if (S.RunError is not null)
+        {
+            <span class="err">@S.RunError</span>
+        }
+        else if (S.ActiveResult is { } r)
+        {
+            <span><strong>@r.Model</strong> · @r.EditCount edits · @r.Elapsed.ToString(@"mm\:ss") · @r.PromptTokens in / @r.OutputTokens out tokens (@r.TokensPerSecond.ToString("0") tok/s)
+                @if (r.Discarded > 0) { <span class="muted"> · @r.Discarded non-verbatim answers discarded</span> }
+                · @(r.Id == S.OutputResultId ? "saved to output ✔" : "not the saved output")</span>
+            <span class="muted"> · confidence: @ConfText</span>
+            @if (S.SavedNote is not null) { <span class="note"> — @S.SavedNote</span> }
+        }
+        else { <span class="muted">Select a document, then press Redact.</span> }
+    </footer>
+
+    @if (showPrompt && S.Options.Ui.PromptInspector) { <PromptDrawer Tab="@promptTab" TabChanged="t => promptTab = t" Selected="@selectedCall" OnClose="() => showPrompt = false" /> }
+    @if (showModels) { <ModelsDialog OnClose="() => { showModels = false; }" /> }
+</div>
+
+@code {
+    /// <summary>Category filter for the edits list (empty = all).</summary>
+    string typeFilter = "";
+    /// <summary>The edit last clicked, highlighted in the list.</summary>
+    int? selectedBookmark;
+    /// <summary>Shows the "replace existing results?" confirmation instead of the Redact button.</summary>
+    bool viewPages;
+    bool confirmReplace, showModels, sortByConfidence, showPrompt, showChunks;
+    string promptTab = "prompt";
+    int? selectedCall;
+
+    /// <summary>True when the selected document is a PDF or scan image that could be read (so it can be redacted and shown as real pages).</summary>
+    bool PagesAvailable => S.Selected is { CanPreview: true } && S.OriginalText is not null && !S.PreviewOnly;
+
+    /// <summary>True when the PDF is shown as real pages instead of extracted text.</summary>
+    bool PagesMode => viewPages && PagesAvailable;
+
+    /// <summary>True while the selected document is being redacted: the result areas are blanked and show a spinner.</summary>
+    bool Processing => S.IsRunning && S.RunningPath == S.Selected?.FullPath;
+
+    /// <summary>Chunk boundaries of the viewed result, drawn in the original pane.</summary>
+    IReadOnlyList<ChunkMarker> ChunkMarkers => S.ActiveResult?.Calls.Select(c => new ChunkMarker(c.Number, c.ChunkStart)).ToList() ?? [];
+
+    /// <summary>Opens the prompt inspector on a tab, optionally expanding one call.</summary>
+    void OpenPrompt(string tab, int? call) { promptTab = tab; selectedCall = call; showPrompt = true; }
+    /// <summary>Confidence filter for the edits list (empty = all).</summary>
+    string confFilter = "";
+    /// <summary>Confidence counts for the status bar, e.g. "9 high / 1 medium / 0 low".</summary>
+    string ConfText { get { var c = S.ConfidenceCounts(); return $"{c.High} high / {c.Medium} medium / {c.Low} low"; } }
+    /// <summary>True when any edits filter is active.</summary>
+    bool IsFiltered => typeFilter != "" || confFilter != "";
+    /// <summary>Text on the Redact button, naming the model(s) it will run.</summary>
+    string RunLabel => S.WillReplaceExisting
+        ? (S.PlannedModels.Count > 1 ? $"↻ Re-run {S.PlannedModels.Count} models" : $"↻ Re-run {S.SelectedModel}")
+        : (S.PlannedModels.Count > 1 ? $"▶ Redact with {S.SelectedModel} + {S.PlannedModels.Count - 1} for confidence" : $"▶ Redact with {S.SelectedModel}");
+
+    /// <summary>Model shown in the banner: the viewed result's model, else the picker's.</summary>
+    ModelInfo? BannerModel => S.InfoFor(S.ActiveResult?.Model ?? S.SelectedModel);
+    /// <summary>Why Redact is unavailable right now (null when it can run). Shown next to the button so it is never a mystery.</summary>
+    string? RunBlocked =>
+        S.IsRunning ? "A run is in progress." :
+        S.Selected is null ? "Select a document first." :
+        S.PreviewOnly ? (S.PreviewNote ?? $"{(S.Selected.IsPdf ? "PDFs" : "Scanned images")} can be viewed but not redacted yet.") :
+        S.LoadError is not null ? S.LoadError :
+        S.OriginalText is null ? "The document has not loaded." :
+        S.InfoFor(S.SelectedModel) is null ? $"Model {S.SelectedModel} is not installed. Run: ollama pull {S.SelectedModel}" : null;
+
+    /// <summary>True when Redact can run.</summary>
+    bool CanRun => RunBlocked is null;
+
+    /// <summary>Every edit of the viewed result.</summary>
+    IReadOnlyList<Bookmark> AllBookmarks => Processing ? [] : S.Bookmarks();
+    /// <summary>Edits after the category/confidence filters, in document order or lowest confidence first.</summary>
+    List<Bookmark> Visible
+    {
+        get
+        {
+            var q = AllBookmarks.Where(b => (typeFilter == "" || b.Type == typeFilter) && (confFilter == "" || b.Confidence.Level.ToString() == confFilter));
+            return (sortByConfidence ? q.OrderBy(b => b.Confidence.Level).ThenBy(b => b.OriginalStart) : q.OrderBy(b => b.OriginalStart)).ToList();
+        }
+    }
+
+    /// <summary>Highlights for the original pane: live detections while running, else the viewed result's edits.</summary>
+    IReadOnlyList<PaneMark> OriginalMarks =>
+        S.IsRunning && S.RunningPath == S.Selected?.FullPath
+            ? S.LiveSpans.Select((e, i) => new PaneMark(-1 - i, e.Start, e.Length, e.Type, true)).ToList()
+            : S.ActiveResult?.Result.Edits.Where(e => e.Status == EditStatus.Active).Select(e => new PaneMark(e.Id, e.OriginalStart, e.OriginalLength, e.Type, false, ConfOf(e.Id))).ToList() ?? [];
+    /// <summary>Highlights for the placeholders in the redacted pane.</summary>
+    IReadOnlyList<PaneMark> RedactedMarks =>
+        S.ActiveResult?.Result.Edits.Where(e => e.Status == EditStatus.Active).Select(e => new PaneMark(e.Id, e.RedactedStart, e.RedactedLength, e.Type, false, ConfOf(e.Id))).ToList() ?? [];
+    /// <summary>Confidence level name for an edit, used to outline low-confidence highlights.</summary>
+    string? ConfOf(int id) => S.Confidence().TryGetValue(id, out var c) ? c.Level.ToString() : null;
+
+    /// <summary>Message shown instead of the original text (nothing selected, or unreadable file).</summary>
+    string? OriginalMessage => S.Selected is null ? "Select a document from the list."
+        : S.IsReading ? "Reading the document… scans are read with OCR, which can take a few seconds."
+        : S.LoadError;
+    /// <summary>Message shown instead of the redacted text (not run yet, or running).</summary>
+    string? RedactedMessage => Processing ? $"Processing with {S.RunningModel}{(S.RunTotal > 1 ? $" (model {S.RunIndex} of {S.RunTotal})" : "")}…"
+        : S.PreviewOnly ? (S.PreviewNote ?? "Redaction of this file type is not built yet — it can be viewed only.")
+        : S.Selected is null || S.LoadError is not null ? null
+        : S.ActiveResult is not null ? null
+        : S.IsRunning && S.RunningPath == S.Selected.FullPath ? "Redacting… the result appears here when the run finishes."
+        : "Not redacted yet — press Redact.";
+
+    /// <summary>The folder part of a document's relative path, for display.</summary>
+    static string FolderOf(DocumentItem d) => Path.GetDirectoryName(d.RelativePath) is { Length: > 0 } f ? f : "";
+    /// <summary>Small symbol for each document status.</summary>
+    static string Icon(DocumentStatus s) => s switch
+    {
+        DocumentStatus.Processed => "✔", DocumentStatus.NeedsReview => "⚠", DocumentStatus.Error => "✖",
+        DocumentStatus.Processing => "⟳", DocumentStatus.Cancelled => "◌", _ => "·",
+    };
+
+    /// <summary>On first load: listen for changes and fetch the installed models.</summary>
+    protected override async Task OnInitializedAsync()
+    {
+        S.Changed += OnChanged;
+        await S.LoadModelsAsync();
+    }
+
+    /// <summary>Redraws the screen when the session changes (marshalled to the UI thread).</summary>
+    string? lastView;
+
+    /// <summary>Redraws when the session changes. The selected edit is cleared when the document or result changes, because edit numbers belong to one result.</summary>
+    void OnChanged()
+    {
+        var view = $"{S.Selected?.FullPath}|{S.ActiveResultId}";
+        if (view != lastView) { selectedBookmark = null; lastView = view; }
+        InvokeAsync(StateHasChanged);
+    }
+    /// <summary>Stops listening to the session when the screen goes away.</summary>
+    public void Dispose() => S.Changed -= OnChanged;
+
+    /// <summary>Picker changed: choose the model for the next run.</summary>
+    void OnModelChanged(ChangeEventArgs e) { confirmReplace = false; S.SelectModel(e.Value?.ToString() ?? S.SelectedModel); }
+    /// <summary>Edits sort changed: document order or lowest confidence first.</summary>
+    void OnEditSort(ChangeEventArgs e) => sortByConfidence = e.Value?.ToString() == "conf";
+    /// <summary>Search box changed: filter the document list.</summary>
+    void OnSearch(ChangeEventArgs e) { S.Documents.SearchText = e.Value?.ToString() ?? ""; S.NotifyChanged(); }
+    /// <summary>Sort selector changed: sort the document list by name or type.</summary>
+    /// <summary>Type filter changed: show only documents of that type (or all).</summary>
+    void OnTypeFilter(ChangeEventArgs e) { S.Documents.TypeFilter = e.Value?.ToString() ?? ""; S.NotifyChanged(); }
+    void OnSort(ChangeEventArgs e) { S.Documents.SortBy = Enum.Parse<DocumentSort>(e.Value?.ToString() ?? "Name"); S.NotifyChanged(); }
+    /// <summary>Reverses the document list order.</summary>
+    void ToggleDirection() { S.Documents.SortDescending = !S.Documents.SortDescending; S.NotifyChanged(); }
+
+    /// <summary>Redact clicked: asks for confirmation if results would be replaced, otherwise runs.</summary>
+    void RunClicked()
+    {
+        if (S.WillReplaceExisting) { confirmReplace = true; return; }
+        _ = Run();
+    }
+    /// <summary>Starts the run (all planned models, one after another).</summary>
+    async Task Run() { confirmReplace = false; await S.RunAsync(); }
+
+    /// <summary>A highlight or edit was clicked: select it and scroll both panes to it.</summary>
+    async Task OnMarkClicked(int id)
+    {
+        if (id < 0) return;
+        selectedBookmark = id;
+        await JS.InvokeVoidAsync("redactorUi.jumpTo", id);
+    }
+
+    /// <summary>Turns synchronised scrolling of the two panes on or off.</summary>
+    async Task OnSyncChanged(ChangeEventArgs e) => await JS.InvokeVoidAsync("redactorUi.setSync", (bool)(e.Value ?? false));
+
+    /// <summary>After the first draw, set up the scroll-sync script.</summary>
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender) await JS.InvokeVoidAsync("redactorUi.init");
+    }
+}

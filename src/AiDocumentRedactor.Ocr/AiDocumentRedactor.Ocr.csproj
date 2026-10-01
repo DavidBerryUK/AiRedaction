@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\AiDocumentRedactor.Core\AiDocumentRedactor.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="RapidOcrNet" Version="4.2.0" GeneratePathProperty="true" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <!-- The OCR models ship inside the RapidOcrNet package. Copy them to the output of this project and of every project
+       that references it (the app, the CLI, the tests), so the engine finds them next to the executable. -->
+  <ItemGroup>
+    <Content Include="$(PkgRapidOcrNet)\models\v5\*.*" Link="models\v5\%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+</Project>

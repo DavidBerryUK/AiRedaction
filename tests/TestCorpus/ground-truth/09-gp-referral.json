@@ -1,0 +1,82 @@
+{
+  "id": "09-gp-referral",
+  "title": "Referral letter",
+  "formats": [
+    "pdf",
+    "docx",
+    "scan"
+  ],
+  "scanKinds": [
+    "clean",
+    "degraded"
+  ],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Tomasz Kowalczyk",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "GENDER",
+      "text": "male",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "AGE",
+      "text": "61",
+      "occurrences": 2
+    },
+    {
+      "where": "body",
+      "type": "DATE_OF_BIRTH",
+      "text": "30 July 1964",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ID_NUMBER",
+      "text": "943 476 5919",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "3 Orchard Close, Norwich NR2 3AB",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PHONE",
+      "text": "07700 900456",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "GENDER",
+      "text": "man",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Eastway Coaches Ltd",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Dr Helen Okafor",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Fernleigh Surgery",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

@@ -1,0 +1,70 @@
+{
+  "id": "08-invoice",
+  "title": "Invoice",
+  "formats": [
+    "pdf",
+    "scan"
+  ],
+  "scanKinds": [
+    "clean",
+    "degraded",
+    "pdf"
+  ],
+  "entities": [
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Fernleigh Parcels Ltd",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "Unit 9, Mill Lane Trading Estate, Norwich NR6 6XY",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "COMPANY_ID",
+      "text": "GB 987 6543 21",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Corvid Logistics PLC",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Priya Natarajan",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "Harbourside Works, 7 Quay Lane, Bristol BS1 5TT",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ID_NUMBER",
+      "text": "GB82 WEST 1234 5698 7654 32",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "EMAIL",
+      "text": "accounts@fernleigh-parcels.example",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PHONE",
+      "text": "01603 740555",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

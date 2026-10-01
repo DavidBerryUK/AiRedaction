@@ -1,0 +1,106 @@
+{
+  "input": {
+    "directory": "./in",
+    "recursive": true,
+    "include": [
+      "*.txt",
+      "*.md",
+      "*.csv",
+      "*.json",
+      "*.log",
+      "*.docx",
+      "*.pdf",
+      "*.png",
+      "*.jpg",
+      "*.tiff"
+    ]
+  },
+  "output": {
+    "directory": "./out",
+    "overwrite": false,
+    "mirrorFolders": true,
+    "suffix": "-redacted",
+    "scrubMetadata": true
+  },
+  "entities": {
+    "PERSON": {
+      "enabled": true
+    },
+    "PHONE": {
+      "enabled": true
+    },
+    "EMAIL": {
+      "enabled": true
+    },
+    "ADDRESS": {
+      "enabled": true
+    },
+    "ID_NUMBER": {
+      "enabled": true
+    },
+    "ONLINE_ID": {
+      "enabled": true
+    },
+    "AGE": {
+      "enabled": true
+    },
+    "DATE_OF_BIRTH": {
+      "enabled": true
+    },
+    "GENDER": {
+      "enabled": true
+    },
+    "COMPANY": {
+      "enabled": true
+    },
+    "COMPANY_ID": {
+      "enabled": true
+    },
+    "DOMAIN": {
+      "enabled": true
+    },
+    "CONTEXTUAL": {
+      "enabled": true
+    },
+    "SECRET": {
+      "enabled": true
+    }
+  },
+  "redaction": {
+    "placeholderTemplate": "[REDACTED:{type}]"
+  },
+  "llm": {
+    "provider": "ollama",
+    "endpoint": "http://localhost:11434",
+    "model": "phi4",
+    "candidateModels": [
+      "phi4",
+      "gemma4:e4b",
+      "mistral-small3.2",
+      "qwen3.6:27b",
+      "qwen3.5:4b",
+      "gemma4:31b",
+      "gpt-oss"
+    ],
+    "temperature": 0,
+    "seed": 42,
+    "numCtx": 8192,
+    "keepAlive": "60m"
+  },
+  "ocr": { "enabled": true, "renderDpi": 300, "imageDpi": 300, "minConfidence": 0.6, "verifyOutput": true },
+  "pdf": {
+    "renderDpi": 200,
+    "boxPaddingPoints": 1.5,
+    "jpegQuality": 85
+  },
+  "confidence": {
+    "models": [
+      "phi4",
+      "gemma4:e4b",
+      "mistral-small3.2"
+    ]
+  },
+  "report": {
+    "directory": ""
+  }
+}

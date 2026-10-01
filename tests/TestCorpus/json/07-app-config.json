@@ -1,0 +1,8 @@
+{
+  "service": "reporting",
+  "owner": "ops@brightwater-analytics.example",
+  "database": "Server=db01.internal;Database=reports;User Id=svc_reports;Password=Tr1cky-Gl4cier!",
+  "apiKey": "sk-test-4f9a1c7e2b8d4a6f9c3e5b7a1d2c4e6f",
+  "supportContact": "Dev Patel",
+  "retries": 3
+}

@@ -1,0 +1,17 @@
+{
+  "id": "11-hard-negatives",
+  "title": "Document with nothing to redact",
+  "formats": [
+    "txt",
+    "docx"
+  ],
+  "scanKinds": [],
+  "entities": [],
+  "mustPreserve": [
+    "Microsoft Word",
+    "HMRC",
+    "London",
+    "mark",
+    "42"
+  ]
+}
