@@ -1,28 +1,29 @@
-using System;
-using System.IO;
+using AiDocumentRedactor.Core;
 
-namespace AiDocumentRedactor.Cli
+namespace AiDocumentRedactor.Cli;
+
+/// <summary>Loads the JSON config and applies command-line overrides.</summary>
+public static class ConfigurationLoader
 {
-    public static class ConfigurationLoader
+    /// <summary>Reads the config file named by <c>--config</c> (default redactor.config.json) and applies <c>--model</c> (FR15).
+    /// Prints the problem and returns null if the file cannot be read or is invalid.</summary>
+    public static RedactorOptions? LoadConfiguration(string[] args)
     {
-        public static RedactorOptions LoadConfiguration(string[] args)
+        var configPath = CommandLine.Arg(args, "--config") ?? "redactor.config.json";
+        try
         {
-            var configPath = GetArg(args, "--config") ?? "redactor.config.json";
-            try
+            var options = RedactorOptions.Load(configPath);
+            if (CommandLine.Arg(args, "--model") is { } modelOverride)
             {
-                return RedactorOptions.Load(configPath);
+                options.Llm.Model = modelOverride;
             }
-            catch (Exception ex)
-            {
-                Console.Error.WriteLine($"Config error: {ex.Message}");
-                return null;
-            }
-        }
 
-        private static string? GetArg(string[] args, string name)
+            return options;
+        }
+        catch (Exception ex)
         {
-            var i = Array.IndexOf(args, name);
-            return i >= 0 && i + 1 < args.Length ? args[i + 1] : null;
+            Console.Error.WriteLine($"Config error: {ex.Message}");
+            return null;
         }
     }
 }

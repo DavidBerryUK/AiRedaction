@@ -4,22 +4,32 @@ using System.Text.Json;
 using AiDocumentRedactor.Core;
 using AiDocumentRedactor.Detection;
 using AiDocumentRedactor.Documents;
+using AiDocumentRedactor.Cli;
 using AiDocumentRedactor.Ocr;
 
-// 1. Load the JSON config (the single source of settings). Flags below override it.
+// 1. Load the JSON config (the single source of settings). Flags override it.
 var options = ConfigurationLoader.LoadConfiguration(args);
-if (options == null) return 2;
+if (options is null)
+{
+    return 2;
+}
 
 // 2. Validate input/output paths
 var (input, output, isValid) = InputOutputValidator.ValidatePaths(args, options);
-if (!isValid) return 2;
-options.Output.Directory = output;
+if (!isValid)
+{
+    return 2;
+}
 
+options.Output.Directory = output;
 var dryRun = args.Contains("--dry-run");
 
-// 3. Build the pipeline
-var (detector, pipeline) = PipelineBuilder.BuildPipeline(options);
-if (detector == null || pipeline == null) return 2;
+// 3. Build the pipeline. The OCR engine lives as long as the run, because scans are read and checked with it.
+using var ocr = options.Ocr.Enabled ? new RapidOcrEngine() : null;
+if (await PipelineBuilder.BuildPipelineAsync(options, ocr) is not var (detector, pipeline))
+{
+    return 2;
+}
 
 // 4. List the files to process.
 var files = options.Input.Include

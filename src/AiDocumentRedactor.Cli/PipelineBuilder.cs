@@ -1,43 +1,35 @@
-using System;
 using AiDocumentRedactor.Core;
 using AiDocumentRedactor.Detection;
 using AiDocumentRedactor.Documents;
-using AiDocumentRedactor.Ocr;
 
-namespace AiDocumentRedactor.Cli
+namespace AiDocumentRedactor.Cli;
+
+/// <summary>Builds the read, detect, redact, write pipeline from the config.</summary>
+public static class PipelineBuilder
 {
-    public static class PipelineBuilder
+    /// <summary>Creates the detector (the local Ollama model if configured and reachable, otherwise one that finds nothing) and the pipeline.
+    /// The OCR engine is owned by the caller and must stay alive for as long as the pipeline is used. Returns null after printing the problem
+    /// if the model is not available.</summary>
+    public static async Task<(IEntityDetector Detector, RedactionPipeline Pipeline)?> BuildPipelineAsync(RedactorOptions options, IOcrEngine? ocr)
     {
-        public static (IEntityDetector detector, RedactionPipeline pipeline) BuildPipeline(RedactorOptions options)
+        IEntityDetector detector = new NoOpDetector();
+        if (options.Llm.Provider == "ollama")
         {
-            // Choose the detector: the local Ollama model if configured (checking it is reachable), else one that finds nothing.
-            IEntityDetector detector = new NoOpDetector();
-
-            if (options.Llm.Provider == "ollama")
+            try
             {
-                try
-                {
-                    var od = new OllamaDetector(OllamaDetector.CreateClient(options.Llm), options);
-                    od.CheckAvailableAsync(CancellationToken.None).Wait(); // Synchronous for CLI use
-                    detector = od;
-                    Console.WriteLine($"Model: {options.Llm.Model} at {options.Llm.Endpoint}");
-                }
-                catch (Exception ex)
-                {
-                    Console.Error.WriteLine(ex.Message);
-                    return (null, null);
-                }
+                var ollama = new OllamaDetector(OllamaDetector.CreateClient(options.Llm), options);
+                await ollama.CheckAvailableAsync(CancellationToken.None);
+                detector = ollama;
+                Console.WriteLine($"Model: {options.Llm.Model} at {options.Llm.Endpoint}");
             }
-
-            // Build the pipeline (read -> detect -> redact -> write)
-            using var ocr = options.Ocr.Enabled ? new RapidOcrEngine() : null;
-            var pipeline = new RedactionPipeline(
-                DocumentFormats.Readers(options, ocr),
-                DocumentFormats.Writers(options, ocr),
-                detector,
-                options);
-
-            return (detector, pipeline);
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine(ex.Message);
+                return null;
+            }
         }
+
+        var pipeline = new RedactionPipeline(DocumentFormats.Readers(options, ocr), DocumentFormats.Writers(options, ocr), detector, options);
+        return (detector, pipeline);
     }
 }

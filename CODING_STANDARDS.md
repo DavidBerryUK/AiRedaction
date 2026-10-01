@@ -30,17 +30,18 @@ This is a C#/.NET project that uses local AI (Ollama) for document redaction. Th
 
 ```
 src/
-├── AiDocumentRedactor.Cli/          # Console entry point, config, DI wiring
+├── AiDocumentRedactor.Cli/          # Command-line runner: Program.cs plus small helpers (config, paths, pipeline setup)
+├── AiDocumentRedactor.Eval/         # Evaluation command: scores models on the test corpus and writes a Markdown report
 ├── AiDocumentRedactor.App.ViewModels/ # UI logic (view-models, session, results). Plain net10.0, no UI-framework dependency
 ├── AiDocumentRedactor.App.Ui/       # Razor class library: all components, CSS and JS
 ├── AiDocumentRedactor.App.Web/      # Local ASP.NET Core (Blazor Server) host: loopback-only
 ├── AiDocumentRedactor.Core/         # Models, interfaces, pipeline orchestration
 ├── AiDocumentRedactor.Documents/    # text, docx, pdf readers/writers; page rendering and box redaction
-├── AiDocumentRedactor.Ocr/          # Local OCR (Tesseract/RapidOCR) behind IOcrEngine interface
+├── AiDocumentRedactor.Ocr/          # Local OCR (RapidOCR) behind the IOcrEngine interface
 └── AiDocumentRedactor.Detection/    # LlmDetector (Ollama), prompt builder, span locator/merger
 
 tests/        - Test projects
-documentation/ - Project documentation (SPECIFICATION.md, CODING_STANDARDS.md)
+documentation/ - Project documentation (SPECIFICATION.md); CODING_STANDARDS.md is in the repository root
 tools/        - Helper tools
 in/           - Input documents (for testing)
 out/          - Output documents and run reports
@@ -134,7 +135,7 @@ public class RedactorOptions { public string Model { get; set; } = ""; }
 ### Use collection initializers for arrays and lists:
 ```csharp
 // Good
-var types = [EntityTypes.Person, EntityTypes.Email];
+string[] types = [EntityTypes.Person, EntityTypes.Email];
 var list = new List<string> { "a", "b", "c" };
 
 // Bad
@@ -269,57 +270,9 @@ catch (Exception ex) { Console.Error.WriteLine($"Config error: {ex.Message}"); r
 // Extract to a dedicated class:
 public class ConfigurationLoader
 {
-    public static RedactorOptions LoadConfiguration(string[] args)
+    public static RedactorOptions? LoadConfiguration(string[] args)
     {
-        var configPath = GetArg(args, "--config") ?? "redactor.config.json";
-        try
-        {
-            return RedactorOptions.Load(configPath);
-        }
-        catch (Exception ex)
-        {
-            Console.Error.WriteLine($"Config error: {ex.Message}");
-            return null;
-        }
-    }
-}
-```
-
-### Class Naming Convention for Helpers
-- Helper classes should be named descriptively to indicate their purpose
-- Use suffixes like `Manager`, `Processor`, `Validator`, or `Builder` to clarify responsibilities
-- Keep helper classes focused on a single domain of functionality
-
-This approach improves:
-- Code readability and maintainability
-- Testability of individual components
-- Reusability across different parts of the application
-- Team collaboration by clearly separating concerns
-
-## Separation of Concerns
-
-### Single Responsibility Principle
-The `Program.cs` file should be kept minimal and focused. Complex logic should be extracted into dedicated helper classes that each handle a single responsibility:
-
-1. **Configuration Management**: Handle loading and validation of configuration settings
-2. **Input/Output Processing**: Manage directory validation, file enumeration, and path calculations
-3. **Pipeline Setup**: Configure the redaction pipeline components (readers, writers, detectors)
-4. **Execution Logic**: Handle the main processing loop and result reporting
-
-### Example Refactoring Approach
-```csharp
-// Instead of complex logic in Program.cs:
-var configPath = Arg("--config") ?? "redactor.config.json";
-RedactorOptions options;
-try { options = RedactorOptions.Load(configPath); }
-catch (Exception ex) { Console.Error.WriteLine($"Config error: {ex.Message}"); return 2; }
-
-// Extract to a dedicated class:
-public class ConfigurationLoader
-{
-    public static RedactorOptions LoadConfiguration(string[] args)
-    {
-        var configPath = GetArg(args, "--config") ?? "redactor.config.json";
+        var configPath = CommandLine.Arg(args, "--config") ?? "redactor.config.json";
         try
         {
             return RedactorOptions.Load(configPath);
