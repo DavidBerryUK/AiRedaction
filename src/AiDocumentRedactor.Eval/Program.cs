@@ -147,7 +147,7 @@ foreach (var model in wanted)
     foreach (var d in docs)
     {
         long p0 = detector.PromptTokens, o0 = detector.OutputTokens;
-        int x0 = detector.Discarded;
+        var x0 = detector.Discarded;
         var sw = Stopwatch.StartNew();
         RedactionResult result;
         try

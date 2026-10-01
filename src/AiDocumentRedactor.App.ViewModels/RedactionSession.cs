@@ -248,7 +248,7 @@ public class RedactionSession
             }
         }
         var seconds = chunks * perChunk;
-        string? warning = pages > options.Ui.WarnPages || chars > options.Ui.WarnChars
+        var warning = pages > options.Ui.WarnPages || chars > options.Ui.WarnChars
             ? $"Large document ({pages} page{(pages == 1 ? "" : "s")}, {chars:N0} characters). Redacting it with {planned.Count} model{(planned.Count == 1 ? "" : "s")} may take about {new RunEstimate(pages, chars, chunks, planned.Count, seconds, measured, null).TimeText}."
             : null;
         return new RunEstimate(pages, chars, chunks, planned.Count, seconds, measured, warning);

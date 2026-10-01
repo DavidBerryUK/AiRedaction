@@ -16,7 +16,7 @@ This is a C#/.NET project that uses local AI (Ollama) for document redaction. Th
 - **C# 12** with modern features (file-scoped namespaces, target-typed new, expression-bodied members, pattern matching)
 - **.NET 10** as the target framework (net10.0 for cross-platform compatibility)
 - Follow Microsoft's C# Coding Conventions:
-  - Use `var` for type inference when the type is obvious from the right-hand side of the assignment
+  - Use `var` for local variables (see *Use `var`* below)
   - Use `this.` prefix for member access when there's ambiguity, but not otherwise
   - Use `nameof()` operator instead of string literals when referencing identifiers
   - Use `string.Empty` instead of `""` for empty strings
@@ -69,8 +69,10 @@ out/          - Output documents and run reports
 
 ## Code Style
 
-### `var` or an explicit type
-Use `var` when the type is obvious from the right-hand side (`var list = new List<string>();`, `var doc = await reader.ReadAsync(...)`). Use the explicit type when it is not obvious (`string filePath = GetPath();`).
+### Use `var`
+Use `var` for local variables wherever the language allows it, whether or not the type is obvious from the right-hand side: `var filePath = GetPath();`, `var list = new List<string>();`, `var doc = await reader.ReadAsync(...)`. Use an explicit type only when `var` cannot work (for example a field, a parameter, `string? x = null;` that is assigned later, or a target-typed collection such as `string[] types = [...]`).
+
+**Enforced by tooling:** `.editorconfig` sets the rule. Run `dotnet format style --diagnostics IDE0007` to convert a file or the solution.
 
 ### Use expression-bodied members for simple methods:
 ```csharp

@@ -72,7 +72,7 @@ public class OllamaDetector(HttpClient http, RedactorOptions options) : IEntityD
         var spans = new List<DetectedEntity>();
         progress?.Report(new(RedactionStage.Chunking, $"Split into {chunks.Count} chunk(s)", 0, chunks.Count, 0, sw.Elapsed));
 
-        for (int i = 0; i < chunks.Count; i++)
+        for (var i = 0; i < chunks.Count; i++)
         {
             ct.ThrowIfCancellationRequested();
             var chunk = chunks[i];

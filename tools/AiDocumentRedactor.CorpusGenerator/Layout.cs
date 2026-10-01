@@ -18,7 +18,7 @@ public class Layout
     /// <summary>Lays out all blocks of a document into lines across pages.</summary>
     public Layout(DocDef d)
     {
-        float y = M + 14;
+        var y = M + 14;
         var page = 1;
         /// <summary>Wraps one block's text into lines, starting a new page when the current one is full.</summary>
         void Add(string text, bool heading)

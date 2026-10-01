@@ -16,7 +16,7 @@ foreach (var f in new[] { "text", "markdown", "csv", "json", "docx", "pdf", "sca
 }
 
 var jo = new JsonSerializerOptions { WriteIndented = true };
-int files = 0;
+var files = 0;
 // Builds an output path inside the corpus folder and counts the file.
 string Out(string folder, string name)
 {
