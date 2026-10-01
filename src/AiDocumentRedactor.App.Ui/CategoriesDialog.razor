@@ -1,0 +1,56 @@
+@* Categories dialog: switch each kind of sensitive data on or off, choose redact or flag, and turn pronouns on or off. The changes belong to
+   this browser's session only and are used by the next Redact; the config file is never written. *@
+@inject RedactionSession S
+
+<div class="overlay" @onclick="Close">
+    <div class="dialog" role="dialog" aria-modal="true" aria-label="Categories" @onclick:stopPropagation>
+        <div class="dialog-head">
+            <h2>Categories</h2>
+            <button class="btn icon" @onclick="Close" aria-label="Close">✕</button>
+        </div>
+        <p class="dialog-note">
+            Choose what the model looks for. <strong>Redact</strong> removes what is found; <strong>Flag</strong> lists it for review and leaves it in the text.
+            Changes apply to the next <em>Redact</em> and last for this session only. They are not saved to <code>redactor.config.json</code>.
+        </p>
+        <table class="models">
+            <thead><tr><th>On</th><th>Category</th><th>What it covers</th><th>When found</th></tr></thead>
+            <tbody>
+            @foreach (var c in S.Categories)
+            {
+                <tr class="@(c.Enabled ? "" : "unavail")">
+                    <td class="center">
+                        <label class="switch" title="@(c.Enabled ? "On: the model looks for this" : "Off: the model is not asked about this")">
+                            <input type="checkbox" role="switch" aria-label="@c.Type" checked="@c.Enabled" @onchange="e => S.SetCategoryEnabled(c.Type, (bool)(e.Value ?? false))" />
+                            <span class="slider"></span>
+                        </label>
+                    </td>
+                    <td><span class="chip type t-@c.Type">@c.Type</span></td>
+                    <td>@c.Description
+                        @if (c.Type == "GENDER")
+                        {
+                            <div class="sub"><label><input type="checkbox" checked="@c.RedactPronouns" disabled="@(!c.Enabled)" @onchange="e => S.SetPronouns((bool)(e.Value ?? false))" /> Also redact pronouns (he, him, his, she, her, hers)</label></div>
+                        }
+                    </td>
+                    <td>
+                        <select aria-label="Mode for @c.Type" disabled="@(!c.Enabled)" @onchange='e => S.SetCategoryMode(c.Type, e.Value?.ToString() ?? "redact")'>
+                            <option value="redact" selected="@(c.Mode != "flag")">Redact</option>
+                            <option value="flag" selected="@(c.Mode == "flag")">Flag only</option>
+                        </select>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+        <div class="dialog-foot">
+            <button class="btn" disabled="@(!S.CategoriesChanged)" title="Put every category back to the config file's settings" @onclick="S.ResetCategories">↺ Reset to config file</button>
+            <button class="btn primary" @onclick="Close">Done</button>
+        </div>
+    </div>
+</div>
+
+@code {
+    /// <summary>Called when the dialog should close.</summary>
+    [Parameter] public EventCallback OnClose { get; set; }
+    /// <summary>Closes the dialog.</summary>
+    Task Close() => OnClose.InvokeAsync();
+}

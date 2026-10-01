@@ -92,4 +92,25 @@ public class SessionTests : IDisposable
         Assert.Contains("Large document", est.Warning);
         Assert.Contains("5,000 characters", est.Warning);
     }
+
+    /// <summary>Category changes made in the UI reach the prompt for the next run, can be reset, and never touch the loaded config.</summary>
+    [Fact]
+    public async Task Category_changes_apply_to_the_next_run_and_stay_in_the_session()
+    {
+        var s = await Session();
+        Assert.Contains("- EMAIL:", s.Prompt().SystemPrompt);
+        s.SetCategoryEnabled("EMAIL", false);
+        Assert.DoesNotContain("- EMAIL:", s.Prompt().SystemPrompt);
+        Assert.True(s.CategoriesChanged);
+        Assert.True(options.Entities.GetValueOrDefault("EMAIL")?.Enabled ?? true);   // the loaded config is untouched
+
+        s.SetPronouns(true);
+        Assert.Contains("also gendered pronouns", s.Prompt().SystemPrompt);
+        s.SetCategoryMode("CONTEXTUAL", "flag");
+        Assert.Equal("flag", s.Categories.Single(c => c.Type == "CONTEXTUAL").Mode);
+
+        s.ResetCategories();
+        Assert.Contains("- EMAIL:", s.Prompt().SystemPrompt);
+        Assert.False(s.CategoriesChanged);
+    }
 }

@@ -24,47 +24,61 @@
   },
   "entities": {
     "PERSON": {
-      "enabled": true
+      "enabled": true,
+      "description": "names of people (full, partial, initials, nicknames), including titles with names"
     },
     "PHONE": {
-      "enabled": true
+      "enabled": true,
+      "description": "telephone numbers in any format"
     },
     "EMAIL": {
-      "enabled": true
+      "enabled": true,
+      "description": "email addresses"
     },
     "ADDRESS": {
-      "enabled": true
+      "enabled": true,
+      "description": "postal addresses, including partial addresses (street, town, postcode)"
     },
     "ID_NUMBER": {
-      "enabled": true
+      "enabled": true,
+      "description": "government, passport, licence, national insurance/social security, bank account, sort code, IBAN or card numbers"
     },
     "ONLINE_ID": {
-      "enabled": true
+      "enabled": true,
+      "description": "IP addresses, usernames, social media handles and URLs identifying a person"
     },
     "AGE": {
-      "enabled": true
+      "enabled": true,
+      "description": "a person's age, exact or approximate (e.g. '42', 'in her forties')"
     },
     "DATE_OF_BIRTH": {
-      "enabled": true
+      "enabled": true,
+      "description": "dates of birth"
     },
     "GENDER": {
       "enabled": true,
-      "redactPronouns": true
+      "redactPronouns": true,
+      "description": "explicit statements of gender: titles (Mr, Mrs, Ms, Miss, Mx), male/female, man/woman"
     },
     "COMPANY": {
-      "enabled": true
+      "enabled": true,
+      "description": "company, organisation and trading names and their abbreviations"
     },
     "COMPANY_ID": {
-      "enabled": true
+      "enabled": true,
+      "description": "company registration, VAT, tax or DUNS numbers"
     },
     "DOMAIN": {
-      "enabled": true
+      "enabled": true,
+      "description": "company domain names and web addresses"
     },
     "CONTEXTUAL": {
-      "enabled": true
+      "enabled": true,
+      "description": "indirect identifiers that single out a person or company: distinctive job titles or roles, schools, employers, unusual events, salaries tied to a person"
     },
     "SECRET": {
-      "enabled": true
+      "enabled": true,
+      "description": "passwords, API keys, access tokens, private keys, connection strings and other credentials"
     }
   },
   "redaction": {
@@ -88,7 +102,13 @@
     "numCtx": 8192,
     "keepAlive": "60m"
   },
-  "ocr": { "enabled": true, "renderDpi": 300, "imageDpi": 300, "minConfidence": 0.6, "verifyOutput": true },
+  "ocr": {
+    "enabled": true,
+    "renderDpi": 300,
+    "imageDpi": 300,
+    "minConfidence": 0.6,
+    "verifyOutput": true
+  },
   "pdf": {
     "renderDpi": 200,
     "boxPaddingPoints": 1.5,
