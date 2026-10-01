@@ -13,6 +13,9 @@ internal record TextSegment(Text Element, int Start, int Length);
 /// <summary>How a Word file is turned into plain text and mapped back. The reader and writer both use this so their offsets always agree.</summary>
 internal static class DocxModel
 {
+    /// <summary>A growable in-memory copy of the bytes (a MemoryStream over an array cannot grow when the package is saved).</summary>
+    public static MemoryStream ExpandableCopy(byte[] bytes) { var ms = new MemoryStream(); ms.Write(bytes); ms.Position = 0; return ms; }
+
     /// <summary>The roots of every part that carries text: body, headers, footers, footnotes, endnotes and comments.</summary>
     public static IEnumerable<OpenXmlElement> TextRoots(WordprocessingDocument doc)
     {
@@ -78,7 +81,7 @@ public class DocxDocumentReader : IDocumentReader
     /// <summary>Reads the file into text on a background thread.</summary>
     public Task<ExtractedDocument> ReadAsync(string path, CancellationToken ct) => Task.Run(() =>
     {
-        using var ms = new MemoryStream(File.ReadAllBytes(path));
+        using var ms = DocxModel.ExpandableCopy(File.ReadAllBytes(path));
         WordprocessingDocument doc;
         try { doc = WordprocessingDocument.Open(ms, true); }
         catch (Exception ex) when (ex is OpenXmlPackageException or InvalidDataException or FileFormatException or IOException)
@@ -124,7 +127,7 @@ public class DocxDocumentWriter : IDocumentWriter, IStreamDocumentWriter
     static byte[] Render(ExtractedDocument source, RedactionResult result)
     {
         var secrets = Secrets(result);
-        using var ms = new MemoryStream(File.ReadAllBytes(source.SourcePath));
+        using var ms = DocxModel.ExpandableCopy(File.ReadAllBytes(source.SourcePath));
         using (var doc = WordprocessingDocument.Open(ms, true))
         {
             DocxModel.AcceptChanges(doc);
@@ -185,7 +188,7 @@ public class DocxDocumentWriter : IDocumentWriter, IStreamDocumentWriter
 
         // Comment authors and times identify people.
         if (main.WordprocessingCommentsPart?.Comments is { } comments)
-            foreach (var c in comments.Descendants<Comment>()) { c.Author = "Reviewer"; c.Initials = "R"; c.DateTime = null; }
+            foreach (var c in comments.Descendants<Comment>()) { c.Author = "Reviewer"; c.Initials = "R"; c.Date = null; }
 
         // Image descriptions ("alt text") often describe who or what is shown.
         foreach (var root in DocxModel.TextRoots(doc))
