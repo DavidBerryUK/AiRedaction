@@ -7,12 +7,24 @@ using AiDocumentRedactor.Documents;
 using AiDocumentRedactor.Ocr;
 
 // Reads the value after a command-line flag, e.g. --config path. Returns null if the flag is absent.
-string? Arg(string name) { var i = Array.IndexOf(args, name); return i >= 0 && i + 1 < args.Length ? args[i + 1] : null; }
+string? Arg(string name)
+{
+    var i = Array.IndexOf(args, name);
+    return i >= 0 && i + 1 < args.Length ? args[i + 1] : null;
+}
+
 // 1. Load the JSON config (the single source of settings). Flags below override it.
 var configPath = Arg("--config") ?? "redactor.config.json";
 RedactorOptions options;
-try { options = RedactorOptions.Load(configPath); }
-catch (Exception ex) { Console.Error.WriteLine($"Config error: {ex.Message}"); return 2; }
+try
+{
+    options = RedactorOptions.Load(configPath);
+}
+catch (Exception ex)
+{
+    Console.Error.WriteLine($"Config error: {ex.Message}");
+    return 2;
+}
 
 if (Arg("--model") is { } modelOverride) options.Llm.Model = modelOverride;   // FR15
 // 2. Work out the input/output folders and refuse unsafe combinations (output inside input).
@@ -21,9 +33,17 @@ var output = Path.GetFullPath(Arg("--output") ?? options.Output.Directory);
 options.Output.Directory = output;
 var dryRun = args.Contains("--dry-run");
 
-if (!Directory.Exists(input)) { Console.Error.WriteLine($"Input directory not found: {input}"); return 2; }
+if (!Directory.Exists(input))
+{
+    Console.Error.WriteLine($"Input directory not found: {input}");
+    return 2;
+}
+
 if (output == input || output.StartsWith(input + Path.DirectorySeparatorChar))
-{ Console.Error.WriteLine("Output directory must not be the input directory or inside it."); return 2; }
+{
+    Console.Error.WriteLine("Output directory must not be the input directory or inside it.");
+    return 2;
+}
 
 // 3. Choose the detector: the local Ollama model if configured (checking it is reachable), else one that finds nothing.
 IEntityDetector detector = new NoOpDetector();
@@ -36,7 +56,11 @@ if (options.Llm.Provider == "ollama")
         detector = od;
         Console.WriteLine($"Model: {options.Llm.Model} at {options.Llm.Endpoint}");
     }
-    catch (Exception ex) { Console.Error.WriteLine(ex.Message); return 2; }
+    catch (Exception ex)
+    {
+        Console.Error.WriteLine(ex.Message);
+        return 2;
+    }
 }
 // 4. Build the pipeline (read -> detect -> redact -> write) and list the files to process.
 using var ocr = options.Ocr.Enabled ? new RapidOcrEngine() : null;   // local OCR for scanned PDFs and images

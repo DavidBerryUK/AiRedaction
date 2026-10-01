@@ -94,7 +94,9 @@ public bool IsDocument(string path) => path.EndsWith(".pdf", StringComparison.Or
 public string GetPath() => _cachedPath ??= Path.Combine(_config.OutputDir, "output.pdf");
 ```
 
-### Always use brackets for if statements:
+### Braces: Always on a new line
+All braces must be on a new line, never on the same line as the statement:
+
 ```csharp
 // Good
 if (condition)
@@ -102,9 +104,21 @@ if (condition)
     DoSomething();
 }
 
+foreach (var item in items)
+{
+    Process(item);
+}
+
+catch (Exception ex)
+{
+    Console.Error.WriteLine(ex.Message);
+    return 2;
+}
+
 // Bad
-if (condition)
-    DoSomething();
+if (condition) { DoSomething(); }
+
+catch (Exception ex) { Console.Error.WriteLine(ex.Message); return 2; }
 ```
 
 ### Use records for immutable data types:
