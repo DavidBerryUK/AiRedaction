@@ -140,7 +140,7 @@
       },
       {
         "name": "qwen3.6:27b",
-        "include": false
+        "include": true
       },
       {
         "name": "qwen3.5:4b",
@@ -148,11 +148,11 @@
       },
       {
         "name": "gemma4:31b",
-        "include": false
+        "include": true
       },
       {
         "name": "gpt-oss",
-        "include": false
+        "include": true
       }
     ]
   }
