@@ -120,6 +120,14 @@ public static class MarkdownReport
             return Row(f, any.Group, any.Present.ToString(), models.Select(m => scores.FirstOrDefault(s => s.File == f && s.Model == m) is { } s ? (s.Present == 0 ? "–" : P((double)s.Caught / s.Present)) + $" · {s.Present - s.Caught} · {s.FalsePositives.Count + s.PreserveBroken.Count}" : "–"));
         }));
 
+        sb.AppendLine("## Timings").AppendLine();
+        sb.AppendLine("Seconds for each document and model. The first figure is the model finding the sensitive items" + (run.WroteOutputs ? "; the second is writing and verifying the redacted file (PDF render, OCR re-read of scans, and so on)" : "") + ". Models are run one after another, every document with one model before the next model is loaded, so a model is loaded into memory once.").AppendLine();
+        string Time(DocScore? s) => s is null ? "–" : s.DetectSeconds.ToString("0.0", CultureInfo.InvariantCulture) + (s.OutputOk is null ? "" : " + " + s.WriteSeconds.ToString("0.0", CultureInfo.InvariantCulture));
+        var timeRows = files.Select(f => Row(f, models.Select(m => Time(scores.FirstOrDefault(s => s.File == f && s.Model == m))))).ToList();
+        timeRows.Add(Row("**Total**", models.Select(m => $"**{by[m].Sum(s => s.DetectSeconds):0.0}" + (run.WroteOutputs ? $" + {by[m].Sum(s => s.WriteSeconds):0.0}" : "") + "**")));
+        timeRows.Add(Row("Average per document", models.Select(m => by[m].Count == 0 ? "–" : $"{by[m].Average(s => s.DetectSeconds):0.0}")));
+        Table(sb, ["Document", .. models], timeRows);
+
         if (run.ShowText)
         {
             sb.AppendLine("## What was missed and over-redacted").AppendLine("*Contains text from the documents.*").AppendLine();
@@ -249,6 +257,7 @@ public static class MarkdownReport
             s.TypeCorrect,
             s.LostToExtraction,
             s.DetectSeconds,
+            s.WriteSeconds,
             s.PromptTokens,
             s.OutputTokens,
             s.Discarded,

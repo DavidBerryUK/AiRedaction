@@ -171,4 +171,42 @@ public class DetectorTests
         o.Entities["LOCATION"] = new EntityOptions { Mode = "redact" };
         Assert.Equal("redact", o.ModeOf("LOCATION"));
     }
+
+    /// <summary>A word the model labels two ways, each with a context found in the text, is redacted only where its contexts say (a person called Paris and the city).</summary>
+    [Fact]
+    public async Task A_word_used_two_ways_is_placed_by_its_context()
+    {
+        const string text = "Paris met Jane in Paris. Later Paris left.";
+        var json = "{\"entities\":[" +
+                   "{\"type\":\"PERSON\",\"text\":\"Paris\",\"context\":\"Paris met Jane\"}," +
+                   "{\"type\":\"LOCATION\",\"text\":\"Paris\",\"context\":\"Jane in Paris.\"}," +
+                   "{\"type\":\"PERSON\",\"text\":\"Paris\",\"context\":\"Later Paris left\"}," +
+                   "{\"type\":\"PERSON\",\"text\":\"Jane\",\"context\":\"met Jane in\"}]}";
+        var spans = await Make(json).DetectAsync(text, null, default);
+        var paris = spans.Where(s => text.Substring(s.Start, s.Length) == "Paris").OrderBy(s => s.Start).ToList();
+        Assert.Equal(3, paris.Count);
+        Assert.Equal(["PERSON", "LOCATION", "PERSON"], paris.Select(s => s.Type));
+        Assert.Equal("[REDACTED:PERSON] met [REDACTED:PERSON] in Paris. Later [REDACTED:PERSON] left.", Redactor.Apply(text, spans, "[REDACTED:{type}]").RedactedText);
+    }
+
+    /// <summary>Without usable contexts the old behaviour holds: the first label wins and every occurrence is redacted.</summary>
+    [Fact]
+    public async Task Without_context_every_occurrence_is_redacted_as_before()
+    {
+        const string text = "Paris met Jane in Paris.";
+        var spans = await Make("{\"entities\":[{\"type\":\"PERSON\",\"text\":\"Paris\"},{\"type\":\"LOCATION\",\"text\":\"Paris\"}]}").DetectAsync(text, null, default);
+        Assert.Equal(2, spans.Count(s => s.Type == "PERSON"));
+    }
+
+    /// <summary>A place inside an address is part of the address: the flagged LOCATION is dropped where the redacted ADDRESS covers it.</summary>
+    [Fact]
+    public async Task A_place_inside_an_address_is_not_a_separate_location()
+    {
+        const string text = "Write to 22 Wharf Road, Leeds LS1 4ZZ. We also have an office in Leeds.";
+        var json = "{\"entities\":[{\"type\":\"ADDRESS\",\"text\":\"22 Wharf Road, Leeds LS1 4ZZ\",\"context\":\"Write to 22 Wharf Road, Leeds LS1 4ZZ.\"},{\"type\":\"LOCATION\",\"text\":\"Leeds\",\"context\":\"an office in Leeds.\"}]}";
+        var result = Redactor.Apply(text, await Make(json).DetectAsync(text, null, default), "[REDACTED:{type}]");
+        Assert.StartsWith("Write to [REDACTED:ADDRESS].", result.RedactedText);
+        Assert.Contains(result.Edits, e => e.Type == "LOCATION" && e.Status == EditStatus.Flagged && e.OriginalText == "Leeds");
+        Assert.Single(result.Edits, e => e.Type == "LOCATION");
+    }
 }

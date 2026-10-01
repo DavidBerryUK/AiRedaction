@@ -24,7 +24,9 @@ public class DocScore
     /// <summary>Per edit category: edits made and how many were correct.</summary>
     public Dictionary<string, (int Edits, int Correct)> EditsByType = new();
     public int MustPreserve; public List<string> PreserveBroken = [];
-    public double DetectSeconds; public long PromptTokens, OutputTokens; public int Discarded;
+    /// <summary>Seconds the model took to find the sensitive items, and seconds to write and verify the redacted file (0 when files were not written).</summary>
+    public double DetectSeconds, WriteSeconds;
+    public long PromptTokens, OutputTokens; public int Discarded;
     /// <summary>Whether the redacted file was written and passed its own safety checks (null = not tried).</summary>
     public bool? OutputOk; public string? OutputError;
 }

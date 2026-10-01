@@ -85,6 +85,7 @@ The report is a Markdown file you can open in any viewer or paste into a documen
 - **Headline findings:** plain-English highlights generated from the numbers.
 - **Recall by category** and **by document format**, and **precision by category**.
 - **Per document:** recall, misses and over-redactions for each file and model.
+- **Timings:** seconds for every document and model (model time, plus write-and-verify time unless `--no-write`), with totals and averages. The program runs every document with one model before loading the next, so each model is loaded once.
 - **Output safety:** whether each redacted file was written and passed the tool's own checks (no text layer in PDFs, nothing recoverable in Word files, OCR re-read of scans). Not present when `--no-write` is used.
 - **Settings used** and **how to read this, and its limits**.
 

@@ -144,6 +144,7 @@ foreach (var model in wanted)
     var detector = new OllamaDetector(OllamaDetector.CreateClient(o.Llm), o);
     await detector.CheckAvailableAsync(CancellationToken.None);
     Console.WriteLine($"\n=== {model} ===");
+    var modelClock = Stopwatch.StartNew();   // every document is run with this model before the next model is loaded
     foreach (var d in docs)
     {
         long p0 = detector.PromptTokens, o0 = detector.OutputTokens;
@@ -171,6 +172,7 @@ foreach (var model in wanted)
         if (write && writers.FirstOrDefault(w => w.CanWrite(d.Doc)) is { } writer)
         {
             var tmp = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString("N") + Path.GetExtension(d.Path));
+            var writeClock = Stopwatch.StartNew();
             try
             {
                 await writer.WriteAsync(d.Doc, result, tmp, CancellationToken.None);
@@ -181,11 +183,16 @@ foreach (var model in wanted)
                 score.OutputOk = false;
                 score.OutputError = ex.Message;
             }
-            finally { File.Delete(tmp); }
+            finally
+            {
+                File.Delete(tmp);
+                score.WriteSeconds = writeClock.Elapsed.TotalSeconds;
+            }
         }
         scores.Add(score);
-        Console.WriteLine($"  {d.Name}: caught {score.Caught}/{score.Present}, {score.FalsePositives.Count} over, {score.DetectSeconds:0.0}s{(score.OutputOk == false ? " (output refused)" : "")}");
+        Console.WriteLine($"  {d.Name}: caught {score.Caught}/{score.Present}, {score.FalsePositives.Count} over, {score.DetectSeconds:0.0}s{(score.OutputOk is null ? "" : $" + {score.WriteSeconds:0.0}s writing")}{(score.OutputOk == false ? " (output refused)" : "")}");
     }
+    Console.WriteLine($"  {model} finished in {modelClock.Elapsed:hh\\:mm\\:ss}");
     Save();
 }
 Console.WriteLine($"\nReport: {outPath}");

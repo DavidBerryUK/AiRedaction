@@ -40,6 +40,8 @@ public static class PromptBuilder
         sb.AppendLine();
         sb.AppendLine("Rules:");
         sb.AppendLine("- Copy each item EXACTLY, character for character, as it appears in the text. Never correct, shorten or rewrite it.");
+        sb.AppendLine("- For each item also give \"context\": the words around it, copied exactly from the text (about 3 to 6 words before and after, kept inside one line), so the same word used differently elsewhere can be told apart.");
+        sb.AppendLine("- If the same word is used in different ways in the text (for example once as a PERSON and once as a LOCATION), list it again for each way, each with its own context.");
         sb.AppendLine("- Prefer recall: if unsure whether something identifies a person or company, include it.");
         sb.AppendLine("- Ignore existing [REDACTED:...] placeholders.");
         if (!pronouns && EnabledTypes(o).Contains(EntityTypes.Gender))
@@ -50,7 +52,7 @@ public static class PromptBuilder
         if (EnabledTypes(o).Contains(EntityTypes.Address))
         {
             sb.AppendLine(EnabledTypes(o).Contains(EntityTypes.Location)
-                ? "- A city, town, region or country on its own is LOCATION, not ADDRESS. ADDRESS needs a street, building or postcode."
+                ? "- A city, town, region or country on its own is LOCATION, not ADDRESS. ADDRESS needs a street, building or postcode. Do not return LOCATION for a place that is part of an address: return the whole address as ADDRESS."
                 : "- Do not return the name of a city, town, region or country on its own: only addresses that include a street, building or postcode.");
         }
 
@@ -87,9 +89,12 @@ public static class PromptBuilder
                         },
                         text = new {
                             type = "string"
+                        },
+                        context = new {
+                            type = "string"
                         }
                     },
-                    required = new[] { "type", "text" },
+                    required = new[] { "type", "text", "context" },
                 },
             },
         },

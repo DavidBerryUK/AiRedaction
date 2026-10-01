@@ -1,4 +1,4 @@
-using System.Net.Http.Json;
+﻿using System.Net.Http.Json;
 using System.Text.Json;
 using AiDocumentRedactor.Core;
 
@@ -29,7 +29,10 @@ public class OllamaDetector(HttpClient http, RedactorOptions options) : IEntityD
     }
 
     /// <summary>One thing the model found: its category and the exact text.</summary>
-    public record Item(string Type, string Text);
+    public record Item(string Type, string Text, string? Context = null);
+
+    /// <summary>One accepted answer: its text and category, and where it sits if the model's context quote was found in the text (otherwise empty).</summary>
+    record Use(string Text, string Type, List<DetectedEntity> Located);
 
     /// <summary>Creates the HTTP client for the model server; refuses a non-local address unless the config allows it.</summary>
     public static HttpClient CreateClient(LlmOptions llm)
@@ -67,9 +70,11 @@ public class OllamaDetector(HttpClient http, RedactorOptions options) : IEntityD
     {
         var sw = System.Diagnostics.Stopwatch.StartNew();
         var chunks = Chunker.Split(text, options.Llm.ChunkChars, options.Llm.ChunkOverlapChars);
-        var found = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase); // text -> type
+        var found = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase); // text -> type, for the live view while chunks are read
+        var uses = new List<Use>();
         var allow = new HashSet<string>(options.CustomTerms.Allow, StringComparer.OrdinalIgnoreCase);
         var spans = new List<DetectedEntity>();
+        var liveCount = 0;   // items shown so far in the live view (the final list is built after every chunk is read)
         progress?.Report(new(RedactionStage.Chunking, $"Split into {chunks.Count} chunk(s)", 0, chunks.Count, 0, sw.Elapsed));
 
         for (var i = 0; i < chunks.Count; i++)
@@ -98,10 +103,12 @@ public class OllamaDetector(HttpClient http, RedactorOptions options) : IEntityD
                     outcomes.Add(new(it.Type, it.Text, "discarded: not found word-for-word in the text", false));
                     continue;
                 }
+                var located = LocateInContext(chunk.Text, t, it.Context, it.Type, chunk.Start);
+                uses.Add(new Use(t, it.Type, located));
                 if (found.TryAdd(t, it.Type))
                 {
-                    fresh.AddRange(Locate(chunk.Text, t, it.Type, chunk.Start));
-                    outcomes.Add(new(it.Type, it.Text, "kept", true));
+                    fresh.AddRange(located.Count > 0 ? located : Locate(chunk.Text, t, it.Type, chunk.Start));
+                    outcomes.Add(new(it.Type, it.Text, located.Count > 0 ? "kept (placed using its context)" : "kept", true));
                 }
                 else
                 {
@@ -110,12 +117,30 @@ public class OllamaDetector(HttpClient http, RedactorOptions options) : IEntityD
             }
             calls.Add(new ModelCall(i + 1, chunk.Start, chunk.Text.Length, ask.UserMessage, ask.RawReply, outcomes,
                 ask.PromptTokens, ask.OutputTokens, ask.Elapsed, ask.Attempts));
-            spans.AddRange(fresh);
-            progress?.Report(new(RedactionStage.Detecting, $"Detecting (chunk {i + 1} of {chunks.Count})", i + 1, chunks.Count, spans.Count, sw.Elapsed, fresh));
+            liveCount += fresh.Count;
+            progress?.Report(new(RedactionStage.Detecting, $"Detecting (chunk {i + 1} of {chunks.Count})", i + 1, chunks.Count, liveCount, sw.Elapsed, fresh));
         }
 
-        progress?.Report(new(RedactionStage.Locating, $"Locating and propagating {found.Count} item(s)", 0, 0, spans.Count, sw.Elapsed));
-        foreach (var (t, type) in found)            // propagate to every occurrence in the whole document
+        progress?.Report(new(RedactionStage.Locating, $"Locating and propagating {found.Count} item(s)", 0, 0, liveCount, sw.Elapsed));
+        // A word the model labelled in more than one way, each time with a context that was found in the text (a person called Paris and the city),
+        // is placed only where its contexts say. Any other word is propagated to every occurrence in the document, as before.
+        var ambiguous = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        foreach (var g in uses.GroupBy(u => u.Text, StringComparer.OrdinalIgnoreCase))
+        {
+            if (g.Select(u => u.Type).Distinct().Count() > 1 && g.All(u => u.Located.Count > 0))
+            {
+                ambiguous.Add(g.Key);
+                spans.AddRange(g.SelectMany(u => u.Located));
+            }
+        }
+
+        found.Clear();
+        foreach (var u in uses.Where(u => !ambiguous.Contains(u.Text)))
+        {
+            found.TryAdd(u.Text, u.Type);
+        }
+
+        foreach (var (t, type) in found)
         {
             spans.AddRange(Locate(text, t, type, 0));
         }
@@ -188,6 +213,27 @@ public class OllamaDetector(HttpClient http, RedactorOptions options) : IEntityD
         }
     }
 
+    /// <summary>Finds where an answer sits using the context quote the model gave with it: every place the quote occurs in the chunk, and the answer
+    /// within it. Empty if there is no quote, the quote is not in the text word for word, or the answer is not inside it.</summary>
+    public static List<DetectedEntity> LocateInContext(string chunkText, string answer, string? context, string type, int offset)
+    {
+        var result = new List<DetectedEntity>();
+        var c = context?.Trim();
+        if (string.IsNullOrEmpty(c) || !c.Contains(answer, StringComparison.Ordinal))
+        {
+            return result;
+        }
+
+        var inner = System.Text.RegularExpressions.Regex.Match(c, $@"(?<![\p{{L}}\p{{N}}]){System.Text.RegularExpressions.Regex.Escape(answer)}(?![\p{{L}}\p{{N}}])");
+        var at = inner.Success ? inner.Index : c.IndexOf(answer, StringComparison.Ordinal);
+        for (var i = chunkText.IndexOf(c, StringComparison.Ordinal); i >= 0; i = chunkText.IndexOf(c, i + c.Length, StringComparison.Ordinal))
+        {
+            result.Add(new DetectedEntity(type, offset + i + at, answer.Length, 1.0, "llm"));
+        }
+
+        return result;
+    }
+
     /// <summary>Finds whole-word, same-capitalisation occurrences of a variant (so "Kowalczyk" does not match inside another word).</summary>
     public static IEnumerable<DetectedEntity> LocateWord(string text, string needle, string type, string source) =>
         System.Text.RegularExpressions.Regex.Matches(text, $@"(?<![\p{{L}}\p{{N}}]){System.Text.RegularExpressions.Regex.Escape(needle)}(?![\p{{L}}\p{{N}}])")
@@ -258,7 +304,8 @@ public class OllamaDetector(HttpClient http, RedactorOptions options) : IEntityD
     {
         using var doc = JsonDocument.Parse(content);
         return doc.RootElement.GetProperty("entities").EnumerateArray()
-            .Select(e => new Item(e.GetProperty("type").GetString() ?? EntityTypes.Other, e.GetProperty("text").GetString() ?? string.Empty))
+            .Select(e => new Item(e.GetProperty("type").GetString() ?? EntityTypes.Other, e.GetProperty("text").GetString() ?? string.Empty,
+                e.TryGetProperty("context", out var cx) && cx.ValueKind == JsonValueKind.String ? cx.GetString() : null))
             .ToList();
     }
 }
