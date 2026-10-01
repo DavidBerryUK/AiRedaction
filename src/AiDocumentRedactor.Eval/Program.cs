@@ -136,17 +136,22 @@ void Save()
     File.WriteAllText(Path.ChangeExtension(outPath, ".json"), MarkdownReport.Json(run, scores));
 }
 
+var modelNumber = 0;
 foreach (var model in wanted)
 {
+    modelNumber++;
     modelInfos.Add((model, installed.First(i => i.Name == model)));
     var o = JsonSerializer.Deserialize<RedactorOptions>(JsonSerializer.Serialize(options, RedactorOptions.JsonOptions), RedactorOptions.JsonOptions)!;
     o.Llm.Model = model;
     var detector = new OllamaDetector(OllamaDetector.CreateClient(o.Llm), o);
     await detector.CheckAvailableAsync(CancellationToken.None);
-    Console.WriteLine($"\n=== {model} ===");
+    Console.WriteLine($"\n=== Model {modelNumber} of {wanted.Length}: {model} ===");
     var modelClock = Stopwatch.StartNew();   // every document is run with this model before the next model is loaded
+    var docNumber = 0;
     foreach (var d in docs)
     {
+        docNumber++;
+        Console.Write($"  [model {modelNumber}/{wanted.Length} {model}] document {docNumber} of {docs.Count()}: {d.Name} ... ");
         long p0 = detector.PromptTokens, o0 = detector.OutputTokens;
         var x0 = detector.Discarded;
         var sw = Stopwatch.StartNew();
@@ -158,7 +163,7 @@ foreach (var model in wanted)
         catch (Exception ex)
         {
             skipped.Add($"`{d.Name}` with {model}: {ex.Message}");
-            Console.WriteLine($"  {d.Name}: FAILED {ex.Message}");
+            Console.WriteLine($"FAILED {ex.Message}");
             continue;
         }
         sw.Stop();
@@ -190,7 +195,7 @@ foreach (var model in wanted)
             }
         }
         scores.Add(score);
-        Console.WriteLine($"  {d.Name}: caught {score.Caught}/{score.Present}, {score.FalsePositives.Count} over, {score.DetectSeconds:0.0}s{(score.OutputOk is null ? "" : $" + {score.WriteSeconds:0.0}s writing")}{(score.OutputOk == false ? " (output refused)" : "")}");
+        Console.WriteLine($"caught {score.Caught}/{score.Present}, {score.FalsePositives.Count} over, {score.DetectSeconds:0.0}s{(score.OutputOk is null ? "" : $" + {score.WriteSeconds:0.0}s writing")}{(score.OutputOk == false ? " (output refused)" : "")}");
     }
     Console.WriteLine($"  {model} finished in {modelClock.Elapsed:hh\\:mm\\:ss}");
     Save();

@@ -76,7 +76,14 @@ public static class MarkdownReport
                     $"{t.Leaked} of {t.Present}", $"{t.Edits - t.TruePositives} of {t.Edits}", t.PreserveTotal == 0 ? "–" : $"{t.PreserveBroken} of {t.PreserveTotal}",
                     TimeSpan.FromSeconds(t.Docs == 0 ? 0 : t.Seconds / t.Docs).ToString(@"m\:ss\.f"), t.TokensPerSecond.ToString("0", CultureInfo.InvariantCulture) };
             }));
-        sb.AppendLine("*Recall* is the share of sensitive items the model removed (a miss is a leak). *Precision* is the share of its redactions that were correct (the rest are over-redaction). *F1* balances the two. Recall matters most for a redaction tool.").AppendLine();
+        sb.AppendLine("### What the columns mean").AppendLine();
+        sb.AppendLine("- **Recall** answers: *of everything that should have been hidden, how much did the model hide?* If a document has 100 sensitive items and the model hides 95, recall is 95%. The other 5 are leaks, so for a redaction tool this is the most important number. It is strict: hiding only the surname of \"Jane Smith\" leaves the first name visible and counts as a miss.");
+        sb.AppendLine("- **Precision** answers: *of everything the model hid, how much really needed hiding?* If it hides 100 things and 90 were sensitive, precision is 90%. The other 10 are over-redactions: harmless, but they make the document harder to read.");
+        sb.AppendLine("- **F1** is a single score that blends recall and precision. It is high only when both are high, so a model cannot score well by hiding everything (perfect recall, poor precision) or by hiding almost nothing (high precision, poor recall). Use it for a quick ranking, but look at recall first.");
+        sb.AppendLine("- **Sensitive items missed** is the count behind recall (\"3 of 120\" means 3 sensitive items were left visible).");
+        sb.AppendLine("- **Over-redactions** is the count behind precision (\"8 of 130\" means 8 of the 130 redactions covered text that did not need hiding).");
+        sb.AppendLine("- **Must-keep items damaged** (also called *preserved*) checks the opposite risk. Each test document contains ordinary text that must survive, such as dates, job titles, amounts, product names and general places. This counts how many of those were wrongly removed. \"0 of 40\" is ideal, and each one damaged is information the reader needed that is now gone.");
+        sb.AppendLine("- **Time per document** is the average wall-clock time to redact one document, and **Output tokens/s** is how fast the model writes its answer (a hardware and model-size measure).").AppendLine();
 
         Findings(sb, run, models, tot, by);
 
