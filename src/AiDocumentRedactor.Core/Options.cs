@@ -93,6 +93,10 @@ public class OutputOptions
 public class EntityOptions
 {
     public bool Enabled { get; set; } = true;
+    /// <summary>"redact" (default) removes what is found; "flag" lists it for review but leaves it in the text.</summary>
+    public string Mode { get; set; } = "redact";
+    /// <summary>GENDER only: also redact gendered pronouns (he, she, him, her, his, hers). Off by default because it makes text hard to read.</summary>
+    public bool RedactPronouns { get; set; }
     /// <summary>Overrides the category's definition in the model prompt.</summary>
     public string? Description { get; set; }
 }
@@ -127,6 +131,8 @@ public class LlmOptions
     public string KeepAlive { get; set; } = "60m";
     /// <summary>Approximate size of each piece of text sent to the model.</summary>
     public int ChunkChars { get; set; } = 4800;
+    /// <summary>How much of the end of one piece is repeated at the start of the next, so a name split across a boundary is still seen whole.</summary>
+    public int ChunkOverlapChars { get; set; } = 400;
     /// <summary>Give up on a model call after this long.</summary>
     public int TimeoutSeconds { get; set; } = 300;
 }
@@ -162,6 +168,8 @@ public class ConfidenceOptions
 {
     /// <summary>Models whose results are compared with the primary model to grade each edit's confidence.</summary>
     public string[] Models { get; set; } = [];
+    /// <summary>Highest level a category can reach, for categories the models are known to be less reliable on (e.g. CONTEXTUAL: Medium).</summary>
+    public Dictionary<string, string> CategoryCaps { get; set; } = new() { ["CONTEXTUAL"] = "Medium" };
 }
 
 /// <summary>Web UI settings.</summary>
@@ -171,6 +179,10 @@ public class UiOptions
     public int MaxResultsPerDocument { get; set; } = 8;
     /// <summary>Show the Prompt button (what is sent to the model and what came back). Turn off for client sessions.</summary>
     public bool PromptInspector { get; set; } = true;
+    /// <summary>Warn before redacting a document with more pages than this.</summary>
+    public int WarnPages { get; set; } = 50;
+    /// <summary>Warn before redacting a document with more characters of text than this.</summary>
+    public int WarnChars { get; set; } = 200_000;
 }
 
 /// <summary>User-supplied terms that override the model.</summary>

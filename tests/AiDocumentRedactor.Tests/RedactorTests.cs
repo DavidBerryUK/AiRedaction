@@ -44,4 +44,17 @@ public class RedactorTests
         var r = Redactor.Apply("AABB", [E("PERSON", 0, 2), E("COMPANY", 2, 2)], T);
         Assert.Equal("[REDACTED:PERSON][REDACTED:COMPANY]", r.RedactedText);
     }
+
+    /// <summary>A flagged span stays in the text, is recorded as a Flagged edit with its position, and is dropped if a real redaction covers it.</summary>
+    [Fact]
+    public void Flagged_spans_stay_in_the_text_and_are_recorded()
+    {
+        var r = Redactor.Apply("Ann is head of compliance today", [new DetectedEntity("PERSON", 0, 3, 1, "t"), new DetectedEntity("CONTEXTUAL", 7, 18, 1, "t", Flag: true)], T);
+        Assert.Equal("[REDACTED:PERSON] is head of compliance today", r.RedactedText);
+        var flagged = Assert.Single(r.Edits, e => e.Status == EditStatus.Flagged);
+        Assert.Equal("head of compliance", r.RedactedText.Substring(flagged.RedactedStart, flagged.RedactedLength));
+
+        var covered = Redactor.Apply("Ann Lee says", [new DetectedEntity("PERSON", 0, 7, 1, "t"), new DetectedEntity("CONTEXTUAL", 4, 3, 1, "t", Flag: true)], T);
+        Assert.DoesNotContain(covered.Edits, e => e.Status == EditStatus.Flagged);
+    }
 }

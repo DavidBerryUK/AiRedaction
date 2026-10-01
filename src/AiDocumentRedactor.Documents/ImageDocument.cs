@@ -61,8 +61,7 @@ public class ImageDocumentWriter(PdfOptions options, IOcrEngine? ocr = null, Ocr
             using (var black = new SKPaint { Color = SKColors.Black, Style = SKPaintStyle.Fill, IsAntialias = false })
                 foreach (var w in PdfDocumentWriter.WordsToCover(source, result))
                 {
-                    var (l, t, r, b) = PdfDocumentWriter.BoxInPoints(w, ph, options, boxIncludesDescenders: true);   // OCR boxes already cover the line height
-                    canvas.DrawRect(SKRect.Create((float)(l * sx), (float)(t * sy), (float)((r - l) * sx), (float)((b - t) * sy)), black);
+                    PdfDocumentWriter.PaintWord(canvas, black, w, ph, sx, sy, options, fromOcr: true);   // tilted outline for OCR words
                 }
             var png = Path.GetExtension(source.SourcePath).Equals(".png", StringComparison.OrdinalIgnoreCase);
             using var img = SKImage.FromBitmap(bmp);

@@ -16,4 +16,4 @@ public record ModelResult(Guid Id, string Model, ModelInfo? Info, RedactionResul
 }
 
 /// <summary>A row in the bookmark list. Built from the REDACTED text, so it never contains sensitive text.</summary>
-public record Bookmark(int Id, string Type, string Snippet, int Line, int OriginalStart, int RedactedStart, EditConfidence Confidence);
+public record Bookmark(int Id, string Type, string Snippet, int Line, int OriginalStart, int RedactedStart, EditConfidence Confidence, bool Flagged = false);

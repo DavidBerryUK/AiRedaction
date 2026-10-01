@@ -49,7 +49,7 @@ public class OllamaDetector(HttpClient http, RedactorOptions options) : IEntityD
     public async Task<IReadOnlyList<DetectedEntity>> DetectAsync(string text, IProgress<RedactionProgress>? progress, CancellationToken ct)
     {
         var sw = System.Diagnostics.Stopwatch.StartNew();
-        var chunks = Chunker.Split(text, options.Llm.ChunkChars);
+        var chunks = Chunker.Split(text, options.Llm.ChunkChars, options.Llm.ChunkOverlapChars);
         var found = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase); // text -> type
         var allow = new HashSet<string>(options.CustomTerms.Allow, StringComparer.OrdinalIgnoreCase);
         var spans = new List<DetectedEntity>();
@@ -81,10 +81,52 @@ public class OllamaDetector(HttpClient http, RedactorOptions options) : IEntityD
         progress?.Report(new(RedactionStage.Locating, $"Locating and propagating {found.Count} item(s)", 0, 0, spans.Count, sw.Elapsed));
         foreach (var (t, type) in found)            // propagate to every occurrence in the whole document
             spans.AddRange(Locate(text, t, type, 0));
+        foreach (var (variant, type) in Variants(found, text, allow))   // shorter forms: a surname alone, a company without "Ltd"
+            spans.AddRange(LocateWord(text, variant, type, "llm-variant"));
         foreach (var term in options.CustomTerms.Redact.Where(x => x.Length > 1))
             spans.AddRange(Locate(text, term, EntityTypes.Other, 0, "custom-list"));
-        return spans.DistinctBy(s => (s.Start, s.Length)).ToList();
+        // Categories set to "flag" are listed for review but left in the text.
+        var flagTypes = options.Entities.Where(kv => kv.Value.Mode == "flag").Select(kv => kv.Key).ToHashSet();
+        return spans.Select(s => flagTypes.Contains(s.Type) ? s with { Flag = true } : s).DistinctBy(s => (s.Start, s.Length)).ToList();
     }
+
+    static readonly HashSet<string> Titles = new(StringComparer.OrdinalIgnoreCase) { "mr", "mrs", "ms", "miss", "mx", "dr", "prof", "sir", "madam", "lord", "lady" };
+    static readonly HashSet<string> LegalSuffixes = new(StringComparer.OrdinalIgnoreCase) { "ltd", "limited", "plc", "llc", "llp", "inc", "corp", "corporation", "co", "gmbh", "ag", "as", "bv", "sa", "pty" };
+
+    /// <summary>Shorter forms of what the model found, because people and companies are usually named in full once and then briefly:
+    /// each part of a full name (a surname alone), and a company without its legal ending. A part is skipped if the same word also
+    /// appears in lower case in the document (so a name like "Will Smith" does not redact every "will"), and variants are matched
+    /// as whole words with the same capitalisation.</summary>
+    public static IEnumerable<(string Text, string Type)> Variants(IEnumerable<KeyValuePair<string, string>> found, string text, ISet<string> allow)
+    {
+        var known = new HashSet<string>(found.Select(f => f.Key), StringComparer.OrdinalIgnoreCase);
+        bool CommonWord(string w) => System.Text.RegularExpressions.Regex.IsMatch(text, $@"(?<![\p{{L}}\p{{N}}]){System.Text.RegularExpressions.Regex.Escape(w.ToLowerInvariant())}(?![\p{{L}}\p{{N}}])");
+        foreach (var (t, type) in found.Select(f => (f.Key, f.Value)))
+        {
+            var words = t.Split([' ', '\t'], StringSplitOptions.RemoveEmptyEntries).Select(w => w.Trim(',', '.', ';')).Where(w => w.Length > 0).ToList();
+            if (type == EntityTypes.Person)
+            {
+                var name = words.Where(w => !Titles.Contains(w)).ToList();
+                if (name.Count < 2) continue;
+                foreach (var part in name.Where(w => w.Length >= 3 && char.IsUpper(w[0]) && w.All(c => char.IsLetter(c) || c is '-' or '\'')))
+                    if (!known.Contains(part) && !allow.Contains(part) && !CommonWord(part)) { known.Add(part); yield return (part, type); }
+            }
+            else if (type == EntityTypes.Company)
+            {
+                var core = words.ToList();
+                while (core.Count > 1 && LegalSuffixes.Contains(core[^1])) core.RemoveAt(core.Count - 1);
+                var coreText = string.Join(' ', core);
+                if (core.Count < words.Count && coreText.Length >= 4 && !known.Contains(coreText) && !allow.Contains(coreText)) { known.Add(coreText); yield return (coreText, type); }
+                if (core.Count >= 2 && core[0].Length >= 5 && char.IsUpper(core[0][0]) && !known.Contains(core[0]) && !allow.Contains(core[0]) && !CommonWord(core[0]))
+                { known.Add(core[0]); yield return (core[0], type); }
+            }
+        }
+    }
+
+    /// <summary>Finds whole-word, same-capitalisation occurrences of a variant (so "Kowalczyk" does not match inside another word).</summary>
+    public static IEnumerable<DetectedEntity> LocateWord(string text, string needle, string type, string source) =>
+        System.Text.RegularExpressions.Regex.Matches(text, $@"(?<![\p{{L}}\p{{N}}]){System.Text.RegularExpressions.Regex.Escape(needle)}(?![\p{{L}}\p{{N}}])")
+            .Select(m => new DetectedEntity(type, m.Index, m.Length, 0.7, source));
 
     /// <summary>Finds every occurrence (ignoring case) of a string and returns it as spans.</summary>
     public static IEnumerable<DetectedEntity> Locate(string text, string needle, string type, int offset, string source = "llm")

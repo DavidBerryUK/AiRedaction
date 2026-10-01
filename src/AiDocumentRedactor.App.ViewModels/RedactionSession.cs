@@ -109,6 +109,29 @@ public class RedactionSession
     /// <summary>How many models the current run will execute.</summary>
     public int RunTotal { get; private set; }
 
+    // ---- estimate and warnings before running ----
+    /// <summary>How big the selected document is and roughly how long Redact will take, or null if no readable document is selected.
+    /// Uses the speed measured on earlier runs of the planned models when there is one, otherwise a rough default. Adds a warning for large documents.</summary>
+    public RunEstimate? Estimate()
+    {
+        if (OriginalText is null) return null;
+        var pages = OriginalDoc?.PageSizes?.Count ?? 1; var chars = OriginalText.Length;
+        var step = Math.Max(500, options.Llm.ChunkChars - options.Llm.ChunkOverlapChars);
+        var chunks = Math.Max(1, (int)Math.Ceiling(Math.Max(0, chars - options.Llm.ChunkOverlapChars) / (double)step));
+        var planned = PlannedModels; var measured = true; double perChunk = 0;
+        foreach (var m in planned)
+        {
+            var past = results.Values.SelectMany(l => l).Where(r => r.Model == m && r.Calls.Count > 0).ToList();
+            if (past.Count > 0) perChunk += past.Average(r => r.Elapsed.TotalSeconds / r.Calls.Count);
+            else { perChunk += 8; measured = false; }
+        }
+        var seconds = chunks * perChunk;
+        string? warning = pages > options.Ui.WarnPages || chars > options.Ui.WarnChars
+            ? $"Large document ({pages} page{(pages == 1 ? "" : "s")}, {chars:N0} characters). Redacting it with {planned.Count} model{(planned.Count == 1 ? "" : "s")} may take about {new RunEstimate(pages, chars, chunks, planned.Count, seconds, measured, null).TimeText}."
+            : null;
+        return new RunEstimate(pages, chars, chunks, planned.Count, seconds, measured, warning);
+    }
+
     // ---- prompt inspector ----
     /// <summary>What the model is told, built from the current config and the picker's model (for the Prompt tab).</summary>
     public PromptPreview Prompt()
@@ -123,6 +146,8 @@ public class RedactionSession
     // ---- document selection ----
     /// <summary>Text of the selected document.</summary>
     public string? OriginalText { get; private set; }
+    /// <summary>The selected document as read: text plus (for PDFs and images) the position and OCR confidence of every word.</summary>
+    public ExtractedDocument? OriginalDoc { get; private set; }
     /// <summary>Why the selected document could not be read, if it could not.</summary>
     public string? LoadError { get; private set; }
     /// <summary>True when the selected file can be viewed (PDF, scan image) but not read for redaction yet.</summary>
@@ -137,7 +162,7 @@ public class RedactionSession
     /// <summary>Selects a document, reads its text and restores any results already produced for it.</summary>
     public async Task SelectAsync(DocumentItem? item)
     {
-        Documents.Selected = item; OriginalText = null; LoadError = null; PreviewOnly = false; PreviewNote = null; OcrConfidence = null; ActiveResultId = null; LiveSpans = [];
+        Documents.Selected = item; OriginalText = null; OriginalDoc = null; LoadError = null; PreviewOnly = false; PreviewNote = null; OcrConfidence = null; ActiveResultId = null; LiveSpans = [];
         if (item is not null)
         {
             var reader = readers.FirstOrDefault(r => r.CanRead(item.FullPath));
@@ -149,7 +174,7 @@ public class RedactionSession
                     IsReading = true; Notify();
                     var doc = await reader.ReadAsync(item.FullPath, CancellationToken.None);
                     if (Documents.Selected?.FullPath != item.FullPath) return;   // the user moved on while this was being read
-                    OriginalText = doc.Text; OcrConfidence = doc.OcrConfidence;
+                    OriginalText = doc.Text; OriginalDoc = doc; OcrConfidence = doc.OcrConfidence;
                 }
                 catch (NoTextLayerException ex) { PreviewOnly = true; PreviewNote = ex.Message; }   // a scanned PDF: view it, but it needs OCR
                 catch (Exception ex) { LoadError = ex.Message; }
@@ -182,7 +207,11 @@ public class RedactionSession
     public IReadOnlyList<ModelResult> Voters => ResultsForSelected.Where(r => r.Id == ActiveResultId || options.Confidence.Models.Contains(r.Model)
         || (Selected is { } d && ranTogether.TryGetValue(d.FullPath, out var set) && set.Contains(r.Model))).ToList();
     /// <summary>Confidence of each edit of the active result.</summary>
-    public Dictionary<int, EditConfidence> Confidence() => ActiveResult is { } a ? ConfidenceGrader.Grade(a, Voters) : new();
+    public Dictionary<int, EditConfidence> Confidence() => ActiveResult is { } a ? ConfidenceGrader.Grade(a, Voters, new ConfidenceContext(OcrConfidenceOf, options.Ocr.MinConfidence, options.Confidence.CategoryCaps)) : new();
+
+    /// <summary>The lowest OCR confidence among the words an edit covers, or null if its text did not come from OCR.</summary>
+    double? OcrConfidenceOf(RedactionEdit e) =>
+        OriginalDoc?.Words?.Where(w => w.Confidence is not null && w.Start < e.OriginalStart + e.OriginalLength && w.Start + w.Length > e.OriginalStart).Select(w => w.Confidence).Min();
     /// <summary>How many edits of the active result are High, Medium and Low.</summary>
     public (int High, int Medium, int Low) ConfidenceCounts()
     {
@@ -198,13 +227,14 @@ public class RedactionSession
         var r = ActiveResult; if (r is null || OriginalText is null) return [];
         var red = r.Result.RedactedText;
         var conf = Confidence();
-        return r.Result.Edits.Where(e => e.Status == EditStatus.Active).Select(e =>
+        return r.Result.Edits.Where(e => e.Status is EditStatus.Active or EditStatus.Flagged).Select(e =>
         {
             var from = Math.Max(0, e.RedactedStart - 24); var to = Math.Min(red.Length, e.RedactedStart + e.RedactedLength + 24);
             var snippet = red[from..to].Replace('\n', ' ').Replace('\r', ' ');
             var line = 1 + OriginalText.AsSpan(0, Math.Min(e.OriginalStart, OriginalText.Length)).Count('\n');
             return new Bookmark(e.Id, e.Type, (from > 0 ? "…" : "") + snippet + (to < red.Length ? "…" : ""), line, e.OriginalStart, e.RedactedStart,
-                conf.GetValueOrDefault(e.Id) ?? new EditConfidence(ConfidenceLevel.Medium, 1, 1, ""));
+                conf.GetValueOrDefault(e.Id) ?? new EditConfidence(ConfidenceLevel.Medium, 1, 1, e.Status == EditStatus.Flagged ? "Flagged for review. Left in the text, not redacted." : ""),
+                e.Status == EditStatus.Flagged);
         }).ToList();
     }
 

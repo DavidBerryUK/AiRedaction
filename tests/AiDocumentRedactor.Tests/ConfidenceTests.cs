@@ -67,4 +67,37 @@ public class ConfidenceTests
         Assert.Equal(["gemma4:e4b", "phi4"], o.Confidence.Models);
         Assert.Equal(7, o.Llm.Seed); Assert.Equal("-x", o.Output.Suffix);
     }
+
+    /// <summary>An edit that is only a shorter form of something longer is graded one step lower, and a person's own edit is always High.</summary>
+    [Fact]
+    public void Variant_only_edits_are_lowered_and_human_edits_are_high()
+    {
+        ModelResult WithSource(string src) => new(Guid.NewGuid(), "a", null,
+            Redactor.Apply(Text, [new DetectedEntity("PERSON", 0, 5, 1, src)], "[REDACTED:{type}]"), TimeSpan.FromSeconds(1), 0, 0, 0, DateTime.UtcNow);
+        var llm = WithSource("llm"); var variant = WithSource("llm-variant"); var human = WithSource("human");
+        Assert.Equal(ConfidenceLevel.Medium, ConfidenceGrader.Grade(llm, [llm]).Values.Single().Level);
+        var v = ConfidenceGrader.Grade(variant, [variant]).Values.Single();
+        Assert.Equal(ConfidenceLevel.Low, v.Level);
+        Assert.Contains("shorter form", v.Reason);
+        Assert.Equal(ConfidenceLevel.High, ConfidenceGrader.Grade(human, [human]).Values.Single().Level);
+    }
+
+    /// <summary>Words OCR was unsure of cap the edit at Low, and a category ceiling stops High going above it.</summary>
+    [Fact]
+    public void Low_ocr_confidence_and_category_caps_limit_the_grade()
+    {
+        var a = R("a", Sarah); var b = R("b", Sarah);                     // both models agree: would be High
+        var plain = ConfidenceGrader.Grade(a, [a, b]).Values.Single();
+        Assert.Equal(ConfidenceLevel.High, plain.Level);
+
+        var lowOcr = new ConfidenceContext(_ => 0.42, 0.6, new Dictionary<string, string>());
+        var g = ConfidenceGrader.Grade(a, [a, b], lowOcr).Values.Single();
+        Assert.Equal(ConfidenceLevel.Low, g.Level);
+        Assert.Contains("42%", g.Reason);
+
+        var goodOcr = new ConfidenceContext(_ => 0.95, 0.6, new Dictionary<string, string> { ["PERSON"] = "Medium" });
+        var capped = ConfidenceGrader.Grade(a, [a, b], goodOcr).Values.Single();
+        Assert.Equal(ConfidenceLevel.Medium, capped.Level);
+        Assert.Contains("limited to Medium", capped.Reason);
+    }
 }

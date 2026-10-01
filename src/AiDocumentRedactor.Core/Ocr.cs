@@ -1,7 +1,8 @@
 namespace AiDocumentRedactor.Core;
 
-/// <summary>One word read by OCR, with its box in image pixels (origin top-left) and the engine's confidence (0 to 1).</summary>
-public record OcrWord(string Text, double X, double Y, double Width, double Height, double Confidence);
+/// <summary>One word read by OCR, with its upright bounding box in image pixels (origin top-left) and the engine's confidence (0 to 1).
+/// Corners are the word's true outline (4 points clockwise from top-left), which is tilted on a skewed scan; null if the engine gives none.</summary>
+public record OcrWord(string Text, double X, double Y, double Width, double Height, double Confidence, IReadOnlyList<(double X, double Y)>? Corners = null);
 
 /// <summary>One line of text read by OCR, as a list of words in reading order.</summary>
 public record OcrLine(IReadOnlyList<OcrWord> Words);

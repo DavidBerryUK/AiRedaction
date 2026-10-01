@@ -79,4 +79,73 @@ public class DetectorTests
     [Fact]
     public void Refuses_remote_endpoint_by_default() =>
         Assert.Throws<InvalidOperationException>(() => OllamaDetector.CreateClient(new LlmOptions { Endpoint = "http://example.com:11434" }));
+
+    /// <summary>With overlap, every chunk after the first starts inside the previous one, the pieces still cover the whole text, and none is too big.</summary>
+    [Fact]
+    public void Chunker_overlap_repeats_the_end_of_each_chunk_without_leaving_gaps()
+    {
+        var text = string.Join(" ", Enumerable.Range(0, 400).Select(i => $"word{i}"));
+        var chunks = Chunker.Split(text, 500, 100);
+        Assert.True(chunks.Count > 3);
+        for (var i = 1; i < chunks.Count; i++)
+        {
+            var prevEnd = chunks[i - 1].Start + chunks[i - 1].Text.Length;
+            Assert.True(chunks[i].Start < prevEnd, "next chunk should start before the previous one ends");
+            Assert.True(chunks[i].Start >= chunks[i - 1].Start + 1);
+            Assert.Equal(' ', text[chunks[i].Start - 1]);                 // starts at a word boundary, never mid-word
+        }
+        Assert.Equal(0, chunks[0].Start);
+        Assert.Equal(text.Length, chunks[^1].Start + chunks[^1].Text.Length);
+        Assert.All(chunks, c => { Assert.True(c.Text.Length <= 500); Assert.Equal(text.Substring(c.Start, c.Text.Length), c.Text); });
+    }
+
+    /// <summary>After the full name is found, the surname alone and a company without its legal ending are redacted too, marked as variants.</summary>
+    [Fact]
+    public async Task Short_forms_of_found_names_are_redacted_and_marked_as_variants()
+    {
+        var d = Make("{\"entities\":[{\"type\":\"PERSON\",\"text\":\"Tomasz Kowalczyk\"},{\"type\":\"COMPANY\",\"text\":\"Brightwater Analytics Ltd\"}]}");
+        var text = "Tomasz Kowalczyk joined Brightwater Analytics Ltd. Mr Kowalczyk wrote to Brightwater Analytics. Tomasz is happy. Later Kowalczyk left.";
+        var spans = await d.DetectAsync(text, null, default);
+        string Found(DetectedEntity s) => text.Substring(s.Start, s.Length);
+        Assert.Contains(spans, s => Found(s) == "Kowalczyk" && s.Source == "llm-variant");
+        Assert.Contains(spans, s => Found(s) == "Tomasz" && s.Source == "llm-variant");
+        Assert.Contains(spans, s => Found(s) == "Brightwater Analytics" && s.Source == "llm-variant" && s.Start > 60);
+        Assert.Equal(1, spans.Count(s => Found(s) == "Tomasz Kowalczyk"));
+        Assert.All(spans.Where(s => Found(s) == "Tomasz Kowalczyk"), s => Assert.Equal("llm", s.Source));
+    }
+
+    /// <summary>A name part that is also an ordinary lower-case word in the document is not turned into a variant.</summary>
+    [Fact]
+    public async Task Variants_skip_name_parts_that_are_ordinary_words_and_match_whole_words_only()
+    {
+        var d = Make("{\"entities\":[{\"type\":\"PERSON\",\"text\":\"Will Smith\"}]}");
+        var text = "Will Smith said he will go. Will you come? Smithson stayed. Smith agreed.";
+        var spans = await d.DetectAsync(text, null, default);
+        var found = spans.Select(s => text.Substring(s.Start, s.Length)).ToList();
+        Assert.Contains("Smith", found);                       // surname alone is redacted
+        Assert.DoesNotContain("Will", found.Where((_, i) => spans[i].Source == "llm-variant"));   // 'will' is an ordinary word here
+        Assert.DoesNotContain(spans, s => s.Source == "llm-variant" && s.Start == text.IndexOf("Smithson"));   // not inside another word
+    }
+
+    /// <summary>A category set to "flag" is reported for review but marked so it is not redacted.</summary>
+    [Fact]
+    public async Task Categories_in_flag_mode_are_marked_as_flagged()
+    {
+        var o = new RedactorOptions { Entities = { ["CONTEXTUAL"] = new EntityOptions { Mode = "flag" } } };
+        var d = Make("{\"entities\":[{\"type\":\"CONTEXTUAL\",\"text\":\"head of compliance\"},{\"type\":\"PERSON\",\"text\":\"Sarah Jones\"}]}", o);
+        var spans = await d.DetectAsync("Sarah Jones is head of compliance.", null, default);
+        Assert.True(spans.Single(s => s.Type == "CONTEXTUAL").Flag);
+        Assert.False(spans.First(s => s.Type == "PERSON" && s.Source == "llm").Flag);
+    }
+
+    /// <summary>The prompt tells the model not to return pronouns unless the pronoun switch is on, in which case they are added to GENDER.</summary>
+    [Fact]
+    public void Pronoun_switch_changes_the_prompt()
+    {
+        var off = PromptBuilder.System(new RedactorOptions());
+        Assert.Contains("Do not return pronouns", off);
+        var on = PromptBuilder.System(new RedactorOptions { Entities = { ["GENDER"] = new EntityOptions { RedactPronouns = true } } });
+        Assert.DoesNotContain("Do not return pronouns", on);
+        Assert.Contains("also gendered pronouns", on);
+    }
 }

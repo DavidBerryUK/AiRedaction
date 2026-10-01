@@ -9,11 +9,13 @@ public static class EntityTypes
         Contextual = "CONTEXTUAL", Secret = "SECRET", Other = "OTHER";
 }
 
-/// <summary>A span found in the extracted text. Detection never edits text.</summary>
-public record DetectedEntity(string Type, int Start, int Length, double Confidence, string Source);
+/// <summary>A span found in the extracted text. Detection never edits text. Source says where it came from: "llm" (returned by the model),
+/// "llm-variant" (a shorter form of something the model returned, such as a surname alone), "custom-list" or "human".
+/// Flag means: report it for review but do not redact it.</summary>
+public record DetectedEntity(string Type, int Start, int Length, double Confidence, string Source, bool Flag = false);
 
-/// <summary>Whether a redaction is applied (Active) or has been rejected by a reviewer (Rejected).</summary>
-public enum EditStatus { Active, Rejected }
+/// <summary>Whether an edit is applied (Active), was rejected by a reviewer (Rejected), or was found but only flagged for review and left in the text (Flagged).</summary>
+public enum EditStatus { Active, Rejected, Flagged }
 
 /// <summary>One redaction, with positions in both original and redacted text.</summary>
 public record RedactionEdit(
@@ -25,7 +27,9 @@ public record RedactionEdit(
     double Confidence, string Source, EditStatus Status);
 
 /// <summary>Where one word of the extracted text sits on its page (PDF points; origin bottom-left, as in PDF files).</summary>
-public record WordBox(int Page, int Start, int Length, double X, double Y, double Width, double Height);
+/// Confidence (0 to 1) is set for words read by OCR. Quad is the word's true outline as 8 numbers (4 corners x,y, clockwise from top-left,
+/// in the same points space) for OCR words, which on a tilted scan is a tilted rectangle rather than an upright one.
+public record WordBox(int Page, int Start, int Length, double X, double Y, double Width, double Height, double? Confidence = null, double[]? Quad = null);
 
 /// <summary>Flattened text of a document plus enough information to write it back.
 /// For PDFs and images, Words maps text offsets to page positions and PageSizes gives each page's size in points.

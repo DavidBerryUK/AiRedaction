@@ -56,14 +56,14 @@ public sealed class RapidOcrEngine : IOcrEngine, IDisposable
         var left = b.BoxPoints.Min(p => p.X); var top = b.BoxPoints.Min(p => p.Y);
         var width = b.BoxPoints.Max(p => p.X) - left; var height = b.BoxPoints.Max(p => p.Y) - top;
         var total = parts.Sum(s => s.Length + 1); var x = (double)left; var score = b.CharScores is { Length: > 0 } cs ? cs.Average() : b.BoxScore;
-        return parts.Select(s => { var w = width * (s.Length + 1) / total; var word = new OcrWord(s, x, top, w * s.Length / (s.Length + 1), height, score); x += w; return word; }).ToList();
+        return parts.Select(s => { var w = width * (s.Length + 1) / total; var word = new OcrWord(s, x, top, w * s.Length / (s.Length + 1), height, score); x += w; return word; }).ToList();   // no outline for this fallback
     }
 
     /// <summary>The axis-aligned box around a word's corner points.</summary>
     static OcrWord ToWord(string text, SKPointI[] pts, double score)
     {
         var l = pts.Min(p => p.X); var t = pts.Min(p => p.Y);
-        return new OcrWord(text, l, t, pts.Max(p => p.X) - l, pts.Max(p => p.Y) - t, score);
+        return new OcrWord(text, l, t, pts.Max(p => p.X) - l, pts.Max(p => p.Y) - t, score, pts.Length == 4 ? pts.Select(p => ((double)p.X, (double)p.Y)).ToList() : null);
     }
 
     /// <summary>Releases the ONNX sessions.</summary>

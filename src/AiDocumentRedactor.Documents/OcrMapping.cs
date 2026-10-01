@@ -4,7 +4,7 @@ using AiDocumentRedactor.Core;
 namespace AiDocumentRedactor.Documents;
 
 /// <summary>A word on a page in PDF points (origin bottom-left), from either a text layer or OCR.</summary>
-public record PageWord(string Text, double X, double Y, double W, double H);
+public record PageWord(string Text, double X, double Y, double W, double H, double? Confidence = null, double[]? Quad = null);
 
 /// <summary>Shared helpers for turning OCR output into the same text-plus-word-positions form used for PDF text layers.</summary>
 public static class OcrMapping
@@ -15,7 +15,8 @@ public static class OcrMapping
         double sx = pageWidthPts / page.WidthPx, sy = pageHeightPts / page.HeightPx;
         return page.Lines
             .Select(l => l.Words.Where(w => !string.IsNullOrWhiteSpace(w.Text))
-                .Select(w => new PageWord(w.Text, w.X * sx, pageHeightPts - (w.Y + w.Height) * sy, w.Width * sx, w.Height * sy)).ToList())
+                .Select(w => new PageWord(w.Text, w.X * sx, pageHeightPts - (w.Y + w.Height) * sy, w.Width * sx, w.Height * sy, w.Confidence,
+                    w.Corners is { Count: 4 } c ? c.SelectMany(p => new[] { p.X * sx, pageHeightPts - p.Y * sy }).ToArray() : null)).ToList())
             .Where(l => l.Count > 0).ToList();
     }
 
@@ -30,7 +31,7 @@ public static class OcrMapping
             for (var i = 0; i < line.Count; i++)
             {
                 if (i > 0) sb.Append(' ');
-                words.Add(new WordBox(pageIndex, sb.Length, line[i].Text.Length, line[i].X, line[i].Y, line[i].W, line[i].H));
+                words.Add(new WordBox(pageIndex, sb.Length, line[i].Text.Length, line[i].X, line[i].Y, line[i].W, line[i].H, line[i].Confidence, line[i].Quad));
                 sb.Append(line[i].Text);
             }
         }

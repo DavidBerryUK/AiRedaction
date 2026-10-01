@@ -6,11 +6,14 @@ public static class Redactor
     /// <summary>Builds the replacement text, e.g. [REDACTED:EMAIL], from the template.</summary>
     public static string Placeholder(string template, string type) => template.Replace("{type}", type);
 
-    /// <summary>Overlaps resolve to the longest span; ties go to the earlier span.</summary>
+    /// <summary>Overlaps resolve to the longest span; ties go to the earlier span. A flagged span that overlaps a real redaction is
+    /// dropped, because the redaction already covers that text.</summary>
     public static List<DetectedEntity> Merge(IEnumerable<DetectedEntity> spans, int textLength)
     {
-        var valid = spans.Where(s => s.Length > 0 && s.Start >= 0 && s.Start + s.Length <= textLength)
-                         .OrderBy(s => s.Start).ThenByDescending(s => s.Length).ToList();
+        var inRange = spans.Where(s => s.Length > 0 && s.Start >= 0 && s.Start + s.Length <= textLength).ToList();
+        var redactions = inRange.Where(s => !s.Flag).ToList();
+        var valid = redactions.Concat(inRange.Where(s => s.Flag && !redactions.Any(r => s.Start < r.Start + r.Length && r.Start < s.Start + s.Length)))
+                              .OrderBy(s => s.Start).ThenByDescending(s => s.Length).ToList();
         var result = new List<DetectedEntity>();
         foreach (var s in valid)
         {
@@ -28,7 +31,8 @@ public static class Redactor
         return result;
     }
 
-    /// <summary>Replaces each span with its placeholder and records where every edit sits in the original and redacted text.</summary>
+    /// <summary>Replaces each span with its placeholder and records where every edit sits in the original and redacted text.
+    /// Flagged spans stay in the text as they are, and are recorded as Flagged edits so a reviewer can see them.</summary>
     public static RedactionResult Apply(string text, IEnumerable<DetectedEntity> spans, string template)
     {
         var merged = Merge(spans, text.Length);
@@ -38,6 +42,11 @@ public static class Redactor
         foreach (var s in merged)
         {
             sb.Append(text, pos, s.Start - pos);
+            if (s.Flag)
+            {
+                edits.Add(new RedactionEdit(id++, s.Type, s.Start, s.Length, sb.Length, s.Length, "", text.Substring(s.Start, s.Length), s.Confidence, s.Source, EditStatus.Flagged));
+                sb.Append(text, s.Start, s.Length); pos = s.Start + s.Length; continue;
+            }
             var placeholder = Placeholder(template, s.Type);
             edits.Add(new RedactionEdit(id++, s.Type, s.Start, s.Length, sb.Length, placeholder.Length,
                 placeholder, text.Substring(s.Start, s.Length), s.Confidence, s.Source, EditStatus.Active));

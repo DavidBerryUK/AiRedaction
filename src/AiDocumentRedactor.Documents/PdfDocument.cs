@@ -137,6 +137,32 @@ public class PdfDocumentWriter(PdfOptions options, IOcrEngine? ocr = null, OcrOp
         (w.X - o.BoxPaddingPoints, pageHeight - (w.Y + w.Height) - o.BoxPaddingPoints,
          w.X + w.Width + o.BoxPaddingPoints, pageHeight - w.Y + o.BoxPaddingPoints + (boxIncludesDescenders ? 0 : o.DescenderFactor * w.Height));
 
+    /// <summary>The word's true outline, padded outward by <c>pad</c> points along its own axes, as 4 (x, y) points measured from the page's top-left;
+    /// null if the word has no outline (text-layer PDFs). Used for OCR words so a box on a tilted scan is tilted too and does not clip the next line.</summary>
+    public static (double X, double Y)[]? QuadInPoints(WordBox w, double pageHeight, double pad)
+    {
+        if (w.Quad is not { Length: 8 } q) return null;
+        var p = Enumerable.Range(0, 4).Select(i => (X: q[i * 2], Y: pageHeight - q[i * 2 + 1])).ToArray();   // top-left origin, clockwise from top-left
+        (double X, double Y) Unit((double X, double Y) a, (double X, double Y) b) { var dx = b.X - a.X; var dy = b.Y - a.Y; var len = Math.Sqrt(dx * dx + dy * dy); return len < 1e-9 ? (0, 0) : (dx / len, dy / len); }
+        var u = Unit(p[0], p[1]); var v = Unit(p[0], p[3]);       // along the word, and down the word
+        (double X, double Y) Move((double X, double Y) pt, double su, double sv) => (pt.X + u.X * su * pad + v.X * sv * pad, pt.Y + u.Y * su * pad + v.Y * sv * pad);
+        return [Move(p[0], -1, -1), Move(p[1], 1, -1), Move(p[2], 1, 1), Move(p[3], -1, 1)];
+    }
+
+    /// <summary>Paints one word black on a bitmap: its tilted outline if it has one, otherwise an upright rectangle. Scales are bitmap pixels per point.</summary>
+    public static void PaintWord(SKCanvas canvas, SKPaint black, WordBox w, double pageHeight, double sx, double sy, PdfOptions options, bool fromOcr)
+    {
+        if (QuadInPoints(w, pageHeight, options.BoxPaddingPoints) is { } quad)
+        {
+            using var path = new SKPath();
+            path.MoveTo((float)(quad[0].X * sx), (float)(quad[0].Y * sy));
+            for (var i = 1; i < 4; i++) path.LineTo((float)(quad[i].X * sx), (float)(quad[i].Y * sy));
+            path.Close(); canvas.DrawPath(path, black); return;
+        }
+        var (l, t, r, b) = BoxInPoints(w, pageHeight, options, fromOcr);
+        canvas.DrawRect(SKRect.Create((float)(l * sx), (float)(t * sy), (float)((r - l) * sx), (float)((b - t) * sy)), black);
+    }
+
     /// <summary>Draws black boxes on rendered pages, builds the new PDF, and refuses to return it if any text survived.
     /// Returns the finished PDF bytes.</summary>
     byte[] Render(ExtractedDocument doc, RedactionResult result, CancellationToken ct)
@@ -158,8 +184,7 @@ public class PdfDocumentWriter(PdfOptions options, IOcrEngine? ocr = null, OcrOp
                 using (var black = new SKPaint { Color = SKColors.Black, Style = SKPaintStyle.Fill, IsAntialias = false })
                     foreach (var w in cover.GetValueOrDefault(p) ?? [])
                     {
-                        var (l, t, r, b) = BoxInPoints(w, ph, options, doc.OcrConfidence is not null);
-                        canvas.DrawRect(SKRect.Create((float)(l * sx), (float)(t * sy), (float)((r - l) * sx), (float)((b - t) * sy)), black);
+                        PaintWord(canvas, black, w, ph, sx, sy, options, doc.OcrConfidence is not null);
                     }
                 using var img = SKImage.FromBitmap(bmp);
                 using var jpg = img.Encode(SKEncodedImageFormat.Jpeg, options.JpegQuality);

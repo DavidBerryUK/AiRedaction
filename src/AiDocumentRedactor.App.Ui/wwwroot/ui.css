@@ -220,3 +220,10 @@ img.viewer-img { max-width: 100%; align-self: center; margin: 12px; box-shadow: 
 /* the edit selected in the edits list stays strongly highlighted in both panes until another is chosen */
 mark.m.sel { outline: 3px solid var(--focus); outline-offset: 2px; box-shadow: 0 0 0 7px color-mix(in srgb, var(--brand-yellow) 75%, transparent); font-weight: 700; position: relative; z-index: 2; border-radius: 4px; }
 mark.m.sel.lowconf { outline-style: solid; }
+
+/* flagged for review: left in the text, not redacted */
+.chip.conf-Flag { background: transparent; color: var(--text); border: 2px dashed var(--brand-slate); font-weight: 700; font-size: 11px; }
+mark.m.flagged { background: transparent !important; box-shadow: none; outline: 2px dashed var(--brand-grey-3); outline-offset: 1px; }
+/* forecast beside the Redact button */
+.estimate { max-width: 280px; font-size: 12px; line-height: 1.3; color: var(--brand-grey-5); }
+.estimate.big { color: var(--brand-yellow); font-weight: 600; }

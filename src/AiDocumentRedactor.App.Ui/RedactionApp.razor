@@ -63,6 +63,7 @@
                     @RunLabel
                 </button>
                 @if (RunBlocked is { } why && !S.IsRunning) { <span class="blocked-hint" role="status">@why</span> }
+                else if (!S.IsRunning && S.Estimate() is { } est) { <span class="estimate @(est.Warning is not null ? "big" : "")" title="@(est.Warning ?? "Forecast from the speed of earlier runs")" role="status">@(est.Warning is not null ? "⚠ " : "")@est.Summary@(est.Warning is not null ? ". " + est.Warning : "")</span> }
             }
         </div>
     </header>
@@ -230,7 +231,7 @@
             @foreach (var b in Visible)
             {
                 <li class="bm @(selectedBookmark == b.Id ? "selected" : "")" @onclick="() => OnMarkClicked(b.Id)">
-                    <div class="bm-top"><span class="chip type t-@b.Type">@b.Type</span><span class="chip conf-@b.Confidence.Level" title="@b.Confidence.Reason">@b.Confidence.Level</span><span class="bm-line">line @b.Line</span></div>
+                    <div class="bm-top"><span class="chip type t-@b.Type">@b.Type</span>@if (b.Flagged) { <span class="chip conf-Flag" title="@b.Confidence.Reason">Flagged</span> } else { <span class="chip conf-@b.Confidence.Level" title="@b.Confidence.Reason">@b.Confidence.Level</span> }<span class="bm-line">line @b.Line</span></div>
                     <div class="bm-snippet">@b.Snippet</div>
                     @if (b.Confidence.Level != ConfidenceLevel.High && b.Confidence.Reason != "") { <div class="bm-reason">@b.Confidence.Reason</div> }
                 </li>
@@ -303,7 +304,7 @@
     /// <summary>Confidence filter for the edits list (empty = all).</summary>
     string confFilter = "";
     /// <summary>Confidence counts for the status bar, e.g. "9 high / 1 medium / 0 low".</summary>
-    string ConfText { get { var c = S.ConfidenceCounts(); return $"{c.High} high / {c.Medium} medium / {c.Low} low"; } }
+    string ConfText { get { var c = S.ConfidenceCounts(); var flagged = S.ActiveResult?.Result.Edits.Count(e => e.Status == EditStatus.Flagged) ?? 0; return $"{c.High} high / {c.Medium} medium / {c.Low} low" + (flagged > 0 ? $" · {flagged} flagged for review" : ""); } }
     /// <summary>True when any edits filter is active.</summary>
     bool IsFiltered => typeFilter != "" || confFilter != "";
     /// <summary>Text on the Redact button, naming the model(s) it will run.</summary>
@@ -341,10 +342,10 @@
     IReadOnlyList<PaneMark> OriginalMarks =>
         S.IsRunning && S.RunningPath == S.Selected?.FullPath
             ? S.LiveSpans.Select((e, i) => new PaneMark(-1 - i, e.Start, e.Length, e.Type, true)).ToList()
-            : S.ActiveResult?.Result.Edits.Where(e => e.Status == EditStatus.Active).Select(e => new PaneMark(e.Id, e.OriginalStart, e.OriginalLength, e.Type, false, ConfOf(e.Id))).ToList() ?? [];
+            : S.ActiveResult?.Result.Edits.Where(e => e.Status is EditStatus.Active or EditStatus.Flagged).Select(e => new PaneMark(e.Id, e.OriginalStart, e.OriginalLength, e.Type, false, ConfOf(e.Id), e.Status == EditStatus.Flagged)).ToList() ?? [];
     /// <summary>Highlights for the placeholders in the redacted pane.</summary>
     IReadOnlyList<PaneMark> RedactedMarks =>
-        S.ActiveResult?.Result.Edits.Where(e => e.Status == EditStatus.Active).Select(e => new PaneMark(e.Id, e.RedactedStart, e.RedactedLength, e.Type, false, ConfOf(e.Id))).ToList() ?? [];
+        S.ActiveResult?.Result.Edits.Where(e => e.Status is EditStatus.Active or EditStatus.Flagged).Select(e => new PaneMark(e.Id, e.RedactedStart, e.RedactedLength, e.Type, false, ConfOf(e.Id), e.Status == EditStatus.Flagged)).ToList() ?? [];
     /// <summary>Confidence level name for an edit, used to outline low-confidence highlights.</summary>
     string? ConfOf(int id) => S.Confidence().TryGetValue(id, out var c) ? c.Level.ToString() : null;
 
