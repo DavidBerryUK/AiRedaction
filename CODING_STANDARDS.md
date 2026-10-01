@@ -293,3 +293,51 @@ public int GetCount() => _items.Count;
 ```
 
 - **Block-bodied members** are preferred when the logic is more complex or spans multiple lines.
+
+## Separation of Concerns
+
+### Single Responsibility Principle
+The `Program.cs` file should be kept minimal and focused. Complex logic should be extracted into dedicated helper classes that each handle a single responsibility:
+
+1. **Configuration Management**: Handle loading and validation of configuration settings
+2. **Input/Output Processing**: Manage directory validation, file enumeration, and path calculations
+3. **Pipeline Setup**: Configure the redaction pipeline components (readers, writers, detectors)
+4. **Execution Logic**: Handle the main processing loop and result reporting
+
+### Example Refactoring Approach
+```csharp
+// Instead of complex logic in Program.cs:
+var configPath = Arg("--config") ?? "redactor.config.json";
+RedactorOptions options;
+try { options = RedactorOptions.Load(configPath); }
+catch (Exception ex) { Console.Error.WriteLine($"Config error: {ex.Message}"); return 2; }
+
+// Extract to a dedicated class:
+public class ConfigurationLoader
+{
+    public static RedactorOptions LoadConfiguration(string[] args)
+    {
+        var configPath = GetArg(args, "--config") ?? "redactor.config.json";
+        try
+        {
+            return RedactorOptions.Load(configPath);
+        }
+        catch (Exception ex)
+        {
+            Console.Error.WriteLine($"Config error: {ex.Message}");
+            return null;
+        }
+    }
+}
+```
+
+### Class Naming Convention for Helpers
+- Helper classes should be named descriptively to indicate their purpose
+- Use suffixes like `Manager`, `Processor`, `Validator`, or `Builder` to clarify responsibilities
+- Keep helper classes focused on a single domain of functionality
+
+This approach improves:
+- Code readability and maintainability
+- Testability of individual components
+- Reusability across different parts of the application
+- Team collaboration by clearly separating concerns
