@@ -158,6 +158,18 @@
       {
         "name": "gpt-oss",
         "include": true
+      },
+      {
+        "name": "llama3.1:8b",
+        "include": true
+      },
+      {
+        "name": "qwen2.5:14b",
+        "include": true
+      },
+      {
+        "name": "granite4.2:30b",
+        "include": true
       }
     ]
   }
