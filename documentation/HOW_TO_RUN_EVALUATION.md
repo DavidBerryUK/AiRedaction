@@ -2,6 +2,22 @@
 
 The Evaluation App measures how well each local model redacts. It runs the models over the synthetic test corpus, compares what they redacted with an answer key, and writes a **Markdown report** (plus a JSON file of the raw scores). It is a command-line tool, not part of the web app: a full run takes a long time, so it is meant to be started and left alone.
 
+## Quick launch
+
+From the repository root, one command builds, checks that Ollama is running, runs the evaluation with the models switched on in the config, and opens the Markdown report when it finishes:
+
+```bash
+./run-eval.sh
+```
+
+It accepts the same options as the program (`--models`, `--only`, `--no-write`, `--show-text`, `--out`) plus `--no-open` (do not open the report). For a quick trial:
+
+```bash
+./run-eval.sh --models phi4 --only text/ --no-write
+```
+
+`Ctrl+C` stops it; the report for the models that finished is kept. The manual steps below do the same thing in separate commands.
+
 ## What you need
 
 - .NET 10 SDK and Ollama running (as for the Web App)

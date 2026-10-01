@@ -22,6 +22,15 @@ It reads text files, Word documents, PDFs and scans (with local OCR), and writes
 
 ## Quick start
 
+One command each, from the repository root:
+
+```bash
+./run-web.sh      # start the Web App and open it in your browser
+./run-eval.sh     # run the evaluation and open the report (takes a while)
+```
+
+The scripts check .NET and Ollama, build, and start. The manual steps are below and in the guides.
+
 You need the .NET 10 SDK, [Ollama](https://ollama.com) running, and a model:
 
 ```bash

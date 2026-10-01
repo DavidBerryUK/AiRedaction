@@ -2,6 +2,16 @@
 
 The Web App is the interactive Redaction Demo: pick a document, press **Redact**, and review exactly what was redacted. It runs on your own machine, only listens on `127.0.0.1`, and sends nothing anywhere. All detection is done by a local model through Ollama.
 
+## Quick launch (recommended for demos)
+
+From the repository root, one command builds, checks that Ollama is running, starts the app and opens it in your browser with the access token already filled in:
+
+```bash
+./run-web.sh
+```
+
+Stop it with `Ctrl+C`. Options: `--port 5200` (use another port), `--input <folder>`, `--output <folder>`, `--config <file>`, and `--no-open` (do not open the browser). If Ollama is not running, or the port is busy, the script says so and what to do. The manual steps below do the same thing in separate commands.
+
 ## What you need
 
 | Requirement | Check |
