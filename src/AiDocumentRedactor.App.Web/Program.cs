@@ -30,9 +30,9 @@ builder.Services.AddRazorComponents().AddInteractiveServerComponents();
 // OCR engine for scanned PDFs and images (local, models load on first use). Null if switched off in the config.
 IOcrEngine? ocr = options.Ocr.Enabled ? new RapidOcrEngine() : null;
 
-// One user, one machine: a single shared session.
+// One session per browser (found by a cookie), so several browsers or people never share documents or results.
 // Create the one shared session that holds results and runs redactions (detectors are created per model on demand).
-builder.Services.AddSingleton(sp =>
+builder.Services.AddSingleton(sp => new SessionRegistry(() =>
 {
     var llm = options.Llm;
     IModelCatalog catalog = new OllamaModelCatalog(OllamaDetector.CreateClient(llm));
@@ -40,7 +40,10 @@ builder.Services.AddSingleton(sp =>
         opts => opts.Llm.Provider == "ollama" ? new OllamaDetector(OllamaDetector.CreateClient(opts.Llm), opts) : new NoOpDetector(),
         new ReviewStore(Path.GetFullPath(Path.Combine(".cache", "review"))))   // review changes are kept as offsets only
     { ConfigPath = Path.GetFullPath(configPath), OcrEngineName = ocr?.Name };
-});
+}));
+// Components get the session of their own browser: the root component sets the holder, everything below asks for the session.
+builder.Services.AddScoped<SessionHolder>();
+builder.Services.AddScoped(sp => sp.GetRequiredService<SessionHolder>().Current ?? throw new InvalidOperationException("No session for this browser."));
 
 var app = builder.Build();
 if (!app.Environment.IsDevelopment()) app.UseExceptionHandler("/Error", createScopeForErrors: true);
@@ -62,6 +65,14 @@ app.Use(async (ctx, next) =>
         ctx.Response.StatusCode = 403; await ctx.Response.WriteAsync("Access token required. Use the URL printed at startup.");
         return;
     }
+    // Which session this browser uses: a random id in an HttpOnly cookie (a missing or malformed one is replaced).
+    var sid = ctx.Request.Cookies["rd_session"];
+    if (!SessionRegistry.IsValidId(sid))
+    {
+        sid = SessionRegistry.NewId();
+        ctx.Response.Cookies.Append("rd_session", sid, new CookieOptions { HttpOnly = true, SameSite = SameSiteMode.Strict, Path = "/" });
+    }
+    ctx.Items["rd_session"] = sid;
     ctx.Response.Headers["Cache-Control"] = "no-store";
     ctx.Response.Headers["X-Content-Type-Options"] = "nosniff";
     ctx.Response.Headers["Referrer-Policy"] = "no-referrer";
@@ -84,14 +95,14 @@ app.MapGet("/pages/{page:int}/{**path}", (int page, string path) =>
         : Results.NotFound());
 
 // One page of a redacted result as a PNG, rendered in memory from the same bytes that would be saved.
-app.MapGet("/results/{id:guid}/page/{page:int}", async (Guid id, int page, RedactionSession session) =>
-    await session.RenderRedactedAsync(id) is { } r && page >= 0
+app.MapGet("/results/{id:guid}/page/{page:int}", async (Guid id, int page, HttpContext ctx, SessionRegistry sessions) =>
+    await sessions.Get((string)ctx.Items["rd_session"]!).RenderRedactedAsync(id) is { } r && page >= 0
         ? Results.File(PageRenderer.RenderPng(r.Bytes, r.ContentType == "application/pdf", page, 110), "image/png")
         : Results.NotFound());
 
 // Renders a redacted PDF or image result in memory for the viewer (never written to disk). Same token protection as everything else.
-app.MapGet("/results/{id:guid}/redacted", async (Guid id, RedactionSession session) =>
-    await session.RenderRedactedAsync(id) is { } r ? Results.File(r.Bytes, r.ContentType) : Results.NotFound());
+app.MapGet("/results/{id:guid}/redacted", async (Guid id, HttpContext ctx, SessionRegistry sessions) =>
+    await sessions.Get((string)ctx.Items["rd_session"]!).RenderRedactedAsync(id) is { } r ? Results.File(r.Bytes, r.ContentType) : Results.NotFound());
 
 app.UseStatusCodePagesWithReExecute("/not-found", createScopeForStatusCodePages: true);
 app.UseAntiforgery();

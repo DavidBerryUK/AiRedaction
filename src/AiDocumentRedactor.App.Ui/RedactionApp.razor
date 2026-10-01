@@ -2,7 +2,8 @@
    with one tab per model, edits list with confidence, status bar, and the Models dialog.
    All state and actions live in RedactionSession; this component only draws it and forwards clicks. *@
 @implements IDisposable
-@inject RedactionSession S
+@inject SessionRegistry Registry
+@inject SessionHolder Holder
 @inject IJSRuntime JS
 
 <div class="app">
@@ -446,6 +447,13 @@
         DocumentStatus.Processed => "✔", DocumentStatus.NeedsReview => "⚠", DocumentStatus.Error => "✖",
         DocumentStatus.Processing => "⟳", DocumentStatus.Cancelled => "◌", _ => "·",
     };
+
+    /// <summary>Id of this browser's session (from its cookie), passed down from the page.</summary>
+    [CascadingParameter(Name = "SessionId")] public string? SessionId { get; set; }
+    /// <summary>This browser's session: its documents, results and review.</summary>
+    RedactionSession S = default!;
+    /// <summary>Picks this browser's session before anything is drawn, and tells child components which one it is.</summary>
+    protected override void OnInitialized() => S = Holder.Current = Registry.Get(SessionRegistry.IsValidId(SessionId) ? SessionId! : "00000000000000000000000000000000");
 
     /// <summary>On first load: listen for changes and fetch the installed models.</summary>
     protected override async Task OnInitializedAsync()

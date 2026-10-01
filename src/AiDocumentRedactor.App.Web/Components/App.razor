@@ -13,9 +13,15 @@
 </head>
 
 <body>
-    <Routes @rendermode="InteractiveServer" />
+    <Routes SessionId="@(HttpContext?.Items["rd_session"] as string)" @rendermode="InteractiveServer" />
+
         <script src="@Assets["_content/AiDocumentRedactor.App.Ui/redactorUi.js"]"></script>
     <script src="@Assets["_framework/blazor.web.js"]"></script>
 </body>
 
 </html>
+
+@code {
+    /// <summary>The request, used to pass this browser's session id to the interactive part of the page.</summary>
+    [CascadingParameter] HttpContext? HttpContext { get; set; }
+}

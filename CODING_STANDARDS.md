@@ -248,51 +248,53 @@ _cachedPath ??= Path.Combine(_config.OutputDir, "output.pdf");
 var value = options?.Value ?? defaultValue;
 ```
 
-## Code Structure and Formatting
+## Separation of Concerns
 
-### Bracket Usage
-- **Always use braces for control flow statements** (if, else, while, for, etc.), even for single-line statements.
-- **For simple methods and expressions**, single-line formatting is acceptable when it improves readability:
+### Single Responsibility Principle
+The `Program.cs` file should be kept minimal and focused. Complex logic should be extracted into dedicated helper classes that each handle a single responsibility:
+
+1. **Configuration Management**: Handle loading and validation of configuration settings
+2. **Input/Output Processing**: Manage directory validation, file enumeration, and path calculations
+3. **Pipeline Setup**: Configure the redaction pipeline components (readers, writers, detectors)
+4. **Execution Logic**: Handle the main processing loop and result reporting
+
+### Example Refactoring Approach
 ```csharp
-// Acceptable - concise and readable
-string? Arg(string name) { var i = Array.IndexOf(args, name); return i >= 0 && i + 1 < args.Length ? args[i + 1] : null; }
+// Instead of complex logic in Program.cs:
+var configPath = Arg("--config") ?? "redactor.config.json";
+RedactorOptions options;
+try { options = RedactorOptions.Load(configPath); }
+catch (Exception ex) { Console.Error.WriteLine($"Config error: {ex.Message}"); return 2; }
 
-// Also acceptable - simple catch block
-catch (Exception ex) { Console.Error.WriteLine(ex.Message); return 2; }
-```
-
-- **For complex statements and multi-line code blocks**, use braces for clarity:
-```csharp
-// Good - multi-line with braces
-if (output == input || output.StartsWith(input + Path.DirectorySeparatorChar))
+// Extract to a dedicated class:
+public class ConfigurationLoader
 {
-    Console.Error.WriteLine("Output directory must not be the input directory or inside it.");
-    return 2;
-}
-
-// Good - complex logic with braces
-try
-{
-    var od = new OllamaDetector(OllamaDetector.CreateClient(options.Llm), options);
-    await od.CheckAvailableAsync(CancellationToken.None);
-    detector = od;
-    Console.WriteLine($"Model: {options.Llm.Model} at {options.Llm.Endpoint}");
-}
-catch (Exception ex) 
-{ 
-    Console.Error.WriteLine(ex.Message); 
-    return 2; 
+    public static RedactorOptions LoadConfiguration(string[] args)
+    {
+        var configPath = GetArg(args, "--config") ?? "redactor.config.json";
+        try
+        {
+            return RedactorOptions.Load(configPath);
+        }
+        catch (Exception ex)
+        {
+            Console.Error.WriteLine($"Config error: {ex.Message}");
+            return null;
+        }
+    }
 }
 ```
 
-### Method and Expression Bodies
-- **Expression-bodied members** are preferred for simple one-line methods:
-```csharp
-public string GetName() => _name;
-public int GetCount() => _items.Count;
-```
+### Class Naming Convention for Helpers
+- Helper classes should be named descriptively to indicate their purpose
+- Use suffixes like `Manager`, `Processor`, `Validator`, or `Builder` to clarify responsibilities
+- Keep helper classes focused on a single domain of functionality
 
-- **Block-bodied members** are preferred when the logic is more complex or spans multiple lines.
+This approach improves:
+- Code readability and maintainability
+- Testability of individual components
+- Reusability across different parts of the application
+- Team collaboration by clearly separating concerns
 
 ## Separation of Concerns
 

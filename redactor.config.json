@@ -48,7 +48,8 @@
       "enabled": true
     },
     "GENDER": {
-      "enabled": true
+      "enabled": true,
+      "redactPronouns": true
     },
     "COMPANY": {
       "enabled": true
