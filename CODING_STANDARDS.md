@@ -22,7 +22,7 @@ This is a C#/.NET project that uses local AI (Ollama) for document redaction. Th
   - Use `string.Empty` instead of `""` for empty strings
   - Use `const` for compile-time constants and `static readonly` for runtime constants
   - Use `async`/`await` for all I/O operations
-  - Use `ConfigureAwait(false)` in library code to avoid deadlocks
+  - Do not use `ConfigureAwait(false)`: ASP.NET Core and modern .NET have no context that causes the old deadlocks, and in the UI layer code must resume on the component's context
   - Prefer `Task.Run` for CPU-bound work on background threads
 - **Razor/Blazor** for the UI (ASP.NET Core host, loopback-only, no platform-specific UI code)
 
@@ -189,7 +189,7 @@ namespace MyApp { class Program { static async Task Main() { ... } } }
 ### Async methods:
 - Use `async`/`await` for all I/O operations
 - Return `Task` or `Task<T>` from async methods
-- Use `ConfigureAwait(false)` in library code to avoid deadlocks
+- Do not add `ConfigureAwait(false)` (see above); a plain `await` is the standard
 - Prefer `Task.Run` for CPU-bound work on background threads
 
 ## Documentation
