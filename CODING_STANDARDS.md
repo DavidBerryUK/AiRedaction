@@ -62,8 +62,10 @@ out/          - Output documents and run reports
 
 ## File Organization
 
-- One class per file (except partial classes)
-- File name matches class name
+- One main class per file, and the file name matches it (`RedactionPipeline.cs` holds `RedactionPipeline`)
+- Small related types may share a file: records, enums, interfaces and tiny helper classes that belong with the main type or form a closely related set (for example the option classes in `Options.cs`, or the interfaces in `Interfaces.cs`). Name the file after the main type or the group (`Options.cs`, `Models.cs`)
+- Give a type its own file when it grows past about 100 lines, has its own tests, or is used on its own elsewhere
+- Keep a file under about 400 lines; split a larger class by responsibility (partial classes are fine for this)
 - Private fields have no underscore prefix. Use `this.` only where a parameter has the same name as a field.
 - Use file-scoped namespaces
 - Order usings: System first, then external libraries, then project usings
@@ -195,9 +197,10 @@ namespace MyApp { class Program { static async Task Main() { ... } } }
 
 ## Documentation
 
-- Public types and members must have XML documentation
-- Use `<summary>`, `<param>`, `<returns>` tags
-- Document exceptions with `<exception>` tag
+- Public types and members must have an XML `<summary>`, written in plain English
+- Say what the parameters and the return value mean **inside the summary** when it is not obvious. `<param>` and `<returns>` tags are not required
+- Add an `<exception>` tag only where a caller is expected to handle a specific exception
+- Private members need a short comment only when the reason is not obvious from the code
 
 ## Testing
 
