@@ -77,6 +77,18 @@ app.MapGet("/files/{**path}", (string path) =>
         ? Results.File(full, DocumentFiles.ContentType(full), enableRangeProcessing: true)
         : Results.NotFound());
 
+// One page of the original PDF as a PNG (an image file is returned as it is), for the page view with highlights.
+app.MapGet("/pages/{page:int}/{**path}", (int page, string path) =>
+    DocumentFiles.Resolve(inputRoot, path) is { } full && page >= 0
+        ? Results.File(PageRenderer.RenderPng(File.ReadAllBytes(full), full.EndsWith(".pdf", StringComparison.OrdinalIgnoreCase), page, 110), "image/png")
+        : Results.NotFound());
+
+// One page of a redacted result as a PNG, rendered in memory from the same bytes that would be saved.
+app.MapGet("/results/{id:guid}/page/{page:int}", async (Guid id, int page, RedactionSession session) =>
+    await session.RenderRedactedAsync(id) is { } r && page >= 0
+        ? Results.File(PageRenderer.RenderPng(r.Bytes, r.ContentType == "application/pdf", page, 110), "image/png")
+        : Results.NotFound());
+
 // Renders a redacted PDF or image result in memory for the viewer (never written to disk). Same token protection as everything else.
 app.MapGet("/results/{id:guid}/redacted", async (Guid id, RedactionSession session) =>
     await session.RenderRedactedAsync(id) is { } r ? Results.File(r.Bytes, r.ContentType) : Results.NotFound());

@@ -50,5 +50,13 @@ public record RedactionProgress(
     int ItemsFoundSoFar, TimeSpan Elapsed,
     IReadOnlyList<DetectedEntity>? NewDetections = null);
 
-/// <summary>The outcome of redacting one document: the redacted text and the list of edits made.</summary>
-public record RedactionResult(string RedactedText, IReadOnlyList<RedactionEdit> Edits);
+/// <summary>A rectangle a person drew on a page to black out something that is not text (a signature, a logo, a stamp).
+/// Page is 0-based; X, Y, Width and Height are in PDF points with the origin at the page's bottom-left, like <see cref="WordBox"/>.</summary>
+public record AreaBox(int Page, double X, double Y, double Width, double Height);
+
+/// <summary>The outcome of redacting one document: the redacted text, the list of edits made, and any rectangles drawn by hand on pages.</summary>
+public record RedactionResult(string RedactedText, IReadOnlyList<RedactionEdit> Edits, IReadOnlyList<AreaBox>? Areas = null)
+{
+    /// <summary>The hand-drawn rectangles (empty when there are none).</summary>
+    public IReadOnlyList<AreaBox> AreaList => Areas ?? [];
+}

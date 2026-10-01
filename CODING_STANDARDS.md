@@ -15,7 +15,15 @@ This is a C#/.NET project that uses local AI (Ollama) for document redaction. Th
 
 - **C# 12** with modern features (file-scoped namespaces, target-typed new, expression-bodied members, pattern matching)
 - **.NET 10** as the target framework (net10.0 for cross-platform compatibility)
-- Follow Microsoft's [C# Coding Conventions](https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/coding-style/coding-conventions)
+- Follow Microsoft's C# Coding Conventions:
+  - Use `var` for type inference when the type is obvious from the right-hand side of the assignment
+  - Use `this.` prefix for member access when there's ambiguity, but not otherwise
+  - Use `nameof()` operator instead of string literals when referencing identifiers
+  - Use `string.Empty` instead of `""` for empty strings
+  - Use `const` for compile-time constants and `static readonly` for runtime constants
+  - Use `async`/`await` for all I/O operations
+  - Use `ConfigureAwait(false)` in library code to avoid deadlocks
+  - Prefer `Task.Run` for CPU-bound work on background threads
 - **Razor/Blazor** for the UI (ASP.NET Core host, loopback-only, no platform-specific UI code)
 
 ## Project Structure
@@ -225,3 +233,49 @@ _cachedPath ??= Path.Combine(_config.OutputDir, "output.pdf");
 // Good for null checks
 var value = options?.Value ?? defaultValue;
 ```
+
+## Code Structure and Formatting
+
+### Bracket Usage
+- **Always use braces for control flow statements** (if, else, while, for, etc.), even for single-line statements.
+- **For simple methods and expressions**, single-line formatting is acceptable when it improves readability:
+```csharp
+// Acceptable - concise and readable
+string? Arg(string name) { var i = Array.IndexOf(args, name); return i >= 0 && i + 1 < args.Length ? args[i + 1] : null; }
+
+// Also acceptable - simple catch block
+catch (Exception ex) { Console.Error.WriteLine(ex.Message); return 2; }
+```
+
+- **For complex statements and multi-line code blocks**, use braces for clarity:
+```csharp
+// Good - multi-line with braces
+if (output == input || output.StartsWith(input + Path.DirectorySeparatorChar))
+{
+    Console.Error.WriteLine("Output directory must not be the input directory or inside it.");
+    return 2;
+}
+
+// Good - complex logic with braces
+try
+{
+    var od = new OllamaDetector(OllamaDetector.CreateClient(options.Llm), options);
+    await od.CheckAvailableAsync(CancellationToken.None);
+    detector = od;
+    Console.WriteLine($"Model: {options.Llm.Model} at {options.Llm.Endpoint}");
+}
+catch (Exception ex) 
+{ 
+    Console.Error.WriteLine(ex.Message); 
+    return 2; 
+}
+```
+
+### Method and Expression Bodies
+- **Expression-bodied members** are preferred for simple one-line methods:
+```csharp
+public string GetName() => _name;
+public int GetCount() => _items.Count;
+```
+
+- **Block-bodied members** are preferred when the logic is more complex or spans multiple lines.

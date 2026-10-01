@@ -254,6 +254,11 @@ public class RedactionSession
         }).ToList();
     }
 
+    /// <summary>The hand-drawn page rectangles of the viewed result as list entries (numbered from <see cref="Bookmark.AreaIdBase"/>).</summary>
+    public IReadOnlyList<Bookmark> AreaBookmarks() =>
+        ActiveResult?.Result.AreaList.Select((a, i) => new Bookmark(Bookmark.AreaIdBase + i, "AREA", $"Box drawn on page {a.Page + 1} (signature, logo, stamp or other non-text)", a.Page + 1, 0, 0,
+            new EditConfidence(ConfidenceLevel.High, 1, 1, "Drawn by a person."), false, "human", false, true, a.Page + 1)).ToList() ?? [];
+
     // ---- running ----
     /// <summary>True while a redaction run is in progress.</summary>
     public bool IsRunning { get; private set; }
@@ -362,13 +367,21 @@ public class RedactionSession
         var entry = results.FirstOrDefault(kv => kv.Value.Any(r => r.Id == resultId));
         if (entry.Value is null) return null;
         var mr = entry.Value.First(r => r.Id == resultId);
+        if (renderCache.TryGetValue(resultId, out var hit) && ReferenceEquals(hit.Result, mr.Result)) return (hit.Bytes, hit.ContentType);   // unchanged since last render
         var reader = readers.FirstOrDefault(r => r.CanRead(entry.Key)); if (reader is null) return null;
         var src = await reader.ReadAsync(entry.Key, CancellationToken.None);
         if (writers.FirstOrDefault(w => w.CanWrite(src)) is not IStreamDocumentWriter streamWriter) return null;
         using var ms = new MemoryStream();
         await streamWriter.WriteAsync(src, mr.Result, ms, CancellationToken.None);
-        return (ms.ToArray(), DocumentFiles.ContentType(entry.Key) ?? "application/octet-stream");
+        var rendered = (Bytes: ms.ToArray(), ContentType: DocumentFiles.ContentType(entry.Key) ?? "application/octet-stream");
+        renderCache[resultId] = (mr.Result, rendered.Bytes, rendered.ContentType);
+        return rendered;
     }
+
+    /// <summary>The last in-memory rendering of each result's redacted document, reused until the result changes (rendering a scan runs OCR, so it is slow).</summary>
+    readonly Dictionary<Guid, (RedactionResult Result, byte[] Bytes, string ContentType)> renderCache = new();
+    /// <summary>A number that changes whenever a result's redacted output changes, used to make the page images refresh.</summary>
+    public int RenderStamp(Guid resultId) => ResultsForSelected.FirstOrDefault(r => r.Id == resultId) is { } r ? System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(r.Result) : 0;
 
     /// <summary>Writes the chosen result as the saved output (FR42).</summary>
     public async Task UseAsOutputAsync(Guid id)
@@ -461,7 +474,7 @@ public class RedactionSession
             rejected.RemoveAll(r => r.Start < i + length && i < r.Start + r.Length);   // redacting over a rejected edit supersedes the rejection
             manual.Add(new ManualSpan(type, i, length)); added++;
         }
-        if (added > 0) Commit(new ReviewState(manual, rejected));
+        if (added > 0) Commit(rv.Current with { Manual = manual, Rejected = rejected });
         return added;
     }
 
@@ -477,7 +490,7 @@ public class RedactionSession
     public void RestoreEdit(int editId)
     {
         if (CurrentReview is not { } rv || FindEdit(editId) is not { Status: EditStatus.Rejected } e) return;
-        Commit(new ReviewState(rv.Current.Manual, rv.Current.Rejected.Where(r => r != new SpanKey(e.OriginalStart, e.OriginalLength)).ToList()));
+        Commit(rv.Current with { Rejected = rv.Current.Rejected.Where(r => r != new SpanKey(e.OriginalStart, e.OriginalLength)).ToList() });
     }
 
     /// <summary>Changes an edit's category. A manual edit is updated; an AI edit is replaced by a manual one of the new category.</summary>
@@ -485,13 +498,13 @@ public class RedactionSession
     {
         if (CurrentReview is not { } rv || FindEdit(editId) is not { } e || e.Type == type || e.Status == EditStatus.Rejected) return;
         var without = Without(rv.Current, e);
-        Commit(new ReviewState([.. without.Manual, new ManualSpan(type, e.OriginalStart, e.OriginalLength)], without.Rejected));
+        Commit(without with { Manual = [.. without.Manual, new ManualSpan(type, e.OriginalStart, e.OriginalLength)] });
     }
 
     /// <summary>The review state with this edit taken out: removed if it was manual, rejected if it came from a model.</summary>
     static ReviewState Without(ReviewState s, RedactionEdit e) => e.Source == "human"
-        ? new ReviewState(s.Manual.Where(m => !(m.Start == e.OriginalStart && m.Length == e.OriginalLength)).ToList(), s.Rejected)
-        : new ReviewState(s.Manual, [.. s.Rejected, new SpanKey(e.OriginalStart, e.OriginalLength)]);
+        ? s with { Manual = s.Manual.Where(m => !(m.Start == e.OriginalStart && m.Length == e.OriginalLength)).ToList() }
+        : s with { Rejected = [.. s.Rejected, new SpanKey(e.OriginalStart, e.OriginalLength)] };
 
     /// <summary>An edit of the viewed result by its number.</summary>
     RedactionEdit? FindEdit(int id) => ActiveResult?.Result.Edits.FirstOrDefault(e => e.Id == id);
@@ -514,6 +527,29 @@ public class RedactionSession
     public async Task SaveAsync()
     {
         if (ActiveResult is { } a) await UseAsOutputAsync(a.Id);
+    }
+
+    /// <summary>Blacks out a rectangle a person drew on a page (for example a signature or logo). Works without any model.
+    /// Coordinates are PDF points from the page's bottom-left; boxes smaller than a few points are ignored.</summary>
+    public bool AddArea(int page, double x, double y, double width, double height)
+    {
+        if (!CanReview || OriginalDoc?.PageSizes is not { } sizes || page < 0 || page >= sizes.Count || width < 3 || height < 3) return false;
+        var (pw, ph) = sizes[page];
+        x = Math.Max(0, x); y = Math.Max(0, y); width = Math.Min(width, pw - x); height = Math.Min(height, ph - y);
+        if (width < 3 || height < 3) return false;
+        EnsureManualResult();
+        var rv = ReviewOf(Selected!.FullPath);
+        Commit(rv.Current with { Areas = [.. rv.Current.Areas, new AreaBox(page, x, y, width, height)] });
+        return true;
+    }
+
+    /// <summary>Removes a hand-drawn rectangle (by its list number).</summary>
+    public void RemoveArea(int bookmarkId)
+    {
+        if (CurrentReview is not { } rv) return;
+        var i = bookmarkId - Bookmark.AreaIdBase;
+        if (ActiveResult?.Result.AreaList is not { } list || i < 0 || i >= list.Count) return;
+        Commit(rv.Current with { Areas = rv.Current.Areas.Where(a => a != list[i]).ToList() });
     }
 
     /// <summary>Detector that finds nothing; used when only rewriting an existing result.</summary>

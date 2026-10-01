@@ -113,4 +113,20 @@ public class ReviewTests : IDisposable
         var again = await Open(store);   // a new session: the edit returns, as a hand-made result
         Assert.Equal("Sarah Jones met Sarah at [REDACTED:COMPANY] on Monday.", again.ActiveResult!.Result.RedactedText);
     }
+
+    /// <summary>Hand-drawn areas are part of the review: they appear in the result, count as changes, and are saved as numbers only.</summary>
+    [Fact]
+    public void Areas_are_part_of_the_review_and_saved()
+    {
+        var area = new AreaBox(0, 10, 20, 30, 40);
+        var review = ReviewState.Empty with { Areas = [area] };
+        Assert.False(review.IsEmpty);
+        Assert.False(review.SameAs(ReviewState.Empty));
+        Assert.Equal([area], review.ApplyTo(Text, new RedactionResult(Text, []), "[REDACTED:{type}]").Areas);
+
+        var file = Path.Combine(In, "b.txt"); File.WriteAllText(file, "x");
+        var store = new ReviewStore(Path.Combine(root, "review2"));
+        store.Save(file, review);
+        Assert.Equal([area], store.Load(file).Areas);
+    }
 }

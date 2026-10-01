@@ -16,10 +16,14 @@ public record ModelResult(Guid Id, string Model, ModelInfo? Info, RedactionResul
     public const string ManualModelName = "Manual";
 
     /// <summary>Number of redactions that are currently applied.</summary>
-    public int EditCount => Result.Edits.Count(e => e.Status == EditStatus.Active);
+    public int EditCount => Result.Edits.Count(e => e.Status == EditStatus.Active) + Result.AreaList.Count;
     /// <summary>Model output speed.</summary>
     public double TokensPerSecond => Elapsed.TotalSeconds > 0 ? OutputTokens / Elapsed.TotalSeconds : 0;
 }
 
 /// <summary>A row in the bookmark list. Built from the REDACTED text, so it never contains sensitive text.</summary>
-public record Bookmark(int Id, string Type, string Snippet, int Line, int OriginalStart, int RedactedStart, EditConfidence Confidence, bool Flagged = false, string Source = "llm", bool Rejected = false);
+public record Bookmark(int Id, string Type, string Snippet, int Line, int OriginalStart, int RedactedStart, EditConfidence Confidence, bool Flagged = false, string Source = "llm", bool Rejected = false, bool IsArea = false, int Page = 0)
+{
+    /// <summary>Numbers for hand-drawn areas start here so they never clash with edit numbers.</summary>
+    public const int AreaIdBase = 1_000_000;
+}

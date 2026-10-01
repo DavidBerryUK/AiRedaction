@@ -238,3 +238,35 @@ mark.m.rejected { background: transparent !important; box-shadow: none; text-dec
 .sel-bar { position: fixed; z-index: 50; display: flex; align-items: center; gap: 8px; padding: 6px 10px; background: var(--panel); color: var(--text); border: 2px solid var(--brand-yellow); border-radius: var(--radius); box-shadow: 0 4px 16px rgba(0,0,0,.35); font-size: 12.5px; }
 .sel-bar label { display: flex; align-items: center; gap: 4px; } .sel-count { color: var(--muted); }
 .chunk-mark { user-select: none; }
+
+/* page view with highlights */
+.pages-scroll { background: color-mix(in srgb, var(--panel-2) 70%, #888); padding: 8px; }
+.page { position: relative; width: 100%; max-width: 900px; margin: 0 auto 12px; background: #fff; box-shadow: 0 2px 10px rgba(0,0,0,.25); }
+.page img { display: block; width: 100%; height: 100%; user-select: none; -webkit-user-drag: none; }
+.page svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.page-no { position: absolute; right: 8px; top: 6px; font-size: 11px; background: rgba(0,0,0,.55); color: #fff; padding: 1px 7px; border-radius: 9px; pointer-events: none; }
+.hl { cursor: pointer; fill: color-mix(in srgb, var(--c-OTHER) 35%, transparent); stroke: var(--c-OTHER); stroke-width: 1; }
+.hl.area { fill: rgba(0,0,0,.35); stroke: #000; stroke-width: 1.5; stroke-dasharray: 5 3; }
+.hl.flagged, .hl.rejected { fill: transparent; stroke-dasharray: 3 2; } .hl.rejected { stroke: var(--bad); }
+.hl.sel { stroke: var(--focus); stroke-width: 3; fill: color-mix(in srgb, var(--brand-yellow) 55%, transparent); }
+.hl.flash { animation: svgflash 1.2s ease-out; } @keyframes svgflash { 0%, 40% { stroke: var(--focus); stroke-width: 4; } }
+.area-mode .page { cursor: crosshair; } .area-mode .hl { pointer-events: none; }
+.area-draft { position: absolute; background: rgba(0,0,0,.4); border: 2px dashed var(--brand-yellow); pointer-events: none; }
+.seg.draw-on { background: var(--brand-yellow); color: var(--brand-slate); border-color: var(--brand-yellow); }
+.hl.t-ADDRESS { fill: color-mix(in srgb, var(--c-ADDRESS) 38%, transparent); stroke: var(--c-ADDRESS); }
+.hl.t-AGE { fill: color-mix(in srgb, var(--c-AGE) 38%, transparent); stroke: var(--c-AGE); }
+.hl.t-COMPANY { fill: color-mix(in srgb, var(--c-COMPANY) 38%, transparent); stroke: var(--c-COMPANY); }
+.hl.t-COMPANY_ID { fill: color-mix(in srgb, var(--c-COMPANY_ID) 38%, transparent); stroke: var(--c-COMPANY_ID); }
+.hl.t-CONTEXTUAL { fill: color-mix(in srgb, var(--c-CONTEXTUAL) 38%, transparent); stroke: var(--c-CONTEXTUAL); }
+.hl.t-DATE_OF_BIRTH { fill: color-mix(in srgb, var(--c-DATE_OF_BIRTH) 38%, transparent); stroke: var(--c-DATE_OF_BIRTH); }
+.hl.t-DOMAIN { fill: color-mix(in srgb, var(--c-DOMAIN) 38%, transparent); stroke: var(--c-DOMAIN); }
+.hl.t-EMAIL { fill: color-mix(in srgb, var(--c-EMAIL) 38%, transparent); stroke: var(--c-EMAIL); }
+.hl.t-GENDER { fill: color-mix(in srgb, var(--c-GENDER) 38%, transparent); stroke: var(--c-GENDER); }
+.hl.t-ID_NUMBER { fill: color-mix(in srgb, var(--c-ID_NUMBER) 38%, transparent); stroke: var(--c-ID_NUMBER); }
+.hl.t-ONLINE_ID { fill: color-mix(in srgb, var(--c-ONLINE_ID) 38%, transparent); stroke: var(--c-ONLINE_ID); }
+.hl.t-OTHER { fill: color-mix(in srgb, var(--c-OTHER) 38%, transparent); stroke: var(--c-OTHER); }
+.hl.t-PERSON { fill: color-mix(in srgb, var(--c-PERSON) 38%, transparent); stroke: var(--c-PERSON); }
+.hl.t-PHONE { fill: color-mix(in srgb, var(--c-PHONE) 38%, transparent); stroke: var(--c-PHONE); }
+.hl.t-SECRET { fill: color-mix(in srgb, var(--c-SECRET) 38%, transparent); stroke: var(--c-SECRET); }
+.hl.flagged, .hl.rejected { fill: transparent; } .hl.sel { fill: color-mix(in srgb, var(--brand-yellow) 55%, transparent); stroke: var(--focus); }
+.chip.type.t-AREA { background: #000; color: #fff; }

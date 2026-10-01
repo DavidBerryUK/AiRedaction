@@ -46,6 +46,27 @@ window.redactorUi = (() => {
                 dotnet.invokeMethodAsync('OnTextSelected', a, b - a, Math.max(8, Math.min(rect.left, window.innerWidth - 460)), Math.min(rect.bottom + 8, window.innerHeight - 70));
             });
         },
+        // Lets a person drag a rectangle on a page (in the original pane, while it is in draw mode). Reports page and box in PDF points.
+        watchAreas(dotnet) {
+            let page = null, start = null, box = null;
+            const local = (e) => { const r = page.getBoundingClientRect(); return { x: Math.min(Math.max(e.clientX - r.left, 0), r.width), y: Math.min(Math.max(e.clientY - r.top, 0), r.height), r }; };
+            document.addEventListener('pointerdown', e => {
+                const pg = e.button === 0 && e.target.closest && e.target.closest('#pane-original.area-mode .page');
+                if (!pg) return;
+                e.preventDefault(); page = pg; start = local(e);
+                box = document.createElement('div'); box.className = 'area-draft'; pg.appendChild(box);
+            });
+            document.addEventListener('pointermove', e => {
+                if (!box) return; const p = local(e);
+                Object.assign(box.style, { left: Math.min(start.x, p.x) + 'px', top: Math.min(start.y, p.y) + 'px', width: Math.abs(p.x - start.x) + 'px', height: Math.abs(p.y - start.y) + 'px' });
+            });
+            document.addEventListener('pointerup', e => {
+                if (!box) return; const p = local(e); box.remove(); box = null;
+                const pw = +page.dataset.pw, ph = +page.dataset.ph, sx = pw / p.r.width, sy = ph / p.r.height;
+                const left = Math.min(start.x, p.x), top = Math.min(start.y, p.y), w = Math.abs(p.x - start.x), h = Math.abs(p.y - start.y);
+                dotnet.invokeMethodAsync('OnAreaDrawn', +page.dataset.page, left * sx, ph - (top + h) * sy, w * sx, h * sy);
+            });
+        },
         // Clears the browser's text selection (after a selection has been redacted or dismissed).
         clearSelection() { const s = window.getSelection(); if (s) s.removeAllRanges(); },
         // Starts listening for scrolls on the panes (called once after the first render).
@@ -61,7 +82,7 @@ window.redactorUi = (() => {
         // Scrolls both panes to the edit with this id and flashes it.
         jumpTo(id) {
             for (const pane of panes()) {
-                const el = pane && pane.querySelector(`mark[data-id="${id}"]`);
+                const el = pane && pane.querySelector(`[data-id="${id}"]`);
                 if (!el) continue;
                 busy = true; // do not let the two scrolls fight
                 el.scrollIntoView({ block: 'center', behavior: 'smooth' });

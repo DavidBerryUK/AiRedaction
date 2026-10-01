@@ -1,0 +1,67 @@
+@* Shows a document as its real pages (images), optionally with the edits drawn over them: each edit covers the words it redacts, in the
+   word's own outline (tilted on a tilted scan). In draw mode a person can drag a rectangle over anything that is not text. *@
+@using System.Globalization
+<div class="doc-scroll pages-scroll @(DrawMode ? "area-mode" : "")" id="@Id">
+    @for (var p = 0; p < Sizes.Count; p++)
+    {
+        var pg = p; var (pw, ph) = Sizes[p];
+        <div class="page" data-page="@pg" data-pw="@N(pw)" data-ph="@N(ph)" style="aspect-ratio: @N(pw) / @N(ph)">
+            <img src="@Src(pg)" draggable="false" alt="Page @(pg + 1)" />
+            @if (Marks is not null)
+            {
+                <svg viewBox="0 0 @N(pw) @N(ph)" preserveAspectRatio="none" aria-hidden="true">
+                    @foreach (var m in Marks)
+                    {
+                        var boxes = WordsFor(m).Where(w => w.Page == pg).ToList();
+                        if (boxes.Count == 0) { continue; }
+                        <g class="hl t-@m.Type @(m.Flagged ? "flagged" : "") @(m.Rejected ? "rejected" : "") @(m.Conf == "Low" ? "lowconf" : "") @(SelectedId == m.Id ? "sel" : "")" data-id="@m.Id" @onclick="() => OnMarkClick.InvokeAsync(m.Id)">
+                            <title>@m.Type</title>
+                            @foreach (var w in boxes) { <polygon points="@Points(w, ph)" /> }
+                        </g>
+                    }
+                    @foreach (var a in Areas.Where(a => a.Page == pg))
+                    {
+                        <g class="hl area @(SelectedId == a.Id ? "sel" : "")" data-id="@a.Id" @onclick="() => OnMarkClick.InvokeAsync(a.Id)">
+                            <title>Box drawn by hand</title>
+                            <rect x="@N(a.X)" y="@N(ph - a.Y - a.Height)" width="@N(a.Width)" height="@N(a.Height)" />
+                        </g>
+                    }
+                </svg>
+            }
+            <span class="page-no">Page @(pg + 1) of @Sizes.Count</span>
+        </div>
+    }
+</div>
+
+@code {
+    /// <summary>DOM id of the scrolling pane (the scripts find it by this).</summary>
+    [Parameter] public string Id { get; set; } = "";
+    /// <summary>Size of every page in points.</summary>
+    [Parameter] public IReadOnlyList<(double Width, double Height)> Sizes { get; set; } = [];
+    /// <summary>The picture URL for a page (0-based).</summary>
+    [Parameter] public Func<int, string> Src { get; set; } = _ => "";
+    /// <summary>Where each word sits, used to draw the edits (null for the redacted pane, which has nothing to draw over).</summary>
+    [Parameter] public IReadOnlyList<WordBox>? Words { get; set; }
+    /// <summary>The edits to draw (null = draw nothing).</summary>
+    [Parameter] public IReadOnlyList<PaneMark>? Marks { get; set; }
+    /// <summary>Rectangles drawn by hand.</summary>
+    [Parameter] public IReadOnlyList<PageArea> Areas { get; set; } = [];
+    /// <summary>The edit selected in the list, kept strongly highlighted.</summary>
+    [Parameter] public int? SelectedId { get; set; }
+    /// <summary>True while dragging a rectangle draws a new redaction box.</summary>
+    [Parameter] public bool DrawMode { get; set; }
+    [Parameter] public EventCallback<int> OnMarkClick { get; set; }
+
+    /// <summary>A number in invariant culture, as SVG needs.</summary>
+    static string N(double v) => v.ToString("0.##", CultureInfo.InvariantCulture);
+    /// <summary>The words that the text span of an edit covers.</summary>
+    IEnumerable<WordBox> WordsFor(PaneMark m) => (Words ?? []).Where(w => w.Start < m.Start + m.Length && w.Start + w.Length > m.Start);
+    /// <summary>A word's outline as SVG points (page top-left origin): its true quad if it has one, else its upright box with a little padding.</summary>
+    static string Points(WordBox w, double ph)
+    {
+        if (w.Quad is { Length: 8 } q) return string.Join(' ', Enumerable.Range(0, 4).Select(i => $"{N(q[i * 2])},{N(ph - q[i * 2 + 1])}"));
+        const double pad = 1;
+        double l = w.X - pad, r = w.X + w.Width + pad, t = ph - (w.Y + w.Height) - pad, b = ph - w.Y + pad;
+        return $"{N(l)},{N(t)} {N(r)},{N(t)} {N(r)},{N(b)} {N(l)},{N(b)}";
+    }
+}

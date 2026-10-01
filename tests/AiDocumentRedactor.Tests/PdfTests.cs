@@ -151,4 +151,25 @@ public class PdfTests
 
     /// <summary>The words that overlap any edit's span.</summary>
     static IEnumerable<WordBox> WordsInSpans(ExtractedDocument doc, RedactionResult result) => PdfDocumentWriter.WordsToCover(doc, result);
+
+    /// <summary>A rectangle drawn by hand on a page is painted solid black into the output, even where there is no word to redact.</summary>
+    [Fact]
+    public async Task Hand_drawn_area_is_painted_black()
+    {
+        var doc = await new PdfDocumentReader().ReadAsync(Corpus("pdf/01-hr-letter.pdf"), default);
+        var (pw, ph) = doc.PageSizes![0];
+        var area = new AreaBox(0, 100, 100, 150, 60);   // points, from the bottom-left
+        var result = Redactor.Apply(doc.Text, [], "[REDACTED:{type}]") with { Areas = [area] };
+        var outPath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString("N") + ".pdf");
+        try
+        {
+            await new PdfDocumentWriter(new PdfOptions()).WriteAsync(doc, result, outPath, default);
+            using var bmp = Conversion.ToImage(File.OpenRead(outPath), 0, options: new RenderOptions(Dpi: 100));
+            double sx = bmp.Width / pw, sy = bmp.Height / ph; int dark = 0, total = 0;
+            for (var x = (int)((area.X + 3) * sx); x < (int)((area.X + area.Width - 3) * sx); x++)
+                for (var y = (int)((ph - area.Y - area.Height + 3) * sy); y < (int)((ph - area.Y - 3) * sy); y++) { total++; if (bmp.GetPixel(x, y).Red < 40) dark++; }
+            Assert.True(dark > total * 0.98, $"only {dark} of {total} pixels are black");
+        }
+        finally { File.Delete(outPath); }
+    }
 }

@@ -59,10 +59,11 @@ public class ImageDocumentWriter(PdfOptions options, IOcrEngine? ocr = null, Ocr
             double sx = bmp.Width / pw, sy = bmp.Height / ph;
             using (var canvas = new SKCanvas(bmp))
             using (var black = new SKPaint { Color = SKColors.Black, Style = SKPaintStyle.Fill, IsAntialias = false })
+            {
                 foreach (var w in PdfDocumentWriter.WordsToCover(source, result))
-                {
                     PdfDocumentWriter.PaintWord(canvas, black, w, ph, sx, sy, options, fromOcr: true);   // tilted outline for OCR words
-                }
+                foreach (var a in result.AreaList.Where(a => a.Page == 0)) PdfDocumentWriter.PaintArea(canvas, black, a, ph, sx, sy);
+            }
             var png = Path.GetExtension(source.SourcePath).Equals(".png", StringComparison.OrdinalIgnoreCase);
             using var img = SKImage.FromBitmap(bmp);
             return img.Encode(png ? SKEncodedImageFormat.Png : SKEncodedImageFormat.Jpeg, png ? 100 : options.JpegQuality).ToArray();

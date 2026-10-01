@@ -163,6 +163,10 @@ public class PdfDocumentWriter(PdfOptions options, IOcrEngine? ocr = null, OcrOp
         canvas.DrawRect(SKRect.Create((float)(l * sx), (float)(t * sy), (float)((r - l) * sx), (float)((b - t) * sy)), black);
     }
 
+    /// <summary>Paints a hand-drawn rectangle solid black on a bitmap. Scales are bitmap pixels per point.</summary>
+    public static void PaintArea(SKCanvas canvas, SKPaint black, AreaBox a, double pageHeight, double sx, double sy) =>
+        canvas.DrawRect(SKRect.Create((float)(a.X * sx), (float)((pageHeight - a.Y - a.Height) * sy), (float)(a.Width * sx), (float)(a.Height * sy)), black);
+
     /// <summary>Draws black boxes on rendered pages, builds the new PDF, and refuses to return it if any text survived.
     /// Returns the finished PDF bytes.</summary>
     byte[] Render(ExtractedDocument doc, RedactionResult result, CancellationToken ct)
@@ -182,10 +186,11 @@ public class PdfDocumentWriter(PdfOptions options, IOcrEngine? ocr = null, OcrOp
                 var sx = bmp.Width / pw; var sy = bmp.Height / ph;
                 using (var canvas = new SKCanvas(bmp))
                 using (var black = new SKPaint { Color = SKColors.Black, Style = SKPaintStyle.Fill, IsAntialias = false })
+                {
                     foreach (var w in cover.GetValueOrDefault(p) ?? [])
-                    {
                         PaintWord(canvas, black, w, ph, sx, sy, options, doc.OcrConfidence is not null);
-                    }
+                    foreach (var a in result.AreaList.Where(a => a.Page == p)) PaintArea(canvas, black, a, ph, sx, sy);
+                }
                 using var img = SKImage.FromBitmap(bmp);
                 using var jpg = img.Encode(SKEncodedImageFormat.Jpeg, options.JpegQuality);
                 using var page = SKImage.FromEncodedData(jpg);

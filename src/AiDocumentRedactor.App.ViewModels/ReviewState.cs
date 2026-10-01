@@ -12,16 +12,20 @@ public record SpanKey(int Start, int Length);
 
 /// <summary>Everything a reviewer has changed for one document: spans they added and AI edits they rejected. Offsets only, never the
 /// text itself (FR9). It applies on top of any model's result, so the same review carries across models.</summary>
-public record ReviewState(IReadOnlyList<ManualSpan> Manual, IReadOnlyList<SpanKey> Rejected)
+public record ReviewState(IReadOnlyList<ManualSpan> Manual, IReadOnlyList<SpanKey> Rejected, IReadOnlyList<AreaBox> Areas)
 {
+    /// <summary>A review with no hand-drawn areas.</summary>
+    public ReviewState(IReadOnlyList<ManualSpan> manual, IReadOnlyList<SpanKey> rejected) : this(manual, rejected, []) { }
+
     /// <summary>No changes.</summary>
-    public static ReviewState Empty { get; } = new([], []);
+    public static ReviewState Empty { get; } = new([], [], []);
 
     /// <summary>True when nothing has been changed.</summary>
-    public bool IsEmpty => Manual.Count == 0 && Rejected.Count == 0;
+    public bool IsEmpty => Manual.Count == 0 && Rejected.Count == 0 && Areas.Count == 0;
 
     /// <summary>True if both states hold the same changes (records of lists compare by reference, so this compares the contents).</summary>
-    public bool SameAs(ReviewState o) => Manual.Count == o.Manual.Count && Rejected.Count == o.Rejected.Count
+    public bool SameAs(ReviewState o) => Manual.Count == o.Manual.Count && Rejected.Count == o.Rejected.Count && Areas.Count == o.Areas.Count
+        && Areas.OrderBy(a => a.Page).ThenBy(a => a.X).ThenBy(a => a.Y).SequenceEqual(o.Areas.OrderBy(a => a.Page).ThenBy(a => a.X).ThenBy(a => a.Y))
         && Manual.OrderBy(m => m.Start).ThenBy(m => m.Length).ThenBy(m => m.Type).SequenceEqual(o.Manual.OrderBy(m => m.Start).ThenBy(m => m.Length).ThenBy(m => m.Type))
         && Rejected.OrderBy(r => r.Start).ThenBy(r => r.Length).SequenceEqual(o.Rejected.OrderBy(r => r.Start).ThenBy(r => r.Length));
 
@@ -34,6 +38,7 @@ public record ReviewState(IReadOnlyList<ManualSpan> Manual, IReadOnlyList<SpanKe
             .Concat(model.Edits.Where(e => e.Status != EditStatus.Rejected && !rejected.Contains(new SpanKey(e.OriginalStart, e.OriginalLength)))
                 .Select(e => new DetectedEntity(e.Type, e.OriginalStart, e.OriginalLength, e.Confidence, e.Source, e.Status == EditStatus.Flagged)));
         var built = Redactor.Apply(text, spans, template);
+        if (Areas.Count > 0) built = built with { Areas = Areas };
         if (rejected.Count == 0) return built;
 
         var edits = built.Edits.ToList(); var id = edits.Count == 0 ? 1 : edits.Max(e => e.Id) + 1;
@@ -52,7 +57,7 @@ public record ReviewState(IReadOnlyList<ManualSpan> Manual, IReadOnlyList<SpanKe
 /// that exact file. The file holds offsets and categories only, no document text.</summary>
 public class ReviewStore(string directory)
 {
-    record Stored(int Version, List<ManualSpan> Manual, List<SpanKey> Rejected);
+    record Stored(int Version, List<ManualSpan> Manual, List<SpanKey> Rejected, List<AreaBox>? Areas = null);
 
     /// <summary>The file this document's review is kept in.</summary>
     string FileFor(string inputPath) => Path.Combine(directory, Convert.ToHexString(SHA256.HashData(File.ReadAllBytes(inputPath))) + ".json");
@@ -65,7 +70,7 @@ public class ReviewStore(string directory)
             var f = FileFor(inputPath);
             if (!File.Exists(f)) return ReviewState.Empty;
             var s = JsonSerializer.Deserialize<Stored>(File.ReadAllText(f));
-            return s is null ? ReviewState.Empty : new ReviewState(s.Manual, s.Rejected);
+            return s is null ? ReviewState.Empty : new ReviewState(s.Manual, s.Rejected, s.Areas ?? []);
         }
         catch (Exception ex) when (ex is IOException or JsonException) { return ReviewState.Empty; }
     }
@@ -76,6 +81,6 @@ public class ReviewStore(string directory)
         var f = FileFor(inputPath);
         if (state.IsEmpty) { File.Delete(f); return; }
         Directory.CreateDirectory(directory);
-        File.WriteAllText(f, JsonSerializer.Serialize(new Stored(1, [.. state.Manual], [.. state.Rejected])));
+        File.WriteAllText(f, JsonSerializer.Serialize(new Stored(2, [.. state.Manual], [.. state.Rejected], [.. state.Areas])));
     }
 }

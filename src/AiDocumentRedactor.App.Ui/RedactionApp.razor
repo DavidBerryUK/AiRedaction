@@ -126,6 +126,10 @@
                     <button class="seg @(!viewPages ? "active" : "")" @onclick="() => viewPages = false">Text</button>
                     <button class="seg @(viewPages ? "active" : "")" @onclick="() => viewPages = true" title="See the actual PDF pages: the original on the left, the redacted PDF as it will be saved on the right">Pages</button>
                 </span>
+                @if (PagesMode)
+                {
+                    <button class="seg @(drawMode ? "draw-on" : "")" title="Drag a rectangle on a page to black out something that is not text, such as a signature or logo" @onclick="() => drawMode = !drawMode">▭ @(drawMode ? "Drawing: drag on a page" : "Draw box")</button>
+                }
             }
             @if (S.OcrConfidence is { } oc)
             {
@@ -144,11 +148,8 @@
         }
         else if (PagesMode && S.Selected is { } po)
         {
-            <div class="doc-scroll preview" id="pane-original">
-                <div class="preview-note">@(po.IsPdf ? "Original PDF" : "Original image")</div>
-                @if (po.IsPdf) { <iframe class="viewer" title="@po.Name" src="@RedactionSession.FileUrl(po)"></iframe> }
-                else { <img class="viewer-img" alt="@po.Name" src="@RedactionSession.FileUrl(po)" /> }
-            </div>
+            <PageView Id="pane-original" Sizes="S.OriginalDoc!.PageSizes!" Src="p => PageUrl(po, p)" Words="S.OriginalDoc.Words" Marks="OriginalMarks"
+                      Areas="PageAreas" SelectedId="selectedBookmark" DrawMode="drawMode && !S.IsRunning" OnMarkClick="OnMarkClicked" />
         }
         else
         {
@@ -192,11 +193,7 @@
         @if (PagesMode && !Processing && S.ActiveResult is { } pr)
         {
             @* The redacted PDF exactly as it will be saved: black boxes over redacted words, no text layer. Rendered in memory on request. *@
-            <div class="doc-scroll preview" id="pane-redacted">
-                <div class="preview-note">@(S.Selected!.IsPdf ? "Redacted PDF as saved: black boxes, no text layer" : "Redacted image as saved: black boxes, no metadata")</div>
-                @if (S.Selected.IsPdf) { <iframe class="viewer" title="Redacted PDF" src="/results/@pr.Id/redacted"></iframe> }
-                else { <img class="viewer-img" alt="Redacted image" src="/results/@pr.Id/redacted" /> }
-            </div>
+            <PageView Id="pane-redacted" Sizes="S.OriginalDoc!.PageSizes!" Src="p => RedactedPageUrl(pr.Id, p)" />
         }
         else
         {
@@ -239,13 +236,14 @@
             @foreach (var b in Visible)
             {
                 <li class="bm @(selectedBookmark == b.Id ? "selected" : "") @(b.Rejected ? "rejected" : "")" @onclick="() => OnMarkClicked(b.Id)">
-                    <div class="bm-top"><span class="chip type t-@b.Type">@b.Type</span><span class="chip src @(b.Source == "human" ? "manual" : "")" title="@(b.Source == "human" ? "Added by a person" : "Found by the model")">@(b.Source == "human" ? "Manual" : "AI")</span>@if (b.Rejected) { <span class="chip conf-Flag" title="You rejected this edit. The text is left in the output.">Rejected</span> } else if (b.Flagged) { <span class="chip conf-Flag" title="@b.Confidence.Reason">Flagged</span> } else { <span class="chip conf-@b.Confidence.Level" title="@b.Confidence.Reason">@b.Confidence.Level</span> }<span class="bm-line">line @b.Line</span></div>
+                    <div class="bm-top"><span class="chip type t-@b.Type">@(b.IsArea ? "AREA" : b.Type)</span><span class="chip src @(b.Source == "human" ? "manual" : "")" title="@(b.Source == "human" ? "Added by a person" : "Found by the model")">@(b.Source == "human" ? "Manual" : "AI")</span>@if (b.Rejected) { <span class="chip conf-Flag" title="You rejected this edit. The text is left in the output.">Rejected</span> } else if (b.Flagged) { <span class="chip conf-Flag" title="@b.Confidence.Reason">Flagged</span> } else { <span class="chip conf-@b.Confidence.Level" title="@b.Confidence.Reason">@b.Confidence.Level</span> }<span class="bm-line">@(b.IsArea ? "page" : "line") @b.Line</span></div>
                     <div class="bm-snippet">@b.Snippet</div>
                     @if (!b.Rejected && b.Confidence.Level != ConfidenceLevel.High && b.Confidence.Reason != "") { <div class="bm-reason">@b.Confidence.Reason</div> }
                     @if (selectedBookmark == b.Id && S.CanReview)
                     {
                         <div class="bm-actions" @onclick:stopPropagation="true">
                             @if (b.Rejected) { <button class="btn small" @onclick="() => Restore(b.Id)">↺ Restore redaction</button> }
+                            else if (b.IsArea) { <button class="btn small" title="Remove this box" @onclick="() => RemoveArea(b.Id)">✕ Remove</button> }
                             else
                             {
                                 <select aria-label="Change category" @onchange="e => Retype(b.Id, e.Value?.ToString())">
@@ -320,6 +318,18 @@
     bool selAll;
     DotNetObjectReference<RedactionApp>? self;
 
+    /// <summary>Called from the page when a rectangle is dragged on a page: blacks out that area.</summary>
+    [JSInvokable] public void OnAreaDrawn(int page, double x, double y, double width, double height)
+    {
+        if (S.AddArea(page, x, y, width, height)) { selectedBookmark = null; drawMode = false; InvokeAsync(StateHasChanged); }
+    }
+    /// <summary>The picture URL of one page of a redacted result (the stamp makes it reload after a change).</summary>
+    string RedactedPageUrl(Guid id, int page) => "/results/" + id + "/page/" + page + "?v=" + S.RenderStamp(id);
+    /// <summary>The picture URL of one page of the original document.</summary>
+    static string PageUrl(DocumentItem d, int page) => $"/pages/{page}/" + string.Join('/', d.RelativePath.Replace('\\', '/').Split('/').Select(Uri.EscapeDataString));
+    /// <summary>Hand-drawn rectangles of the viewed result, for the page view.</summary>
+    IReadOnlyList<PageArea> PageAreas => Processing ? [] : S.ActiveResult?.Result.AreaList.Select((a, i) => new PageArea(Bookmark.AreaIdBase + i, a.Page, a.X, a.Y, a.Width, a.Height)).ToList() ?? [];
+
     /// <summary>Called from the page when text is selected in the original pane.</summary>
     [JSInvokable] public void OnTextSelected(int start, int length, double x, double y)
     {
@@ -338,6 +348,7 @@
     async Task DismissSelection() { sel = null; await JS.InvokeVoidAsync("redactorUi.clearSelection"); }
     /// <summary>Review actions on an edit. Edit numbers are rebuilt after every change, so the selection in the list is cleared.</summary>
     void Reject(int id) { S.RejectEdit(id); selectedBookmark = null; }
+    void RemoveArea(int id) { S.RemoveArea(id); selectedBookmark = null; }
     void Restore(int id) { S.RestoreEdit(id); selectedBookmark = null; }
     void Retype(int id, string? type) { if (type is not null) S.ChangeType(id, type); selectedBookmark = null; }
     void Undo() { S.Undo(); selectedBookmark = null; }
@@ -348,7 +359,7 @@
     /// <summary>The edit last clicked, highlighted in the list.</summary>
     int? selectedBookmark;
     /// <summary>Shows the "replace existing results?" confirmation instead of the Redact button.</summary>
-    bool viewPages;
+    bool viewPages, drawMode;
     bool confirmReplace, showModels, sortByConfidence, showPrompt, showChunks;
     string promptTab = "prompt";
     int? selectedCall;
@@ -393,14 +404,14 @@
     bool CanRun => RunBlocked is null;
 
     /// <summary>Every edit of the viewed result.</summary>
-    IReadOnlyList<Bookmark> AllBookmarks => Processing ? [] : S.Bookmarks();
+    IReadOnlyList<Bookmark> AllBookmarks => Processing ? [] : [.. S.Bookmarks(), .. S.AreaBookmarks()];
     /// <summary>Edits after the category/confidence filters, in document order or lowest confidence first.</summary>
     List<Bookmark> Visible
     {
         get
         {
             var q = AllBookmarks.Where(b => (typeFilter == "" || b.Type == typeFilter) && (confFilter == "" || b.Confidence.Level.ToString() == confFilter));
-            return (sortByConfidence ? q.OrderBy(b => b.Confidence.Level).ThenBy(b => b.OriginalStart) : q.OrderBy(b => b.OriginalStart)).ToList();
+            return (sortByConfidence ? q.OrderBy(b => b.Confidence.Level).ThenBy(b => b.IsArea ? int.MaxValue : b.OriginalStart) : q.OrderBy(b => b.IsArea ? int.MaxValue : b.OriginalStart).ThenBy(b => b.Page)).ToList();
         }
     }
 
@@ -492,6 +503,6 @@
     /// <summary>After the first draw, set up the scroll-sync script.</summary>
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if (firstRender) { await JS.InvokeVoidAsync("redactorUi.init"); await JS.InvokeVoidAsync("redactorUi.watchSelection", self); }
+        if (firstRender) { await JS.InvokeVoidAsync("redactorUi.init"); await JS.InvokeVoidAsync("redactorUi.watchSelection", self); await JS.InvokeVoidAsync("redactorUi.watchAreas", self); }
     }
 }
