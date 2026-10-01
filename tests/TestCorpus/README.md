@@ -25,6 +25,7 @@ Each source document is authored once with inline markup `[[TYPE|text]]` in
 | 10-contextual-profile | Indirect identifiers: role, salary, school, event | txt | Tier 4 (contextual) |
 | 11-hard-negatives | Nothing to redact: Microsoft Word, HMRC, London, "mark", "42" | txt, docx | Over-redaction / allow-list |
 | 12-hygiene-docx | Hidden content: comment, tracked deletion, header, footer, author metadata, text split across runs | docx | Scrubbing and run mapping |
+| context-text-01 to 10 | Five pairs of short texts where the same word is a person or company in one and an ordinary word or place in the other: Paris, Jordan, Will/Mark/Rose/Bill, Apple/Shell/Amazon/Target, Georgia/Chelsea/Florence/Victoria | txt | Context: does the model tell a name from a place or a common word (over-redaction and misses) |
 
 Ground-truth fields: `entities[].where` is `body`, `header`, `footer`, `comment`, `tracked-deletion` or
 `metadata`; `mustPreserve` lists strings that must survive redaction. Everything in `entities` must be

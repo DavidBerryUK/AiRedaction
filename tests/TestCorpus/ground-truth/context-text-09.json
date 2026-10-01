@@ -1,0 +1,35 @@
+{
+  "id": "context-text-09",
+  "title": "Context: places that are also first names (people)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Georgia",
+      "occurrences": 2
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Chelsea",
+      "occurrences": 2
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Florence",
+      "occurrences": 2
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Victoria",
+      "occurrences": 2
+    }
+  ],
+  "mustPreserve": []
+}

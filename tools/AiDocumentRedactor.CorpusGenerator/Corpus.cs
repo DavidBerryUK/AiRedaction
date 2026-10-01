@@ -122,5 +122,77 @@ public static class Corpus
             MetadataAuthor = "[[PERSON|Priya Natarajan]]",
             SplitRuns = true,
         },
+
+        // ---- Context tests: the same word is sometimes a person or company and sometimes an ordinary word or a place. Each pair has one document
+        // for each sense, so the answer key stays exact (a word is never both in the same document). ----
+        new("context-text-01", "Context: Paris the person", ["txt"],
+        [
+            H("Project Kestrel meeting notes"),
+            P("[[PERSON|Jane]] and [[PERSON|Paris]] were in a meeting discussing the project. [[PERSON|Paris]] leads the design team and [[PERSON|Jane]] manages the budget."),
+            P("After the meeting [[PERSON|Paris]] sent the notes to [[PERSON|Jane]] and asked [[GENDER|her]] to confirm the timetable before Friday."),
+        ]),
+
+        new("context-text-02", "Context: Paris the city", ["txt"],
+        [
+            H("Project Kestrel travel note"),
+            P("[[PERSON|Jane]] was with [[GENDER|her]] team in Paris discussing the project. The team took the train to Paris on Monday and stayed in the city for three days."),
+            P("The workshop in Paris went well, and the group returned to the office on Thursday. France has a good rail network."),
+        ]) { MustPreserve = ["Paris", "France"] },
+
+        new("context-text-03", "Context: Jordan the person", ["txt"],
+        [
+            H("Onboarding update"),
+            P("[[PERSON|Jordan]] joined the finance team last week. [[PERSON|Dana]] showed [[PERSON|Jordan]] the reporting system and [[PERSON|Jordan]] asked a lot of good questions."),
+            P("Please send [[PERSON|Jordan]] the access form at [[EMAIL|jordan.reeve@northfield-partners.example]]."),
+        ]),
+
+        new("context-text-04", "Context: Jordan the country", ["txt"],
+        [
+            H("Regional expansion plan"),
+            P("[[PERSON|Dana]] travelled to Jordan to meet suppliers. The flight to Jordan takes about five hours and the team plans to open a regional office in Amman next spring."),
+            P("Please send the visa forms for the Jordan trip to [[EMAIL|dana.whitlock@northfield-partners.example]]."),
+        ]) { MustPreserve = ["Jordan", "Amman"] },
+
+        new("context-text-05", "Context: names that are also ordinary words (people)", ["txt"],
+        [
+            H("Team lunch"),
+            P("[[PERSON|Will]] booked the table and [[PERSON|Mark]] paid. [[PERSON|Rose]] brought the cake and [[PERSON|Bill]] cut it. [[PERSON|Grace]] and [[PERSON|Hope]] arrived late but were forgiven."),
+            P("[[PERSON|Mark]] thanked everyone and [[PERSON|Will]] promised to organise the next one."),
+        ]),
+
+        new("context-text-06", "Context: ordinary words that are also names", ["txt"],
+        [
+            H("Committee minutes"),
+            P("The committee will approve the budget at the meeting on 14 May. Please mark each page you have read. A rose bush was planted by the entrance."),
+            P("The bill for the repairs was paid with grace and a little hope that costs will fall."),
+        ]) { MustPreserve = ["will", "mark", "rose", "bill", "grace", "hope", "May"] },
+
+        new("context-text-07", "Context: company names that are also ordinary words (companies)", ["txt"],
+        [
+            H("Supplier review"),
+            P("Our laptops come from [[COMPANY|Apple]] and our fuel cards from [[COMPANY|Shell]]. Parcels are shipped by [[COMPANY|Amazon]] and uniforms are bought from [[COMPANY|Target]]."),
+            P("The contract with [[COMPANY|Apple]] renews in June and [[COMPANY|Shell]] has offered a better rate."),
+        ]),
+
+        new("context-text-08", "Context: ordinary words that are also company names", ["txt"],
+        [
+            H("Weekend notes"),
+            P("The children ate an apple and collected a shell on the beach. Later they paddled down the Amazon on a school trip and practised on a target in the garden."),
+            P("The apple tree needs pruning and the shell path needs raking."),
+        ]) { MustPreserve = ["apple", "shell", "Amazon", "target"] },
+
+        new("context-text-09", "Context: places that are also first names (people)", ["txt"],
+        [
+            H("Planning session"),
+            P("[[PERSON|Georgia]] and [[PERSON|Chelsea]] reviewed the plan with [[PERSON|Florence]] and [[PERSON|Victoria]]. [[PERSON|Chelsea]] will present it on Tuesday."),
+            P("[[PERSON|Florence]] asked [[PERSON|Georgia]] to share the slides with [[PERSON|Victoria]]."),
+        ]),
+
+        new("context-text-10", "Context: first names that are also places", ["txt"],
+        [
+            H("Offsite itinerary"),
+            P("The offsite starts in Chelsea in London, moves to Florence in Italy, stops near Victoria Station, and finishes in Georgia."),
+            P("Coaches leave Chelsea at nine and the train from Victoria Station is booked."),
+        ]) { MustPreserve = ["Chelsea", "London", "Florence", "Italy", "Victoria", "Georgia"] },
     ];
 }

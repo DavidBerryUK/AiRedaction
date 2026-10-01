@@ -1,0 +1,29 @@
+{
+  "id": "context-text-01",
+  "title": "Context: Paris the person",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Jane",
+      "occurrences": 3
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Paris",
+      "occurrences": 3
+    },
+    {
+      "where": "body",
+      "type": "GENDER",
+      "text": "her",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

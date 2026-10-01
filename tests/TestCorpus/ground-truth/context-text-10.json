@@ -1,0 +1,17 @@
+{
+  "id": "context-text-10",
+  "title": "Context: first names that are also places",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [],
+  "mustPreserve": [
+    "Chelsea",
+    "London",
+    "Florence",
+    "Italy",
+    "Victoria",
+    "Georgia"
+  ]
+}

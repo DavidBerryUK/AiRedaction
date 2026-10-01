@@ -1,0 +1,35 @@
+{
+  "id": "context-text-07",
+  "title": "Context: company names that are also ordinary words (companies)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Apple",
+      "occurrences": 2
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Shell",
+      "occurrences": 2
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Amazon",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Target",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

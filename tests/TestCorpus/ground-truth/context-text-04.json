@@ -1,0 +1,26 @@
+{
+  "id": "context-text-04",
+  "title": "Context: Jordan the country",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Dana",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "EMAIL",
+      "text": "dana.whitlock@northfield-partners.example",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": [
+    "Jordan",
+    "Amman"
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "id": "context-text-02",
+  "title": "Context: Paris the city",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Jane",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "GENDER",
+      "text": "her",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": [
+    "Paris",
+    "France"
+  ]
+}

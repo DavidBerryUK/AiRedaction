@@ -1,0 +1,18 @@
+{
+  "id": "context-text-06",
+  "title": "Context: ordinary words that are also names",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [],
+  "mustPreserve": [
+    "will",
+    "mark",
+    "rose",
+    "bill",
+    "grace",
+    "hope",
+    "May"
+  ]
+}

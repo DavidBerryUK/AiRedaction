@@ -1,0 +1,15 @@
+{
+  "id": "context-text-08",
+  "title": "Context: ordinary words that are also company names",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [],
+  "mustPreserve": [
+    "apple",
+    "shell",
+    "Amazon",
+    "target"
+  ]
+}

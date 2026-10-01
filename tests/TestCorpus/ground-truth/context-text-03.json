@@ -1,0 +1,29 @@
+{
+  "id": "context-text-03",
+  "title": "Context: Jordan the person",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Jordan",
+      "occurrences": 4
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Dana",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "EMAIL",
+      "text": "jordan.reeve@northfield-partners.example",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}
