@@ -73,7 +73,7 @@ public class EvalTests
 
         var corpus = Path.Combine(dir!, "tests", "TestCorpus");
         var keys = GroundTruthStore.Load(corpus);
-        Assert.Equal(22, keys.Count);
+        Assert.Equal(23, keys.Count);
         Assert.Equal("01-hr-letter", GroundTruthStore.For("01-hr-letter-scan-degraded.jpg", keys)!.Id);
         Assert.Equal("Scan: image-only PDF", GroundTruthStore.FormatGroup("x/08-invoice-scan.pdf"));
         Assert.Equal("Word", GroundTruthStore.FormatGroup("x/02-services-agreement.docx"));

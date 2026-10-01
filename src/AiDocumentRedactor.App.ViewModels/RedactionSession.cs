@@ -1,4 +1,4 @@
-using System.Text.Json;
+﻿using System.Text.Json;
 using AiDocumentRedactor.Core;
 
 namespace AiDocumentRedactor.App.ViewModels;
@@ -38,7 +38,7 @@ public class RedactionSession
     {
         this.reviewStore = reviewStore;
         this.options = Copy(options);
-        startingEntities = Copy(options).Entities;
+        startingOptions = Copy(options);
         this.inputRoot = Path.GetFullPath(inputRoot);
         this.readers = readers;
         this.writers = writers;
@@ -51,19 +51,23 @@ public class RedactionSession
     /// <summary>An independent copy of the options, so changes made in one browser's session never reach another's (or the file).</summary>
     static RedactorOptions Copy(RedactorOptions o) => JsonSerializer.Deserialize<RedactorOptions>(JsonSerializer.Serialize(o, RedactorOptions.JsonOptions), RedactorOptions.JsonOptions)!;
     /// <summary>The category settings as loaded from the config file, for the Reset button.</summary>
-    readonly Dictionary<string, EntityOptions> startingEntities;
+    readonly RedactorOptions startingOptions;
 
     // ---- categories (changed in the UI for this session only; never written to the config file) ----
     /// <summary>Every category with its current switch, mode and description, in prompt order.</summary>
     public IReadOnlyList<CategoryRow> Categories => PromptBuilder.DefaultDescriptions.Keys.Select(t =>
     {
         options.Entities.TryGetValue(t, out var e);
-        return new CategoryRow(t, e?.Enabled ?? true, e?.Mode ?? "redact", e?.RedactPronouns ?? false, e?.RedactPlaces ?? false, e?.Description ?? PromptBuilder.DefaultDescriptions[t]);
+        return new CategoryRow(t, e?.Enabled ?? true, options.ModeOf(t), e?.RedactPronouns ?? false, e?.Description ?? PromptBuilder.DefaultDescriptions[t]);
     }).ToList();
     /// <summary>True if the categories differ from the config file.</summary>
-    public bool CategoriesChanged => Categories.Any(c => !(startingEntities.TryGetValue(c.Type, out var s) ? (s.Enabled, s.Mode, s.RedactPronouns, s.RedactPlaces) : (true, "redact", false, false)).Equals((c.Enabled, c.Mode, c.RedactPronouns, c.RedactPlaces)));
+    public bool CategoriesChanged => Categories.Any(c =>
+    {
+        startingOptions.Entities.TryGetValue(c.Type, out var s);
+        return (s?.Enabled ?? true, startingOptions.ModeOf(c.Type), s?.RedactPronouns ?? false) != (c.Enabled, c.Mode, c.RedactPronouns);
+    });
     /// <summary>The settings object for a category (created if the file did not mention it).</summary>
-    EntityOptions EntityFor(string type) => options.Entities.TryGetValue(type, out var e) ? e : options.Entities[type] = new EntityOptions();
+    EntityOptions EntityFor(string type) => options.Entities.TryGetValue(type, out var e) ? e : options.Entities[type] = new EntityOptions { Mode = options.ModeOf(type) };
     /// <summary>Switches a category on or off for the next Redact.</summary>
     public void SetCategoryEnabled(string type, bool on)
     {
@@ -82,16 +86,10 @@ public class RedactionSession
         EntityFor(EntityTypes.Gender).RedactPronouns = on;
         Notify();
     }
-    /// <summary>Turns redaction of place names on their own (cities, regions, countries) on or off (ADDRESS category) for the next Redact.</summary>
-    public void SetPlaces(bool on)
-    {
-        EntityFor(EntityTypes.Address).RedactPlaces = on;
-        Notify();
-    }
     /// <summary>Puts every category back to the config file's settings.</summary>
     public void ResetCategories()
     {
-        options.Entities = JsonSerializer.Deserialize<Dictionary<string, EntityOptions>>(JsonSerializer.Serialize(startingEntities, RedactorOptions.JsonOptions), RedactorOptions.JsonOptions)!;
+        options.Entities = Copy(startingOptions).Entities;
         Notify();
     }
 

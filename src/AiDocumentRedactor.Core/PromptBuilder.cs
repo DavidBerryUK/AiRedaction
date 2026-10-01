@@ -18,6 +18,7 @@ public static class PromptBuilder
         [EntityTypes.CompanyId] = "company registration, VAT, tax or DUNS numbers",
         [EntityTypes.Domain] = "company domain names and web addresses",
         [EntityTypes.Contextual] = "indirect identifiers that single out a person or company: distinctive job titles or roles, schools, employers, unusual events, salaries tied to a person",
+        [EntityTypes.Location] = "names of cities, towns, regions, counties and countries on their own (for example Paris, Yorkshire, Jordan), when they are places and not people or companies",
         [EntityTypes.Secret] = "passwords, API keys, access tokens, private keys, connection strings and other credentials",
     };
 
@@ -31,10 +32,9 @@ public static class PromptBuilder
         var sb = new System.Text.StringBuilder();
         sb.AppendLine("You find sensitive data in documents so it can be redacted. Return every item that belongs to one of these categories:");
         var pronouns = o.Entities.TryGetValue(EntityTypes.Gender, out var g) && g.RedactPronouns;
-        var places = o.Entities.TryGetValue(EntityTypes.Address, out var a) && a.RedactPlaces;
         foreach (var t in EnabledTypes(o))
         {
-            sb.AppendLine($"- {t}: {(o.Entities.TryGetValue(t, out var e) && e.Description is { } d ? d : DefaultDescriptions[t])}{(t == EntityTypes.Gender && pronouns ? "; also gendered pronouns (he, him, his, she, her, hers)" : "")}{(t == EntityTypes.Address && places ? "; also the names of cities, towns, regions and countries" : "")}");
+            sb.AppendLine($"- {t}: {(o.Entities.TryGetValue(t, out var e) && e.Description is { } d ? d : DefaultDescriptions[t])}{(t == EntityTypes.Gender && pronouns ? "; also gendered pronouns (he, him, his, she, her, hers)" : "")}");
         }
 
         sb.AppendLine();
@@ -47,9 +47,16 @@ public static class PromptBuilder
             sb.AppendLine("- Do not return pronouns (he, she, him, her, his, hers, they): only explicit statements of gender such as titles, male/female, man/woman.");
         }
 
-        if (!places && EnabledTypes(o).Contains(EntityTypes.Address))
+        if (EnabledTypes(o).Contains(EntityTypes.Address))
         {
-            sb.AppendLine("- Do not return the name of a city, town, region or country on its own (for example \"a meeting in Paris\"): only addresses that include a street, building or postcode, or a place that shows where a particular person lives.");
+            sb.AppendLine(EnabledTypes(o).Contains(EntityTypes.Location)
+                ? "- A city, town, region or country on its own is LOCATION, not ADDRESS. ADDRESS needs a street, building or postcode."
+                : "- Do not return the name of a city, town, region or country on its own: only addresses that include a street, building or postcode.");
+        }
+
+        if (EnabledTypes(o).Contains(EntityTypes.Location))
+        {
+            sb.AppendLine("- Decide by how the word is used in its sentence. A word that is a place name but is used as a person's name is PERSON, and one used as a company is COMPANY. Example: in \"Tom met Sydney for lunch\" and \"Sydney approved the plan\" Sydney is PERSON; in \"Tom flew to Sydney\" Sydney is LOCATION. A common word is not returned at all.");
         }
 
         if (o.CustomTerms.Allow.Length > 0)

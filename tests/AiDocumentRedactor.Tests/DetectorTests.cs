@@ -151,14 +151,24 @@ public class DetectorTests
         Assert.Contains("also gendered pronouns", on);
     }
 
-    /// <summary>The place switch changes the prompt: place names on their own are excluded by default and included when it is on.</summary>
+    /// <summary>City and country names are their own category, identified but left in the text by default, and kept apart from ADDRESS in the prompt.</summary>
     [Fact]
-    public void Place_switch_changes_the_prompt()
+    public async Task Locations_are_a_separate_category_flagged_by_default()
     {
-        var off = PromptBuilder.System(new RedactorOptions());
-        Assert.Contains("Do not return the name of a city", off);
-        var on = PromptBuilder.System(new RedactorOptions { Entities = { ["ADDRESS"] = new EntityOptions { RedactPlaces = true } } });
-        Assert.DoesNotContain("Do not return the name of a city", on);
-        Assert.Contains("also the names of cities, towns, regions and countries", on);
+        var o = new RedactorOptions();
+        Assert.Equal("flag", o.ModeOf("LOCATION"));
+        Assert.Equal("redact", o.ModeOf("ADDRESS"));
+        var prompt = PromptBuilder.System(o);
+        Assert.Contains("- LOCATION:", prompt);
+        Assert.Contains("A city, town, region or country on its own is LOCATION, not ADDRESS", prompt);
+
+        var d = Make("{\"entities\":[{\"type\":\"LOCATION\",\"text\":\"Paris\"},{\"type\":\"PERSON\",\"text\":\"Jane\"}]}", o);
+        var spans = await d.DetectAsync("Jane was in Paris.", null, default);
+        Assert.True(spans.Single(s => s.Type == "LOCATION").Flag);
+        Assert.False(spans.Single(s => s.Type == "PERSON").Flag);
+        Assert.Equal("Jane was in Paris.".Replace("Jane", "[REDACTED:PERSON]"), Redactor.Apply("Jane was in Paris.", spans, "[REDACTED:{type}]").RedactedText);
+
+        o.Entities["LOCATION"] = new EntityOptions { Mode = "redact" };
+        Assert.Equal("redact", o.ModeOf("LOCATION"));
     }
 }

@@ -12,7 +12,7 @@
   /* Category colours: Okabe-Ito (colour-blind safe). Always paired with a text label. */
   --c-PERSON: #e69f00; --c-PHONE: #56b4e9; --c-EMAIL: #009e73; --c-ADDRESS: #cc79a7; --c-ID_NUMBER: #d55e00;
   --c-ONLINE_ID: #0072b2; --c-AGE: #b8a600; --c-DATE_OF_BIRTH: #8a6bbf; --c-GENDER: #7f8c8d; --c-COMPANY: #44aa99;
-  --c-COMPANY_ID: #117733; --c-DOMAIN: #88ccee; --c-CONTEXTUAL: #aa4499; --c-SECRET: #cc3311; --c-OTHER: #999999;
+  --c-COMPANY_ID: #117733; --c-DOMAIN: #88ccee; --c-CONTEXTUAL: #aa4499; --c-LOCATION: #44aa99; --c-SECRET: #cc3311; --c-OTHER: #999999;
 }
 @media (prefers-color-scheme: dark) {
   :root { --bg: #232c36; --panel: #2b3541; --panel-2: #333f4c; --text: #eef2f2; --muted: #a2aab6; --border: #46525f;
@@ -285,3 +285,7 @@ mark.m.rejected { background: transparent !important; box-shadow: none; text-dec
 .seg.running { display: inline-flex; align-items: center; gap: 8px; }
 .spin-dot { flex: none; width: 16px; height: 16px; box-sizing: border-box; border-radius: 50%; border: 3px solid color-mix(in srgb, currentColor 25%, transparent); border-top-color: currentColor; animation: spin .9s linear infinite; }
 @media (prefers-reduced-motion: reduce) { .spin-dot { animation-duration: 3s; } }
+
+mark.m.t-LOCATION { background: color-mix(in srgb, var(--c-LOCATION) 38%, transparent); box-shadow: inset 0 -2px 0 var(--c-LOCATION); }
+.chip.type.t-LOCATION { background: var(--c-LOCATION); }
+.hl.t-LOCATION { fill: color-mix(in srgb, var(--c-LOCATION) 38%, transparent); stroke: var(--c-LOCATION); }

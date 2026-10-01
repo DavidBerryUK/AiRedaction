@@ -1,0 +1,35 @@
+{
+  "id": "context-text-11-mixed",
+  "title": "Context: MIXED - the same words as a person and as a place in one document (demo)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Paris",
+      "occurrences": 2
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Jane",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Jordan",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Georgia",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

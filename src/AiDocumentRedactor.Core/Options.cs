@@ -31,6 +31,10 @@ public class RedactorOptions
     /// <summary>Which models the evaluation command (not the app) compares.</summary>
     public EvaluationOptions Evaluation { get; set; } = new();
 
+    /// <summary>The mode of a category: what the config says, otherwise "flag" for LOCATION (place names are identified but left in the text,
+    /// because a city alone does not identify anyone) and "redact" for everything else.</summary>
+    public string ModeOf(string type) => Entities.TryGetValue(type, out var e) ? e.Mode : (type == EntityTypes.Location ? "flag" : "redact");
+
     /// <summary>Where reports and status.json go: report.directory if set, otherwise &lt;output&gt;/_report.</summary>
     [JsonIgnore]
     public string ReportDirectory => string.IsNullOrWhiteSpace(Report.Directory) ? Path.Combine(Output.Directory, "_report") : Report.Directory;
@@ -140,9 +144,6 @@ public class EntityOptions
     {
         get; set;
     }
-    /// <summary>ADDRESS only: also redact the names of cities, towns, regions and countries on their own. Off by default: a place name alone
-    /// ("a meeting in Paris") does not identify anyone, so only addresses with a street, building or postcode, or a place tied to a person, count.</summary>
-    public bool RedactPlaces { get; set; }
     /// <summary>Overrides the category's definition in the model prompt.</summary>
     public string? Description
     {

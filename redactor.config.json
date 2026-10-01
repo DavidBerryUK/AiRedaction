@@ -37,7 +37,6 @@
     },
     "ADDRESS": {
       "enabled": true,
-      "redactPlaces": false,
       "description": "postal addresses, including partial addresses (street, building, postcode)"
     },
     "ID_NUMBER": {
@@ -76,6 +75,11 @@
     "CONTEXTUAL": {
       "enabled": true,
       "description": "indirect identifiers that single out a person or company: distinctive job titles or roles, schools, employers, unusual events, salaries tied to a person"
+    },
+    "LOCATION": {
+      "enabled": true,
+      "mode": "flag",
+      "description": "names of cities, towns, regions, counties and countries on their own (for example Paris, Yorkshire, Jordan), when they are places and not people or companies"
     },
     "SECRET": {
       "enabled": true,

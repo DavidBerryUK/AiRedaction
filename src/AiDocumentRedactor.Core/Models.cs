@@ -6,7 +6,7 @@ public static class EntityTypes
     public const string Person = "PERSON", Phone = "PHONE", Email = "EMAIL", Address = "ADDRESS",
         IdNumber = "ID_NUMBER", OnlineId = "ONLINE_ID", Age = "AGE", DateOfBirth = "DATE_OF_BIRTH",
         Gender = "GENDER", Company = "COMPANY", CompanyId = "COMPANY_ID", Domain = "DOMAIN",
-        Contextual = "CONTEXTUAL", Secret = "SECRET", Other = "OTHER";
+        Contextual = "CONTEXTUAL", Location = "LOCATION", Secret = "SECRET", Other = "OTHER";
 }
 
 /// <summary>A span found in the extracted text. Detection never edits text. Source says where it came from: "llm" (returned by the model),

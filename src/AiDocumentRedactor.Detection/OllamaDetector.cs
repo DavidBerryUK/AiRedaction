@@ -130,7 +130,7 @@ public class OllamaDetector(HttpClient http, RedactorOptions options) : IEntityD
             spans.AddRange(Locate(text, term, EntityTypes.Other, 0, "custom-list"));
         }
         // Categories set to "flag" are listed for review but left in the text.
-        var flagTypes = options.Entities.Where(kv => kv.Value.Mode == "flag").Select(kv => kv.Key).ToHashSet();
+        var flagTypes = PromptBuilder.DefaultDescriptions.Keys.Where(t => options.ModeOf(t) == "flag").ToHashSet();
         return spans.Select(s => flagTypes.Contains(s.Type) ? s with { Flag = true } : s).DistinctBy(s => (s.Start, s.Length)).ToList();
     }
 

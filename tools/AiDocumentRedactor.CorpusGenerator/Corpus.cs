@@ -194,5 +194,14 @@ public static class Corpus
             P("The offsite starts in Chelsea in London, moves to Florence in Italy, stops near Victoria Station, and finishes in Georgia."),
             P("Coaches leave Chelsea at nine and the train from Victoria Station is booked."),
         ]) { MustPreserve = ["Chelsea", "London", "Florence", "Italy", "Victoria", "Georgia"] },
+
+        // MIXED: the same words are a person in one sentence and a place in the next, inside ONE document. For the demo. The scorer matches words as
+        // strings, so it cannot tell the two uses apart; its numbers for this one document are approximate (no keep-list is set for that reason).
+        new("context-text-11-mixed", "Context: MIXED - the same words as a person and as a place in one document (demo)", ["txt"],
+        [
+            H("MIXED: Project Kestrel visit notes"),
+            P("[[PERSON|Paris]] and [[PERSON|Jane]] spent Monday in Paris discussing the project. [[PERSON|Paris]] presented the budget and the team then had dinner in Paris."),
+            P("[[PERSON|Jordan]] flew to Jordan on Tuesday to meet suppliers. The visit to Jordan was arranged by [[PERSON|Georgia]], who then travelled to Georgia for the follow-up meeting."),
+        ]),
     ];
 }
