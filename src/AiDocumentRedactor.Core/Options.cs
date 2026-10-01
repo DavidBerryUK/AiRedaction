@@ -140,6 +140,9 @@ public class EntityOptions
     {
         get; set;
     }
+    /// <summary>ADDRESS only: also redact the names of cities, towns, regions and countries on their own. Off by default: a place name alone
+    /// ("a meeting in Paris") does not identify anyone, so only addresses with a street, building or postcode, or a place tied to a person, count.</summary>
+    public bool RedactPlaces { get; set; }
     /// <summary>Overrides the category's definition in the model prompt.</summary>
     public string? Description
     {

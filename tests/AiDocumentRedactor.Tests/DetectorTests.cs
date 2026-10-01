@@ -150,4 +150,15 @@ public class DetectorTests
         Assert.DoesNotContain("Do not return pronouns", on);
         Assert.Contains("also gendered pronouns", on);
     }
+
+    /// <summary>The place switch changes the prompt: place names on their own are excluded by default and included when it is on.</summary>
+    [Fact]
+    public void Place_switch_changes_the_prompt()
+    {
+        var off = PromptBuilder.System(new RedactorOptions());
+        Assert.Contains("Do not return the name of a city", off);
+        var on = PromptBuilder.System(new RedactorOptions { Entities = { ["ADDRESS"] = new EntityOptions { RedactPlaces = true } } });
+        Assert.DoesNotContain("Do not return the name of a city", on);
+        Assert.Contains("also the names of cities, towns, regions and countries", on);
+    }
 }

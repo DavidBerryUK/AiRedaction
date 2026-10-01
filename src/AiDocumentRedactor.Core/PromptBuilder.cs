@@ -8,7 +8,7 @@ public static class PromptBuilder
         [EntityTypes.Person] = "names of people (full, partial, initials, nicknames), including titles with names",
         [EntityTypes.Phone] = "telephone numbers in any format",
         [EntityTypes.Email] = "email addresses",
-        [EntityTypes.Address] = "postal addresses, including partial addresses (street, town, postcode)",
+        [EntityTypes.Address] = "postal addresses, including partial addresses (street, building, postcode)",
         [EntityTypes.IdNumber] = "government, passport, licence, national insurance/social security, bank account, sort code, IBAN or card numbers",
         [EntityTypes.OnlineId] = "IP addresses, usernames, social media handles and URLs identifying a person",
         [EntityTypes.Age] = "a person's age, exact or approximate (e.g. '42', 'in her forties')",
@@ -31,9 +31,10 @@ public static class PromptBuilder
         var sb = new System.Text.StringBuilder();
         sb.AppendLine("You find sensitive data in documents so it can be redacted. Return every item that belongs to one of these categories:");
         var pronouns = o.Entities.TryGetValue(EntityTypes.Gender, out var g) && g.RedactPronouns;
+        var places = o.Entities.TryGetValue(EntityTypes.Address, out var a) && a.RedactPlaces;
         foreach (var t in EnabledTypes(o))
         {
-            sb.AppendLine($"- {t}: {(o.Entities.TryGetValue(t, out var e) && e.Description is { } d ? d : DefaultDescriptions[t])}{(t == EntityTypes.Gender && pronouns ? "; also gendered pronouns (he, him, his, she, her, hers)" : "")}");
+            sb.AppendLine($"- {t}: {(o.Entities.TryGetValue(t, out var e) && e.Description is { } d ? d : DefaultDescriptions[t])}{(t == EntityTypes.Gender && pronouns ? "; also gendered pronouns (he, him, his, she, her, hers)" : "")}{(t == EntityTypes.Address && places ? "; also the names of cities, towns, regions and countries" : "")}");
         }
 
         sb.AppendLine();
@@ -44,6 +45,11 @@ public static class PromptBuilder
         if (!pronouns && EnabledTypes(o).Contains(EntityTypes.Gender))
         {
             sb.AppendLine("- Do not return pronouns (he, she, him, her, his, hers, they): only explicit statements of gender such as titles, male/female, man/woman.");
+        }
+
+        if (!places && EnabledTypes(o).Contains(EntityTypes.Address))
+        {
+            sb.AppendLine("- Do not return the name of a city, town, region or country on its own (for example \"a meeting in Paris\"): only addresses that include a street, building or postcode, or a place that shows where a particular person lives.");
         }
 
         if (o.CustomTerms.Allow.Length > 0)

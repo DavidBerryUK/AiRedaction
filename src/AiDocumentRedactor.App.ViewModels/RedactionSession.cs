@@ -58,10 +58,10 @@ public class RedactionSession
     public IReadOnlyList<CategoryRow> Categories => PromptBuilder.DefaultDescriptions.Keys.Select(t =>
     {
         options.Entities.TryGetValue(t, out var e);
-        return new CategoryRow(t, e?.Enabled ?? true, e?.Mode ?? "redact", e?.RedactPronouns ?? false, e?.Description ?? PromptBuilder.DefaultDescriptions[t]);
+        return new CategoryRow(t, e?.Enabled ?? true, e?.Mode ?? "redact", e?.RedactPronouns ?? false, e?.RedactPlaces ?? false, e?.Description ?? PromptBuilder.DefaultDescriptions[t]);
     }).ToList();
     /// <summary>True if the categories differ from the config file.</summary>
-    public bool CategoriesChanged => Categories.Any(c => !(startingEntities.TryGetValue(c.Type, out var s) ? (s.Enabled, s.Mode, s.RedactPronouns) : (true, "redact", false)).Equals((c.Enabled, c.Mode, c.RedactPronouns)));
+    public bool CategoriesChanged => Categories.Any(c => !(startingEntities.TryGetValue(c.Type, out var s) ? (s.Enabled, s.Mode, s.RedactPronouns, s.RedactPlaces) : (true, "redact", false, false)).Equals((c.Enabled, c.Mode, c.RedactPronouns, c.RedactPlaces)));
     /// <summary>The settings object for a category (created if the file did not mention it).</summary>
     EntityOptions EntityFor(string type) => options.Entities.TryGetValue(type, out var e) ? e : options.Entities[type] = new EntityOptions();
     /// <summary>Switches a category on or off for the next Redact.</summary>
@@ -80,6 +80,12 @@ public class RedactionSession
     public void SetPronouns(bool on)
     {
         EntityFor(EntityTypes.Gender).RedactPronouns = on;
+        Notify();
+    }
+    /// <summary>Turns redaction of place names on their own (cities, regions, countries) on or off (ADDRESS category) for the next Redact.</summary>
+    public void SetPlaces(bool on)
+    {
+        EntityFor(EntityTypes.Address).RedactPlaces = on;
         Notify();
     }
     /// <summary>Puts every category back to the config file's settings.</summary>

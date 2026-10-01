@@ -26,6 +26,10 @@
                     </td>
                     <td><span class="chip type t-@c.Type">@c.Type</span></td>
                     <td>@c.Description
+                        @if (c.Type == "ADDRESS")
+                        {
+                            <div class="sub"><label><input type="checkbox" checked="@c.RedactPlaces" disabled="@(!c.Enabled)" @onchange="e => S.SetPlaces((bool)(e.Value ?? false))" /> Also redact city, region and country names on their own</label></div>
+                        }
                         @if (c.Type == "GENDER")
                         {
                             <div class="sub"><label><input type="checkbox" checked="@c.RedactPronouns" disabled="@(!c.Enabled)" @onchange="e => S.SetPronouns((bool)(e.Value ?? false))" /> Also redact pronouns (he, him, his, she, her, hers)</label></div>

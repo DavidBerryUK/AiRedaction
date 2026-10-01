@@ -37,7 +37,8 @@
     },
     "ADDRESS": {
       "enabled": true,
-      "description": "postal addresses, including partial addresses (street, town, postcode)"
+      "redactPlaces": false,
+      "description": "postal addresses, including partial addresses (street, building, postcode)"
     },
     "ID_NUMBER": {
       "enabled": true,

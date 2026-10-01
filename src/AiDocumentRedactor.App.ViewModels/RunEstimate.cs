@@ -10,4 +10,4 @@ public record RunEstimate(int Pages, int Chars, int Chunks, int Models, double S
 }
 
 /// <summary>One category in the Categories dialog: its switch, mode, whether pronouns are redacted (GENDER only) and its definition.</summary>
-public record CategoryRow(string Type, bool Enabled, string Mode, bool RedactPronouns, string Description);
+public record CategoryRow(string Type, bool Enabled, string Mode, bool RedactPronouns, bool RedactPlaces, string Description);
