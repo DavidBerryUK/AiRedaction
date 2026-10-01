@@ -24,6 +24,7 @@
     <ProjectReference Include="..\..\src\AiDocumentRedactor.Documents\AiDocumentRedactor.Documents.csproj" />
     <ProjectReference Include="..\..\src\AiDocumentRedactor.App.ViewModels\AiDocumentRedactor.App.ViewModels.csproj" />
     <ProjectReference Include="..\..\src\AiDocumentRedactor.Ocr\AiDocumentRedactor.Ocr.csproj" />
+    <ProjectReference Include="..\..\src\AiDocumentRedactor.Eval\AiDocumentRedactor.Eval.csproj" />
   </ItemGroup>
 
 </Project>

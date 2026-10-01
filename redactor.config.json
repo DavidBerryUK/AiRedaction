@@ -123,5 +123,37 @@
   },
   "report": {
     "directory": ""
+  },
+  "evaluation": {
+    "models": [
+      {
+        "name": "phi4",
+        "include": true
+      },
+      {
+        "name": "gemma4:e4b",
+        "include": true
+      },
+      {
+        "name": "mistral-small3.2",
+        "include": true
+      },
+      {
+        "name": "qwen3.6:27b",
+        "include": false
+      },
+      {
+        "name": "qwen3.5:4b",
+        "include": true
+      },
+      {
+        "name": "gemma4:31b",
+        "include": false
+      },
+      {
+        "name": "gpt-oss",
+        "include": false
+      }
+    ]
   }
 }

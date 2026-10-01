@@ -28,6 +28,8 @@ public class RedactorOptions
     public PdfOptions Pdf { get; set; } = new();
     /// <summary>Reading scanned PDFs and images with OCR.</summary>
     public OcrOptions Ocr { get; set; } = new();
+    /// <summary>Which models the evaluation command (not the app) compares.</summary>
+    public EvaluationOptions Evaluation { get; set; } = new();
 
     /// <summary>Where reports and status.json go: report.directory if set, otherwise &lt;output&gt;/_report.</summary>
     [JsonIgnore]
@@ -60,8 +62,25 @@ public class RedactorOptions
         if (!Redaction.PlaceholderTemplate.Contains("{type}")) errors.Add("redaction.placeholderTemplate must contain {type}.");
         if (string.IsNullOrWhiteSpace(Output.Suffix)) errors.Add("output.suffix must not be empty.");
         if (Llm.Provider is not ("none" or "ollama")) errors.Add("llm.provider must be 'none' or 'ollama'.");
+        if (Evaluation.Models.Any(m => string.IsNullOrWhiteSpace(m.Name))) errors.Add("evaluation.models: every entry needs a name.");
         if (errors.Count > 0) throw new InvalidDataException(string.Join(Environment.NewLine, errors));
     }
+}
+
+/// <summary>Settings for the evaluation command.</summary>
+public class EvaluationOptions
+{
+    /// <summary>Models that may be compared, each with a switch. Only those with include = true are run (and only if installed).</summary>
+    public List<EvaluationModel> Models { get; set; } = [];
+}
+
+/// <summary>One model the evaluation command could run.</summary>
+public class EvaluationModel
+{
+    /// <summary>The Ollama model name, e.g. "phi4" or "gemma4:e4b".</summary>
+    public string Name { get; set; } = "";
+    /// <summary>True to run it in the next evaluation; false to keep it listed but skip it.</summary>
+    public bool Include { get; set; } = true;
 }
 
 /// <summary>Input folder settings.</summary>
