@@ -143,7 +143,8 @@ public class PdfDocumentWriter(PdfOptions options, IOcrEngine? ocr = null, OcrOp
     /// <summary>Renders the redacted PDF into the stream (used for the in-app viewer as well as saving).</summary>
     public async Task WriteAsync(ExtractedDocument source, RedactionResult result, Stream output, CancellationToken ct)
     {
-        var bytes = await Task.Run(() => Render(source, result, ct), ct);
+        var original = await File.ReadAllBytesAsync(source.SourcePath, ct);
+        var bytes = await Task.Run(() => Render(original, source, result, ct), ct);
         // For documents read by OCR, also read the OUTPUT with OCR: if redacted words can still be read, refuse to return it.
         if (ocr is not null && (ocrOptions ?? new()).VerifyOutput && source.OcrConfidence is not null)
         {
@@ -225,7 +226,7 @@ public class PdfDocumentWriter(PdfOptions options, IOcrEngine? ocr = null, OcrOp
 
     /// <summary>Draws black boxes on rendered pages, builds the new PDF, and refuses to return it if any text survived.
     /// Returns the finished PDF bytes.</summary>
-    byte[] Render(ExtractedDocument doc, RedactionResult result, CancellationToken ct)
+    byte[] Render(byte[] pdfBytes, ExtractedDocument doc, RedactionResult result, CancellationToken ct)
     {
         if (doc.PageSizes is not { Count: > 0 } sizes)
         {
@@ -233,7 +234,6 @@ public class PdfDocumentWriter(PdfOptions options, IOcrEngine? ocr = null, OcrOp
         }
 
         var cover = WordsToCover(doc, result).GroupBy(w => w.Page).ToDictionary(g => g.Key, g => g.ToList());
-        var pdfBytes = File.ReadAllBytes(doc.SourcePath);
         using var built = new MemoryStream();
         using (var pdf = SKDocument.CreatePdf(built))
         {

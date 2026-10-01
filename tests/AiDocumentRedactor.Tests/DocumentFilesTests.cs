@@ -44,7 +44,7 @@ public class DocumentFilesTests : IDisposable
     {
         Assert.Null(DocumentFiles.Resolve(In, "notes.txt"));
         Assert.Null(DocumentFiles.Resolve(In, "missing.pdf"));
-        Assert.Null(DocumentFiles.Resolve(In, ""));
+        Assert.Null(DocumentFiles.Resolve(In, string.Empty));
     }
 
     /// <summary>Content types are chosen by extension, case-insensitively.</summary>

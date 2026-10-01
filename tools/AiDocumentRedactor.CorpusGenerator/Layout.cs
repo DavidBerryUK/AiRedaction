@@ -61,7 +61,7 @@ public class Layout
     /// <summary>Breaks a line into pieces that fit the page width.</summary>
     static IEnumerable<string> Wrap(string s, SKFont f, float max)
     {
-        var cur = "";
+        var cur = string.Empty;
         foreach (var w in s.Split(' '))
         {
             var t = cur.Length == 0 ? w : cur + " " + w;

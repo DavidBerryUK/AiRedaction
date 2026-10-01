@@ -152,14 +152,14 @@ public class DocumentListTests : IDisposable
         Assert.Equal(["Alpha letter.txt"], Names(vm));
         Assert.StartsWith("1 of 5 documents", vm.Summary);
 
-        vm.SearchText = "";
-        vm.TypeFilter = "";
+        vm.SearchText = string.Empty;
+        vm.TypeFilter = string.Empty;
         Assert.Equal(5, vm.Items.Count);
 
         vm.TypeFilter = "PDF";
         File.Delete(Path.Combine(In, "beta.pdf"));
         vm.Refresh();                       // there are no PDFs left, so the filter must not leave the list empty
-        Assert.Equal("", vm.TypeFilter);
+        Assert.Equal(string.Empty, vm.TypeFilter);
         Assert.Equal(4, vm.Items.Count);
     }
 }

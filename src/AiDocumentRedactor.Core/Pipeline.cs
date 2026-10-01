@@ -53,7 +53,7 @@ public class RedactionPipeline(
     public string OutputPathFor(string inputPath, string inputRoot)
     {
         var rel = Path.GetRelativePath(inputRoot, inputPath);
-        var dir = options.Output.MirrorFolders ? Path.GetDirectoryName(rel) ?? "" : "";
+        var dir = options.Output.MirrorFolders ? Path.GetDirectoryName(rel) ?? string.Empty : "";
         var name = Path.GetFileNameWithoutExtension(rel) + options.Output.Suffix + Path.GetExtension(rel);
         return Path.Combine(options.Output.Directory, dir, name);
     }

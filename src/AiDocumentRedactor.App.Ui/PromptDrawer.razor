@@ -49,8 +49,14 @@
                             <strong>Call @c.Number of @Calls.Count</strong> · @c.ChunkLength.ToString("N0") chars
                             · @c.PromptTokens in / @c.OutputTokens out · @c.Elapsed.TotalSeconds.ToString("0.0") s
                             · <span class="kept">@c.Items.Count(i => i.Kept) kept</span>
-                            @if (c.Items.Count(i => !i.Kept) > 0) { <span> · <span class="dropped">@c.Items.Count(i => !i.Kept) dropped</span></span> }
-                            @if (c.Attempts > 1) { <span> · <span class="dropped">retried</span></span> }
+                            @if (c.Items.Count(i => !i.Kept) > 0)
+                            {
+                                <span> · <span class="dropped">@c.Items.Count(i => !i.Kept) dropped</span></span>
+                            }
+                            @if (c.Attempts > 1)
+                            {
+                                <span> · <span class="dropped">retried</span></span>
+                            }
                         </summary>
                         <h5>Sent (user message)</h5>
                         <pre class="prompt tall">@c.UserMessage</pre>
@@ -62,7 +68,10 @@
                             {
                                 <tr class="@(i.Kept ? "o-kept" : "o-dropped")"><td><span class="chip type t-@i.Type">@i.Type</span></td><td class="o-text">@i.Text</td><td>@(i.Kept ? "✔" : "✖") @i.Outcome</td></tr>
                             }
-                            @if (c.Items.Count == 0) { <tr><td colspan="3" class="muted">The model returned nothing for this chunk.</td></tr> }
+                            @if (c.Items.Count == 0)
+                            {
+                                <tr><td colspan="3" class="muted">The model returned nothing for this chunk.</td></tr>
+                            }
                         </table>
                     </details>
                 }

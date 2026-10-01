@@ -13,10 +13,16 @@
                     @foreach (var m in Marks)
                     {
                         var boxes = WordsFor(m).Where(w => w.Page == pg).ToList();
-                        if (boxes.Count == 0) { continue; }
+                        if (boxes.Count == 0)
+                        {
+                            continue;
+                        }
                         <g class="hl t-@m.Type @(m.Flagged ? "flagged" : "") @(m.Rejected ? "rejected" : "") @(m.Conf == "Low" ? "lowconf" : "") @(SelectedId == m.Id ? "sel" : "")" data-id="@m.Id" @onclick="() => OnMarkClick.InvokeAsync(m.Id)">
                             <title>@m.Type</title>
-                            @foreach (var w in boxes) { <polygon points="@Points(w, ph)" /> }
+                            @foreach (var w in boxes)
+                            {
+                                <polygon points="@Points(w, ph)" />
+                            }
                         </g>
                     }
                     @foreach (var a in Areas.Where(a => a.Page == pg))
@@ -59,7 +65,10 @@
     /// <summary>A word's outline as SVG points (page top-left origin): its true quad if it has one, else its upright box with a little padding.</summary>
     static string Points(WordBox w, double ph)
     {
-        if (w.Quad is { Length: 8 } q) return string.Join(' ', Enumerable.Range(0, 4).Select(i => $"{N(q[i * 2])},{N(ph - q[i * 2 + 1])}"));
+        if (w.Quad is { Length: 8 } q)
+        {
+            return string.Join(' ', Enumerable.Range(0, 4).Select(i => $"{N(q[i * 2])},{N(ph - q[i * 2 + 1])}"));
+        }
         const double pad = 1;
         double l = w.X - pad, r = w.X + w.Width + pad, t = ph - (w.Y + w.Height) - pad, b = ph - w.Y + pad;
         return $"{N(l)},{N(t)} {N(r)},{N(t)} {N(r)},{N(b)} {N(l)},{N(b)}";

@@ -24,7 +24,7 @@ public class SessionTests : IDisposable
         /// <summary>Records the call; returns null so the caller carries on to build the result.</summary>
         List<DetectedEntity>? Record(string text)
         {
-            Calls = [new ModelCall(1, 0, text.Length, "", "", [], 0, 0, TimeSpan.FromSeconds(1), 1)];
+            Calls = [new ModelCall(1, 0, text.Length, string.Empty, string.Empty, [], 0, 0, TimeSpan.FromSeconds(1), 1)];
             return null;
         }
     }

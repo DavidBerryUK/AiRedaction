@@ -49,18 +49,39 @@
         {
             while (ci < chunks.Count && chunks[ci].Start <= to)
             {
-                if (chunks[ci].Start > pos) { yield return new(t[pos..chunks[ci].Start], null, null, pos); pos = chunks[ci].Start; }
+                if (chunks[ci].Start > pos)
+                {
+                    yield return new(t[pos..chunks[ci].Start], null, null, pos);
+                    pos = chunks[ci].Start;
+                }
                 yield return new("", null, chunks[ci].Number); ci++;
             }
-            if (to > pos) { yield return new(t[pos..to], null, null, pos); pos = to; }
+            if (to > pos)
+            {
+                yield return new(t[pos..to], null, null, pos);
+                pos = to;
+            }
         }
         foreach (var m in Marks.Where(m => m.Start >= 0 && m.Start + m.Length <= t.Length).OrderBy(m => m.Start))
         {
-            if (m.Start < pos) continue;
-            foreach (var x in Plain(m.Start)) yield return x;
+            if (m.Start < pos)
+            {
+                continue;
+            }
+            foreach (var x in Plain(m.Start))
+            {
+                yield return x;
+            }
             yield return new(t.Substring(m.Start, m.Length), m, null, m.Start); pos = m.Start + m.Length;
-            while (ci < chunks.Count && chunks[ci].Start < pos) { yield return new("", null, chunks[ci].Number); ci++; }
+            while (ci < chunks.Count && chunks[ci].Start < pos)
+            {
+                yield return new(string.Empty, null, chunks[ci].Number);
+                ci++;
+            }
         }
-        foreach (var x in Plain(t.Length)) yield return x;
+        foreach (var x in Plain(t.Length))
+        {
+            yield return x;
+        }
     }
 }

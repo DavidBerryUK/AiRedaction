@@ -23,10 +23,10 @@ public class OllamaModelCatalog(HttpClient http) : IModelCatalog
 
             var d = m.GetProperty("details");
             /// <summary>Reads a text field from the model's details, or empty if absent.</summary>
-            string Str(string n) => d.TryGetProperty(n, out var v) ? v.GetString() ?? "" : "";
+            string Str(string n) => d.TryGetProperty(n, out var v) ? v.GetString() ?? string.Empty : "";
             var name = m.GetProperty("name").GetString()!;
             list.Add(new ModelInfo(name.EndsWith(":latest") ? name[..^7] : name, Str("parameter_size"), Str("quantization_level"), Str("family"),
-                m.GetProperty("size").GetInt64(), m.GetProperty("digest").GetString() ?? "",
+                m.GetProperty("size").GetInt64(), m.GetProperty("digest").GetString() ?? string.Empty,
                 d.TryGetProperty("context_length", out var cl) ? cl.GetInt32() : 0));
         }
         return list.OrderBy(x => x.Name, StringComparer.OrdinalIgnoreCase).ToList();

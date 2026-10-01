@@ -33,7 +33,7 @@ public partial class DocumentListViewModel : ObservableObject
     public ObservableCollection<DocumentItem> Items { get; } = [];
 
     /// <summary>Free-text search box contents.</summary>
-    [ObservableProperty] string searchText = "";
+    [ObservableProperty] string searchText = string.Empty;
     /// <summary>Sort field.</summary>
     [ObservableProperty] DocumentSort sortBy = DocumentSort.Name;
     /// <summary>Reverse the sort order.</summary>
@@ -41,14 +41,14 @@ public partial class DocumentListViewModel : ObservableObject
     /// <summary>The document chosen in the list.</summary>
     [ObservableProperty] DocumentItem? selected;
     /// <summary>Show only documents of this type (upper-case extension such as "PDF"); empty shows all types.</summary>
-    [ObservableProperty] string typeFilter = "";
+    [ObservableProperty] string typeFilter = string.Empty;
     /// <summary>The types present in the source folder with how many documents each has, for the type filter drop-down.</summary>
     public IReadOnlyList<(string Type, int Count)> AvailableTypes => all.GroupBy(i => i.Type).OrderBy(g => g.Key, StringComparer.OrdinalIgnoreCase).Select(g => (g.Key, g.Count())).ToList();
     /// <summary>Total number of documents in the folder, ignoring search and filter.</summary>
     public int TotalCount => all.Count;
 
     /// <summary>Counts line, e.g. "12 of 27 documents · 3 processed · 1 errors".</summary>
-    [ObservableProperty] string summary = "";
+    [ObservableProperty] string summary = string.Empty;
 
     /// <summary>Re-applies search and sort when the search text changes.</summary>
     partial void OnSearchTextChanged(string value) => Apply();
@@ -70,9 +70,9 @@ public partial class DocumentListViewModel : ObservableObject
             .Distinct();
         var selectedPath = Selected?.FullPath;
         all = files.Select(f => Build(f, saved)).ToList();
-        if (TypeFilter != "" && all.All(i => i.Type != TypeFilter))
+        if (TypeFilter != string.Empty && all.All(i => i.Type != TypeFilter))
         {
-            TypeFilter = "";   // that type no longer exists in the folder
+            TypeFilter = string.Empty;   // that type no longer exists in the folder
         }
 
         Apply();
@@ -95,7 +95,7 @@ public partial class DocumentListViewModel : ObservableObject
             return new(fullPath, rel, size, s.Status, s.Error);
         }
         // No record: processed outside the tool or before status tracking? An output file means it was processed.
-        var output = Path.Combine(options.Output.Directory, options.Output.MirrorFolders ? Path.GetDirectoryName(rel) ?? "" : "",
+        var output = Path.Combine(options.Output.Directory, options.Output.MirrorFolders ? Path.GetDirectoryName(rel) ?? string.Empty : "",
             Path.GetFileNameWithoutExtension(rel) + options.Output.Suffix + Path.GetExtension(rel));
         return new(fullPath, rel, size, File.Exists(output) ? DocumentStatus.Processed : DocumentStatus.NotProcessed, null);
     }
@@ -120,7 +120,7 @@ public partial class DocumentListViewModel : ObservableObject
     /// <summary>Filters by the search words, sorts, and refreshes the visible list and summary.</summary>
     void Apply()
     {
-        IEnumerable<DocumentItem> q = TypeFilter == "" ? all : all.Where(i => i.Type == TypeFilter);
+        IEnumerable<DocumentItem> q = TypeFilter == string.Empty ? all : all.Where(i => i.Type == TypeFilter);
         var terms = SearchText.Split(' ', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
         // Free text: every word must match the name, folder, type or status (case-insensitive)
         foreach (var t in terms)

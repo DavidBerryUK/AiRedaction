@@ -62,9 +62,10 @@ public class ImageDocumentWriter(PdfOptions options, IOcrEngine? ocr = null, Ocr
     public async Task WriteAsync(ExtractedDocument source, RedactionResult result, Stream output, CancellationToken ct)
     {
         var (pw, ph) = source.PageSizes![0];
+        var original = await File.ReadAllBytesAsync(source.SourcePath, ct);
         var bytes = await Task.Run(() =>
         {
-            using var bmp = SKBitmap.Decode(File.ReadAllBytes(source.SourcePath)) ?? throw new InvalidOperationException("The image could not be decoded.");
+            using var bmp = SKBitmap.Decode(original) ?? throw new InvalidOperationException("The image could not be decoded.");
             double sx = bmp.Width / pw, sy = bmp.Height / ph;
             using (var canvas = new SKCanvas(bmp))
             using (var black = new SKPaint { Color = SKColors.Black, Style = SKPaintStyle.Fill, IsAntialias = false })

@@ -36,7 +36,7 @@ public static class MarkdownReport
     static string P(double v) => (v * 100).ToString("0.0", CultureInfo.InvariantCulture) + "%";
     static string Cell(string s) => s.Replace("|", "\\|").Replace("\n", " ");
     /// <summary>One table row from single cells and lists of cells, flattened.</summary>
-    static string[] Row(params object[] parts) => parts.SelectMany(p => p is IEnumerable<string> l ? l : [p.ToString() ?? ""]).ToArray();
+    static string[] Row(params object[] parts) => parts.SelectMany(p => p is IEnumerable<string> l ? l : [p.ToString() ?? string.Empty]).ToArray();
     /// <summary>A Markdown table from a header row and body rows.</summary>
     static void Table(StringBuilder sb, string[] head, IEnumerable<string[]> rows)
     {

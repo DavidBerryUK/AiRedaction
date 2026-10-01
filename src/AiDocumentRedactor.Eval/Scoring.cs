@@ -11,7 +11,7 @@ public record FalsePositive(string Type, string Text);
 /// <summary>The scores of one model on one document.</summary>
 public class DocScore
 {
-    public string File = "", Group = "", Model = "";
+    public string File = string.Empty, Group = string.Empty, Model = string.Empty;
     /// <summary>Per category: occurrences that were in the text, and how many of them the model removed.</summary>
     public Dictionary<string, (int Present, int Caught)> ByCategory = new();
     public int Present, Caught, EntitiesPresent, EntitiesFullyCaught;
@@ -103,7 +103,7 @@ public static class Scoring
             }
             else
             {
-                s.FalsePositives.Add(new FalsePositive(edit.Type, edit.OriginalText ?? ""));
+                s.FalsePositives.Add(new FalsePositive(edit.Type, edit.OriginalText ?? string.Empty));
             }
 
             var t = s.EditsByType.GetValueOrDefault(edit.Type);

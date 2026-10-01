@@ -244,7 +244,7 @@ public class OllamaDetector(HttpClient http, RedactorOptions options) : IEntityD
                 OutputTokens += ec.GetInt64();
                 ot += ec.GetInt64();
             }
-            var raw = json.GetProperty("message").GetProperty("content").GetString() ?? "";
+            var raw = json.GetProperty("message").GetProperty("content").GetString() ?? string.Empty;
             try
             {
                 return new AskResult(Parse(raw), userMessage, raw, pt, ot, sw.Elapsed, attempt);
@@ -258,7 +258,7 @@ public class OllamaDetector(HttpClient http, RedactorOptions options) : IEntityD
     {
         using var doc = JsonDocument.Parse(content);
         return doc.RootElement.GetProperty("entities").EnumerateArray()
-            .Select(e => new Item(e.GetProperty("type").GetString() ?? EntityTypes.Other, e.GetProperty("text").GetString() ?? ""))
+            .Select(e => new Item(e.GetProperty("type").GetString() ?? EntityTypes.Other, e.GetProperty("text").GetString() ?? string.Empty))
             .ToList();
     }
 }

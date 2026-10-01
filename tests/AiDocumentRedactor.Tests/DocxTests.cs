@@ -28,7 +28,7 @@ public class DocxTests
 
     /// <summary>All the docx files in the corpus.</summary>
     public static IEnumerable<object[]> Files() =>
-        Directory.GetFiles(Path.GetDirectoryName(Corpus("docx/01-hr-letter.docx")) ?? "", "*.docx").Select(f => new object[] { Path.GetFileName(f) });
+        Directory.GetFiles(Path.GetDirectoryName(Corpus("docx/01-hr-letter.docx")) ?? string.Empty, "*.docx").Select(f => new object[] { Path.GetFileName(f) });
 
     /// <summary>Every corpus document reads to non-empty text.</summary>
     [Theory, MemberData(nameof(Files))]

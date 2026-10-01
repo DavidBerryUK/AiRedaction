@@ -26,9 +26,15 @@
                     </td>
                     <td><strong>@c.Name</strong>@if (c.Available) { <div class="sub">@c.Info!.ParameterSize · @c.Info.Quantization · @c.Info.ContextLabel</div> }</td>
                     <td>
-                        @if (c.Available) { <span class="chip st-ok">✔ Downloaded</span> }
+                        @if (c.Available)
+                        {
+                            <span class="chip st-ok">✔ Downloaded</span>
+                        }
                         else { <span class="chip st-bad">✖ Unavailable</span><div class="sub"><code>@c.PullCommand</code></div> }
-                        @if (!c.Available && S.IsConfidenceModel(c.Name)) { <div class="sub warn">Ticked, but skipped until downloaded</div> }
+                        @if (!c.Available && S.IsConfidenceModel(c.Name))
+                        {
+                            <div class="sub warn">Ticked, but skipped until downloaded</div>
+                        }
                     </td>
                     <td>@(c.Available ? c.Info!.SizeLabel : "—")</td>
                     <td>@if (isPrimary) { <span class="chip primary-role">Primary (next run)</span> }

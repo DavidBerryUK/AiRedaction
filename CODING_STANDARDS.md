@@ -21,7 +21,7 @@ This is a C#/.NET project that uses local AI (Ollama) for document redaction. Th
   - Use `nameof()` operator instead of string literals when referencing identifiers
   - Use `string.Empty` instead of `""` for empty strings
   - Use `const` for compile-time constants and `static readonly` for runtime constants
-  - Use `async`/`await` for all I/O operations
+  - Use `async`/`await` for all I/O operations (`File.ReadAllBytesAsync`, not `File.ReadAllBytes`). Synchronous file access is acceptable only for loading the config at start-up, tiny state files, and inside a `Task.Run` block doing CPU-bound work on bytes that were already read asynchronously
   - Do not use `ConfigureAwait(false)`: ASP.NET Core and modern .NET have no context that causes the old deadlocks, and in the UI layer code must resume on the component's context
   - Prefer `Task.Run` for CPU-bound work on background threads
 - **Razor/Blazor** for the UI (ASP.NET Core host, loopback-only, no platform-specific UI code)
@@ -119,7 +119,7 @@ catch (Exception ex) { Console.Error.WriteLine(ex.Message); return 2; }
 
 Exceptions: expression-bodied members and lambdas (`=> ...`) and object/collection initializers (`new X { A = 1 }`) may stay on one line.
 
-**Enforced by tooling:** `.editorconfig` in the repository root sets these rules. To fix a file or the whole solution, run `dotnet format whitespace` and `dotnet format style --diagnostics IDE0011`. Razor files (`.razor`) are not covered by these tools yet; follow the same rule by hand in their `@code` blocks when you touch them.
+**Enforced by tooling:** `.editorconfig` in the repository root sets these rules. To fix a file or the whole solution, run `dotnet format whitespace` and `dotnet format style --diagnostics IDE0011`. Razor files (`.razor`) are not covered by these tools; the same rule applies to their `@code` blocks and to `@if` / `@foreach` markup blocks, by hand. Two exceptions in markup: a short conditional placed inline in the middle of a line of markup (`<td>@if (x) { <span>…</span> }</td>`), and anything inside a `<pre>` element, where whitespace is visible.
 
 ### Use records for immutable data types:
 ```csharp
@@ -170,6 +170,8 @@ using var doc = WordprocessingDocument.Open(ms, true);
 // Bad
 using (var ms = new MemoryStream()) { ... }
 ```
+
+**Exception:** keep a `using` block when the object must be disposed *before the end of the method*, for example a PDF document, canvas or Word package that has to be closed (flushed) before its output stream is read. Add a short comment saying why.
 
 ### Use null-forgiving operator when you know better than the compiler:
 ```csharp

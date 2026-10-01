@@ -161,10 +161,17 @@ public class DocxDocumentReader : IDocumentReader
     /// <summary>True for .docx files.</summary>
     public bool CanRead(string path) => Path.GetExtension(path).Equals(".docx", StringComparison.OrdinalIgnoreCase);
 
-    /// <summary>Reads the file into text on a background thread.</summary>
-    public Task<ExtractedDocument> ReadAsync(string path, CancellationToken ct) => Task.Run(() =>
+    /// <summary>Reads the file, then turns it into text on a background thread.</summary>
+    public async Task<ExtractedDocument> ReadAsync(string path, CancellationToken ct)
     {
-        using var ms = DocxModel.ExpandableCopy(File.ReadAllBytes(path));
+        var bytes = await File.ReadAllBytesAsync(path, ct);
+        return await Task.Run(() => Read(path, bytes), ct);
+    }
+
+    /// <summary>Opens the document from its bytes (accepting tracked changes in memory) and returns its flattened text.</summary>
+    static ExtractedDocument Read(string path, byte[] bytes)
+    {
+        using var ms = DocxModel.ExpandableCopy(bytes);
         WordprocessingDocument doc;
         try
         {
@@ -190,7 +197,7 @@ public class DocxDocumentReader : IDocumentReader
 
             return new ExtractedDocument(path, "docx", text);
         }
-    }, ct);
+    }
 }
 
 /// <summary>Writes a redacted Word document. Redacted text is replaced inside the original formatting (the placeholder takes the formatting
@@ -211,8 +218,12 @@ public class DocxDocumentWriter : IDocumentWriter, IStreamDocumentWriter
     }
 
     /// <summary>Redacts, scrubs and verifies the document, then writes it to the stream.</summary>
-    public Task WriteAsync(ExtractedDocument source, RedactionResult result, Stream output, CancellationToken ct) =>
-        Task.Run(() => output.Write(Render(source, result)), ct);
+    public async Task WriteAsync(ExtractedDocument source, RedactionResult result, Stream output, CancellationToken ct)
+    {
+        var bytes = await File.ReadAllBytesAsync(source.SourcePath, ct);
+        var rendered = await Task.Run(() => Render(bytes, source, result), ct);
+        await output.WriteAsync(rendered, ct);
+    }
 
     /// <summary>The strings that must not survive anywhere in the output: the text of every active edit long enough to search for safely.</summary>
     static List<string> Secrets(RedactionResult result) =>
@@ -220,10 +231,10 @@ public class DocxDocumentWriter : IDocumentWriter, IStreamDocumentWriter
             .Distinct(StringComparer.OrdinalIgnoreCase).OrderByDescending(s => s.Length).ToList();
 
     /// <summary>The whole job: accept changes, check the text still matches what was read, replace the redacted spans, scrub, save, verify.</summary>
-    static byte[] Render(ExtractedDocument source, RedactionResult result)
+    static byte[] Render(byte[] original, ExtractedDocument source, RedactionResult result)
     {
         var secrets = Secrets(result);
-        using var ms = DocxModel.ExpandableCopy(File.ReadAllBytes(source.SourcePath));
+        using var ms = DocxModel.ExpandableCopy(original);
         using (var doc = WordprocessingDocument.Open(ms, true))
         {
             DocxModel.AcceptChanges(doc);
@@ -345,8 +356,8 @@ public class DocxDocumentWriter : IDocumentWriter, IStreamDocumentWriter
         {
             foreach (var dp in root.Descendants<DocumentFormat.OpenXml.Drawing.Wordprocessing.DocProperties>())
             {
-                dp.Description = "";
-                dp.Title = "";
+                dp.Description = string.Empty;
+                dp.Title = string.Empty;
             }
         }
 
@@ -379,7 +390,7 @@ public class DocxDocumentWriter : IDocumentWriter, IStreamDocumentWriter
                 }
                 foreach (var attr in el.GetAttributes().ToList())
                 {
-                    var v = Replace(attr.Value ?? "", secrets);
+                    var v = Replace(attr.Value ?? string.Empty, secrets);
                     if (v != attr.Value)
                     {
                         el.SetAttribute(new OpenXmlAttribute(attr.Prefix, attr.LocalName, attr.NamespaceUri, v));

@@ -61,7 +61,7 @@ public record ReviewState(IReadOnlyList<ManualSpan> Manual, IReadOnlyList<SpanKe
             }
 
             var shift = built.Edits.Where(x => x.Status == EditStatus.Active && x.OriginalStart + x.OriginalLength <= e.OriginalStart).Sum(x => x.RedactedLength - x.OriginalLength);
-            edits.Add(new RedactionEdit(id++, e.Type, e.OriginalStart, e.OriginalLength, e.OriginalStart + shift, e.OriginalLength, "", e.OriginalText, e.Confidence, e.Source, EditStatus.Rejected));
+            edits.Add(new RedactionEdit(id++, e.Type, e.OriginalStart, e.OriginalLength, e.OriginalStart + shift, e.OriginalLength, string.Empty, e.OriginalText, e.Confidence, e.Source, EditStatus.Rejected));
         }
         return built with {
             Edits = edits

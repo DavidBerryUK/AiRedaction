@@ -49,7 +49,7 @@ public static class Redactor
             sb.Append(text, pos, s.Start - pos);
             if (s.Flag)
             {
-                edits.Add(new RedactionEdit(id++, s.Type, s.Start, s.Length, sb.Length, s.Length, "", text.Substring(s.Start, s.Length), s.Confidence, s.Source, EditStatus.Flagged));
+                edits.Add(new RedactionEdit(id++, s.Type, s.Start, s.Length, sb.Length, s.Length, string.Empty, text.Substring(s.Start, s.Length), s.Confidence, s.Source, EditStatus.Flagged));
                 sb.Append(text, s.Start, s.Length);
                 pos = s.Start + s.Length;
                 continue;

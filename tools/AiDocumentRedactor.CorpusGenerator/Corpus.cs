@@ -9,7 +9,7 @@ public static class Corpus
     /// <summary>A paragraph block (\n gives a line break).</summary>
     static Block P(string t) => new(BlockKind.Para, t);
     /// <summary>A table block from rows of cells.</summary>
-    static Block T(params string[][] rows) => new(BlockKind.Table, "", rows);
+    static Block T(params string[][] rows) => new(BlockKind.Table, string.Empty, rows);
 
     /// <summary>The 12 test documents. Each is written once, with the formats it should be rendered to.</summary>
     public static List<DocDef> All() =>

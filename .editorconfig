@@ -29,3 +29,7 @@ dotnet_naming_rule.private_fields_camel.style = camel_case_no_underscore
 dotnet_naming_symbols.private_fields.applicable_kinds = field
 dotnet_naming_symbols.private_fields.applicable_accessibilities = private
 dotnet_naming_style.camel_case_no_underscore.capitalization = camel_case
+
+# using declarations instead of using blocks.
+csharp_prefer_simple_using_statement = true:warning
+dotnet_diagnostic.IDE0063.severity = warning

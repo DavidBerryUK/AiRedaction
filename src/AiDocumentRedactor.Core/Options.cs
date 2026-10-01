@@ -96,7 +96,7 @@ public class EvaluationOptions
 public class EvaluationModel
 {
     /// <summary>The Ollama model name, e.g. "phi4" or "gemma4:e4b".</summary>
-    public string Name { get; set; } = "";
+    public string Name { get; set; } = string.Empty;
     /// <summary>True to run it in the next evaluation; false to keep it listed but skip it.</summary>
     public bool Include { get; set; } = true;
 }
@@ -250,5 +250,5 @@ public class CustomTermsOptions
 public class ReportOptions
 {
     /// <summary>Empty means <output>/_report.</summary>
-    public string Directory { get; set; } = "";
+    public string Directory { get; set; } = string.Empty;
 }
