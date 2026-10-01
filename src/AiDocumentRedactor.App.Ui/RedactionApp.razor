@@ -64,17 +64,20 @@
             }
             else
             {
-                <button class="btn primary" disabled="@(!CanRun)" title="@(RunBlocked ?? "")" @onclick="RunClicked">
-                    @RunLabel
-                </button>
-                @if (RunBlocked is { } why && !S.IsRunning)
-                {
-                    <span class="blocked-hint" role="status">@why</span>
-                }
-                else if (!S.IsRunning && S.Estimate() is { } est)
-                {
-                    <span class="estimate @(est.Warning is not null ? "big" : "")" title="@(est.Warning ?? "Forecast from the speed of earlier runs")" role="status">@(est.Warning is not null ? "⚠ " : "")@est.Summary@(est.Warning is not null ? ". " + est.Warning : "")</span>
-                }
+                @* The Redact button with its forecast (or the reason it is blocked) on a line of its own underneath, right-aligned *@
+                <div class="run-action">
+                    <button class="btn primary" disabled="@(!CanRun)" title="@(RunBlocked ?? "")" @onclick="RunClicked">
+                        @RunLabel
+                    </button>
+                    @if (RunBlocked is { } why && !S.IsRunning)
+                    {
+                        <span class="blocked-hint" role="status">@why</span>
+                    }
+                    else if (!S.IsRunning && S.Estimate() is { } est)
+                    {
+                        <span class="estimate @(est.Warning is not null ? "big" : "")" title="@(est.Warning ?? "Forecast from the speed of earlier runs")" role="status">@(est.Warning is not null ? "⚠ " : "")@est.Summary@(est.Warning is not null ? ". " + est.Warning : "")</span>
+                    }
+                </div>
             }
         </div>
     </header>
@@ -188,7 +191,7 @@
                 }
                 @if (S.IsRunning && S.RunningPath == S.Selected?.FullPath && S.ResultsForSelected.All(r => r.Model != S.RunningModel))
                 {
-                    <button class="seg running" disabled><span class="spin">⟳</span> @S.RunningModel</button>
+                    <button class="seg running" disabled>@S.RunningModel <span class="spin-dot" aria-hidden="true"></span></button>
                 }
             </div>
             @if (!Processing && S.ActiveResult is { } ar)

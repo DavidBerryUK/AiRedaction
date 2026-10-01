@@ -34,7 +34,9 @@ html, body { margin: 0; height: 100%; background: var(--bg); color: var(--text);
 .chip { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 12px; border: 1px solid var(--border); background: var(--panel-2); }
 .chip.ok { color: var(--ok); border-color: var(--ok); } .chip.bad { color: #fff; background: var(--bad); border-color: var(--bad); }
 .warn { color: var(--warn); }
-.run-controls { display: flex; align-items: center; gap: 10px; }
+.run-controls { display: flex; align-items: flex-start; gap: 10px; }
+.run-action { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
+.run-action .estimate, .run-action .blocked-hint { text-align: right; }
 .picker { display: flex; align-items: center; gap: 6px; color: var(--muted); font-size: 12px; }
 select, input[type=search] { font: inherit; padding: 6px 8px; border: 1px solid var(--border); border-radius: 6px; background: var(--panel); color: var(--text); }
 .btn { font: inherit; padding: 7px 16px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--panel-2); color: var(--text); cursor: pointer; }
@@ -278,3 +280,8 @@ mark.m.rejected { background: transparent !important; box-shadow: none; text-dec
 .switch .slider::before { content: ""; position: absolute; width: 16px; height: 16px; left: 3px; top: 3px; background: #fff; border-radius: 50%; transition: transform .15s; }
 .switch input:checked + .slider { background: var(--brand-yellow); } .switch input:checked + .slider::before { transform: translateX(16px); background: var(--brand-slate); }
 .switch input:focus-visible + .slider { outline: 3px solid var(--focus); outline-offset: 2px; }
+
+/* a clear, centred spinner after the model name on a running result tab */
+.seg.running { display: inline-flex; align-items: center; gap: 8px; }
+.spin-dot { flex: none; width: 16px; height: 16px; box-sizing: border-box; border-radius: 50%; border: 3px solid color-mix(in srgb, currentColor 25%, transparent); border-top-color: currentColor; animation: spin .9s linear infinite; }
+@media (prefers-reduced-motion: reduce) { .spin-dot { animation-duration: 3s; } }
