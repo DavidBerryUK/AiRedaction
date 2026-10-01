@@ -37,8 +37,16 @@ public class RedactionPipeline(
             Report(RedactionStage.Done, $"{result.Edits.Count} edits in {sw.Elapsed:mm\\:ss}", result.Edits.Count);
             return result;
         }
-        catch (OperationCanceledException) { Report(RedactionStage.Cancelled, "Cancelled"); throw; }
-        catch (Exception ex) { Report(RedactionStage.Failed, ex.Message); throw; }
+        catch (OperationCanceledException)
+        {
+            Report(RedactionStage.Cancelled, "Cancelled");
+            throw;
+        }
+        catch (Exception ex)
+        {
+            Report(RedactionStage.Failed, ex.Message);
+            throw;
+        }
     }
 
     /// <summary>Where this input's redacted file goes: output folder + same sub-folders + name with the suffix.</summary>

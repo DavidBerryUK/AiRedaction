@@ -15,7 +15,10 @@ public static class EntityTypes
 public record DetectedEntity(string Type, int Start, int Length, double Confidence, string Source, bool Flag = false);
 
 /// <summary>Whether an edit is applied (Active), was rejected by a reviewer (Rejected), or was found but only flagged for review and left in the text (Flagged).</summary>
-public enum EditStatus { Active, Rejected, Flagged }
+public enum EditStatus
+{
+    Active, Rejected, Flagged
+}
 
 /// <summary>One redaction, with positions in both original and redacted text.</summary>
 public record RedactionEdit(
@@ -42,7 +45,10 @@ public record ExtractedDocument(string SourcePath, string Format, string Text,
 public class NoTextLayerException(string message) : Exception(message);
 
 /// <summary>The steps of a redaction run, reported through <see cref="RedactionProgress"/>.</summary>
-public enum RedactionStage { Reading, Chunking, Detecting, Locating, Redacting, Verifying, Writing, Done, Failed, Cancelled }
+public enum RedactionStage
+{
+    Reading, Chunking, Detecting, Locating, Redacting, Verifying, Writing, Done, Failed, Cancelled
+}
 
 /// <summary>Progress event. Never contains sensitive text.</summary>
 public record RedactionProgress(

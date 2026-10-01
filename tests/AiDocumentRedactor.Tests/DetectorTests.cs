@@ -53,7 +53,9 @@ public class DetectorTests
         var d = Make("{\"entities\":[{\"type\":\"PERSON\",\"text\":\"Sarah Jones\"},{\"type\":\"PERSON\",\"text\":\"Made Up\"},{\"type\":\"COMPANY\",\"text\":\"HMRC\"},{\"type\":\"AGE\",\"text\":\"4\"}]}", o);
         await d.DetectAsync("Sarah Jones wrote to HMRC.", null, default);
         var call = Assert.Single(d.Calls);
-        Assert.Equal(1, call.Number); Assert.Equal(0, call.ChunkStart); Assert.Equal(26, call.ChunkLength);
+        Assert.Equal(1, call.Number);
+        Assert.Equal(0, call.ChunkStart);
+        Assert.Equal(26, call.ChunkLength);
         Assert.Contains("Sarah Jones wrote to HMRC.", call.UserMessage);
         Assert.Contains("Sarah Jones", call.RawReply);
         Assert.Equal(["kept", "discarded: not found word-for-word in the text", "ignored: on the allow-list", "ignored: too short"], call.Items.Select(i => i.Outcome));

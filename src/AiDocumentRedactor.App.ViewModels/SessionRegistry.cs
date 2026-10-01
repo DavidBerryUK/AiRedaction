@@ -23,5 +23,8 @@ public class SessionRegistry(Func<RedactionSession> create)
 public class SessionHolder
 {
     /// <summary>The session for the current browser.</summary>
-    public RedactionSession? Current { get; set; }
+    public RedactionSession? Current
+    {
+        get; set;
+    }
 }

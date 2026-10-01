@@ -27,7 +27,8 @@ public static class ConfidenceGrader
         {
             var missedBy = others.Where(o => !o.Result.Edits.Any(x => x.Status == EditStatus.Active && x.Source != "human" && Overlaps(e, x))).Select(o => o.Model).ToList();
             var votes = total - missedBy.Count;
-            ConfidenceLevel level; string reason;
+            ConfidenceLevel level;
+            string reason;
             if (total == 1)
             {
                 level = ConfidenceLevel.Medium;
@@ -40,14 +41,32 @@ public static class ConfidenceGrader
             }
             // Further signals, each of which can only lower the grade (a person's own edit is the exception).
             var notes = new List<string>();
-            if (e.Source == "human") { level = ConfidenceLevel.High; reason = "Added by a person."; }
+            if (e.Source == "human")
+            {
+                level = ConfidenceLevel.High;
+                reason = "Added by a person.";
+            }
             else
             {
-                if (e.Source == "llm-variant") { level = Lower(level); notes.Add("only a shorter form of something longer the model found"); }
-                if (ctx?.OcrConfidenceOf(e) is { } oc && oc < ctx.MinOcrConfidence) { level = ConfidenceLevel.Low; notes.Add($"low OCR confidence ({oc:P0})"); }
+                if (e.Source == "llm-variant")
+                {
+                    level = Lower(level);
+                    notes.Add("only a shorter form of something longer the model found");
+                }
+                if (ctx?.OcrConfidenceOf(e) is { } oc && oc < ctx.MinOcrConfidence)
+                {
+                    level = ConfidenceLevel.Low;
+                    notes.Add($"low OCR confidence ({oc:P0})");
+                }
                 if (ctx is not null && ctx.CategoryCaps.TryGetValue(e.Type, out var cap) && Enum.TryParse<ConfidenceLevel>(cap, true, out var ceiling) && level > ceiling)
-                { level = ceiling; notes.Add($"{e.Type} is limited to {ceiling}"); }
-                if (notes.Count > 0) reason += " · " + string.Join(" · ", notes);
+                {
+                    level = ceiling;
+                    notes.Add($"{e.Type} is limited to {ceiling}");
+                }
+                if (notes.Count > 0)
+                {
+                    reason += " · " + string.Join(" · ", notes);
+                }
             }
             map[e.Id] = new EditConfidence(level, votes, total, reason);
         }

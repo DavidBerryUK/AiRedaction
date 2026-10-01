@@ -21,9 +21,17 @@ public class PdfDocumentReader(IOcrEngine? ocr = null, OcrOptions? ocrOptions = 
     public async Task<ExtractedDocument> ReadAsync(string path, CancellationToken ct)
     {
         var info = new FileInfo(path);
-        if (cache.TryGetValue(path, out var hit) && hit.Size == info.Length && hit.Written == info.LastWriteTimeUtc) return hit.Doc;
+        if (cache.TryGetValue(path, out var hit) && hit.Size == info.Length && hit.Written == info.LastWriteTimeUtc)
+        {
+            return hit.Doc;
+        }
+
         var doc = await ReadCoreAsync(path, ct);
-        if (doc.OcrConfidence is not null) cache[path] = (info.Length, info.LastWriteTimeUtc, doc);
+        if (doc.OcrConfidence is not null)
+        {
+            cache[path] = (info.Length, info.LastWriteTimeUtc, doc);
+        }
+
         return doc;
     }
 
@@ -34,23 +42,38 @@ public class PdfDocumentReader(IOcrEngine? ocr = null, OcrOptions? ocrOptions = 
     {
         var bytes = await File.ReadAllBytesAsync(path, ct);
         PdfDocument pdf;
-        try { pdf = PdfDocument.Open(bytes); }
+        try
+        {
+            pdf = PdfDocument.Open(bytes);
+        }
         catch (Exception ex) when (ex.GetType().Name.Contains("Encrypted", StringComparison.OrdinalIgnoreCase) || ex.Message.Contains("password", StringComparison.OrdinalIgnoreCase))
-        { throw new InvalidOperationException("This PDF is password-protected."); }
+        {
+            throw new InvalidOperationException("This PDF is password-protected.");
+        }
         using (pdf)
         {
-            var sb = new StringBuilder(); var words = new List<WordBox>(); var sizes = new List<(double, double)>();
-            var confidences = new List<double>(); var blankPages = 0;
+            var sb = new StringBuilder();
+            var words = new List<WordBox>();
+            var sizes = new List<(double, double)>();
+            var confidences = new List<double>();
+            var blankPages = 0;
             foreach (var page in pdf.GetPages())
             {
                 ct.ThrowIfCancellationRequested();
-                if (page.Rotation.Value != 0) throw new NotSupportedException("Rotated PDF pages are not supported yet.");
+                if (page.Rotation.Value != 0)
+                {
+                    throw new NotSupportedException("Rotated PDF pages are not supported yet.");
+                }
+
                 sizes.Add((page.Width, page.Height));
                 var lines = Lines(page.GetWords().Where(w => !string.IsNullOrWhiteSpace(w.Text))
                     .Select(w => new PageWord(w.Text, w.BoundingBox.Left, w.BoundingBox.Bottom, w.BoundingBox.Width, w.BoundingBox.Height)));
                 if (lines.Count == 0)
                 {
-                    if (ocr is null || !oo.Enabled) { blankPages++; }
+                    if (ocr is null || !oo.Enabled)
+                    {
+                        blankPages++;
+                    }
                     else
                     {
                         // A scanned page: render it and read it with OCR.
@@ -60,15 +83,21 @@ public class PdfDocumentReader(IOcrEngine? ocr = null, OcrOptions? ocrOptions = 
                         var read = await ocr.RecognizeAsync(png.AsSpan().ToArray(), ct);
                         lines = OcrMapping.ToPageLines(read, page.Width, page.Height);
                         confidences.AddRange(read.Lines.SelectMany(l => l.Words).Select(w => w.Confidence));
-                        if (lines.Count == 0) blankPages++;
+                        if (lines.Count == 0)
+                        {
+                            blankPages++;
+                        }
                     }
                 }
                 OcrMapping.AppendPage(sb, words, page.Number - 1, lines);
             }
             if (words.Count == 0)
+            {
                 throw new NoTextLayerException(ocr is null || !oo.Enabled
                     ? "This PDF has no text layer (it looks like a scan), and OCR is switched off."
                     : "No text could be read from this PDF, even with OCR.");
+            }
+
             return new ExtractedDocument(path, "pdf", sb.ToString(), words, sizes, confidences.Count > 0 ? confidences.Average() : null);
         }
     }
@@ -81,7 +110,14 @@ public class PdfDocumentReader(IOcrEngine? ocr = null, OcrOptions? ocrOptions = 
         {
             var mid = w.Y + w.H / 2;
             var i = lines.FindIndex(l => Math.Abs(l.Mid - mid) <= 0.5 * Math.Max(l.H, w.H));
-            if (i < 0) lines.Add((mid, w.H, [w])); else lines[i].Words.Add(w);
+            if (i < 0)
+            {
+                lines.Add((mid, w.H, [w]));
+            }
+            else
+            {
+                lines[i].Words.Add(w);
+            }
         }
         return lines.OrderByDescending(l => l.Mid).Select(l => l.Words.OrderBy(w => w.X).ToList()).ToList();
     }
@@ -120,7 +156,10 @@ public class PdfDocumentWriter(PdfOptions options, IOcrEngine? ocr = null, OcrOp
                 outputWords.AddRange((await ocr.RecognizeAsync(png.AsSpan().ToArray(), ct)).Lines.SelectMany(l => l.Words).Select(w => w.Text));
             }
             var leaks = OcrMapping.CountLeaks(source, result, outputWords);
-            if (leaks > 0) throw new InvalidOperationException($"{leaks} redacted word(s) can still be read in the output (checked by OCR); refusing to write it.");
+            if (leaks > 0)
+            {
+                throw new InvalidOperationException($"{leaks} redacted word(s) can still be read in the output (checked by OCR); refusing to write it.");
+            }
         }
         await output.WriteAsync(bytes, ct);
     }
@@ -141,10 +180,21 @@ public class PdfDocumentWriter(PdfOptions options, IOcrEngine? ocr = null, OcrOp
     /// null if the word has no outline (text-layer PDFs). Used for OCR words so a box on a tilted scan is tilted too and does not clip the next line.</summary>
     public static (double X, double Y)[]? QuadInPoints(WordBox w, double pageHeight, double pad)
     {
-        if (w.Quad is not { Length: 8 } q) return null;
+        if (w.Quad is not { Length: 8 } q)
+        {
+            return null;
+        }
+
         var p = Enumerable.Range(0, 4).Select(i => (X: q[i * 2], Y: pageHeight - q[i * 2 + 1])).ToArray();   // top-left origin, clockwise from top-left
-        (double X, double Y) Unit((double X, double Y) a, (double X, double Y) b) { var dx = b.X - a.X; var dy = b.Y - a.Y; var len = Math.Sqrt(dx * dx + dy * dy); return len < 1e-9 ? (0, 0) : (dx / len, dy / len); }
-        var u = Unit(p[0], p[1]); var v = Unit(p[0], p[3]);       // along the word, and down the word
+        (double X, double Y) Unit((double X, double Y) a, (double X, double Y) b)
+        {
+            var dx = b.X - a.X;
+            var dy = b.Y - a.Y;
+            var len = Math.Sqrt(dx * dx + dy * dy);
+            return len < 1e-9 ? (0, 0) : (dx / len, dy / len);
+        }
+        var u = Unit(p[0], p[1]);
+        var v = Unit(p[0], p[3]);       // along the word, and down the word
         (double X, double Y) Move((double X, double Y) pt, double su, double sv) => (pt.X + u.X * su * pad + v.X * sv * pad, pt.Y + u.Y * su * pad + v.Y * sv * pad);
         return [Move(p[0], -1, -1), Move(p[1], 1, -1), Move(p[2], 1, 1), Move(p[3], -1, 1)];
     }
@@ -156,8 +206,14 @@ public class PdfDocumentWriter(PdfOptions options, IOcrEngine? ocr = null, OcrOp
         {
             using var path = new SKPath();
             path.MoveTo((float)(quad[0].X * sx), (float)(quad[0].Y * sy));
-            for (var i = 1; i < 4; i++) path.LineTo((float)(quad[i].X * sx), (float)(quad[i].Y * sy));
-            path.Close(); canvas.DrawPath(path, black); return;
+            for (var i = 1; i < 4; i++)
+            {
+                path.LineTo((float)(quad[i].X * sx), (float)(quad[i].Y * sy));
+            }
+
+            path.Close();
+            canvas.DrawPath(path, black);
+            return;
         }
         var (l, t, r, b) = BoxInPoints(w, pageHeight, options, fromOcr);
         canvas.DrawRect(SKRect.Create((float)(l * sx), (float)(t * sy), (float)((r - l) * sx), (float)((b - t) * sy)), black);
@@ -171,7 +227,11 @@ public class PdfDocumentWriter(PdfOptions options, IOcrEngine? ocr = null, OcrOp
     /// Returns the finished PDF bytes.</summary>
     byte[] Render(ExtractedDocument doc, RedactionResult result, CancellationToken ct)
     {
-        if (doc.PageSizes is not { Count: > 0 } sizes) throw new InvalidOperationException("The document has no page layout to redact.");
+        if (doc.PageSizes is not { Count: > 0 } sizes)
+        {
+            throw new InvalidOperationException("The document has no page layout to redact.");
+        }
+
         var cover = WordsToCover(doc, result).GroupBy(w => w.Page).ToDictionary(g => g.Key, g => g.ToList());
         var pdfBytes = File.ReadAllBytes(doc.SourcePath);
         using var built = new MemoryStream();
@@ -183,13 +243,20 @@ public class PdfDocumentWriter(PdfOptions options, IOcrEngine? ocr = null, OcrOp
                 var (pw, ph) = sizes[p];
                 using var src = new MemoryStream(pdfBytes);
                 using var bmp = Conversion.ToImage(src, p, options: new RenderOptions(Dpi: options.RenderDpi));
-                var sx = bmp.Width / pw; var sy = bmp.Height / ph;
+                var sx = bmp.Width / pw;
+                var sy = bmp.Height / ph;
                 using (var canvas = new SKCanvas(bmp))
                 using (var black = new SKPaint { Color = SKColors.Black, Style = SKPaintStyle.Fill, IsAntialias = false })
                 {
                     foreach (var w in cover.GetValueOrDefault(p) ?? [])
+                    {
                         PaintWord(canvas, black, w, ph, sx, sy, options, doc.OcrConfidence is not null);
-                    foreach (var a in result.AreaList.Where(a => a.Page == p)) PaintArea(canvas, black, a, ph, sx, sy);
+                    }
+
+                    foreach (var a in result.AreaList.Where(a => a.Page == p))
+                    {
+                        PaintArea(canvas, black, a, ph, sx, sy);
+                    }
                 }
                 using var img = SKImage.FromBitmap(bmp);
                 using var jpg = img.Encode(SKEncodedImageFormat.Jpeg, options.JpegQuality);
@@ -210,6 +277,9 @@ public class PdfDocumentWriter(PdfOptions options, IOcrEngine? ocr = null, OcrOp
     {
         using var check = PdfDocument.Open(pdfBytes);
         var leftover = check.GetPages().Sum(pg => pg.GetWords().Count());
-        if (leftover > 0) throw new InvalidOperationException($"Redacted PDF still contains {leftover} words of text; refusing to write it.");
+        if (leftover > 0)
+        {
+            throw new InvalidOperationException($"Redacted PDF still contains {leftover} words of text; refusing to write it.");
+        }
     }
 }

@@ -21,9 +21,15 @@ public sealed class RapidOcrEngine : IOcrEngine, IDisposable
         await gate.WaitAsync(ct);
         try
         {
-            if (!ready) { InitModels(); ready = true; }
+            if (!ready)
+            {
+                InitModels();
+                ready = true;
+            }
             using var bmp = SKBitmap.Decode(encodedImage.Span) ?? throw new InvalidOperationException("The image could not be decoded.");
-            var result = await ocr.DetectAsync(bmp, RapidOcrOptions.Default with { ReturnWordBox = true }, ct);
+            var result = await ocr.DetectAsync(bmp, RapidOcrOptions.Default with {
+                ReturnWordBox = true
+            }, ct);
             return new OcrPage(bmp.Width, bmp.Height, Lines(result));
         }
         finally { gate.Release(); }
@@ -51,21 +57,33 @@ public sealed class RapidOcrEngine : IOcrEngine, IDisposable
     static List<OcrWord> Words(TextBlock b)
     {
         if (b.WordResults is { Length: > 0 } wr)
+        {
             return wr.Where(w => !string.IsNullOrWhiteSpace(w.Text)).Select(w => ToWord(w.Text, w.BoxPoints, w.Score)).ToList();
+        }
+
         var parts = b.Text.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-        var left = b.BoxPoints.Min(p => p.X); var top = b.BoxPoints.Min(p => p.Y);
-        var width = b.BoxPoints.Max(p => p.X) - left; var height = b.BoxPoints.Max(p => p.Y) - top;
-        var total = parts.Sum(s => s.Length + 1); var x = (double)left; var score = b.CharScores is { Length: > 0 } cs ? cs.Average() : b.BoxScore;
+        var left = b.BoxPoints.Min(p => p.X);
+        var top = b.BoxPoints.Min(p => p.Y);
+        var width = b.BoxPoints.Max(p => p.X) - left;
+        var height = b.BoxPoints.Max(p => p.Y) - top;
+        var total = parts.Sum(s => s.Length + 1);
+        var x = (double)left;
+        var score = b.CharScores is { Length: > 0 } cs ? cs.Average() : b.BoxScore;
         return parts.Select(s => { var w = width * (s.Length + 1) / total; var word = new OcrWord(s, x, top, w * s.Length / (s.Length + 1), height, score); x += w; return word; }).ToList();   // no outline for this fallback
     }
 
     /// <summary>The axis-aligned box around a word's corner points.</summary>
     static OcrWord ToWord(string text, SKPointI[] pts, double score)
     {
-        var l = pts.Min(p => p.X); var t = pts.Min(p => p.Y);
+        var l = pts.Min(p => p.X);
+        var t = pts.Min(p => p.Y);
         return new OcrWord(text, l, t, pts.Max(p => p.X) - l, pts.Max(p => p.Y) - t, score, pts.Length == 4 ? pts.Select(p => ((double)p.X, (double)p.Y)).ToList() : null);
     }
 
     /// <summary>Releases the ONNX sessions.</summary>
-    public void Dispose() { ocr.Dispose(); gate.Dispose(); }
+    public void Dispose()
+    {
+        ocr.Dispose();
+        gate.Dispose();
+    }
 }

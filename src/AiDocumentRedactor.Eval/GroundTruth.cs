@@ -25,10 +25,27 @@ public static class GroundTruthStore
     /// <summary>A reader-friendly format group for a corpus file: plain text, Word, PDF with text, or one of the three kinds of scan.</summary>
     public static string FormatGroup(string path)
     {
-        var name = Path.GetFileName(path).ToLowerInvariant(); var ext = Path.GetExtension(name);
-        if (name.Contains("-scan-clean")) return "Scan: clean image";
-        if (name.Contains("-scan-degraded")) return "Scan: degraded image";
-        if (name.Contains("-scan") && ext == ".pdf") return "Scan: image-only PDF";
-        return ext switch { ".docx" => "Word", ".pdf" => "PDF (text layer)", _ => "Plain text" };
+        var name = Path.GetFileName(path).ToLowerInvariant();
+        var ext = Path.GetExtension(name);
+        if (name.Contains("-scan-clean"))
+        {
+            return "Scan: clean image";
+        }
+
+        if (name.Contains("-scan-degraded"))
+        {
+            return "Scan: degraded image";
+        }
+
+        if (name.Contains("-scan") && ext == ".pdf")
+        {
+            return "Scan: image-only PDF";
+        }
+
+        return ext switch {
+            ".docx" => "Word",
+            ".pdf" => "PDF (text layer)",
+            _ => "Plain text"
+        };
     }
 }

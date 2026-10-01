@@ -3,7 +3,10 @@ using System.Text.Json;
 namespace AiDocumentRedactor.Core;
 
 /// <summary>Where a document is in processing: not yet, running, done, needs a second look, failed or cancelled.</summary>
-public enum DocumentStatus { NotProcessed, Processing, Processed, NeedsReview, Error, Cancelled }
+public enum DocumentStatus
+{
+    NotProcessed, Processing, Processed, NeedsReview, Error, Cancelled
+}
 
 /// <summary>Per-document outcome. Holds no document content: only status, counts and an error message.</summary>
 public record DocumentStatusRecord(DocumentStatus Status, string? Error, int Edits, DateTime AtUtc, string? Model);
@@ -23,8 +26,15 @@ public class StatusStore(string reportDirectory)
     {
         lock (gate)
         {
-            if (!File.Exists(path)) return new();
-            try { return JsonSerializer.Deserialize<Dictionary<string, DocumentStatusRecord>>(File.ReadAllText(path), RedactorOptions.JsonOptions) ?? new(); }
+            if (!File.Exists(path))
+            {
+                return new();
+            }
+
+            try
+            {
+                return JsonSerializer.Deserialize<Dictionary<string, DocumentStatusRecord>>(File.ReadAllText(path), RedactorOptions.JsonOptions) ?? new();
+            }
             catch (JsonException) { return new(); }   // a corrupt status file must never break the app
         }
     }

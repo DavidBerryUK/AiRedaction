@@ -18,23 +18,42 @@ public class Layout
     /// <summary>Lays out all blocks of a document into lines across pages.</summary>
     public Layout(DocDef d)
     {
-        float y = M + 14; var page = 1;
+        float y = M + 14;
+        var page = 1;
         /// <summary>Wraps one block's text into lines, starting a new page when the current one is full.</summary>
         void Add(string text, bool heading)
         {
-            var f = heading ? head : body; var lh = heading ? 22f : 15f;
+            var f = heading ? head : body;
+            var lh = heading ? 22f : 15f;
             foreach (var raw in text.Split('\n'))
+            {
                 foreach (var l in Wrap(raw, f, W - 2 * M))
                 {
-                    if (y > H - M) { page++; y = M + 14; }
-                    Lines.Add(new Line(page, y, l, heading)); y += lh;
+                    if (y > H - M)
+                    {
+                        page++;
+                        y = M + 14;
+                    }
+                    Lines.Add(new Line(page, y, l, heading));
+                    y += lh;
                 }
+            }
+
             y += heading ? 4 : 8;
         }
         foreach (var b in d.Blocks)
         {
-            if (b.Kind == BlockKind.Table) foreach (var r in b.Rows!) Add(string.Join("   |   ", r.Select(Markup.Strip)), false);
-            else Add(Markup.Strip(b.Text), b.Kind == BlockKind.Heading);
+            if (b.Kind == BlockKind.Table)
+            {
+                foreach (var r in b.Rows!)
+                {
+                    Add(string.Join("   |   ", r.Select(Markup.Strip)), false);
+                }
+            }
+            else
+            {
+                Add(Markup.Strip(b.Text), b.Kind == BlockKind.Heading);
+            }
         }
         Pages = page;
     }
@@ -46,7 +65,15 @@ public class Layout
         foreach (var w in s.Split(' '))
         {
             var t = cur.Length == 0 ? w : cur + " " + w;
-            if (f.MeasureText(t) > max && cur.Length > 0) { yield return cur; cur = w; } else cur = t;
+            if (f.MeasureText(t) > max && cur.Length > 0)
+            {
+                yield return cur;
+                cur = w;
+            }
+            else
+            {
+                cur = t;
+            }
         }
         yield return cur;
     }
@@ -57,6 +84,8 @@ public class Layout
         c.Clear(SKColors.White);
         using var p = new SKPaint { Color = SKColors.Black, IsAntialias = true };
         foreach (var l in Lines.Where(l => l.Page == page))
+        {
             c.DrawText(l.Text, M, l.Y, l.Heading ? head : body, p);
+        }
     }
 }

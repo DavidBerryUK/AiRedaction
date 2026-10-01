@@ -1,0 +1,18 @@
+root = true
+
+[*]
+charset = utf-8
+indent_style = space
+insert_final_newline = true
+
+[*.cs]
+indent_size = 4
+# Braces: every if/else/for/foreach/while/using gets braces, and every brace opens on a new line (see CODING_STANDARDS.md).
+csharp_prefer_braces = true:warning
+csharp_new_line_before_open_brace = accessors, anonymous_methods, control_blocks, events, indexers, lambdas, local_functions, methods, properties, types
+csharp_new_line_before_else = true
+csharp_new_line_before_catch = true
+csharp_new_line_before_finally = true
+csharp_preserve_single_line_blocks = false
+csharp_preserve_single_line_statements = false
+dotnet_diagnostic.IDE0011.severity = warning

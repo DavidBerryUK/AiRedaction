@@ -9,14 +9,36 @@ using AiDocumentRedactor.Ocr;
 
 // ---- configuration (single JSON file, FR12) ----
 // Reads the value after a command-line flag, e.g. --config path. Returns null if the flag is absent.
-string? Arg(string name) { var i = Array.IndexOf(args, name); return i >= 0 && i + 1 < args.Length ? args[i + 1] : null; }
+string? Arg(string name)
+{
+    var i = Array.IndexOf(args, name);
+    return i >= 0 && i + 1 < args.Length ? args[i + 1] : null;
+}
 var configPath = Arg("--config") ?? "redactor.config.json";
 RedactorOptions options;
-try { options = RedactorOptions.Load(configPath); }
-catch (Exception ex) { Console.Error.WriteLine($"Config error: {ex.Message}"); return 2; }
-if (Arg("--output") is { } o) options.Output.Directory = Path.GetFullPath(o);
-else options.Output.Directory = Path.GetFullPath(options.Output.Directory);
-if (!string.IsNullOrWhiteSpace(options.Report.Directory)) options.Report.Directory = Path.GetFullPath(options.Report.Directory);
+try
+{
+    options = RedactorOptions.Load(configPath);
+}
+catch (Exception ex)
+{
+    Console.Error.WriteLine($"Config error: {ex.Message}");
+    return 2;
+}
+if (Arg("--output") is { } o)
+{
+    options.Output.Directory = Path.GetFullPath(o);
+}
+else
+{
+    options.Output.Directory = Path.GetFullPath(options.Output.Directory);
+}
+
+if (!string.IsNullOrWhiteSpace(options.Report.Directory))
+{
+    options.Report.Directory = Path.GetFullPath(options.Report.Directory);
+}
+
 var inputRoot = Path.GetFullPath(Arg("--input") ?? options.Input.Directory);
 
 // ---- local-only web host: loopback binding, per-launch token ----
@@ -39,20 +61,30 @@ builder.Services.AddSingleton(sp => new SessionRegistry(() =>
     return new RedactionSession(options, inputRoot, DocumentFormats.Readers(options, ocr), DocumentFormats.Writers(options, ocr), catalog,
         opts => opts.Llm.Provider == "ollama" ? new OllamaDetector(OllamaDetector.CreateClient(opts.Llm), opts) : new NoOpDetector(),
         new ReviewStore(Path.GetFullPath(Path.Combine(".cache", "review"))))   // review changes are kept as offsets only
-    { ConfigPath = Path.GetFullPath(configPath), OcrEngineName = ocr?.Name };
+    {
+        ConfigPath = Path.GetFullPath(configPath),
+        OcrEngineName = ocr?.Name
+    };
 }));
 // Components get the session of their own browser: the root component sets the holder, everything below asks for the session.
 builder.Services.AddScoped<SessionHolder>();
 builder.Services.AddScoped(sp => sp.GetRequiredService<SessionHolder>().Current ?? throw new InvalidOperationException("No session for this browser."));
 
 var app = builder.Build();
-if (!app.Environment.IsDevelopment()) app.UseExceptionHandler("/Error", createScopeForErrors: true);
+if (!app.Environment.IsDevelopment())
+{
+    app.UseExceptionHandler("/Error", createScopeForErrors: true);
+}
 
 // Security gate on every request: loopback host names only, a valid access token/cookie, then no-cache and strict security headers.
 app.Use(async (ctx, next) =>
 {
     // DNS-rebinding defence: only answer to loopback host names.
-    if (ctx.Request.Host.Host is not ("127.0.0.1" or "localhost")) { ctx.Response.StatusCode = 421; return; }
+    if (ctx.Request.Host.Host is not ("127.0.0.1" or "localhost"))
+    {
+        ctx.Response.StatusCode = 421;
+        return;
+    }
     // Access token: first visit carries ?t=..., then a cookie. Other local processes/pages cannot guess it.
     if (ctx.Request.Cookies["rd_token"] != token)
     {
@@ -62,7 +94,8 @@ app.Use(async (ctx, next) =>
             ctx.Response.Redirect(ctx.Request.Path.HasValue ? ctx.Request.Path.Value! : "/");
             return;
         }
-        ctx.Response.StatusCode = 403; await ctx.Response.WriteAsync("Access token required. Use the URL printed at startup.");
+        ctx.Response.StatusCode = 403;
+        await ctx.Response.WriteAsync("Access token required. Use the URL printed at startup.");
         return;
     }
     // Which session this browser uses: a random id in an HttpOnly cookie (a missing or malformed one is replaced).

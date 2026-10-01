@@ -15,7 +15,8 @@ public class DocumentFilesTests : IDisposable
         Directory.CreateDirectory(Path.Combine(root, "in", "sub"));
         File.WriteAllText(Path.Combine(root, "in", "sub", "a.pdf"), "x");
         File.WriteAllText(Path.Combine(root, "in", "notes.txt"), "x");
-        outside = Path.Combine(root, "secret.pdf"); File.WriteAllText(outside, "x");
+        outside = Path.Combine(root, "secret.pdf");
+        File.WriteAllText(outside, "x");
     }
     /// <summary>Deletes the temporary folders.</summary>
     public void Dispose() => Directory.Delete(root, true);
@@ -23,7 +24,8 @@ public class DocumentFilesTests : IDisposable
     string In => Path.Combine(root, "in");
 
     /// <summary>A viewable file inside the folder resolves, in sub-folders too.</summary>
-    [Fact] public void Resolves_a_viewable_file_inside_the_folder() =>
+    [Fact]
+    public void Resolves_a_viewable_file_inside_the_folder() =>
         Assert.Equal(Path.Combine(In, "sub", "a.pdf"), DocumentFiles.Resolve(In, "sub/a.pdf"));
 
     /// <summary>Paths that climb out of the folder, or are absolute, are refused.</summary>
@@ -37,7 +39,8 @@ public class DocumentFilesTests : IDisposable
     [Fact] public void Refuses_absolute_paths() => Assert.Null(DocumentFiles.Resolve(In, outside));
 
     /// <summary>Only viewable types (pdf, png, jpg) are served; text files and missing files are not.</summary>
-    [Fact] public void Refuses_non_viewable_types_and_missing_files()
+    [Fact]
+    public void Refuses_non_viewable_types_and_missing_files()
     {
         Assert.Null(DocumentFiles.Resolve(In, "notes.txt"));
         Assert.Null(DocumentFiles.Resolve(In, "missing.pdf"));
@@ -45,7 +48,8 @@ public class DocumentFilesTests : IDisposable
     }
 
     /// <summary>Content types are chosen by extension, case-insensitively.</summary>
-    [Fact] public void Content_type_follows_the_extension()
+    [Fact]
+    public void Content_type_follows_the_extension()
     {
         Assert.Equal("application/pdf", DocumentFiles.ContentType("x.PDF"));
         Assert.Equal("image/jpeg", DocumentFiles.ContentType("x.jpg"));

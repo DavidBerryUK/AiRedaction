@@ -12,7 +12,11 @@ public class OcrEngineTests(ITestOutputHelper output)
     static string Corpus(string rel)
     {
         var dir = AppContext.BaseDirectory;
-        while (dir != null && !File.Exists(Path.Combine(dir, "tests", "TestCorpus", rel))) dir = Path.GetDirectoryName(dir);
+        while (dir != null && !File.Exists(Path.Combine(dir, "tests", "TestCorpus", rel)))
+        {
+            dir = Path.GetDirectoryName(dir);
+        }
+
         return Path.Combine(dir ?? throw new FileNotFoundException(rel), "tests", "TestCorpus", rel);
     }
 
@@ -32,6 +36,8 @@ public class OcrEngineTests(ITestOutputHelper output)
         Assert.True(words.Count > 50);
         Assert.All(words, w => { Assert.True(w.Width > 0 && w.Height > 0); Assert.InRange(w.X, -5, page.WidthPx + 5); });
         foreach (var expected in new[] { "Eleanor", "Whitcombe", "promotion", "Insurance" })
+        {
             Assert.Contains(words, w => w.Text.Contains(expected, StringComparison.OrdinalIgnoreCase));
+        }
     }
 }

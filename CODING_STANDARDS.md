@@ -69,14 +69,8 @@ out/          - Output documents and run reports
 
 ## Code Style
 
-### Use explicit types over var when type is not obvious:
-```csharp
-// Good
-string filePath = GetPath();
-
-// OK when type is clear
-var list = new List<string>();
-```
+### `var` or an explicit type
+Use `var` when the type is obvious from the right-hand side (`var list = new List<string>();`, `var doc = await reader.ReadAsync(...)`). Use the explicit type when it is not obvious (`string filePath = GetPath();`).
 
 ### Use expression-bodied members for simple methods:
 ```csharp
@@ -95,19 +89,14 @@ public bool IsDocument(string path) => path.EndsWith(".pdf", StringComparison.Or
 public string GetPath() => _cachedPath ??= Path.Combine(_config.OutputDir, "output.pdf");
 ```
 
-### Braces: Always on a new line
-All braces must be on a new line, never on the same line as the statement:
+### Braces: always, and always on a new line
+Every `if`, `else`, `for`, `foreach`, `while`, `using`, `try`, `catch` and `finally` body has braces, **even when it is a single statement**, and every opening brace goes on its own line. Methods, properties and types follow the same rule.
 
 ```csharp
 // Good
-if (condition)
+if (detector is OllamaDetector o)
 {
-    DoSomething();
-}
-
-foreach (var item in items)
-{
-    Process(item);
+    Console.WriteLine($"Tokens: {o.PromptTokens} in / {o.OutputTokens} out");
 }
 
 catch (Exception ex)
@@ -117,10 +106,15 @@ catch (Exception ex)
 }
 
 // Bad
-if (condition) { DoSomething(); }
+if (detector is OllamaDetector o)
+    Console.WriteLine($"Tokens: {o.PromptTokens} in / {o.OutputTokens} out");
 
 catch (Exception ex) { Console.Error.WriteLine(ex.Message); return 2; }
 ```
+
+Exceptions: expression-bodied members and lambdas (`=> ...`) and object/collection initializers (`new X { A = 1 }`) may stay on one line.
+
+**Enforced by tooling:** `.editorconfig` in the repository root sets these rules. To fix a file or the whole solution, run `dotnet format whitespace` and `dotnet format style --diagnostics IDE0011`. Razor files (`.razor`) are not covered by these tools yet; follow the same rule by hand in their `@code` blocks when you touch them.
 
 ### Use records for immutable data types:
 ```csharp
@@ -204,9 +198,9 @@ namespace MyApp { class Program { static async Task Main() { ... } } }
 
 ## Testing
 
-- Unit tests in `tests/` project
-- Test method naming: `MethodName_State_ExpectedResult`
-- Use xUnit as the test framework
+- Unit tests in `tests/` using xUnit
+- Test method names are short sentences that say what is expected, with underscores, e.g. `Reads_text_and_word_positions`, `A_missed_item_is_a_leak`
+- Tests use synthetic data only (`tests/TestCorpus`); never add real documents
 
 ## Exception Handling
 
@@ -216,9 +210,9 @@ namespace MyApp { class Program { static async Task Main() { ... } } }
 
 ## Configuration
 
-- Use `IOptions<T>` pattern for configuration
-- Configuration files in root: `*.json`
-- Environment-specific configs: `appsettings.Development.json`, `appsettings.Production.json`
+- All settings live in one JSON file, `redactor.config.json`, read into `RedactorOptions` (unknown keys are an error)
+- Command-line flags may override individual values (config file < flag)
+- Nothing configurable is hard-coded; a new setting gets a property with a default, a line in the specification, and a test
 
 ## Language Features
 

@@ -45,8 +45,7 @@ public class RedactorOptions
     }
 
     /// <summary>JSON settings used for config and status files: comments allowed, enums as names, unknown keys an error.</summary>
-    public static readonly JsonSerializerOptions JsonOptions = new()
-    {
+    public static readonly JsonSerializerOptions JsonOptions = new() {
         PropertyNameCaseInsensitive = true,
         ReadCommentHandling = JsonCommentHandling.Skip,
         AllowTrailingCommas = true,
@@ -59,11 +58,30 @@ public class RedactorOptions
     public void Validate()
     {
         var errors = new List<string>();
-        if (!Redaction.PlaceholderTemplate.Contains("{type}")) errors.Add("redaction.placeholderTemplate must contain {type}.");
-        if (string.IsNullOrWhiteSpace(Output.Suffix)) errors.Add("output.suffix must not be empty.");
-        if (Llm.Provider is not ("none" or "ollama")) errors.Add("llm.provider must be 'none' or 'ollama'.");
-        if (Evaluation.Models.Any(m => string.IsNullOrWhiteSpace(m.Name))) errors.Add("evaluation.models: every entry needs a name.");
-        if (errors.Count > 0) throw new InvalidDataException(string.Join(Environment.NewLine, errors));
+        if (!Redaction.PlaceholderTemplate.Contains("{type}"))
+        {
+            errors.Add("redaction.placeholderTemplate must contain {type}.");
+        }
+
+        if (string.IsNullOrWhiteSpace(Output.Suffix))
+        {
+            errors.Add("output.suffix must not be empty.");
+        }
+
+        if (Llm.Provider is not ("none" or "ollama"))
+        {
+            errors.Add("llm.provider must be 'none' or 'ollama'.");
+        }
+
+        if (Evaluation.Models.Any(m => string.IsNullOrWhiteSpace(m.Name)))
+        {
+            errors.Add("evaluation.models: every entry needs a name.");
+        }
+
+        if (errors.Count > 0)
+        {
+            throw new InvalidDataException(string.Join(Environment.NewLine, errors));
+        }
     }
 }
 
@@ -99,7 +117,10 @@ public class OutputOptions
     /// <summary>Folder the redacted files are written to.</summary>
     public string Directory { get; set; } = "./out";
     /// <summary>Replace an existing output file instead of skipping it.</summary>
-    public bool Overwrite { get; set; }
+    public bool Overwrite
+    {
+        get; set;
+    }
     /// <summary>Keep the input's sub-folder structure in the output.</summary>
     public bool MirrorFolders { get; set; } = true;
     /// <summary>Added to the file name before the extension, e.g. letter-redacted.txt.</summary>
@@ -115,9 +136,15 @@ public class EntityOptions
     /// <summary>"redact" (default) removes what is found; "flag" lists it for review but leaves it in the text.</summary>
     public string Mode { get; set; } = "redact";
     /// <summary>GENDER only: also redact gendered pronouns (he, she, him, her, his, hers). Off by default because it makes text hard to read.</summary>
-    public bool RedactPronouns { get; set; }
+    public bool RedactPronouns
+    {
+        get; set;
+    }
     /// <summary>Overrides the category's definition in the model prompt.</summary>
-    public string? Description { get; set; }
+    public string? Description
+    {
+        get; set;
+    }
 }
 
 /// <summary>Redaction appearance.</summary>
@@ -135,13 +162,19 @@ public class LlmOptions
     /// <summary>Address of the local model server (must be this machine unless overridden).</summary>
     public string Endpoint { get; set; } = "http://localhost:11434";
     /// <summary>Allow a model server on another machine. Off by default to keep documents local.</summary>
-    public bool AllowRemoteEndpoint { get; set; }
+    public bool AllowRemoteEndpoint
+    {
+        get; set;
+    }
     /// <summary>The model used for the next run.</summary>
     public string Model { get; set; } = "phi4";
     /// <summary>Models offered in the UI picker, in order. Each is shown as available (installed) or unavailable.</summary>
     public string[] CandidateModels { get; set; } = [];
     /// <summary>0 gives repeatable answers.</summary>
-    public double Temperature { get; set; }
+    public double Temperature
+    {
+        get; set;
+    }
     /// <summary>Fixed random seed so repeat runs match.</summary>
     public int Seed { get; set; } = 42;
     /// <summary>Context window the model is asked to use; prompts longer than this are silently truncated.</summary>

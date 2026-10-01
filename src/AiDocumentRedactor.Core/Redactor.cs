@@ -22,7 +22,11 @@ public static class Redactor
                 var last = result[^1];
                 if (s.Start < last.Start + last.Length)
                 {
-                    if (s.Length > last.Length && s.Start == last.Start) result[^1] = s;
+                    if (s.Length > last.Length && s.Start == last.Start)
+                    {
+                        result[^1] = s;
+                    }
+
                     continue;
                 }
             }
@@ -38,14 +42,17 @@ public static class Redactor
         var merged = Merge(spans, text.Length);
         var sb = new System.Text.StringBuilder();
         var edits = new List<RedactionEdit>();
-        var pos = 0; var id = 1;
+        var pos = 0;
+        var id = 1;
         foreach (var s in merged)
         {
             sb.Append(text, pos, s.Start - pos);
             if (s.Flag)
             {
                 edits.Add(new RedactionEdit(id++, s.Type, s.Start, s.Length, sb.Length, s.Length, "", text.Substring(s.Start, s.Length), s.Confidence, s.Source, EditStatus.Flagged));
-                sb.Append(text, s.Start, s.Length); pos = s.Start + s.Length; continue;
+                sb.Append(text, s.Start, s.Length);
+                pos = s.Start + s.Length;
+                continue;
             }
             var placeholder = Placeholder(template, s.Type);
             edits.Add(new RedactionEdit(id++, s.Type, s.Start, s.Length, sb.Length, placeholder.Length,

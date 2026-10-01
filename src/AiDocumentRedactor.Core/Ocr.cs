@@ -14,7 +14,10 @@ public record OcrPage(int WidthPx, int HeightPx, IReadOnlyList<OcrLine> Lines);
 public interface IOcrEngine
 {
     /// <summary>The engine's name, shown in the UI banner (for example "RapidOCR PP-OCRv5").</summary>
-    string Name { get; }
+    string Name
+    {
+        get;
+    }
 
     /// <summary>Reads a PNG or JPEG image and returns the lines and words found, with their positions.</summary>
     Task<OcrPage> RecognizeAsync(ReadOnlyMemory<byte> encodedImage, CancellationToken ct);

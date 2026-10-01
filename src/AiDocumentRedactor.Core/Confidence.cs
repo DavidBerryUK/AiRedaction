@@ -4,7 +4,10 @@ using System.Text.Json.Nodes;
 namespace AiDocumentRedactor.Core;
 
 /// <summary>How sure we are that an edit is right: Low, Medium or High.</summary>
-public enum ConfidenceLevel { Low, Medium, High }
+public enum ConfidenceLevel
+{
+    Low, Medium, High
+}
 
 /// <summary>Confidence in one edit, with the reason shown to the reviewer.</summary>
 public record EditConfidence(ConfidenceLevel Level, int Votes, int Total, string Reason);

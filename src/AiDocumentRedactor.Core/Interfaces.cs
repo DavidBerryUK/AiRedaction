@@ -36,9 +36,18 @@ public interface IStreamDocumentWriter
 public interface IDetectorMetrics
 {
     /// <summary>Tokens sent to the model.</summary>
-    long PromptTokens { get; }
+    long PromptTokens
+    {
+        get;
+    }
     /// <summary>Tokens the model generated.</summary>
-    long OutputTokens { get; }
+    long OutputTokens
+    {
+        get;
+    }
     /// <summary>Model answers dropped because they were not found verbatim in the text.</summary>
-    int Discarded { get; }
+    int Discarded
+    {
+        get;
+    }
 }

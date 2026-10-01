@@ -19,14 +19,33 @@ public static class Chunker
             if (end < text.Length)
             {
                 var brk = text.LastIndexOf("\n\n", end - 1, end - i, StringComparison.Ordinal);
-                if (brk <= i) brk = text.LastIndexOf('\n', end - 1, end - i);
-                if (brk <= i) brk = text.LastIndexOf(' ', end - 1, end - i);
-                if (brk > i) end = brk + 1;
+                if (brk <= i)
+                {
+                    brk = text.LastIndexOf('\n', end - 1, end - i);
+                }
+
+                if (brk <= i)
+                {
+                    brk = text.LastIndexOf(' ', end - 1, end - i);
+                }
+
+                if (brk > i)
+                {
+                    end = brk + 1;
+                }
             }
             chunks.Add(new Chunk(i, text[i..end]));
-            if (end >= text.Length) break;
+            if (end >= text.Length)
+            {
+                break;
+            }
+
             var next = end - Math.Max(0, overlapChars);
-            if (next > i && next < end) { var ws = text.IndexOfAny([' ', '\n'], next, end - next); next = ws >= 0 ? ws + 1 : end; }   // start at a word boundary
+            if (next > i && next < end)
+            {
+                var ws = text.IndexOfAny([' ', '\n'], next, end - next);
+                next = ws >= 0 ? ws + 1 : end;
+            }   // start at a word boundary
             i = next > i ? next : end;
         }
         return chunks;

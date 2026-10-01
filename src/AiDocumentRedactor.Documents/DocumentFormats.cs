@@ -9,7 +9,11 @@ public static class DocumentFormats
     public static List<IDocumentReader> Readers(RedactorOptions options, IOcrEngine? ocr)
     {
         var readers = new List<IDocumentReader> { new TextDocumentReader(), new PdfDocumentReader(ocr, options.Ocr), new DocxDocumentReader() };
-        if (ocr is not null) readers.Add(new ImageDocumentReader(ocr, options.Ocr));
+        if (ocr is not null)
+        {
+            readers.Add(new ImageDocumentReader(ocr, options.Ocr));
+        }
+
         return readers;
     }
 

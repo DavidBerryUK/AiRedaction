@@ -38,18 +38,34 @@ public record ReviewState(IReadOnlyList<ManualSpan> Manual, IReadOnlyList<SpanKe
             .Concat(model.Edits.Where(e => e.Status != EditStatus.Rejected && !rejected.Contains(new SpanKey(e.OriginalStart, e.OriginalLength)))
                 .Select(e => new DetectedEntity(e.Type, e.OriginalStart, e.OriginalLength, e.Confidence, e.Source, e.Status == EditStatus.Flagged)));
         var built = Redactor.Apply(text, spans, template);
-        if (Areas.Count > 0) built = built with { Areas = Areas };
-        if (rejected.Count == 0) return built;
+        if (Areas.Count > 0)
+        {
+            built = built with {
+                Areas = Areas
+            };
+        }
 
-        var edits = built.Edits.ToList(); var id = edits.Count == 0 ? 1 : edits.Max(e => e.Id) + 1;
+        if (rejected.Count == 0)
+        {
+            return built;
+        }
+
+        var edits = built.Edits.ToList();
+        var id = edits.Count == 0 ? 1 : edits.Max(e => e.Id) + 1;
         foreach (var e in model.Edits.Where(e => e.Status != EditStatus.Rejected && rejected.Contains(new SpanKey(e.OriginalStart, e.OriginalLength))))
         {
             // Left in the text: skip it if a redaction now covers the same characters, otherwise find where it sits in the new text.
-            if (built.Edits.Any(x => x.Status == EditStatus.Active && x.OriginalStart < e.OriginalStart + e.OriginalLength && e.OriginalStart < x.OriginalStart + x.OriginalLength)) continue;
+            if (built.Edits.Any(x => x.Status == EditStatus.Active && x.OriginalStart < e.OriginalStart + e.OriginalLength && e.OriginalStart < x.OriginalStart + x.OriginalLength))
+            {
+                continue;
+            }
+
             var shift = built.Edits.Where(x => x.Status == EditStatus.Active && x.OriginalStart + x.OriginalLength <= e.OriginalStart).Sum(x => x.RedactedLength - x.OriginalLength);
             edits.Add(new RedactionEdit(id++, e.Type, e.OriginalStart, e.OriginalLength, e.OriginalStart + shift, e.OriginalLength, "", e.OriginalText, e.Confidence, e.Source, EditStatus.Rejected));
         }
-        return built with { Edits = edits };
+        return built with {
+            Edits = edits
+        };
     }
 }
 
@@ -68,18 +84,29 @@ public class ReviewStore(string directory)
         try
         {
             var f = FileFor(inputPath);
-            if (!File.Exists(f)) return ReviewState.Empty;
+            if (!File.Exists(f))
+            {
+                return ReviewState.Empty;
+            }
+
             var s = JsonSerializer.Deserialize<Stored>(File.ReadAllText(f));
             return s is null ? ReviewState.Empty : new ReviewState(s.Manual, s.Rejected, s.Areas ?? []);
         }
-        catch (Exception ex) when (ex is IOException or JsonException) { return ReviewState.Empty; }
+        catch (Exception ex) when (ex is IOException or JsonException)
+        {
+            return ReviewState.Empty;
+        }
     }
 
     /// <summary>Saves the review (or removes the file when there is nothing to keep).</summary>
     public void Save(string inputPath, ReviewState state)
     {
         var f = FileFor(inputPath);
-        if (state.IsEmpty) { File.Delete(f); return; }
+        if (state.IsEmpty)
+        {
+            File.Delete(f);
+            return;
+        }
         Directory.CreateDirectory(directory);
         File.WriteAllText(f, JsonSerializer.Serialize(new Stored(2, [.. state.Manual], [.. state.Rejected], [.. state.Areas])));
     }

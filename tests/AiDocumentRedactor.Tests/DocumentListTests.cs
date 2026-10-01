@@ -15,14 +15,15 @@ public class DocumentListTests : IDisposable
     public DocumentListTests()
     {
         Directory.CreateDirectory(In);
-        options = new RedactorOptions
-        {
+        options = new RedactorOptions {
             Input = { Include = ["*.txt", "*.pdf", "*.docx", "*.md"] },
             Output = { Directory = Path.Combine(root, "out") },
             Report = { Directory = Path.Combine(root, "out", "_report") },
         };
         foreach (var n in new[] { "beta.pdf", "Alpha letter.txt", "gamma.docx", "delta.txt", "notes.md" })
+        {
             File.WriteAllText(Path.Combine(In, n), "x");
+        }
     }
     /// <summary>Deletes the temporary folder after each test.</summary>
     public void Dispose() => Directory.Delete(root, true);
@@ -46,7 +47,8 @@ public class DocumentListTests : IDisposable
     [Fact]
     public void Sorts_by_type_then_name()
     {
-        var vm = Vm(); vm.SortBy = DocumentSort.Type;
+        var vm = Vm();
+        vm.SortBy = DocumentSort.Type;
         Assert.Equal(["gamma.docx", "notes.md", "beta.pdf", "Alpha letter.txt", "delta.txt"], Names(vm));
     }
 
@@ -59,7 +61,8 @@ public class DocumentListTests : IDisposable
     [InlineData("nomatch", new string[0])]
     public void Free_text_search_matches_name_and_type_case_insensitively(string text, string[] expected)
     {
-        var vm = Vm(); vm.SearchText = text;
+        var vm = Vm();
+        vm.SearchText = text;
         Assert.Equal(expected, Names(vm));
     }
 
@@ -149,7 +152,8 @@ public class DocumentListTests : IDisposable
         Assert.Equal(["Alpha letter.txt"], Names(vm));
         Assert.StartsWith("1 of 5 documents", vm.Summary);
 
-        vm.SearchText = ""; vm.TypeFilter = "";
+        vm.SearchText = "";
+        vm.TypeFilter = "";
         Assert.Equal(5, vm.Items.Count);
 
         vm.TypeFilter = "PDF";

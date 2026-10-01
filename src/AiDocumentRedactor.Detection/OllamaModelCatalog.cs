@@ -16,7 +16,11 @@ public class OllamaModelCatalog(HttpClient http) : IModelCatalog
         {
             // Skip embedding-only models: they cannot chat.
             if (m.TryGetProperty("capabilities", out var caps) &&
-                !caps.EnumerateArray().Any(c => c.GetString() == "completion")) continue;
+                !caps.EnumerateArray().Any(c => c.GetString() == "completion"))
+            {
+                continue;
+            }
+
             var d = m.GetProperty("details");
             /// <summary>Reads a text field from the model's details, or empty if absent.</summary>
             string Str(string n) => d.TryGetProperty(n, out var v) ? v.GetString() ?? "" : "";

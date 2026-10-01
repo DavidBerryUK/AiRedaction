@@ -38,7 +38,8 @@ var files = options.Input.Include
 Console.WriteLine($"{files.Count} file(s) found in {input}");
 
 // 5. Process each file one at a time. A failure is recorded and the run continues with the next file.
-var report = new List<object>(); int done = 0, failed = 0;
+var report = new List<object>();
+int done = 0, failed = 0;
 var store = new StatusStore(options.ReportDirectory);
 var model = detector is OllamaDetector ? options.Llm.Model : null;
 foreach (var f in files)
@@ -46,7 +47,10 @@ foreach (var f in files)
     var target = pipeline.OutputPathFor(f, input);
     if (!options.Output.Overwrite && File.Exists(target))
     {
-        report.Add(new { file = Path.GetFileName(f), status = "skipped-exists" });
+        report.Add(new {
+            file = Path.GetFileName(f),
+            status = "skipped-exists"
+        });
         continue;
     }
     try
@@ -56,15 +60,30 @@ foreach (var f in files)
         var r = await pipeline.RunAsync(f, dryRun ? null : target, progress, CancellationToken.None);
         var rel = Path.GetRelativePath(input, f);
         if (!dryRun)
+        {
             store.Set(rel, new DocumentStatusRecord(r.Edits.Count == 0 && model is not null ? DocumentStatus.NeedsReview : DocumentStatus.Processed, null, r.Edits.Count, DateTime.UtcNow, model));
-        report.Add(new { file = Path.GetFileName(f), status = "done", edits = r.Edits.Count, byType = r.Edits.GroupBy(e => e.Type).ToDictionary(g => g.Key, g => g.Count()) });
+        }
+
+        report.Add(new {
+            file = Path.GetFileName(f),
+            status = "done",
+            edits = r.Edits.Count,
+            byType = r.Edits.GroupBy(e => e.Type).ToDictionary(g => g.Key, g => g.Count())
+        });
         done++;
     }
     catch (Exception ex)
     {
         if (!dryRun)
+        {
             store.Set(Path.GetRelativePath(input, f), new DocumentStatusRecord(DocumentStatus.Error, ex.Message, 0, DateTime.UtcNow, model));
-        report.Add(new { file = Path.GetFileName(f), status = "failed", error = ex.GetType().Name });
+        }
+
+        report.Add(new {
+            file = Path.GetFileName(f),
+            status = "failed",
+            error = ex.GetType().Name
+        });
         failed++;
     }
 }
@@ -75,6 +94,9 @@ if (!dryRun)
     File.WriteAllText(Path.Combine(options.ReportDirectory, "report.json"), JsonSerializer.Serialize(report, RedactorOptions.JsonOptions));
 }
 if (detector is OllamaDetector o)
+{
     Console.WriteLine($"Tokens: {o.PromptTokens} in / {o.OutputTokens} out; discarded non-verbatim: {o.Discarded}");
+}
+
 Console.WriteLine($"Done: {done}, failed: {failed}");
 return failed > 0 ? 1 : 0;

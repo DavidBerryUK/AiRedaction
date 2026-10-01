@@ -22,7 +22,11 @@ public class SessionTests : IDisposable
                 .Where(i => string.CompareOrdinal(text, i, f.Text, 0, f.Text.Length) == 0).Select(i => new DetectedEntity(f.Type, i, f.Text.Length, 1, "llm"))).ToList());
 
         /// <summary>Records the call; returns null so the caller carries on to build the result.</summary>
-        List<DetectedEntity>? Record(string text) { Calls = [new ModelCall(1, 0, text.Length, "", "", [], 0, 0, TimeSpan.FromSeconds(1), 1)]; return null; }
+        List<DetectedEntity>? Record(string text)
+        {
+            Calls = [new ModelCall(1, 0, text.Length, "", "", [], 0, 0, TimeSpan.FromSeconds(1), 1)];
+            return null;
+        }
     }
 
     /// <summary>A catalog that reports the given models as installed.</summary>
@@ -36,8 +40,7 @@ public class SessionTests : IDisposable
     public SessionTests()
     {
         Directory.CreateDirectory(In);
-        options = new RedactorOptions
-        {
+        options = new RedactorOptions {
             Input = { Include = ["*.txt"] },
             Output = { Directory = Path.Combine(root, "out") },
             Llm = { Model = "phi4", CandidateModels = ["phi4"], ChunkChars = 1000, ChunkOverlapChars = 0 },

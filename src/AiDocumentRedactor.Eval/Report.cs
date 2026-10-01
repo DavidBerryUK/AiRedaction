@@ -42,7 +42,11 @@ public static class MarkdownReport
     {
         sb.AppendLine("| " + string.Join(" | ", head) + " |");
         sb.AppendLine("|" + string.Join("|", head.Select((h, i) => i == 0 ? "---" : "---:")) + "|");
-        foreach (var r in rows) sb.AppendLine("| " + string.Join(" | ", r.Select(Cell)) + " |");
+        foreach (var r in rows)
+        {
+            sb.AppendLine("| " + string.Join(" | ", r.Select(Cell)) + " |");
+        }
+
         sb.AppendLine();
     }
 
@@ -57,13 +61,17 @@ public static class MarkdownReport
         sb.AppendLine($"Run on {run.Started:yyyy-MM-dd HH:mm} ({run.Machine}); took {run.Elapsed:hh\\:mm\\:ss}. " +
                       $"{run.Documents} documents, {run.GroundTruthEntities} items on the answer key, {models.Count} model{(models.Count == 1 ? "" : "s")}. " +
                       "Everything ran on this machine through local models.").AppendLine();
-        if (!run.ShowText) sb.AppendLine("> This report contains **no document text**: only counts, categories and file names. Run with `--show-text` to list the missed and over-redacted strings (only sensible on synthetic data).").AppendLine();
+        if (!run.ShowText)
+        {
+            sb.AppendLine("> This report contains **no document text**: only counts, categories and file names. Run with `--show-text` to list the missed and over-redacted strings (only sensible on synthetic data).").AppendLine();
+        }
 
         sb.AppendLine("## Summary").AppendLine();
         Table(sb, ["Model", "Size", "Recall", "Precision", "F1", "Sensitive items missed", "Over-redactions", "Must-keep items damaged", "Time per document", "Output tokens/s"],
             models.Select(m =>
             {
-                var t = tot[m]; var info = run.Models.First(x => x.Model == m).Info;
+                var t = tot[m];
+                var info = run.Models.First(x => x.Model == m).Info;
                 return new[] { m, info is null ? "?" : $"{info.ParameterSize} · {info.SizeBytes / 1_000_000_000.0:0.0} GB", P(t.Recall), P(t.Precision), P(t.F1),
                     $"{t.Leaked} of {t.Present}", $"{t.Edits - t.TruePositives} of {t.Edits}", t.PreserveTotal == 0 ? "–" : $"{t.PreserveBroken} of {t.PreserveTotal}",
                     TimeSpan.FromSeconds(t.Docs == 0 ? 0 : t.Seconds / t.Docs).ToString(@"m\:ss\.f"), t.TokensPerSecond.ToString("0", CultureInfo.InvariantCulture) };
@@ -89,13 +97,17 @@ public static class MarkdownReport
             return Row(g, docs.ToString(), present.ToString(), models.Select(m => { var t = Totals.Of(by[m].Where(s => s.Group == g)); return t.Present == 0 ? "–" : $"{P(t.Recall)} ({t.Caught}/{t.Present})"; }));
         }));
         var lost = models.Select(m => by[m].Where(s => s.Group.StartsWith("Scan")).Sum(s => s.LostToExtraction)).FirstOrDefault();
-        if (lost > 0) sb.AppendLine($"For scans, {lost} answer-key item(s) were not readable by OCR at all, so no model could see them. They are **not** counted above but may still be visible in the output image; they are a limit of OCR, not of the model.").AppendLine();
+        if (lost > 0)
+        {
+            sb.AppendLine($"For scans, {lost} answer-key item(s) were not readable by OCR at all, so no model could see them. They are **not** counted above but may still be visible in the output image; they are a limit of OCR, not of the model.").AppendLine();
+        }
 
         sb.AppendLine("## Precision by redaction category").AppendLine();
         var etypes = scores.SelectMany(s => s.EditsByType.Keys).Distinct().Order().ToList();
         Table(sb, ["Category", .. models], etypes.Select(c => Row(c, models.Select(m =>
         {
-            var e = by[m].Sum(s => s.EditsByType.GetValueOrDefault(c).Edits); var k = by[m].Sum(s => s.EditsByType.GetValueOrDefault(c).Correct);
+            var e = by[m].Sum(s => s.EditsByType.GetValueOrDefault(c).Edits);
+            var k = by[m].Sum(s => s.EditsByType.GetValueOrDefault(c).Correct);
             return e == 0 ? "–" : $"{P((double)k / e)} ({k}/{e})";
         }))));
         sb.AppendLine("Of the correct redactions, the share given the right category label: " + string.Join("; ", models.Select(m => $"{m} {P(tot[m].TruePositives == 0 ? 1 : (double)tot[m].TypeCorrect / tot[m].TruePositives)}")) + ".").AppendLine();
@@ -116,14 +128,34 @@ public static class MarkdownReport
                 sb.AppendLine($"### {m}").AppendLine();
                 var leaks = by[m].SelectMany(s => s.Leaks.Select(l => (s.File, l))).ToList();
                 sb.AppendLine("**Missed**").AppendLine();
-                if (leaks.Count == 0) sb.AppendLine("- nothing");
-                foreach (var (f, l) in leaks) sb.AppendLine($"- `{f}` {l.Type}: “{l.Text}” ({l.Count})");
+                if (leaks.Count == 0)
+                {
+                    sb.AppendLine("- nothing");
+                }
+
+                foreach (var (f, l) in leaks)
+                {
+                    sb.AppendLine($"- `{f}` {l.Type}: “{l.Text}” ({l.Count})");
+                }
+
                 sb.AppendLine().AppendLine("**Over-redacted**").AppendLine();
                 var fps = by[m].SelectMany(s => s.FalsePositives.Select(x => (s.File, x))).ToList();
                 var broken = by[m].SelectMany(s => s.PreserveBroken.Select(x => (s.File, x))).ToList();
-                if (fps.Count + broken.Count == 0) sb.AppendLine("- nothing");
-                foreach (var (f, x) in fps) sb.AppendLine($"- `{f}` {x.Type}: “{x.Text}” is not on the answer key");
-                foreach (var (f, x) in broken) sb.AppendLine($"- `{f}` should have been kept: “{x}”");
+                if (fps.Count + broken.Count == 0)
+                {
+                    sb.AppendLine("- nothing");
+                }
+
+                foreach (var (f, x) in fps)
+                {
+                    sb.AppendLine($"- `{f}` {x.Type}: “{x.Text}” is not on the answer key");
+                }
+
+                foreach (var (f, x) in broken)
+                {
+                    sb.AppendLine($"- `{f}` should have been kept: “{x}”");
+                }
+
                 sb.AppendLine();
             }
         }
@@ -142,7 +174,11 @@ public static class MarkdownReport
         if (run.Skipped.Count > 0)
         {
             sb.AppendLine("## Skipped").AppendLine();
-            foreach (var x in run.Skipped) sb.AppendLine("- " + x);
+            foreach (var x in run.Skipped)
+            {
+                sb.AppendLine("- " + x);
+            }
+
             sb.AppendLine();
         }
 
@@ -151,7 +187,11 @@ public static class MarkdownReport
         sb.AppendLine($"- Temperature {o.Llm.Temperature}, seed {o.Llm.Seed}, context {o.Llm.NumCtx} tokens, chunks of about {o.Llm.ChunkChars} characters with {o.Llm.ChunkOverlapChars} overlap.");
         sb.AppendLine("- Categories on: " + string.Join(", ", PromptBuilder.EnabledTypes(o)) + (o.Entities.TryGetValue("GENDER", out var g) && g.RedactPronouns ? " (pronouns included)" : "") + ".");
         var flag = o.Entities.Where(kv => kv.Value.Mode == "flag").Select(kv => kv.Key).ToList();
-        if (flag.Count > 0) sb.AppendLine("- Flag-only (reported, not redacted, so they count as missed here): " + string.Join(", ", flag) + ".");
+        if (flag.Count > 0)
+        {
+            sb.AppendLine("- Flag-only (reported, not redacted, so they count as missed here): " + string.Join(", ", flag) + ".");
+        }
+
         sb.AppendLine("- Models: " + string.Join("; ", run.Models.Select(m => m.Info is null ? m.Model : $"{m.Model} ({m.Info.Summary}, digest {m.Info.ShortDigest})")) + ".").AppendLine();
 
         sb.AppendLine("## How to read this, and its limits").AppendLine();
@@ -177,25 +217,47 @@ public static class MarkdownReport
         }
         var weakest = by[bestRecall].SelectMany(s => s.ByCategory.Select(kv => (Cat: kv.Key, kv.Value))).GroupBy(x => x.Cat)
             .Select(g => (Cat: g.Key, P: g.Sum(x => x.Value.Present), C: g.Sum(x => x.Value.Caught))).Where(x => x.P >= 3).OrderBy(x => (double)x.C / x.P).FirstOrDefault();
-        if (weakest.Cat is not null && weakest.C < weakest.P) sb.AppendLine($"- **Weakest category for {bestRecall}:** {weakest.Cat} ({P((double)weakest.C / weakest.P)}, {weakest.P - weakest.C} of {weakest.P} missed).");
+        if (weakest.Cat is not null && weakest.C < weakest.P)
+        {
+            sb.AppendLine($"- **Weakest category for {bestRecall}:** {weakest.Cat} ({P((double)weakest.C / weakest.P)}, {weakest.P - weakest.C} of {weakest.P} missed).");
+        }
+
         var worstGroup = by[bestRecall].GroupBy(s => s.Group).Select(g => (G: g.Key, T: Totals.Of(g))).Where(x => x.T.Present > 0).OrderBy(x => x.T.Recall).FirstOrDefault();
-        if (worstGroup.G is not null && worstGroup.T.Recall < 1) sb.AppendLine($"- **Hardest format:** {worstGroup.G} ({P(worstGroup.T.Recall)} recall).");
+        if (worstGroup.G is not null && worstGroup.T.Recall < 1)
+        {
+            sb.AppendLine($"- **Hardest format:** {worstGroup.G} ({P(worstGroup.T.Recall)} recall).");
+        }
+
         var damaged = tot[bestRecall].PreserveBroken;
         sb.AppendLine(damaged == 0 ? $"- **Over-redaction check:** {bestRecall} left every must-keep item (product names, public bodies, places, ordinary numbers) untouched." : $"- **Over-redaction check:** {bestRecall} damaged {damaged} of {tot[bestRecall].PreserveTotal} must-keep items.");
         sb.AppendLine();
     }
 
     /// <summary>The raw scores as JSON (no text unless text was requested).</summary>
-    public static string Json(RunInfo run, List<DocScore> scores) => System.Text.Json.JsonSerializer.Serialize(new
-    {
-        started = run.Started, elapsedSeconds = run.Elapsed.TotalSeconds, models = run.Models.Select(m => m.Model),
-        documents = scores.Select(s => new
-        {
-            s.File, s.Group, s.Model, s.Present, s.Caught, s.Edits, s.TruePositives, s.TypeCorrect, s.LostToExtraction, s.DetectSeconds, s.PromptTokens, s.OutputTokens, s.Discarded, s.OutputOk,
+    public static string Json(RunInfo run, List<DocScore> scores) => System.Text.Json.JsonSerializer.Serialize(new {
+        started = run.Started,
+        elapsedSeconds = run.Elapsed.TotalSeconds,
+        models = run.Models.Select(m => m.Model),
+        documents = scores.Select(s => new {
+            s.File,
+            s.Group,
+            s.Model,
+            s.Present,
+            s.Caught,
+            s.Edits,
+            s.TruePositives,
+            s.TypeCorrect,
+            s.LostToExtraction,
+            s.DetectSeconds,
+            s.PromptTokens,
+            s.OutputTokens,
+            s.Discarded,
+            s.OutputOk,
             byCategory = s.ByCategory.ToDictionary(kv => kv.Key, kv => new { present = kv.Value.Present, caught = kv.Value.Caught }),
             leaks = s.Leaks.Select(l => new { l.Type, l.Count, text = run.ShowText ? l.Text : null }),
             falsePositives = s.FalsePositives.Select(f => new { f.Type, text = run.ShowText ? f.Text : null }),
-            preserveBroken = run.ShowText ? s.PreserveBroken : null, preserveBrokenCount = s.PreserveBroken.Count,
+            preserveBroken = run.ShowText ? s.PreserveBroken : null,
+            preserveBrokenCount = s.PreserveBroken.Count,
         }),
     }, new System.Text.Json.JsonSerializerOptions { WriteIndented = true, DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull });
 }

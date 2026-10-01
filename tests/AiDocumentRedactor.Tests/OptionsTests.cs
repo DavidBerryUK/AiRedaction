@@ -20,7 +20,11 @@ public class OptionsTests
     public void Default_config_file_loads()
     {
         var dir = AppContext.BaseDirectory;
-        while (dir != null && !File.Exists(Path.Combine(dir, "redactor.config.json"))) dir = Path.GetDirectoryName(dir);
+        while (dir != null && !File.Exists(Path.Combine(dir, "redactor.config.json")))
+        {
+            dir = Path.GetDirectoryName(dir);
+        }
+
         var o = RedactorOptions.Load(Path.Combine(dir!, "redactor.config.json"));
         Assert.Equal("[REDACTED:{type}]", o.Redaction.PlaceholderTemplate);
         Assert.Equal("-redacted", o.Output.Suffix);

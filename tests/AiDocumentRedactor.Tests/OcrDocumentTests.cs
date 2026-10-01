@@ -18,7 +18,11 @@ public class OcrDocumentTests
     static string Corpus(string rel)
     {
         var dir = AppContext.BaseDirectory;
-        while (dir != null && !File.Exists(Path.Combine(dir, "tests", "TestCorpus", rel))) dir = Path.GetDirectoryName(dir);
+        while (dir != null && !File.Exists(Path.Combine(dir, "tests", "TestCorpus", rel)))
+        {
+            dir = Path.GetDirectoryName(dir);
+        }
+
         return Path.Combine(dir ?? throw new FileNotFoundException(rel), "tests", "TestCorpus", rel);
     }
 
@@ -53,15 +57,29 @@ public class OcrDocumentTests
         using var ms = new MemoryStream();
         await new PdfDocumentWriter(new PdfOptions(), Engine.Value, new OcrOptions()).WriteAsync(doc, result, ms, default);   // throws if OCR can still read redacted words
 
-        using (var check = PdfDocument.Open(ms.ToArray())) Assert.Equal(0, check.GetPages().Sum(p => p.GetWords().Count()));
+        using (var check = PdfDocument.Open(ms.ToArray()))
+        {
+            Assert.Equal(0, check.GetPages().Sum(p => p.GetWords().Count()));
+        }
+
         ms.Position = 0;
         using var bmp = Conversion.ToImage(ms, 0, options: new RenderOptions(Dpi: 100));
         var (pw, ph) = doc.PageSizes![0];
         var word = doc.Words!.First(w => doc.Text.Substring(w.Start, w.Length) == "Eleanor");
         int dark = 0, n = 0;
         for (var x = (int)(word.X / pw * bmp.Width); x < (int)((word.X + word.Width) / pw * bmp.Width); x++)
+        {
             for (var y = (int)((ph - word.Y - word.Height) / ph * bmp.Height); y < (int)((ph - word.Y) / ph * bmp.Height); y++)
-            { var c = bmp.GetPixel(x, y); n++; if (c.Red < 40) dark++; }
+            {
+                var c = bmp.GetPixel(x, y);
+                n++;
+                if (c.Red < 40)
+                {
+                    dark++;
+                }
+            }
+        }
+
         Assert.True((double)dark / n > 0.95);
     }
 
@@ -82,7 +100,8 @@ public class OcrDocumentTests
         {
             await new ImageDocumentWriter(new PdfOptions(), Engine.Value, new OcrOptions()).WriteAsync(doc, result, outPath, default);
             var bytes = await File.ReadAllBytesAsync(outPath);
-            using var original = SKBitmap.Decode(Corpus(file)); using var redacted = SKBitmap.Decode(bytes);
+            using var original = SKBitmap.Decode(Corpus(file));
+            using var redacted = SKBitmap.Decode(bytes);
             Assert.Equal((original.Width, original.Height), (redacted.Width, redacted.Height));
             Assert.Equal(ext == ".png", bytes.Take(4).SequenceEqual(new byte[] { 0x89, 0x50, 0x4E, 0x47 }));   // really the same type
             Assert.DoesNotContain("Exif", System.Text.Encoding.Latin1.GetString(bytes));                          // no metadata block
@@ -100,8 +119,16 @@ public class OcrDocumentTests
     public async Task A_blank_image_has_no_text()
     {
         var path = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString("N") + ".png");
-        using (var bmp = new SKBitmap(400, 300)) { bmp.Erase(SKColors.White); using var fs = File.Create(path); bmp.Encode(fs, SKEncodedImageFormat.Png, 100); }
-        try { await Assert.ThrowsAsync<NoTextLayerException>(() => new ImageDocumentReader(Engine.Value).ReadAsync(path, default)); }
+        using (var bmp = new SKBitmap(400, 300))
+        {
+            bmp.Erase(SKColors.White);
+            using var fs = File.Create(path);
+            bmp.Encode(fs, SKEncodedImageFormat.Png, 100);
+        }
+        try
+        {
+            await Assert.ThrowsAsync<NoTextLayerException>(() => new ImageDocumentReader(Engine.Value).ReadAsync(path, default));
+        }
         finally { File.Delete(path); }
     }
 }

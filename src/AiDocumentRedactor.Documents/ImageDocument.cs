@@ -18,13 +18,22 @@ public class ImageDocumentReader(IOcrEngine ocr, OcrOptions? ocrOptions = null) 
     public async Task<ExtractedDocument> ReadAsync(string path, CancellationToken ct)
     {
         var info = new FileInfo(path);
-        if (cache.TryGetValue(path, out var hit) && hit.Size == info.Length && hit.Written == info.LastWriteTimeUtc) return hit.Doc;
+        if (cache.TryGetValue(path, out var hit) && hit.Size == info.Length && hit.Written == info.LastWriteTimeUtc)
+        {
+            return hit.Doc;
+        }
+
         var bytes = await File.ReadAllBytesAsync(path, ct);
         var read = await ocr.RecognizeAsync(bytes, ct);
         double pw = read.WidthPx * 72.0 / oo.ImageDpi, ph = read.HeightPx * 72.0 / oo.ImageDpi;
         var lines = OcrMapping.ToPageLines(read, pw, ph);
-        if (lines.Count == 0) throw new NoTextLayerException("No text was found in this image.");
-        var sb = new System.Text.StringBuilder(); var words = new List<WordBox>();
+        if (lines.Count == 0)
+        {
+            throw new NoTextLayerException("No text was found in this image.");
+        }
+
+        var sb = new System.Text.StringBuilder();
+        var words = new List<WordBox>();
         OcrMapping.AppendPage(sb, words, 0, lines);
         var doc = new ExtractedDocument(path, "image", sb.ToString(), words, [(pw, ph)], read.Lines.SelectMany(l => l.Words).Average(w => w.Confidence));
         cache[path] = (info.Length, info.LastWriteTimeUtc, doc);
@@ -61,8 +70,14 @@ public class ImageDocumentWriter(PdfOptions options, IOcrEngine? ocr = null, Ocr
             using (var black = new SKPaint { Color = SKColors.Black, Style = SKPaintStyle.Fill, IsAntialias = false })
             {
                 foreach (var w in PdfDocumentWriter.WordsToCover(source, result))
+                {
                     PdfDocumentWriter.PaintWord(canvas, black, w, ph, sx, sy, options, fromOcr: true);   // tilted outline for OCR words
-                foreach (var a in result.AreaList.Where(a => a.Page == 0)) PdfDocumentWriter.PaintArea(canvas, black, a, ph, sx, sy);
+                }
+
+                foreach (var a in result.AreaList.Where(a => a.Page == 0))
+                {
+                    PdfDocumentWriter.PaintArea(canvas, black, a, ph, sx, sy);
+                }
             }
             var png = Path.GetExtension(source.SourcePath).Equals(".png", StringComparison.OrdinalIgnoreCase);
             using var img = SKImage.FromBitmap(bmp);
@@ -73,7 +88,10 @@ public class ImageDocumentWriter(PdfOptions options, IOcrEngine? ocr = null, Ocr
         {
             var words = (await ocr.RecognizeAsync(bytes, ct)).Lines.SelectMany(l => l.Words).Select(w => w.Text);
             var leaks = OcrMapping.CountLeaks(source, result, words);
-            if (leaks > 0) throw new InvalidOperationException($"{leaks} redacted word(s) can still be read in the output (checked by OCR); refusing to write it.");
+            if (leaks > 0)
+            {
+                throw new InvalidOperationException($"{leaks} redacted word(s) can still be read in the output (checked by OCR); refusing to write it.");
+            }
         }
         await output.WriteAsync(bytes, ct);
     }

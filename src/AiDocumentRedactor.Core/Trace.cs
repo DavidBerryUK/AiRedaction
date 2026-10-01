@@ -12,5 +12,8 @@ public record ModelCall(int Number, int ChunkStart, int ChunkLength, string User
 public interface IDetectorTrace
 {
     /// <summary>The calls made so far, in order.</summary>
-    IReadOnlyList<ModelCall> Calls { get; }
+    IReadOnlyList<ModelCall> Calls
+    {
+        get;
+    }
 }

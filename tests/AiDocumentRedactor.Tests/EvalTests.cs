@@ -25,7 +25,8 @@ public class EvalTests
         var s = Scoring.Score(Text, Redact(("PERSON", "Eleanor Whitcombe"), ("PERSON", "Eleanor"), ("COMPANY", "Acme Ltd"), ("PHONE", "0113 496 0123")), Key, "Plain text");
         Assert.Equal(s.Present, s.Caught);
         Assert.Equal(s.Edits, s.TruePositives);
-        Assert.Empty(s.Leaks); Assert.Empty(s.PreserveBroken);
+        Assert.Empty(s.Leaks);
+        Assert.Empty(s.PreserveBroken);
         Assert.Equal(1, s.MustPreserve);
     }
 
@@ -56,7 +57,8 @@ public class EvalTests
     public void Items_lost_before_the_model_are_counted_separately()
     {
         var s = Scoring.Score("Eleanor Whitc0mbe", Redactor.Apply("Eleanor Whitc0mbe", [], "[R]"), new("t", "t", [new("body", "PERSON", "Eleanor Whitcombe", 1)], []), "Scan: clean image");
-        Assert.Equal(1, s.LostToExtraction); Assert.Equal(0, s.Present);
+        Assert.Equal(1, s.LostToExtraction);
+        Assert.Equal(0, s.Present);
     }
 
     /// <summary>Every corpus file name finds its answer key and a format group.</summary>
@@ -64,7 +66,11 @@ public class EvalTests
     public void Corpus_files_map_to_answer_keys()
     {
         var dir = AppContext.BaseDirectory;
-        while (dir != null && !Directory.Exists(Path.Combine(dir, "tests", "TestCorpus"))) dir = Path.GetDirectoryName(dir);
+        while (dir != null && !Directory.Exists(Path.Combine(dir, "tests", "TestCorpus")))
+        {
+            dir = Path.GetDirectoryName(dir);
+        }
+
         var corpus = Path.Combine(dir!, "tests", "TestCorpus");
         var keys = GroundTruthStore.Load(corpus);
         Assert.Equal(12, keys.Count);
@@ -77,12 +83,19 @@ public class EvalTests
     [Fact]
     public void Report_has_sections_and_no_text_by_default()
     {
-        var score = Scoring.Score(Text, Redact(("PERSON", "Eleanor Whitcombe")), Key, "Plain text"); score.File = "a.txt"; score.Model = "m1";
+        var score = Scoring.Score(Text, Redact(("PERSON", "Eleanor Whitcombe")), Key, "Plain text");
+        score.File = "a.txt";
+        score.Model = "m1";
         var run = new RunInfo(DateTime.Now, TimeSpan.FromMinutes(1), "test", "c", 1, 4, new RedactorOptions(), [("m1", null)], false, false, []);
         var md = MarkdownReport.Build(run, [score]);
         foreach (var h in new[] { "# Redaction evaluation report", "## Summary", "## Headline findings", "## Recall by category", "## Recall by document format", "## Per document", "## How to read this" })
+        {
             Assert.Contains(h, md);
+        }
+
         Assert.DoesNotContain("Acme", md);   // missed in this run, so it would show only with text on
-        Assert.Contains("Acme Ltd", MarkdownReport.Build(run with { ShowText = true }, [score]));
+        Assert.Contains("Acme Ltd", MarkdownReport.Build(run with {
+            ShowText = true
+        }, [score]));
     }
 }

@@ -23,14 +23,27 @@ public static class OcrMapping
     /// <summary>Appends one page to the running text and word list: words separated by spaces, lines by line breaks, pages by a blank line.</summary>
     public static void AppendPage(StringBuilder sb, List<WordBox> words, int pageIndex, List<List<PageWord>> lines)
     {
-        if (pageIndex > 0) sb.Append("\n\n");
+        if (pageIndex > 0)
+        {
+            sb.Append("\n\n");
+        }
+
         var firstLine = true;
         foreach (var line in lines)
         {
-            if (!firstLine) sb.Append('\n'); firstLine = false;
+            if (!firstLine)
+            {
+                sb.Append('\n');
+            }
+
+            firstLine = false;
             for (var i = 0; i < line.Count; i++)
             {
-                if (i > 0) sb.Append(' ');
+                if (i > 0)
+                {
+                    sb.Append(' ');
+                }
+
                 words.Add(new WordBox(pageIndex, sb.Length, line[i].Text.Length, line[i].X, line[i].Y, line[i].W, line[i].H, line[i].Confidence, line[i].Quad));
                 sb.Append(line[i].Text);
             }

@@ -5,7 +5,10 @@ using CommunityToolkit.Mvvm.ComponentModel;
 namespace AiDocumentRedactor.App.ViewModels;
 
 /// <summary>How the document list can be ordered.</summary>
-public enum DocumentSort { Name, Type }
+public enum DocumentSort
+{
+    Name, Type
+}
 
 /// <summary>Backs the document list: scans the source directory, shows each file's status,
 /// and offers sorting (name / type) and free-text search. No UI dependencies.</summary>
@@ -20,7 +23,8 @@ public partial class DocumentListViewModel : ObservableObject
     /// <summary>Loads the document list for the given source folder.</summary>
     public DocumentListViewModel(RedactorOptions options, string inputRoot)
     {
-        this.options = options; this.inputRoot = Path.GetFullPath(inputRoot);
+        this.options = options;
+        this.inputRoot = Path.GetFullPath(inputRoot);
         store = new StatusStore(options.ReportDirectory);
         Refresh();
     }
@@ -66,7 +70,11 @@ public partial class DocumentListViewModel : ObservableObject
             .Distinct();
         var selectedPath = Selected?.FullPath;
         all = files.Select(f => Build(f, saved)).ToList();
-        if (TypeFilter != "" && all.All(i => i.Type != TypeFilter)) TypeFilter = "";   // that type no longer exists in the folder
+        if (TypeFilter != "" && all.All(i => i.Type != TypeFilter))
+        {
+            TypeFilter = "";   // that type no longer exists in the folder
+        }
+
         Apply();
         Selected = selectedPath is null ? null : Items.FirstOrDefault(i => i.FullPath == selectedPath);
     }
@@ -77,8 +85,15 @@ public partial class DocumentListViewModel : ObservableObject
         var rel = Path.GetRelativePath(inputRoot, fullPath);
         var key = StatusStore.Key(rel);
         var size = new FileInfo(fullPath).Length;
-        if (live.TryGetValue(key, out var l)) return new(fullPath, rel, size, l.Status, l.Error);
-        if (saved.TryGetValue(key, out var s)) return new(fullPath, rel, size, s.Status, s.Error);
+        if (live.TryGetValue(key, out var l))
+        {
+            return new(fullPath, rel, size, l.Status, l.Error);
+        }
+
+        if (saved.TryGetValue(key, out var s))
+        {
+            return new(fullPath, rel, size, s.Status, s.Error);
+        }
         // No record: processed outside the tool or before status tracking? An output file means it was processed.
         var output = Path.Combine(options.Output.Directory, options.Output.MirrorFolders ? Path.GetDirectoryName(rel) ?? "" : "",
             Path.GetFileNameWithoutExtension(rel) + options.Output.Suffix + Path.GetExtension(rel));
@@ -90,8 +105,15 @@ public partial class DocumentListViewModel : ObservableObject
     {
         var rel = Path.GetRelativePath(inputRoot, fullPath);
         var rec = new DocumentStatusRecord(status, error, edits, DateTime.UtcNow, model);
-        if (status == DocumentStatus.Processing) live[StatusStore.Key(rel)] = rec;
-        else { live.Remove(StatusStore.Key(rel)); store.Set(rel, rec); }
+        if (status == DocumentStatus.Processing)
+        {
+            live[StatusStore.Key(rel)] = rec;
+        }
+        else
+        {
+            live.Remove(StatusStore.Key(rel));
+            store.Set(rel, rec);
+        }
         Refresh();
     }
 
@@ -102,9 +124,11 @@ public partial class DocumentListViewModel : ObservableObject
         var terms = SearchText.Split(' ', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
         // Free text: every word must match the name, folder, type or status (case-insensitive)
         foreach (var t in terms)
+        {
             q = q.Where(i => i.RelativePath.Contains(t, StringComparison.OrdinalIgnoreCase)
                           || i.Type.Contains(t, StringComparison.OrdinalIgnoreCase)
                           || i.StatusText.Contains(t, StringComparison.OrdinalIgnoreCase));
+        }
 
         var cmp = StringComparer.OrdinalIgnoreCase;
         var sorted = SortBy == DocumentSort.Type
@@ -114,7 +138,11 @@ public partial class DocumentListViewModel : ObservableObject
 
         var list = sorted.ToList();
         Items.Clear();
-        foreach (var i in list) Items.Add(i);
+        foreach (var i in list)
+        {
+            Items.Add(i);
+        }
+
         Summary = $"{list.Count} of {all.Count} documents · {all.Count(i => i.Status is DocumentStatus.Processed or DocumentStatus.NeedsReview)} processed · {all.Count(i => i.Status == DocumentStatus.Error)} errors";
     }
 }

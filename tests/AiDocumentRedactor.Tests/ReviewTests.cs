@@ -17,9 +17,9 @@ public class ReviewTests : IDisposable
     public ReviewTests()
     {
         Directory.CreateDirectory(In);
-        options = new RedactorOptions
-        {
-            Input = { Include = ["*.txt"] }, Output = { Directory = Path.Combine(root, "out") },
+        options = new RedactorOptions {
+            Input = { Include = ["*.txt"] },
+            Output = { Directory = Path.Combine(root, "out") },
             Llm = { Model = "phi4", CandidateModels = ["phi4"], ChunkChars = 1000, ChunkOverlapChars = 0 },
         };
         File.WriteAllText(Path.Combine(In, "a.txt"), Text);
@@ -31,7 +31,8 @@ public class ReviewTests : IDisposable
     async Task<RedactionSession> Open(ReviewStore? store = null, params (string Type, string Text)[] finds)
     {
         var s = new RedactionSession(options, In, [new TextDocumentReader()], [new TextDocumentWriter()], new SessionTests.FakeCatalog("phi4"), _ => new SessionTests.FakeModel(finds), store);
-        await s.LoadModelsAsync(); s.Refresh();
+        await s.LoadModelsAsync();
+        s.Refresh();
         await s.SelectAsync(s.Documents.Items.Single());
         return s;
     }
@@ -119,12 +120,15 @@ public class ReviewTests : IDisposable
     public void Areas_are_part_of_the_review_and_saved()
     {
         var area = new AreaBox(0, 10, 20, 30, 40);
-        var review = ReviewState.Empty with { Areas = [area] };
+        var review = ReviewState.Empty with {
+            Areas = [area]
+        };
         Assert.False(review.IsEmpty);
         Assert.False(review.SameAs(ReviewState.Empty));
         Assert.Equal([area], review.ApplyTo(Text, new RedactionResult(Text, []), "[REDACTED:{type}]").Areas);
 
-        var file = Path.Combine(In, "b.txt"); File.WriteAllText(file, "x");
+        var file = Path.Combine(In, "b.txt");
+        File.WriteAllText(file, "x");
         var store = new ReviewStore(Path.Combine(root, "review2"));
         store.Save(file, review);
         Assert.Equal([area], store.Load(file).Areas);

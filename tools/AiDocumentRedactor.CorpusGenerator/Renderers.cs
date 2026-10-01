@@ -11,10 +11,17 @@ public static class Renderers
     /// <summary>Plain text version (also used for csv and json).</summary>
     public static string PlainText(DocDef d)
     {
-        if (d.RawText is { } raw) return Markup.Strip(raw);
+        if (d.RawText is { } raw)
+        {
+            return Markup.Strip(raw);
+        }
+
         var parts = new List<string>();
         foreach (var b in d.Blocks)
+        {
             parts.Add(b.Kind == BlockKind.Table ? string.Join("\n", b.Rows!.Select(r => string.Join(" | ", r.Select(Markup.Strip)))) : Markup.Strip(b.Text));
+        }
+
         return string.Join("\n\n", parts) + "\n";
     }
 
@@ -23,12 +30,14 @@ public static class Renderers
     {
         var parts = new List<string>();
         foreach (var b in d.Blocks)
-            parts.Add(b.Kind switch
-            {
+        {
+            parts.Add(b.Kind switch {
                 BlockKind.Heading => "## " + Markup.Strip(b.Text),
                 BlockKind.Table => string.Join("\n", b.Rows!.Select((r, i) => "| " + string.Join(" | ", r.Select(Markup.Strip)) + " |" + (i == 0 ? "\n|" + string.Concat(r.Select(_ => " --- |")) : ""))),
                 _ => Markup.Strip(b.Text).Replace("\n", "  \n"),
             });
+        }
+
         return "# " + d.Title + "\n\n" + string.Join("\n\n", parts) + "\n";
     }
 
@@ -38,7 +47,12 @@ public static class Renderers
         var lay = new Layout(d);
         using var stream = File.Create(path);
         using var doc = SKDocument.CreatePdf(stream);
-        for (var p = 1; p <= lay.Pages; p++) { using var c = doc.BeginPage(Layout.W, Layout.H); lay.DrawPage(c, p); doc.EndPage(); }
+        for (var p = 1; p <= lay.Pages; p++)
+        {
+            using var c = doc.BeginPage(Layout.W, Layout.H);
+            lay.DrawPage(c, p);
+            doc.EndPage();
+        }
         doc.Close();
     }
 
@@ -47,7 +61,9 @@ public static class Renderers
     {
         var s = dpi / 72f;
         var bmp = new SKBitmap((int)(Layout.W * s), (int)(Layout.H * s));
-        using var c = new SKCanvas(bmp); c.Scale(s); lay.DrawPage(c, page);
+        using var c = new SKCanvas(bmp);
+        c.Scale(s);
+        lay.DrawPage(c, page);
         return bmp;
     }
 
@@ -66,7 +82,8 @@ public static class Renderers
         var px = bmp.Pixels;
         for (var i = 0; i < px.Length; i++)
         {
-            var n = rnd.Next(-22, 23); var o = px[i];
+            var n = rnd.Next(-22, 23);
+            var o = px[i];
             px[i] = new SKColor((byte)Math.Clamp(o.Red + n, 0, 255), (byte)Math.Clamp(o.Green + n, 0, 255), (byte)Math.Clamp(o.Blue + n, 0, 255));
         }
         bmp.Pixels = px;
@@ -78,7 +95,8 @@ public static class Renderers
     /// <summary>Writes an image to disk as PNG or JPEG.</summary>
     public static void Save(SKBitmap bmp, string path, SKEncodedImageFormat fmt, int q)
     {
-        using var img = SKImage.FromBitmap(bmp); using var data = img.Encode(fmt, q);
+        using var img = SKImage.FromBitmap(bmp);
+        using var data = img.Encode(fmt, q);
         File.WriteAllBytes(path, data.ToArray());
     }
 
@@ -90,7 +108,8 @@ public static class Renderers
         using var c = doc.BeginPage(Layout.W, Layout.H);
         using var img = SKImage.FromBitmap(bmp);
         c.DrawImage(img, new SKRect(0, 0, Layout.W, Layout.H));
-        doc.EndPage(); doc.Close();
+        doc.EndPage();
+        doc.Close();
     }
 
     // ---------- DOCX ----------
@@ -104,10 +123,18 @@ public static class Renderers
             {
                 var parts = ch.Split('\n');
                 var run = new Run();
-                if (bold) run.Append(new RunProperties(new Bold(), new FontSize { Val = "30" }));
+                if (bold)
+                {
+                    run.Append(new RunProperties(new Bold(), new FontSize { Val = "30" }));
+                }
+
                 for (var i = 0; i < parts.Length; i++)
                 {
-                    if (i > 0) run.Append(new Break());
+                    if (i > 0)
+                    {
+                        run.Append(new Break());
+                    }
+
                     run.Append(new Text(parts[i]) { Space = SpaceProcessingModeValues.Preserve });
                 }
                 yield return run;
@@ -119,7 +146,9 @@ public static class Renderers
     public static void Docx(DocDef d, string path)
     {
         using var doc = WordprocessingDocument.Create(path, WordprocessingDocumentType.Document);
-        var main = doc.AddMainDocumentPart(); main.Document = new Document(); var body = main.Document.AppendChild(new Body());
+        var main = doc.AddMainDocumentPart();
+        main.Document = new Document();
+        var body = main.Document.AppendChild(new Body());
         var first = true;
         foreach (var b in d.Blocks)
         {
@@ -132,14 +161,23 @@ public static class Renderers
                 foreach (var r in b.Rows!)
                 {
                     var tr = new TableRow();
-                    foreach (var cell in r) tr.Append(new TableCell(new Paragraph(RunsFor(cell, false, d.SplitRuns))));
+                    foreach (var cell in r)
+                    {
+                        tr.Append(new TableCell(new Paragraph(RunsFor(cell, false, d.SplitRuns))));
+                    }
+
                     t.Append(tr);
                 }
-                body.Append(t); body.Append(new Paragraph());
+                body.Append(t);
+                body.Append(new Paragraph());
                 continue;
             }
             var para = new Paragraph();
-            if (first && d.Comment != null) para.Append(new CommentRangeStart { Id = "0" });
+            if (first && d.Comment != null)
+            {
+                para.Append(new CommentRangeStart { Id = "0" });
+            }
+
             para.Append(RunsFor(b.Text, b.Kind == BlockKind.Heading, d.SplitRuns));
             if (first && d.Comment != null)
             {
@@ -147,17 +185,34 @@ public static class Renderers
                 para.Append(new Run(new CommentReference { Id = "0" }));
             }
             if (first && d.TrackedDeletion != null)
-                para.Append(new DeletedRun(new Run(new DeletedText(Markup.Strip(d.TrackedDeletion)) { Space = SpaceProcessingModeValues.Preserve }))
-                { Author = "Reviewer", Date = new DateTime(2025, 10, 1), Id = "1" });
-            body.Append(para); first = false;
+            {
+                para.Append(new DeletedRun(new Run(new DeletedText(Markup.Strip(d.TrackedDeletion)) { Space = SpaceProcessingModeValues.Preserve })) {
+                    Author = "Reviewer",
+                    Date = new DateTime(2025, 10, 1),
+                    Id = "1"
+                });
+            }
+
+            body.Append(para);
+            first = false;
         }
         if (d.Header != null)
         {
-            var hp = main.AddNewPart<HeaderPart>(); hp.Header = new Header(new Paragraph(RunsFor(d.Header, false, false))); hp.Header.Save();
+            var hp = main.AddNewPart<HeaderPart>();
+            hp.Header = new Header(new Paragraph(RunsFor(d.Header, false, false)));
+            hp.Header.Save();
             var fp = d.Footer != null ? main.AddNewPart<FooterPart>() : null;
-            if (fp != null) { fp.Footer = new Footer(new Paragraph(RunsFor(d.Footer!, false, false))); fp.Footer.Save(); }
+            if (fp != null)
+            {
+                fp.Footer = new Footer(new Paragraph(RunsFor(d.Footer!, false, false)));
+                fp.Footer.Save();
+            }
             var sect = new SectionProperties(new HeaderReference { Type = HeaderFooterValues.Default, Id = main.GetIdOfPart(hp) });
-            if (fp != null) sect.Append(new FooterReference { Type = HeaderFooterValues.Default, Id = main.GetIdOfPart(fp) });
+            if (fp != null)
+            {
+                sect.Append(new FooterReference { Type = HeaderFooterValues.Default, Id = main.GetIdOfPart(fp) });
+            }
+
             body.Append(sect);
         }
         if (d.Comment != null)

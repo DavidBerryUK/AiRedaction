@@ -17,8 +17,7 @@ public record DocumentItem(string FullPath, string RelativePath, long SizeBytes,
     public bool CanPreview => IsPdf || IsImage;
 
     /// <summary>The status in plain words for display and search.</summary>
-    public string StatusText => Status switch
-    {
+    public string StatusText => Status switch {
         DocumentStatus.NotProcessed => "Not processed",
         DocumentStatus.Processing => "Processing…",
         DocumentStatus.Processed => "Processed",

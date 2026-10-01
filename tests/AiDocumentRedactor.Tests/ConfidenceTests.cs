@@ -30,7 +30,9 @@ public class ConfidenceTests
     [Fact]
     public void Edit_found_by_every_model_is_high_and_by_fewer_than_half_is_low()
     {
-        var a = R("a", Sarah, Acme, Bob); var b = R("b", Sarah, Acme); var c = R("c", Sarah);
+        var a = R("a", Sarah, Acme, Bob);
+        var b = R("b", Sarah, Acme);
+        var c = R("c", Sarah);
         var g = ConfidenceGrader.Grade(a, [a, b, c]);
         var byStart = a.Result.Edits.ToDictionary(e => e.OriginalStart, e => g[e.Id]);
         Assert.Equal(ConfidenceLevel.High, byStart[0].Level);      // all 3
@@ -43,7 +45,8 @@ public class ConfidenceTests
     [Fact]
     public void Overlapping_but_not_identical_spans_count_as_agreement()
     {
-        var a = R("a", Sarah); var b = R("b", (0, 5, "PERSON"));   // "Sarah" only
+        var a = R("a", Sarah);
+        var b = R("b", (0, 5, "PERSON"));   // "Sarah" only
         Assert.Equal(ConfidenceLevel.High, ConfidenceGrader.Grade(a, [a, b]).Values.Single().Level);
     }
 
@@ -51,7 +54,8 @@ public class ConfidenceTests
     [Fact]
     public void Two_models_one_disagreement_is_medium_not_low()
     {
-        var a = R("a", Sarah, Acme); var b = R("b", Sarah);
+        var a = R("a", Sarah, Acme);
+        var b = R("b", Sarah);
         var g = ConfidenceGrader.Grade(a, [a, b]);
         Assert.Equal(ConfidenceLevel.Medium, g[a.Result.Edits.Single(e => e.OriginalStart == 16).Id].Level);
     }
@@ -65,7 +69,8 @@ public class ConfidenceTests
         ConfigFile.SaveConfidenceModels(path, ["gemma4:e4b", "phi4"]);
         var o = RedactorOptions.Load(path);
         Assert.Equal(["gemma4:e4b", "phi4"], o.Confidence.Models);
-        Assert.Equal(7, o.Llm.Seed); Assert.Equal("-x", o.Output.Suffix);
+        Assert.Equal(7, o.Llm.Seed);
+        Assert.Equal("-x", o.Output.Suffix);
     }
 
     /// <summary>An edit that is only a shorter form of something longer is graded one step lower, and a person's own edit is always High.</summary>
@@ -74,7 +79,9 @@ public class ConfidenceTests
     {
         ModelResult WithSource(string src) => new(Guid.NewGuid(), "a", null,
             Redactor.Apply(Text, [new DetectedEntity("PERSON", 0, 5, 1, src)], "[REDACTED:{type}]"), TimeSpan.FromSeconds(1), 0, 0, 0, DateTime.UtcNow);
-        var llm = WithSource("llm"); var variant = WithSource("llm-variant"); var human = WithSource("human");
+        var llm = WithSource("llm");
+        var variant = WithSource("llm-variant");
+        var human = WithSource("human");
         Assert.Equal(ConfidenceLevel.Medium, ConfidenceGrader.Grade(llm, [llm]).Values.Single().Level);
         var v = ConfidenceGrader.Grade(variant, [variant]).Values.Single();
         Assert.Equal(ConfidenceLevel.Low, v.Level);
@@ -86,7 +93,8 @@ public class ConfidenceTests
     [Fact]
     public void Low_ocr_confidence_and_category_caps_limit_the_grade()
     {
-        var a = R("a", Sarah); var b = R("b", Sarah);                     // both models agree: would be High
+        var a = R("a", Sarah);
+        var b = R("b", Sarah);                     // both models agree: would be High
         var plain = ConfidenceGrader.Grade(a, [a, b]).Values.Single();
         Assert.Equal(ConfidenceLevel.High, plain.Level);
 

@@ -13,7 +13,11 @@ public class DocxTests
     static string Corpus(string rel)
     {
         var dir = AppContext.BaseDirectory;
-        while (dir != null && !File.Exists(Path.Combine(dir, "tests", "TestCorpus", rel))) dir = Path.GetDirectoryName(dir);
+        while (dir != null && !File.Exists(Path.Combine(dir, "tests", "TestCorpus", rel)))
+        {
+            dir = Path.GetDirectoryName(dir);
+        }
+
         return Path.Combine(dir ?? throw new FileNotFoundException(rel), "tests", "TestCorpus", rel);
     }
 
@@ -47,11 +51,14 @@ public class DocxTests
         {
             await new DocxDocumentWriter().WriteAsync(doc, result, outPath, default);
             using (var zip = ZipFile.OpenRead(outPath))
+            {
                 foreach (var e in zip.Entries.Where(e => e.FullName.EndsWith(".xml") || e.FullName.EndsWith(".rels")))
                 {
                     using var r = new StreamReader(e.Open());
                     Assert.DoesNotContain(secret, r.ReadToEnd());
                 }
+            }
+
             using var opened = WordprocessingDocument.Open(outPath, false);
             Assert.NotNull(opened.MainDocumentPart);
             var back = await new DocxDocumentReader().ReadAsync(outPath, default);
@@ -66,7 +73,11 @@ public class DocxTests
     public async Task Metadata_is_scrubbed()
     {
         var src = Corpus("docx/01-hr-letter.docx");
-        if (!File.Exists(src)) src = Directory.GetFiles(Path.GetDirectoryName(src)!, "*.docx").First();
+        if (!File.Exists(src))
+        {
+            src = Directory.GetFiles(Path.GetDirectoryName(src)!, "*.docx").First();
+        }
+
         var doc = await new DocxDocumentReader().ReadAsync(src, default);
         var outPath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString("N") + ".docx");
         try

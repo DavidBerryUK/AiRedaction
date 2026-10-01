@@ -3,7 +3,10 @@ using System.Text.RegularExpressions;
 namespace CorpusGenerator;
 
 /// <summary>The kinds of content block a document is built from.</summary>
-public enum BlockKind { Heading, Para, Table }
+public enum BlockKind
+{
+    Heading, Para, Table
+}
 
 /// <summary>Content authored with inline markup [[TYPE|text]] so ground truth is exact by construction.</summary>
 public record Block(BlockKind Kind, string Text = "", string[][]? Rows = null);
@@ -12,21 +15,42 @@ public record Block(BlockKind Kind, string Text = "", string[][]? Rows = null);
 public record DocDef(string Id, string Title, string[] Formats, List<Block> Blocks)
 {
     /// <summary>Docx only: header text (markup allowed).</summary>
-    public string? Header { get; init; }
+    public string? Header
+    {
+        get; init;
+    }
     /// <summary>Docx only: footer text.</summary>
-    public string? Footer { get; init; }
+    public string? Footer
+    {
+        get; init;
+    }
     /// <summary>Docx only: a reviewer comment (markup allowed), anchored to the first paragraph.</summary>
-    public string? Comment { get; init; }              // docx only: comment text (markup allowed) anchored to first paragraph
+    public string? Comment
+    {
+        get; init;
+    }              // docx only: comment text (markup allowed) anchored to first paragraph
     /// <summary>Docx only: text that was deleted with change-tracking on (should be scrubbed).</summary>
-    public string? TrackedDeletion { get; init; }      // docx only: text that was deleted with tracking on
+    public string? TrackedDeletion
+    {
+        get; init;
+    }      // docx only: text that was deleted with tracking on
     /// <summary>Docx only: fake author stored in the document properties.</summary>
-    public string? MetadataAuthor { get; init; }       // docx only: fake author in document properties
+    public string? MetadataAuthor
+    {
+        get; init;
+    }       // docx only: fake author in document properties
     /// <summary>Docx only: split text into many small runs, as Word often does, to test run-level redaction.</summary>
-    public bool SplitRuns { get; init; }               // docx only: split text across many runs
+    public bool SplitRuns
+    {
+        get; init;
+    }               // docx only: split text across many runs
     /// <summary>Strings that must NOT be redacted (tests over-redaction).</summary>
     public string[] MustPreserve { get; init; } = [];  // hard negatives that must NOT be redacted
     /// <summary>Csv/json documents: the whole file authored as markup.</summary>
-    public string? RawText { get; init; }              // csv/json: whole file authored as markup
+    public string? RawText
+    {
+        get; init;
+    }              // csv/json: whole file authored as markup
     /// <summary>Which scan variants to produce: clean, degraded, pdf.</summary>
     public string[] ScanKinds { get; init; } = [];     // clean, degraded, pdf
 }
@@ -47,13 +71,23 @@ public static class Markup
     /// <summary>Splits into (text, entityType?) segments, for run-level rendering.</summary>
     public static List<(string Text, string? Type)> Segments(string s)
     {
-        var res = new List<(string, string?)>(); var pos = 0;
+        var res = new List<(string, string?)>();
+        var pos = 0;
         foreach (Match m in Rx.Matches(s))
         {
-            if (m.Index > pos) res.Add((s[pos..m.Index], null));
-            res.Add((m.Groups[2].Value, m.Groups[1].Value)); pos = m.Index + m.Length;
+            if (m.Index > pos)
+            {
+                res.Add((s[pos..m.Index], null));
+            }
+
+            res.Add((m.Groups[2].Value, m.Groups[1].Value));
+            pos = m.Index + m.Length;
         }
-        if (pos < s.Length) res.Add((s[pos..], null));
+        if (pos < s.Length)
+        {
+            res.Add((s[pos..], null));
+        }
+
         return res;
     }
 }

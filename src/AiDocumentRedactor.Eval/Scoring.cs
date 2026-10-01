@@ -53,13 +53,38 @@ public static class Scoring
         // Recall: for every answer-key item, how many of its occurrences are gone from the redacted text.
         foreach (var e in gt.Entities)
         {
-            var before = Find(original, e.Text).Count; var after = Find(result.RedactedText, e.Text).Count;
+            var before = Find(original, e.Text).Count;
+            var after = Find(result.RedactedText, e.Text).Count;
             var present = Math.Min(before, e.Occurrences);
-            if (present == 0) { if (e.Where == "body") s.LostToExtraction++; continue; }
-            var caught = Math.Min(before - after, present); if (caught < 0) caught = 0;
-            s.Present += present; s.Caught += caught; s.EntitiesPresent++;
-            if (caught == present) s.EntitiesFullyCaught++; else s.Leaks.Add(new Leak(e.Type, e.Text, present - caught));
-            var c = s.ByCategory.GetValueOrDefault(e.Type); s.ByCategory[e.Type] = (c.Present + present, c.Caught + caught);
+            if (present == 0)
+            {
+                if (e.Where == "body")
+                {
+                    s.LostToExtraction++;
+                }
+
+                continue;
+            }
+            var caught = Math.Min(before - after, present);
+            if (caught < 0)
+            {
+                caught = 0;
+            }
+
+            s.Present += present;
+            s.Caught += caught;
+            s.EntitiesPresent++;
+            if (caught == present)
+            {
+                s.EntitiesFullyCaught++;
+            }
+            else
+            {
+                s.Leaks.Add(new Leak(e.Type, e.Text, present - caught));
+            }
+
+            var c = s.ByCategory.GetValueOrDefault(e.Type);
+            s.ByCategory[e.Type] = (c.Present + present, c.Caught + caught);
         }
         // Precision: every redaction should cover something on the answer key.
         var keySpans = gt.Entities.SelectMany(e => Find(original, e.Text).Select(p => (p.Start, p.Length, e.Type))).ToList();
@@ -68,16 +93,36 @@ public static class Scoring
             s.Edits++;
             var hits = keySpans.Where(k => k.Start < edit.OriginalStart + edit.OriginalLength && edit.OriginalStart < k.Start + k.Length).ToList();
             var ok = hits.Count > 0;
-            if (ok) { s.TruePositives++; if (hits.Any(h => h.Type == edit.Type)) s.TypeCorrect++; }
-            else s.FalsePositives.Add(new FalsePositive(edit.Type, edit.OriginalText ?? ""));
-            var t = s.EditsByType.GetValueOrDefault(edit.Type); s.EditsByType[edit.Type] = (t.Edits + 1, t.Correct + (ok ? 1 : 0));
+            if (ok)
+            {
+                s.TruePositives++;
+                if (hits.Any(h => h.Type == edit.Type))
+                {
+                    s.TypeCorrect++;
+                }
+            }
+            else
+            {
+                s.FalsePositives.Add(new FalsePositive(edit.Type, edit.OriginalText ?? ""));
+            }
+
+            var t = s.EditsByType.GetValueOrDefault(edit.Type);
+            s.EditsByType[edit.Type] = (t.Edits + 1, t.Correct + (ok ? 1 : 0));
         }
         // Over-redaction of things that must survive (product names, public bodies, places, ordinary numbers).
         foreach (var keep in gt.MustPreserve ?? [])
         {
-            var before = Find(original, keep).Count; if (before == 0) continue;
+            var before = Find(original, keep).Count;
+            if (before == 0)
+            {
+                continue;
+            }
+
             s.MustPreserve++;
-            if (Find(result.RedactedText, keep).Count < before) s.PreserveBroken.Add(keep);
+            if (Find(result.RedactedText, keep).Count < before)
+            {
+                s.PreserveBroken.Add(keep);
+            }
         }
         return s;
     }
