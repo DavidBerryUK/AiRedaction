@@ -13,7 +13,7 @@ public class SessionTests : IDisposable
     readonly RedactorOptions options;
 
     /// <summary>A model that "finds" a fixed list of strings in whatever text it is given.</summary>
-    class FakeModel(params (string Type, string Text)[] finds) : IEntityDetector, IDetectorTrace
+    internal class FakeModel(params (string Type, string Text)[] finds) : IEntityDetector, IDetectorTrace
     {
         /// <summary>One recorded call per run, like the real detector (the session uses it to measure speed).</summary>
         public IReadOnlyList<ModelCall> Calls { get; private set; } = [];
@@ -26,7 +26,7 @@ public class SessionTests : IDisposable
     }
 
     /// <summary>A catalog that reports the given models as installed.</summary>
-    class FakeCatalog(params string[] names) : IModelCatalog
+    internal class FakeCatalog(params string[] names) : IModelCatalog
     {
         public Task<IReadOnlyList<ModelInfo>> ListAsync(CancellationToken ct) =>
             Task.FromResult<IReadOnlyList<ModelInfo>>(names.Select(n => new ModelInfo(n, "1B", "Q4", "x", 1 << 30, "abcdef123456", 8192)).ToList());

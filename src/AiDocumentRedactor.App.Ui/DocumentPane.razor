@@ -13,8 +13,8 @@
     {
         <pre class="doc">@foreach (var seg in Segments()) {
             if (seg.Chunk is { } cn) { <span class="chunk-mark" data-chunk="@cn" title="Sent to the model as call @cn. Click to inspect." @onclick="() => OnChunkClick.InvokeAsync(cn)">Chunk @cn</span> }
-            else if (seg.Mark is null) { @seg.Text }
-            else { <mark class="m t-@seg.Mark.Type @(seg.Mark.Live ? "live" : "") @(seg.Mark.Conf == "Low" ? "lowconf" : "") @(SelectedId == seg.Mark.Id ? "sel" : "") @(seg.Mark.Flagged ? "flagged" : "")" data-id="@seg.Mark.Id" data-start="@seg.Mark.Start" data-len="@seg.Mark.Length" title="@seg.Mark.Type" @onclick="() => OnMarkClick.InvokeAsync(seg.Mark.Id)">@seg.Text</mark> }
+            else if (seg.Mark is null) { <span data-start="@seg.Start">@seg.Text</span> }
+            else { <mark class="m t-@seg.Mark.Type @(seg.Mark.Live ? "live" : "") @(seg.Mark.Conf == "Low" ? "lowconf" : "") @(SelectedId == seg.Mark.Id ? "sel" : "") @(seg.Mark.Flagged ? "flagged" : "") @(seg.Mark.Rejected ? "rejected" : "")" data-id="@seg.Mark.Id" data-start="@seg.Mark.Start" data-len="@seg.Mark.Length" title="@seg.Mark.Type" @onclick="() => OnMarkClick.InvokeAsync(seg.Mark.Id)">@seg.Text</mark> }
         }</pre>
     }
 </div>
@@ -36,7 +36,7 @@
     [Parameter] public EventCallback<int> OnChunkClick { get; set; }
 
     /// <summary>A piece of the pane: plain text, a highlighted span, or a chunk-boundary marker.</summary>
-    record Seg(string Text, PaneMark? Mark, int? Chunk = null);
+    record Seg(string Text, PaneMark? Mark, int? Chunk = null, int Start = 0);
 
     /// <summary>Cuts the text into plain, highlighted and chunk-marker pieces in order, skipping overlapping or out-of-range spans.
     /// A chunk boundary inside a highlight is drawn straight after it, so highlights are never split.</summary>
@@ -49,16 +49,16 @@
         {
             while (ci < chunks.Count && chunks[ci].Start <= to)
             {
-                if (chunks[ci].Start > pos) { yield return new(t[pos..chunks[ci].Start], null); pos = chunks[ci].Start; }
+                if (chunks[ci].Start > pos) { yield return new(t[pos..chunks[ci].Start], null, null, pos); pos = chunks[ci].Start; }
                 yield return new("", null, chunks[ci].Number); ci++;
             }
-            if (to > pos) { yield return new(t[pos..to], null); pos = to; }
+            if (to > pos) { yield return new(t[pos..to], null, null, pos); pos = to; }
         }
         foreach (var m in Marks.Where(m => m.Start >= 0 && m.Start + m.Length <= t.Length).OrderBy(m => m.Start))
         {
             if (m.Start < pos) continue;
             foreach (var x in Plain(m.Start)) yield return x;
-            yield return new(t.Substring(m.Start, m.Length), m); pos = m.Start + m.Length;
+            yield return new(t.Substring(m.Start, m.Length), m, null, m.Start); pos = m.Start + m.Length;
             while (ci < chunks.Count && chunks[ci].Start < pos) { yield return new("", null, chunks[ci].Number); ci++; }
         }
         foreach (var x in Plain(t.Length)) yield return x;

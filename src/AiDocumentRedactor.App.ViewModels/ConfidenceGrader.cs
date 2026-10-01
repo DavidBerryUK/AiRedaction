@@ -25,7 +25,7 @@ public static class ConfidenceGrader
         var map = new Dictionary<int, EditConfidence>();
         foreach (var e in active.Result.Edits.Where(e => e.Status == EditStatus.Active))
         {
-            var missedBy = others.Where(o => !o.Result.Edits.Any(x => x.Status == EditStatus.Active && Overlaps(e, x))).Select(o => o.Model).ToList();
+            var missedBy = others.Where(o => !o.Result.Edits.Any(x => x.Status == EditStatus.Active && x.Source != "human" && Overlaps(e, x))).Select(o => o.Model).ToList();
             var votes = total - missedBy.Count;
             ConfidenceLevel level; string reason;
             if (total == 1)

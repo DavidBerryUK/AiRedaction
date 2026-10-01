@@ -176,9 +176,17 @@
                     <button class="seg running" disabled><span class="spin">⟳</span> @S.RunningModel</button>
                 }
             </div>
-            @if (!Processing && S.ActiveResult is { } ar && ar.Id != S.OutputResultId)
+            @if (!Processing && S.ActiveResult is { } ar)
             {
-                <button class="btn small" title="Write this result to the output folder" @onclick="() => S.UseAsOutputAsync(ar.Id)">Use as output</button>
+                <span class="review-tools">
+                    <button class="btn small" disabled="@(!S.CanUndo)" title="Undo the last review change" @onclick="Undo">↶ Undo</button>
+                    <button class="btn small" disabled="@(!S.CanRedo)" title="Redo" @onclick="Redo">↷ Redo</button>
+                    @if (S.IsModified) { <span class="chip modified" title="Changes made here are not yet in the saved output file">● Unsaved changes</span> }
+                    @if (ar.Id != S.OutputResultId || S.IsModified)
+                    {
+                        <button class="btn small primary" title="Write this result, with your changes, to the output folder" @onclick="S.SaveAsync">@(ar.Id == S.OutputResultId ? "Save changes" : "Use as output")</button>
+                    }
+                </span>
             }
         </div>
         @if (PagesMode && !Processing && S.ActiveResult is { } pr)
@@ -199,7 +207,7 @@
 
     @* Right: every edit as a bookmark with category, confidence badge and a snippet; click to jump to it *@
     <aside class="bookmarks">
-        <div class="pane-head"><span>EDITS (@Visible.Count@(IsFiltered ? $" of {AllBookmarks.Count}" : ""))</span>
+        <div class="pane-head"><span>EDITS (@Visible.Count(b => !b.Rejected)@(IsFiltered ? $" of {AllBookmarks.Count(b => !b.Rejected)}" : ""))</span>
             @if (!Processing && S.ActiveResult is not null)
             {
                 var cc = S.ConfidenceCounts();
@@ -230,10 +238,23 @@
         <ul class="bm-list">
             @foreach (var b in Visible)
             {
-                <li class="bm @(selectedBookmark == b.Id ? "selected" : "")" @onclick="() => OnMarkClicked(b.Id)">
-                    <div class="bm-top"><span class="chip type t-@b.Type">@b.Type</span>@if (b.Flagged) { <span class="chip conf-Flag" title="@b.Confidence.Reason">Flagged</span> } else { <span class="chip conf-@b.Confidence.Level" title="@b.Confidence.Reason">@b.Confidence.Level</span> }<span class="bm-line">line @b.Line</span></div>
+                <li class="bm @(selectedBookmark == b.Id ? "selected" : "") @(b.Rejected ? "rejected" : "")" @onclick="() => OnMarkClicked(b.Id)">
+                    <div class="bm-top"><span class="chip type t-@b.Type">@b.Type</span><span class="chip src @(b.Source == "human" ? "manual" : "")" title="@(b.Source == "human" ? "Added by a person" : "Found by the model")">@(b.Source == "human" ? "Manual" : "AI")</span>@if (b.Rejected) { <span class="chip conf-Flag" title="You rejected this edit. The text is left in the output.">Rejected</span> } else if (b.Flagged) { <span class="chip conf-Flag" title="@b.Confidence.Reason">Flagged</span> } else { <span class="chip conf-@b.Confidence.Level" title="@b.Confidence.Reason">@b.Confidence.Level</span> }<span class="bm-line">line @b.Line</span></div>
                     <div class="bm-snippet">@b.Snippet</div>
-                    @if (b.Confidence.Level != ConfidenceLevel.High && b.Confidence.Reason != "") { <div class="bm-reason">@b.Confidence.Reason</div> }
+                    @if (!b.Rejected && b.Confidence.Level != ConfidenceLevel.High && b.Confidence.Reason != "") { <div class="bm-reason">@b.Confidence.Reason</div> }
+                    @if (selectedBookmark == b.Id && S.CanReview)
+                    {
+                        <div class="bm-actions" @onclick:stopPropagation="true">
+                            @if (b.Rejected) { <button class="btn small" @onclick="() => Restore(b.Id)">↺ Restore redaction</button> }
+                            else
+                            {
+                                <select aria-label="Change category" @onchange="e => Retype(b.Id, e.Value?.ToString())">
+                                    @foreach (var t in S.ManualTypes) { <option value="@t" selected="@(t == b.Type)">@t</option> }
+                                </select>
+                                <button class="btn small" title="@(b.Source == "human" ? "Remove this manual redaction" : "Leave this text unredacted. You can restore it.")" @onclick="() => Reject(b.Id)">@(b.Source == "human" ? "✕ Remove" : "✕ Reject")</button>
+                            }
+                        </div>
+                    }
                 </li>
             }
             @if (Visible.Count == 0)
@@ -272,11 +293,56 @@
         else { <span class="muted">Select a document, then press Redact.</span> }
     </footer>
 
+    @* Appears under text selected in the original pane: redact it by hand, optionally everywhere it occurs *@
+    @if (sel is { } sl && S.CanReview && !PagesMode)
+    {
+        <div class="sel-bar" style="left:@(sl.X.ToString("0"))px; top:@(sl.Y.ToString("0"))px" role="dialog" aria-label="Redact the selected text">
+            <span class="sel-count">@sl.Length selected</span>
+            <select aria-label="Category" @bind="selType">
+                @foreach (var t in S.ManualTypes) { <option value="@t">@t</option> }
+            </select>
+            <label><input type="checkbox" @bind="selAll" /> All occurrences</label>
+            <button class="btn small primary" @onclick="RedactSelection">Redact</button>
+            <button class="btn small" title="Dismiss" @onclick="DismissSelection">✕</button>
+        </div>
+    }
+
     @if (showPrompt && S.Options.Ui.PromptInspector) { <PromptDrawer Tab="@promptTab" TabChanged="t => promptTab = t" Selected="@selectedCall" OnClose="() => showPrompt = false" /> }
     @if (showModels) { <ModelsDialog OnClose="() => { showModels = false; }" /> }
 </div>
 
 @code {
+    /// <summary>Text the person has selected in the original pane (offset, length, where to show the bar).</summary>
+    record Selection(int Start, int Length, double X, double Y);
+    Selection? sel;
+    /// <summary>Category chosen in the selection bar, and whether to redact every occurrence.</summary>
+    string selType = "PERSON";
+    bool selAll;
+    DotNetObjectReference<RedactionApp>? self;
+
+    /// <summary>Called from the page when text is selected in the original pane.</summary>
+    [JSInvokable] public void OnTextSelected(int start, int length, double x, double y)
+    {
+        if (!S.CanReview) return;
+        sel = new Selection(start, length, x, y);
+        if (!S.ManualTypes.Contains(selType)) selType = S.ManualTypes.FirstOrDefault() ?? "OTHER";
+        InvokeAsync(StateHasChanged);
+    }
+    /// <summary>Redacts the selected text by hand (creating a model-free result if the document has none yet).</summary>
+    async Task RedactSelection()
+    {
+        if (sel is { } s) S.AddManual(s.Start, s.Length, selType, selAll);
+        selectedBookmark = null; await DismissSelection();
+    }
+    /// <summary>Closes the selection bar and clears the browser's selection.</summary>
+    async Task DismissSelection() { sel = null; await JS.InvokeVoidAsync("redactorUi.clearSelection"); }
+    /// <summary>Review actions on an edit. Edit numbers are rebuilt after every change, so the selection in the list is cleared.</summary>
+    void Reject(int id) { S.RejectEdit(id); selectedBookmark = null; }
+    void Restore(int id) { S.RestoreEdit(id); selectedBookmark = null; }
+    void Retype(int id, string? type) { if (type is not null) S.ChangeType(id, type); selectedBookmark = null; }
+    void Undo() { S.Undo(); selectedBookmark = null; }
+    void Redo() { S.Redo(); selectedBookmark = null; }
+
     /// <summary>Category filter for the edits list (empty = all).</summary>
     string typeFilter = "";
     /// <summary>The edit last clicked, highlighted in the list.</summary>
@@ -342,7 +408,7 @@
     IReadOnlyList<PaneMark> OriginalMarks =>
         S.IsRunning && S.RunningPath == S.Selected?.FullPath
             ? S.LiveSpans.Select((e, i) => new PaneMark(-1 - i, e.Start, e.Length, e.Type, true)).ToList()
-            : S.ActiveResult?.Result.Edits.Where(e => e.Status is EditStatus.Active or EditStatus.Flagged).Select(e => new PaneMark(e.Id, e.OriginalStart, e.OriginalLength, e.Type, false, ConfOf(e.Id), e.Status == EditStatus.Flagged)).ToList() ?? [];
+            : S.ActiveResult?.Result.Edits.Select(e => new PaneMark(e.Id, e.OriginalStart, e.OriginalLength, e.Type, false, ConfOf(e.Id), e.Status == EditStatus.Flagged, e.Status == EditStatus.Rejected)).ToList() ?? [];
     /// <summary>Highlights for the placeholders in the redacted pane.</summary>
     IReadOnlyList<PaneMark> RedactedMarks =>
         S.ActiveResult?.Result.Edits.Where(e => e.Status is EditStatus.Active or EditStatus.Flagged).Select(e => new PaneMark(e.Id, e.RedactedStart, e.RedactedLength, e.Type, false, ConfOf(e.Id), e.Status == EditStatus.Flagged)).ToList() ?? [];
@@ -359,7 +425,7 @@
         : S.Selected is null || S.LoadError is not null ? null
         : S.ActiveResult is not null ? null
         : S.IsRunning && S.RunningPath == S.Selected.FullPath ? "Redacting… the result appears here when the run finishes."
-        : "Not redacted yet — press Redact.";
+        : "Not redacted yet — press Redact, or select text in the original to redact it by hand.";
 
     /// <summary>The folder part of a document's relative path, for display.</summary>
     static string FolderOf(DocumentItem d) => Path.GetDirectoryName(d.RelativePath) is { Length: > 0 } f ? f : "";
@@ -373,7 +439,7 @@
     /// <summary>On first load: listen for changes and fetch the installed models.</summary>
     protected override async Task OnInitializedAsync()
     {
-        S.Changed += OnChanged;
+        S.Changed += OnChanged; self = DotNetObjectReference.Create(this);
         await S.LoadModelsAsync();
     }
 
@@ -388,7 +454,7 @@
         InvokeAsync(StateHasChanged);
     }
     /// <summary>Stops listening to the session when the screen goes away.</summary>
-    public void Dispose() => S.Changed -= OnChanged;
+    public void Dispose() { S.Changed -= OnChanged; self?.Dispose(); }
 
     /// <summary>Picker changed: choose the model for the next run.</summary>
     void OnModelChanged(ChangeEventArgs e) { confirmReplace = false; S.SelectModel(e.Value?.ToString() ?? S.SelectedModel); }
@@ -426,6 +492,6 @@
     /// <summary>After the first draw, set up the scroll-sync script.</summary>
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if (firstRender) await JS.InvokeVoidAsync("redactorUi.init");
+        if (firstRender) { await JS.InvokeVoidAsync("redactorUi.init"); await JS.InvokeVoidAsync("redactorUi.watchSelection", self); }
     }
 }

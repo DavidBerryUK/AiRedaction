@@ -37,7 +37,8 @@ builder.Services.AddSingleton(sp =>
     var llm = options.Llm;
     IModelCatalog catalog = new OllamaModelCatalog(OllamaDetector.CreateClient(llm));
     return new RedactionSession(options, inputRoot, DocumentFormats.Readers(options, ocr), DocumentFormats.Writers(options, ocr), catalog,
-        opts => opts.Llm.Provider == "ollama" ? new OllamaDetector(OllamaDetector.CreateClient(opts.Llm), opts) : new NoOpDetector())
+        opts => opts.Llm.Provider == "ollama" ? new OllamaDetector(OllamaDetector.CreateClient(opts.Llm), opts) : new NoOpDetector(),
+        new ReviewStore(Path.GetFullPath(Path.Combine(".cache", "review"))))   // review changes are kept as offsets only
     { ConfigPath = Path.GetFullPath(configPath), OcrEngineName = ocr?.Name };
 });
 

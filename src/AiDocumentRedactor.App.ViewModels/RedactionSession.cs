@@ -20,11 +20,23 @@ public class RedactionSession
     readonly Dictionary<string, HashSet<string>> ranTogether = new();   // per document: models run together (they all vote)
     /// <summary>Lets the Cancel button stop a run in progress.</summary>
     CancellationTokenSource? cts;
+    /// <summary>Where each document's review state (manual redactions, rejected edits) is kept, or null to keep it in memory only.</summary>
+    readonly ReviewStore? reviewStore;
+    /// <summary>The reviewer's changes per document, with undo/redo history and the state last written to the output file.</summary>
+    readonly Dictionary<string, DocReview> reviews = new();
+
+    /// <summary>One document's review: current state, undo and redo stacks, and the state the saved output reflects.</summary>
+    sealed class DocReview
+    {
+        public ReviewState Current = ReviewState.Empty, Saved = ReviewState.Empty;
+        public readonly Stack<ReviewState> Undo = new(), Redo = new();
+    }
 
     /// <summary>Wires up the document list, readers/writers, model catalog and a factory that creates a detector per model.</summary>
     public RedactionSession(RedactorOptions options, string inputRoot, IEnumerable<IDocumentReader> readers,
-        IEnumerable<IDocumentWriter> writers, IModelCatalog catalog, Func<RedactorOptions, IEntityDetector> detectorFactory)
+        IEnumerable<IDocumentWriter> writers, IModelCatalog catalog, Func<RedactorOptions, IEntityDetector> detectorFactory, ReviewStore? reviewStore = null)
     {
+        this.reviewStore = reviewStore;
         this.options = options; this.inputRoot = Path.GetFullPath(inputRoot); this.readers = readers; this.writers = writers;
         this.catalog = catalog; this.detectorFactory = detectorFactory;
         Documents = new DocumentListViewModel(options, inputRoot);
@@ -179,6 +191,10 @@ public class RedactionSession
                 catch (NoTextLayerException ex) { PreviewOnly = true; PreviewNote = ex.Message; }   // a scanned PDF: view it, but it needs OCR
                 catch (Exception ex) { LoadError = ex.Message; }
                 finally { IsReading = false; }
+            if (OriginalText is not null && !reviews.ContainsKey(item.FullPath) && reviewStore is not null)
+                reviews[item.FullPath] = new DocReview { Current = reviewStore.Load(item.FullPath) };
+            if (OriginalText is not null && !(results.TryGetValue(item.FullPath, out var any) && any.Count > 0) && !ReviewOf(item.FullPath).Current.IsEmpty)
+                EnsureManualResult();   // a saved review from an earlier session: bring its edits back
             if (results.TryGetValue(item.FullPath, out var list) && list.Count > 0)
                 ActiveResultId = outputResult.TryGetValue(item.FullPath, out var o) ? o : list[^1].Id;
         }
@@ -227,14 +243,14 @@ public class RedactionSession
         var r = ActiveResult; if (r is null || OriginalText is null) return [];
         var red = r.Result.RedactedText;
         var conf = Confidence();
-        return r.Result.Edits.Where(e => e.Status is EditStatus.Active or EditStatus.Flagged).Select(e =>
+        return r.Result.Edits.Select(e =>
         {
             var from = Math.Max(0, e.RedactedStart - 24); var to = Math.Min(red.Length, e.RedactedStart + e.RedactedLength + 24);
             var snippet = red[from..to].Replace('\n', ' ').Replace('\r', ' ');
             var line = 1 + OriginalText.AsSpan(0, Math.Min(e.OriginalStart, OriginalText.Length)).Count('\n');
             return new Bookmark(e.Id, e.Type, (from > 0 ? "…" : "") + snippet + (to < red.Length ? "…" : ""), line, e.OriginalStart, e.RedactedStart,
                 conf.GetValueOrDefault(e.Id) ?? new EditConfidence(ConfidenceLevel.Medium, 1, 1, e.Status == EditStatus.Flagged ? "Flagged for review. Left in the text, not redacted." : ""),
-                e.Status == EditStatus.Flagged);
+                e.Status == EditStatus.Flagged, e.Source, e.Status == EditStatus.Rejected);
         }).ToList();
     }
 
@@ -324,12 +340,14 @@ public class RedactionSession
         sw.Stop();
 
         var od = detector as IDetectorMetrics;
-        var mr = new ModelResult(Guid.NewGuid(), model, InfoFor(model), r, sw.Elapsed, od?.PromptTokens ?? 0, od?.OutputTokens ?? 0, od?.Discarded ?? 0, DateTime.UtcNow) { Calls = (detector as IDetectorTrace)?.Calls ?? [] };
+        var mr = new ModelResult(Guid.NewGuid(), model, InfoFor(model), r, sw.Elapsed, od?.PromptTokens ?? 0, od?.OutputTokens ?? 0, od?.Discarded ?? 0, DateTime.UtcNow) { Calls = (detector as IDetectorTrace)?.Calls ?? [], BaseResult = r };
+        var rv = ReviewOf(doc.FullPath);
+        if (!rv.Current.IsEmpty) mr = mr with { Result = rv.Current.ApplyTo(OriginalText!, r, options.Redaction.PlaceholderTemplate) };
         if (old is not null) list.Remove(old);
         list.Add(mr);
         while (list.Count > Math.Max(1, options.Ui.MaxResultsPerDocument))
             list.Remove(list.First(x => outputResult.GetValueOrDefault(doc.FullPath) != x.Id && x.Id != mr.Id));
-        if (autoSave) outputResult[doc.FullPath] = mr.Id;
+        if (autoSave) { outputResult[doc.FullPath] = mr.Id; rv.Saved = ReviewState.Empty; }   // the file written by the run holds the model's edits only
         if (isPrimary || ActiveResultId is null) ActiveResultId = mr.Id;   // the primary model's result is the one shown
         Notify();
     }
@@ -360,9 +378,142 @@ public class RedactionSession
         var src = await reader.ReadAsync(doc.FullPath, CancellationToken.None);
         var target = new RedactionPipeline(readers, writers, new NullDetector(), options).OutputPathFor(doc.FullPath, inputRoot);
         await writers.First(w => w.CanWrite(src)).WriteAsync(src, mr.Result, target, CancellationToken.None);
-        outputResult[doc.FullPath] = id; SavedNote = null;
+        outputResult[doc.FullPath] = id; SavedNote = null; ReviewOf(doc.FullPath).Saved = ReviewOf(doc.FullPath).Current;
         Documents.SetStatus(doc.FullPath, mr.EditCount == 0 ? DocumentStatus.NeedsReview : DocumentStatus.Processed, null, mr.EditCount, mr.Model);
         Notify();
+    }
+
+    // ---- manual review ----
+    /// <summary>The review record for a document (created when first needed).</summary>
+    DocReview ReviewOf(string path) => reviews.TryGetValue(path, out var r) ? r : reviews[path] = new DocReview();
+    /// <summary>The selected document's review, or null if none is selected.</summary>
+    DocReview? CurrentReview => Selected is { } s ? ReviewOf(s.FullPath) : null;
+    /// <summary>True when a person can add, reject and restore edits (a document is loaded and readable).</summary>
+    public bool CanReview => OriginalText is not null && !PreviewOnly && !IsRunning;
+    /// <summary>The categories a person can choose when redacting by hand (those switched on in the config).</summary>
+    public IReadOnlyList<string> ManualTypes => PromptBuilder.EnabledTypes(options).ToList();
+    /// <summary>True if there is a change to undo.</summary>
+    public bool CanUndo => CurrentReview?.Undo.Count > 0;
+    /// <summary>True if there is an undone change to redo.</summary>
+    public bool CanRedo => CurrentReview?.Redo.Count > 0;
+    /// <summary>True when the reviewer's changes are not yet written to the output file.</summary>
+    public bool IsModified => CurrentReview is { } r && !r.Current.SameAs(r.Saved);
+    /// <summary>How many reviewer changes the selected document has (added plus rejected).</summary>
+    public int ReviewChangeCount => CurrentReview is { } r ? r.Current.Manual.Count + r.Current.Rejected.Count : 0;
+
+    /// <summary>Shows the hand-made result, creating it (with no model) if the document has none yet. This is how a document is redacted without the LLM.</summary>
+    public ModelResult? EnsureManualResult()
+    {
+        if (Selected is not { } doc || OriginalText is null) return null;
+        var list = results.TryGetValue(doc.FullPath, out var l) ? l : results[doc.FullPath] = [];
+        var m = list.FirstOrDefault(r => r.IsManual);
+        if (m is null)
+        {
+            var empty = new RedactionResult(OriginalText, []);
+            m = new ModelResult(Guid.NewGuid(), ModelResult.ManualModelName, null, ReviewOf(doc.FullPath).Current.ApplyTo(OriginalText, empty, options.Redaction.PlaceholderTemplate),
+                TimeSpan.Zero, 0, 0, 0, DateTime.UtcNow) { BaseResult = empty };
+            list.Add(m);
+        }
+        if (ActiveResult is null) ActiveResultId = m.Id;
+        Notify();
+        return m;
+    }
+
+    /// <summary>Records a new review state as one undoable step, saves it, and rebuilds every result of the document with it.</summary>
+    void Commit(ReviewState next)
+    {
+        if (Selected is not { } doc || OriginalText is null) return;
+        var rv = ReviewOf(doc.FullPath);
+        if (next.SameAs(rv.Current)) return;
+        rv.Undo.Push(rv.Current); rv.Redo.Clear(); SetReview(doc, rv, next);
+    }
+
+    /// <summary>Makes a review state current: persists it (offsets only) and recomputes each result's edits and redacted text from it.</summary>
+    void SetReview(DocumentItem doc, DocReview rv, ReviewState state)
+    {
+        rv.Current = state;
+        reviewStore?.Save(doc.FullPath, state);
+        if (results.TryGetValue(doc.FullPath, out var list))
+            for (var i = 0; i < list.Count; i++)
+                if (list[i].BaseResult is { } b) list[i] = list[i] with { Result = state.ApplyTo(OriginalText!, b, options.Redaction.PlaceholderTemplate) };
+        Notify();
+    }
+
+    /// <summary>Redacts a stretch of the original text by hand. With allOccurrences, every identical piece of text is redacted too.
+    /// Returns how many redactions were added.</summary>
+    public int AddManual(int start, int length, string type, bool allOccurrences)
+    {
+        if (!CanReview || OriginalText is not { } text || start < 0 || length <= 0 || start + length > text.Length) return 0;
+        while (length > 0 && char.IsWhiteSpace(text[start])) { start++; length--; }          // ignore stray spaces at the ends of the selection
+        while (length > 0 && char.IsWhiteSpace(text[start + length - 1])) length--;
+        if (length == 0) return 0;
+        EnsureManualResult();
+        var rv = ReviewOf(Selected!.FullPath);
+        var needle = text.Substring(start, length);
+        var starts = new List<int> { start };
+        if (allOccurrences)
+            for (var i = text.IndexOf(needle, StringComparison.Ordinal); i >= 0; i = text.IndexOf(needle, i + length, StringComparison.Ordinal))
+                if (i != start) starts.Add(i);
+        var manual = rv.Current.Manual.ToList(); var rejected = rv.Current.Rejected.ToList(); var added = 0;
+        foreach (var i in starts)
+        {
+            if (manual.Any(m => m.Start == i && m.Length == length && m.Type == type)) continue;
+            rejected.RemoveAll(r => r.Start < i + length && i < r.Start + r.Length);   // redacting over a rejected edit supersedes the rejection
+            manual.Add(new ManualSpan(type, i, length)); added++;
+        }
+        if (added > 0) Commit(new ReviewState(manual, rejected));
+        return added;
+    }
+
+    /// <summary>Rejects an edit of the viewed result: an AI edit is left in the text (and can be restored), a manual one is removed.</summary>
+    public void RejectEdit(int editId)
+    {
+        if (CurrentReview is not { } rv || FindEdit(editId) is not { } e) return;
+        if (e.Status == EditStatus.Rejected) return;
+        Commit(Without(rv.Current, e));
+    }
+
+    /// <summary>Puts a rejected AI edit back.</summary>
+    public void RestoreEdit(int editId)
+    {
+        if (CurrentReview is not { } rv || FindEdit(editId) is not { Status: EditStatus.Rejected } e) return;
+        Commit(new ReviewState(rv.Current.Manual, rv.Current.Rejected.Where(r => r != new SpanKey(e.OriginalStart, e.OriginalLength)).ToList()));
+    }
+
+    /// <summary>Changes an edit's category. A manual edit is updated; an AI edit is replaced by a manual one of the new category.</summary>
+    public void ChangeType(int editId, string type)
+    {
+        if (CurrentReview is not { } rv || FindEdit(editId) is not { } e || e.Type == type || e.Status == EditStatus.Rejected) return;
+        var without = Without(rv.Current, e);
+        Commit(new ReviewState([.. without.Manual, new ManualSpan(type, e.OriginalStart, e.OriginalLength)], without.Rejected));
+    }
+
+    /// <summary>The review state with this edit taken out: removed if it was manual, rejected if it came from a model.</summary>
+    static ReviewState Without(ReviewState s, RedactionEdit e) => e.Source == "human"
+        ? new ReviewState(s.Manual.Where(m => !(m.Start == e.OriginalStart && m.Length == e.OriginalLength)).ToList(), s.Rejected)
+        : new ReviewState(s.Manual, [.. s.Rejected, new SpanKey(e.OriginalStart, e.OriginalLength)]);
+
+    /// <summary>An edit of the viewed result by its number.</summary>
+    RedactionEdit? FindEdit(int id) => ActiveResult?.Result.Edits.FirstOrDefault(e => e.Id == id);
+
+    /// <summary>Undoes the last review change.</summary>
+    public void Undo()
+    {
+        if (Selected is not { } doc || CurrentReview is not { Undo.Count: > 0 } rv) return;
+        rv.Redo.Push(rv.Current); SetReview(doc, rv, rv.Undo.Pop());
+    }
+
+    /// <summary>Redoes the last undone review change.</summary>
+    public void Redo()
+    {
+        if (Selected is not { } doc || CurrentReview is not { Redo.Count: > 0 } rv) return;
+        rv.Undo.Push(rv.Current); SetReview(doc, rv, rv.Redo.Pop());
+    }
+
+    /// <summary>Writes the viewed result, with the reviewer's changes, as the saved output and clears the modified marker.</summary>
+    public async Task SaveAsync()
+    {
+        if (ActiveResult is { } a) await UseAsOutputAsync(a.Id);
     }
 
     /// <summary>Detector that finds nothing; used when only rewriting an existing result.</summary>
