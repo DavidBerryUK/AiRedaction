@@ -60,12 +60,35 @@ public class RedactionSession
         options.Entities.TryGetValue(t, out var e);
         return new CategoryRow(t, e?.Enabled ?? true, options.ModeOf(t), e?.RedactPronouns ?? false, e?.Description ?? PromptBuilder.DefaultDescriptions[t]);
     }).ToList();
-    /// <summary>True if the categories differ from the config file.</summary>
-    public bool CategoriesChanged => Categories.Any(c =>
+    /// <summary>True if the categories or the second-opinion settings differ from the config file.</summary>
+    public bool CategoriesChanged => SecondOpinionChanged || Categories.Any(c =>
     {
         startingOptions.Entities.TryGetValue(c.Type, out var s);
         return (s?.Enabled ?? true, startingOptions.ModeOf(c.Type), s?.RedactPronouns ?? false) != (c.Enabled, c.Mode, c.RedactPronouns);
     });
+
+    // ---- second opinion (GLiNER): also session-only, never written to the config file ----
+    /// <summary>True if the GLiNER model files are in place, so the second opinion can be switched on.</summary>
+    public bool SecondOpinionAvailable => File.Exists(Path.GetFullPath(Path.Combine(options.Gliner.ModelDirectory, options.Gliner.OnnxFile)));
+    /// <summary>The folder the model files are expected in, for the message when they are missing.</summary>
+    public string SecondOpinionFolder => options.Gliner.ModelDirectory;
+    /// <summary>True if the next Redact also asks the second-opinion model (GLiNER).</summary>
+    public bool SecondOpinionOn => options.Gliner.Enabled;
+    /// <summary>What happens to something only GLiNER finds: "flag" (list it for review, leave it in the text) or "redact".</summary>
+    public string SecondOpinionSoloAction => options.Gliner.SoloAction.Equals("redact", StringComparison.OrdinalIgnoreCase) ? "redact" : "flag";
+    bool SecondOpinionChanged => (startingOptions.Gliner.Enabled, startingOptions.Gliner.SoloAction.ToLowerInvariant()) != (options.Gliner.Enabled, options.Gliner.SoloAction.ToLowerInvariant());
+    /// <summary>Switches the second opinion on or off for the next Redact (it cannot be switched on without the model files).</summary>
+    public void SetSecondOpinion(bool on)
+    {
+        options.Gliner.Enabled = on && SecondOpinionAvailable;
+        Notify();
+    }
+    /// <summary>Sets what happens to something only GLiNER finds: "flag" or "redact".</summary>
+    public void SetSecondOpinionSoloAction(string action)
+    {
+        options.Gliner.SoloAction = action == "redact" ? "redact" : "flag";
+        Notify();
+    }
     /// <summary>The settings object for a category (created if the file did not mention it).</summary>
     EntityOptions EntityFor(string type) => options.Entities.TryGetValue(type, out var e) ? e : options.Entities[type] = new EntityOptions { Mode = options.ModeOf(type) };
     /// <summary>Switches a category on or off for the next Redact.</summary>
@@ -90,6 +113,8 @@ public class RedactionSession
     public void ResetCategories()
     {
         options.Entities = Copy(startingOptions).Entities;
+        options.Gliner.Enabled = startingOptions.Gliner.Enabled;
+        options.Gliner.SoloAction = startingOptions.Gliner.SoloAction;
         Notify();
     }
 

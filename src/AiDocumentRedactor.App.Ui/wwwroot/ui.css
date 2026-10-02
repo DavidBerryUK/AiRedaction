@@ -291,3 +291,12 @@ mark.m.rejected { background: transparent !important; box-shadow: none; text-dec
 mark.m.t-LOCATION { background: color-mix(in srgb, var(--c-LOCATION) 38%, transparent); box-shadow: inset 0 -2px 0 var(--c-LOCATION); }
 .chip.type.t-LOCATION { background: var(--c-LOCATION); }
 .hl.t-LOCATION { fill: color-mix(in srgb, var(--c-LOCATION) 38%, transparent); stroke: var(--c-LOCATION); }
+
+/* Second-opinion (GLiNER) switch in the Categories dialog */
+.second-opinion { display: flex; gap: 14px; align-items: flex-start; margin-top: 14px; padding: 12px 14px; border: 1px solid var(--border); border-radius: 8px; background: var(--panel); }
+.second-opinion .switch { flex: none; margin-top: 2px; }
+.second-opinion .switch .slider { border: 1px solid var(--muted); }
+.second-opinion.unavail { opacity: .8; }
+.second-opinion .so-text p { margin: 4px 0; color: var(--muted); font-size: 12.5px; line-height: 1.45; }
+.second-opinion .so-missing { color: var(--text); font-weight: 600; }
+.second-opinion .so-solo { display: inline-flex; gap: 8px; align-items: center; margin-top: 6px; font-size: 12.5px; }

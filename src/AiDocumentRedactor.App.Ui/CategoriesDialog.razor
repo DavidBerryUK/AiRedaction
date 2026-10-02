@@ -1,5 +1,6 @@
 @* Categories dialog: switch each kind of sensitive data on or off, choose redact or flag, and turn pronouns on or off. The changes belong to
-   this browser's session only and are used by the next Redact; the config file is never written. *@
+   this browser's session only and are used by the next Redact; the config file is never written. It also holds the switch for the
+   second-opinion model (GLiNER). *@
 @inject RedactionSession S
 
 <div class="overlay" @onclick="Close">
@@ -41,8 +42,32 @@
             }
             </tbody>
         </table>
+        <div class="second-opinion @(S.SecondOpinionAvailable ? "" : "unavail")">
+            <label class="switch" title="@(S.SecondOpinionAvailable ? "Also ask a small second model, and compare" : "The GLiNER model files are not installed")">
+                <input type="checkbox" role="switch" aria-label="Second opinion (GLiNER)" checked="@S.SecondOpinionOn" disabled="@(!S.SecondOpinionAvailable)" @onchange="e => S.SetSecondOpinion((bool)(e.Value ?? false))" />
+                <span class="slider"></span>
+            </label>
+            <div class="so-text">
+                <strong>Second opinion (GLiNER)</strong>
+                <p>A small second model reads the document too. Where it agrees with the main model, the edit shows <em>AI + GLiNER</em>. Where <strong>only</strong> GLiNER finds something,
+                    it is flagged for you to decide, with its reason, and left in the text unless you choose to redact it. It runs on this machine and adds about a tenth of a second.</p>
+                @if (!S.SecondOpinionAvailable)
+                {
+                    <p class="so-missing">The model files were not found in <code>@S.SecondOpinionFolder</code>. See <em>How to run the Web App</em> to install them.</p>
+                }
+                else
+                {
+                    <label class="so-solo">Something only GLiNER finds:
+                        <select aria-label="What to do with something only GLiNER finds" disabled="@(!S.SecondOpinionOn)" @onchange='e => S.SetSecondOpinionSoloAction(e.Value?.ToString() ?? "flag")'>
+                            <option value="flag" selected="@(S.SecondOpinionSoloAction == "flag")">Flag for review (leave in the text)</option>
+                            <option value="redact" selected="@(S.SecondOpinionSoloAction == "redact")">Redact</option>
+                        </select>
+                    </label>
+                }
+            </div>
+        </div>
         <div class="dialog-foot">
-            <button class="btn" disabled="@(!S.CategoriesChanged)" title="Put every category back to the config file's settings" @onclick="S.ResetCategories">↺ Reset to config file</button>
+            <button class="btn" disabled="@(!S.CategoriesChanged)" title="Put every category and the second opinion back to the config file's settings" @onclick="S.ResetCategories">↺ Reset to config file</button>
             <button class="btn primary" @onclick="Close">Done</button>
         </div>
     </div>

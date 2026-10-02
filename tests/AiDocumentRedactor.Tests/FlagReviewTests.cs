@@ -101,3 +101,52 @@ public class FlagReviewTests : IDisposable
         Assert.Contains(s.Bookmarks(), b => b.Rejected && b.Type == "CONTEXTUAL");
     }
 }
+
+/// <summary>Tests for the session-only second-opinion switch in the Categories dialog.</summary>
+public class SecondOpinionSwitchTests : IDisposable
+{
+    readonly string root = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString("N"));
+    string In => Path.Combine(root, "in");
+
+    public SecondOpinionSwitchTests() => Directory.CreateDirectory(In);
+
+    public void Dispose() => Directory.Delete(root, true);
+
+    RedactionSession Make(string modelDir)
+    {
+        var o = new RedactorOptions {
+            Input = { Include = ["*.txt"] },
+            Output = { Directory = Path.Combine(root, "out") },
+            Llm = { Model = "phi4", CandidateModels = ["phi4"] },
+            Gliner = { ModelDirectory = modelDir },
+        };
+        return new RedactionSession(o, In, [new TextDocumentReader()], [new TextDocumentWriter()], new SessionTests.FakeCatalog("phi4"), _ => new SessionTests.FakeModel());
+    }
+
+    /// <summary>Without the model files the switch cannot be turned on; with them it can, and Reset puts it back.</summary>
+    [Fact]
+    public void Switch_needs_the_model_files_and_resets_to_the_config()
+    {
+        var missing = Make(Path.Combine(root, "nothing"));
+        Assert.False(missing.SecondOpinionAvailable);
+        missing.SetSecondOpinion(true);
+        Assert.False(missing.SecondOpinionOn);
+
+        var models = Path.Combine(root, "models");
+        Directory.CreateDirectory(models);
+        File.WriteAllText(Path.Combine(models, "model_quint8.onnx"), "x");
+        var s = Make(models);
+        Assert.True(s.SecondOpinionAvailable);
+        Assert.False(s.SecondOpinionOn);
+        Assert.False(s.CategoriesChanged);
+        s.SetSecondOpinion(true);
+        s.SetSecondOpinionSoloAction("redact");
+        Assert.True(s.SecondOpinionOn);
+        Assert.Equal("redact", s.SecondOpinionSoloAction);
+        Assert.True(s.CategoriesChanged);
+        s.ResetCategories();
+        Assert.False(s.SecondOpinionOn);
+        Assert.Equal("flag", s.SecondOpinionSoloAction);
+        Assert.False(s.CategoriesChanged);
+    }
+}
