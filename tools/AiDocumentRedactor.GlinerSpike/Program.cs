@@ -15,19 +15,45 @@ string? Arg(string name)
     return i >= 0 && i + 1 < args.Length ? args[i + 1] : null;
 }
 
-// Our categories as plain-language labels for the model (the real integration would keep these in the config).
-var labelOf = new Dictionary<string, string>
+// Our categories as labels for the model. Several labels may stand for one category. Label wording can change results a lot, so there are
+// named sets to compare: A = short everyday words, B = the model's own training vocabulary, C = B plus extra wording for companies and context.
+var labelSets = new Dictionary<string, Dictionary<string, string[]>>
 {
-    [EntityTypes.Person] = "person", [EntityTypes.Phone] = "phone number", [EntityTypes.Email] = "email", [EntityTypes.Address] = "address",
-    [EntityTypes.IdNumber] = "identification number", [EntityTypes.OnlineId] = "ip address", [EntityTypes.Age] = "age",
-    [EntityTypes.DateOfBirth] = "date of birth", [EntityTypes.Gender] = "gender", [EntityTypes.Company] = "organization",
-    [EntityTypes.CompanyId] = "company registration number", [EntityTypes.Domain] = "website", [EntityTypes.Contextual] = "job title",
-    [EntityTypes.Secret] = "password",
+    ["A"] = new()
+    {
+        [EntityTypes.Person] = ["person"], [EntityTypes.Phone] = ["phone number"], [EntityTypes.Email] = ["email"], [EntityTypes.Address] = ["address"],
+        [EntityTypes.IdNumber] = ["identification number"], [EntityTypes.OnlineId] = ["ip address"], [EntityTypes.Age] = ["age"],
+        [EntityTypes.DateOfBirth] = ["date of birth"], [EntityTypes.Gender] = ["gender"], [EntityTypes.Company] = ["organization"],
+        [EntityTypes.CompanyId] = ["company registration number"], [EntityTypes.Domain] = ["website"], [EntityTypes.Contextual] = ["job title"],
+        [EntityTypes.Secret] = ["password"],
+    },
+    ["B"] = new()
+    {
+        [EntityTypes.Person] = ["name", "first name", "last name"], [EntityTypes.Phone] = ["phone number"], [EntityTypes.Email] = ["email address"],
+        [EntityTypes.Address] = ["location address", "location street", "location zip"],
+        [EntityTypes.IdNumber] = ["account number", "bank account", "credit card", "ssn", "passport number", "driver license", "healthcare number"],
+        [EntityTypes.OnlineId] = ["ip address", "username"], [EntityTypes.Age] = ["age"], [EntityTypes.DateOfBirth] = ["dob"], [EntityTypes.Gender] = ["gender"],
+        [EntityTypes.Company] = ["organization"], [EntityTypes.CompanyId] = ["company registration number"], [EntityTypes.Domain] = ["url"],
+        [EntityTypes.Contextual] = ["occupation"], [EntityTypes.Secret] = ["password"],
+    },
 };
-var typeOf = labelOf.ToDictionary(kv => kv.Value, kv => kv.Key);
-var labels = labelOf.Values.ToList();
+labelSets["C"] = labelSets["B"].ToDictionary(kv => kv.Key, kv => kv.Key switch
+{
+    EntityTypes.Company => new[] { "organization", "company name" },
+    EntityTypes.Contextual => ["occupation", "job title", "project name"],
+    _ => kv.Value,
+});
+var labelSet = labelSets[Arg("--labelset") ?? "A"];
+var typeOf = labelSet.SelectMany(kv => kv.Value.Select(l => (Label: l, Type: kv.Key))).ToDictionary(x => x.Label, x => x.Type);
+var labels = typeOf.Keys.ToList();
 
 using var model = new GlinerModel(Arg("--model") ?? "models/gliner-pii-edge");
+if (args.Contains("--inspect"))
+{
+    Console.WriteLine(model.Describe());
+    Environment.Exit(0);
+}
+
 
 if (Arg("--try") is { } sample)
 {

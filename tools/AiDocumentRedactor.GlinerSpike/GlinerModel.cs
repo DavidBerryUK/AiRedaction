@@ -21,19 +21,33 @@ public sealed class Prepared
 public sealed class GlinerModel : IDisposable
 {
     static readonly Regex WordPattern = new(@"\w+(?:[-_]\w+)*|\S", RegexOptions.Compiled);
-    const int MaxTokens = 2040, OverlapWords = 30, MaxSpanWords = 30;
+    const int OverlapWords = 30, MaxSpanWords = 30;
 
     readonly InferenceSession session;
-    readonly BpeTokenizer tokenizer;
+    readonly IWordTokenizer tokenizer;
+    readonly int maxTokens;
     readonly int entToken, sepToken;
 
     public GlinerModel(string dir, string onnxFile = "model_quint8.onnx")
     {
         session = new InferenceSession(Path.Combine(dir, onnxFile));
-        tokenizer = BpeTokenizer.Load(Path.Combine(dir, "tokenizer.json"));
+        var tokenizerPath = Path.Combine(dir, "tokenizer.json");
+        using (var doc = System.Text.Json.JsonDocument.Parse(File.ReadAllText(tokenizerPath)))
+        {
+            tokenizer = doc.RootElement.GetProperty("model").GetProperty("type").GetString() == "Unigram" ? UnigramTokenizer.Load(tokenizerPath) : BpeTokenizer.Load(tokenizerPath);
+        }
+
+        using (var cfg = System.Text.Json.JsonDocument.Parse(File.ReadAllText(Path.Combine(dir, "gliner_config.json"))))
+        {
+            maxTokens = cfg.RootElement.GetProperty("max_len").GetInt32() - 8;   // the model's own length limit, with a little room
+        }
+
         entToken = tokenizer.Special("<<ENT>>") ?? throw new InvalidDataException("No <<ENT>> token");
         sepToken = tokenizer.Special("<<SEP>>") ?? throw new InvalidDataException("No <<SEP>> token");
     }
+
+    /// <summary>The model's input and output names, for checking it is the kind this runner expects.</summary>
+    public string Describe() => "inputs: " + string.Join(", ", session.InputMetadata.Keys) + "; outputs: " + string.Join(", ", session.OutputMetadata.Select(o => $"{o.Key} [{string.Join(",", o.Value.Dimensions)}]"));
 
     /// <summary>Runs the model over the text for the given labels.</summary>
     public Prepared Run(string text, IReadOnlyList<string> labels)
@@ -53,7 +67,7 @@ public sealed class GlinerModel : IDisposable
 
         prompt.Add(sepToken);
         var wordTokens = p.Words.Select(w => tokenizer.EncodeWord(text[w.Start..w.End])).ToList();
-        var budget = MaxTokens - prompt.Count - 2;
+        var budget = maxTokens - prompt.Count - 2;
         for (var first = 0; first < p.Words.Count;)
         {
             var count = 0;

@@ -86,7 +86,21 @@ What it shows:
 
 Caveats: the threshold was looked at on the same corpus (optimistic), scans are not included, the label wording ("person", "organization", "job title", and so on) was a first guess and may change results a lot, and this is the small "edge" variant: larger GLiNER PII models may do better.
 
-**Next experiments:** label wording, a larger variant, scans (through OCR), and the agreement scoring with a chat model.
+**Second round: label wording and larger variants** (same 30 documents, all quantised ONNX, in .NET). Best F1 for each combination, with the recall and precision at that threshold:
+
+| Model | Labels A (short everyday words) | Labels B (the model's training vocabulary) |
+|---|---|---|
+| edge (32M encoder) | **84.8%** (0.3: recall 87%, precision 82%) | 81.4% (0.3: 91% / 74%) |
+| small (68M encoder) | 80.8% (0.4: 80% / 81%) | 73.4% (0.2: 93% / 61%) |
+| large (DeBERTa-v3-large) | 72.5% (0.05: 75% / 70%) | 30.7% (0.2: 19% / 90%) |
+
+- **Label wording matters, and shorter is better:** the short everyday labels (set A) beat the model's own training vocabulary (set B) for all three models, and adding more labels (set C) added noise without helping. Labels are configuration, so this is cheap to tune further.
+- **The small model is not clearly better than the edge model.** Its scores are better calibrated (recall 72% at 86% precision at threshold 0.5, against 42% at 88% for edge), but its best F1 is lower (80.8% against 84.8%).
+- **The large model did worst in this port,** and its scores are squashed into 0.02–0.15, so it needs very different thresholds. I cannot tell whether that is the model (the only published ONNX file is quantised, which is known to hurt DeBERTa models), or a flaw in my C# port of its tokeniser (SentencePiece/Unigram) and inputs. The word-piece ids I checked match known DeBERTa ids, and the BPE port for the other two models works, so a flaw is possible but not shown. **To settle it:** compare against the reference implementation on a few sentences, or run the full-precision file (1.8 GB). Until then, no conclusion about large models should be drawn.
+- **Speed:** edge and small are about 0.02–0.04 s per document, large about 0.07–0.09 s.
+- The best standalone result remains the edge model with short labels, at about 85% F1, which is not enough alone but useful as a flagging second opinion (see above).
+
+**Next experiments:** settle the large-model question, scans (through OCR), more label wording (for example per-category thresholds, since the right threshold differs by category), and the agreement scoring with a chat model.
 
 ### 4.3 Map our categories to GLiNER labels
 

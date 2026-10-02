@@ -6,7 +6,7 @@ namespace AiDocumentRedactor.GlinerSpike;
 
 /// <summary>The byte-level BPE tokeniser used by the GLiNER model's encoder (GPT-2 style), read from a Hugging Face <c>tokenizer.json</c>.
 /// Each word is encoded on its own with a leading space, which is how the model was trained to see words.</summary>
-public sealed class BpeTokenizer
+public sealed class BpeTokenizer : IWordTokenizer
 {
     static readonly Regex Pre = new(@"'s|'t|'re|'ve|'m|'ll|'d| ?\p{L}+| ?\p{N}+| ?[^\s\p{L}\p{N}]+|\s+(?!\S)|\s+", RegexOptions.Compiled);
     static readonly char[] ByteToChar = BuildByteMap();
