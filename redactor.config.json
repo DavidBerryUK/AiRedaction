@@ -151,7 +151,7 @@
       },
       {
         "name": "mistral-small3.2",
-        "include": true
+        "include": false
       },
       {
         "name": "qwen3.6:27b",
@@ -159,7 +159,7 @@
       },
       {
         "name": "qwen3.5:4b",
-        "include": true
+        "include": false
       },
       {
         "name": "gemma4:31b",
@@ -171,15 +171,15 @@
       },
       {
         "name": "llama3.1:8b",
-        "include": true
+        "include": false
       },
       {
         "name": "qwen2.5:14b",
-        "include": true
+        "include": false
       },
       {
         "name": "granite4.2:30b",
-        "include": true
+        "include": false
       }
     ]
   }
