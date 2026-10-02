@@ -45,20 +45,27 @@ Published results (on other test sets, to be checked on ours) are encouraging: a
 
 Published figures come from different test sets and are **not comparable with ours**, and several are modest (F1 between 48% and 76%). That is exactly why the spike measures them on our own documents first: the question is whether GLiNER catches what the chat models miss, not whether it beats them overall.
 
-**.NET:** no ready-made GLiNER library for C# turned up in the search. ONNX Runtime and a tokeniser package exist for .NET, so option A (below) is possible but means writing the pre- and post-processing ourselves; this adds weight to trying option B (helper process) first if the spike is promising.
+**
 
-### 4.2 Run it inside the application (a few days; the main technical risk)
+### 4.2 Run it inside the application, in .NET only (a few days; the main technical risk)
 
-GLiNER is not served by Ollama. Two ways to run it locally, to be decided by a short spike:
+**Decision: everything stays in .NET**, for consistency with the application: no Python and no helper process. The model runs in-process through **ONNX Runtime for .NET** (`Microsoft.ML.OnnxRuntime`), behind the existing detector interface, with fully offline inference.
 
-| Option | How | For | Against |
-|---|---|---|---|
-| **A. ONNX in .NET** | Export the model to ONNX and run it with ONNX Runtime from C# | One process, no extra install, easy to ship | Needs a tokeniser and the model's span-scoring logic written or ported; a community .NET library may exist (to be checked) |
-| **B. Small local helper** | A tiny local Python or other service the app calls over a loopback port, as it does for Ollama | Uses the reference code unchanged, quickest to get right | An extra thing to install and keep running; more to secure |
+What the first candidate needs (from its published configuration; to be confirmed against the ONNX files):
 
-Whichever is chosen, it must keep to the project's rule that **documents never leave the machine** (loopback only, no network calls, no model downloads at run time).
+| Item | Detail | What we write in C# |
+|---|---|---|
+| Architecture | **Token-level** GLiNER on a small **ModernBERT** encoder (about 32M parameters in the encoder, 10 layers), maximum 2,048 tokens | Nothing: ONNX Runtime runs the graph |
+| Tokeniser | A Hugging Face `tokenizer.json` (byte-level BPE) | Load it with a .NET tokeniser package (`Microsoft.ML.Tokenizers` or `HuggingFace.Tokenizers`; the spike picks whichever reproduces the reference token ids exactly) |
+| Input | Label prompt (`<<ENT>> label <<ENT>> label ... <<SEP>>`) followed by the document's words; word-to-token mask; text lengths | Build the input tensors (word splitting, label prompt, masks) |
+| Output | Per token and per label: start, end and inside scores | Decode them into spans: threshold, join start-to-end, resolve overlaps, map back to exact character positions |
+| Long documents | 2,048-token limit | Slide over the text in overlapping windows, as the chunker already does for the chat models, and merge spans from overlapping windows |
 
-Deliverable: a `GlinerDetector` implementing the existing `IEntityDetector`, returning spans with `Source = "gliner"` and the model's confidence.
+There is no ready-made C# GLiNER library, so the pre- and post-processing (about a few hundred lines) is ours to write. **Check:** compare our C# token ids and spans with the reference (Python) implementation on a few sentences once, to prove the port is faithful. This is a one-off check against published reference output, not a runtime dependency.
+
+**Model files:** downloaded once, by hand, from Hugging Face (ONNX file, `tokenizer.json`, `gliner_config.json`) into a local `models/` folder that is **not committed**, and then used offline. The report records the model's file hash, as it records Ollama digests.
+
+Deliverable: a `GlinerDetector` implementing the existing `IEntityDetector`, returning spans with `Source = "gliner"` and the model's confidence. It must keep to the project's rule that **documents never leave the machine** (no network calls and no model downloads at run time).
 
 ### 4.3 Map our categories to GLiNER labels
 
@@ -120,7 +127,7 @@ The work is a success when, on the held-out documents:
 | Risk or question | Plan |
 |---|---|
 | GLiNER does worse than expected on our documents (published results are on other data) | The benchmark answers this early; it is cheap to try first as a standalone benchmark before the application work, so the spike can be stopped if it does not help |
-| Running it in .NET is harder than expected | The helper-service option (4.2 B) is the fallback |
+| The C# port of the pre- and post-processing is harder than expected, or a .NET tokeniser cannot reproduce the reference token ids | Try both .NET tokeniser packages; compare against the reference output early; if neither works, reconsider (for example a different GLiNER variant with a simpler tokeniser) before spending more time |
 | Licence or hosting terms of a particular model rule it out | Check in 4.1 before any integration; keep two candidates |
 | Different tokenisation changes where spans start and end | Map spans back to exact document positions and test on wrapped lines and OCR output |
 | More detectors mean more over-redaction | Agreement scoring and the threshold sweep exist to control exactly this; measured, not assumed |
@@ -129,7 +136,7 @@ The work is a success when, on the held-out documents:
 
 ## 7. Suggested order
 
-1. **Spike (1–2 days):** run one GLiNER PII model offline over the corpus text, outside the application, and score its spans against the answer key. A ready script is in `tools/gliner-spike/spike.py` (setup and run commands are in its header; first model to try: `knowledgator/gliner-pii-edge-v1.0`). It reports recall, precision and F1 at several confidence thresholds, recall by category, speed per document, and the items missed, so they can be compared directly with the chat models. This answers "is it worth it" cheaply.
+1. **Spike (2–3 days, in .NET):** a small console tool, `tools/AiDocumentRedactor.GlinerSpike`, loads the ONNX model with ONNX Runtime, runs it over the plain-text corpus documents and scores the spans against the answer key with the existing evaluation scoring code. It reports recall, precision and F1 at several confidence thresholds, recall by category, speed per document and the items missed, so they compare directly with the chat models. First model to try: `knowledgator/gliner-pii-edge-v1.0`. This answers "is it worth it" before any change to the application, and the spike code becomes the core of the `GlinerDetector`, so none of it is thrown away.
 2. If promising, build the `GlinerDetector` (4.2) and the category mapping (4.3).
 3. Run the full benchmark and the threshold sweep (4.4), then the real combinations.
 4. Add agreement scoring and review routing (4.5), then the second-pass check (4.6).

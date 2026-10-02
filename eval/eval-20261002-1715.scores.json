@@ -1,0 +1,5665 @@
+{
+  "Started": "2026-10-02T17:15:02.368083+01:00",
+  "ElapsedSeconds": 473.9187592,
+  "Machine": "macOS 27.0.1, 18 cores",
+  "CorpusDir": "/Users/davidberry/sources/CSharpe/AiDocumentRedactor/tests/TestCorpus",
+  "Documents": 38,
+  "GroundTruthEntities": 152,
+  "Options": {
+    "Input": {
+      "Directory": "./in",
+      "Recursive": true,
+      "Include": [
+        "*.txt",
+        "*.md",
+        "*.csv",
+        "*.json",
+        "*.log",
+        "*.docx",
+        "*.pdf",
+        "*.png",
+        "*.jpg",
+        "*.tiff"
+      ]
+    },
+    "Output": {
+      "Directory": "./out",
+      "Overwrite": false,
+      "MirrorFolders": true,
+      "Suffix": "-redacted",
+      "ScrubMetadata": true
+    },
+    "Entities": {
+      "PERSON": {
+        "Enabled": true,
+        "Mode": "redact",
+        "RedactPronouns": false,
+        "Description": "names of people (full, partial, initials, nicknames), including titles with names"
+      },
+      "PHONE": {
+        "Enabled": true,
+        "Mode": "redact",
+        "RedactPronouns": false,
+        "Description": "telephone numbers in any format"
+      },
+      "EMAIL": {
+        "Enabled": true,
+        "Mode": "redact",
+        "RedactPronouns": false,
+        "Description": "email addresses"
+      },
+      "ADDRESS": {
+        "Enabled": true,
+        "Mode": "redact",
+        "RedactPronouns": false,
+        "Description": "postal addresses, including partial addresses (street, building, postcode)"
+      },
+      "ID_NUMBER": {
+        "Enabled": true,
+        "Mode": "redact",
+        "RedactPronouns": false,
+        "Description": "government, passport, licence, national insurance/social security, bank account, sort code, IBAN or card numbers"
+      },
+      "ONLINE_ID": {
+        "Enabled": true,
+        "Mode": "redact",
+        "RedactPronouns": false,
+        "Description": "IP addresses, usernames, social media handles and URLs identifying a person"
+      },
+      "AGE": {
+        "Enabled": true,
+        "Mode": "redact",
+        "RedactPronouns": false,
+        "Description": "a person\u0027s age, exact or approximate (e.g. \u002742\u0027, \u0027in her forties\u0027)"
+      },
+      "DATE_OF_BIRTH": {
+        "Enabled": true,
+        "Mode": "redact",
+        "RedactPronouns": false,
+        "Description": "dates of birth"
+      },
+      "GENDER": {
+        "Enabled": true,
+        "Mode": "redact",
+        "RedactPronouns": true,
+        "Description": "explicit statements of gender: titles (Mr, Mrs, Ms, Miss, Mx), male/female, man/woman"
+      },
+      "COMPANY": {
+        "Enabled": true,
+        "Mode": "redact",
+        "RedactPronouns": false,
+        "Description": "company, organisation and trading names and their abbreviations"
+      },
+      "COMPANY_ID": {
+        "Enabled": true,
+        "Mode": "redact",
+        "RedactPronouns": false,
+        "Description": "company registration, VAT, tax or DUNS numbers"
+      },
+      "DOMAIN": {
+        "Enabled": true,
+        "Mode": "redact",
+        "RedactPronouns": false,
+        "Description": "company domain names and web addresses"
+      },
+      "CONTEXTUAL": {
+        "Enabled": true,
+        "Mode": "redact",
+        "RedactPronouns": false,
+        "Description": "indirect identifiers that single out a person or company: distinctive job titles or roles, schools, employers, unusual events, salaries tied to a person"
+      },
+      "LOCATION": {
+        "Enabled": true,
+        "Mode": "flag",
+        "RedactPronouns": false,
+        "Description": "names of cities, towns, regions, counties and countries on their own (for example Paris, Yorkshire, Jordan), when they are places and not people or companies"
+      },
+      "SECRET": {
+        "Enabled": true,
+        "Mode": "redact",
+        "RedactPronouns": false,
+        "Description": "passwords, API keys, access tokens, private keys, connection strings and other credentials"
+      }
+    },
+    "Redaction": {
+      "PlaceholderTemplate": "[REDACTED:{type}]"
+    },
+    "Llm": {
+      "Provider": "ollama",
+      "Endpoint": "http://localhost:11434",
+      "AllowRemoteEndpoint": false,
+      "Model": "phi4",
+      "CandidateModels": [
+        "phi4",
+        "gemma4:e4b",
+        "mistral-small3.2",
+        "qwen3.6:27b",
+        "qwen3.5:4b",
+        "gemma4:31b",
+        "gpt-oss"
+      ],
+      "Temperature": 0,
+      "Seed": 42,
+      "NumCtx": 8192,
+      "KeepAlive": "60m",
+      "FallbackModel": "",
+      "Think": false,
+      "ChunkChars": 4800,
+      "ChunkOverlapChars": 400,
+      "TimeoutSeconds": 300
+    },
+    "Report": {
+      "Directory": ""
+    },
+    "CustomTerms": {
+      "Redact": [],
+      "Allow": []
+    },
+    "Ui": {
+      "MaxResultsPerDocument": 8,
+      "PromptInspector": true,
+      "WarnPages": 50,
+      "WarnChars": 200000
+    },
+    "Confidence": {
+      "Models": [
+        "phi4",
+        "gemma4:e4b",
+        "mistral-small3.2"
+      ],
+      "CategoryCaps": {
+        "CONTEXTUAL": "Medium"
+      }
+    },
+    "Pdf": {
+      "RenderDpi": 200,
+      "BoxPaddingPoints": 1.5,
+      "DescenderFactor": 0.35,
+      "JpegQuality": 85
+    },
+    "Ocr": {
+      "Enabled": true,
+      "RenderDpi": 300,
+      "ImageDpi": 300,
+      "MinConfidence": 0.6,
+      "VerifyOutput": true
+    },
+    "Rules": {
+      "Enabled": true,
+      "OrganisationSuffixes": [
+        "Ltd",
+        "Limited",
+        "PLC",
+        "LLP",
+        "LLC",
+        "Inc",
+        "Corp",
+        "Corporation",
+        "Group",
+        "Holdings",
+        "Partners",
+        "Associates",
+        "Surgery",
+        "Practice",
+        "Clinic",
+        "Hospital",
+        "Trust",
+        "School",
+        "Academy",
+        "College",
+        "University",
+        "Council",
+        "Bank",
+        "Building Society",
+        "Credit Union",
+        "Charity",
+        "Foundation",
+        "Society",
+        "Association"
+      ]
+    },
+    "Evaluation": {
+      "Models": [
+        {
+          "Name": "phi4",
+          "Include": true
+        },
+        {
+          "Name": "gemma4:e4b",
+          "Include": true
+        },
+        {
+          "Name": "mistral-small3.2",
+          "Include": false
+        },
+        {
+          "Name": "qwen3.6:27b",
+          "Include": true
+        },
+        {
+          "Name": "qwen3.5:4b",
+          "Include": false
+        },
+        {
+          "Name": "gemma4:31b",
+          "Include": true
+        },
+        {
+          "Name": "gpt-oss",
+          "Include": true
+        },
+        {
+          "Name": "llama3.1:8b",
+          "Include": false
+        },
+        {
+          "Name": "qwen2.5:14b",
+          "Include": false
+        },
+        {
+          "Name": "granite4.2:30b",
+          "Include": false
+        }
+      ]
+    }
+  },
+  "Models": [
+    {
+      "Model": "phi4",
+      "Info": {
+        "Name": "phi4",
+        "ParameterSize": "14.7B",
+        "Quantization": "Q4_K_M",
+        "Family": "phi3",
+        "SizeBytes": 9053116391,
+        "Digest": "ac896e5b8b34a1f4efa7b14d7520725140d5512484457fab45d2a4ea14c69dba",
+        "ContextLength": 16384,
+        "ShortDigest": "ac896e5b",
+        "ContextLabel": "16K ctx",
+        "Summary": "14.7B \u00B7 Q4_K_M \u00B7 16K ctx",
+        "SizeLabel": "8.4 GB"
+      }
+    },
+    {
+      "Model": "gemma4:e4b",
+      "Info": {
+        "Name": "gemma4:e4b",
+        "ParameterSize": "7.5B",
+        "Quantization": "Q4_K_M",
+        "Family": "gemma4",
+        "SizeBytes": 6583656505,
+        "Digest": "dc35e8d9c6061baa6f0fa870975ab6932e2542b579b13ea0f199fa4bb7300c9c",
+        "ContextLength": 131072,
+        "ShortDigest": "dc35e8d9",
+        "ContextLabel": "128K ctx",
+        "Summary": "7.5B \u00B7 Q4_K_M \u00B7 128K ctx",
+        "SizeLabel": "6.1 GB"
+      }
+    }
+  ],
+  "ShowText": true,
+  "WroteOutputs": true,
+  "Skipped": [],
+  "OllamaVersion": "0.35.0",
+  "Scores": [
+    {
+      "File": "csv/06-customer-list.csv",
+      "Group": "Plain text",
+      "Model": "phi4",
+      "ByCategory": {
+        "PERSON": {
+          "Item1": 4,
+          "Item2": 4
+        },
+        "EMAIL": {
+          "Item1": 4,
+          "Item2": 4
+        },
+        "PHONE": {
+          "Item1": 4,
+          "Item2": 4
+        },
+        "DATE_OF_BIRTH": {
+          "Item1": 4,
+          "Item2": 4
+        },
+        "COMPANY": {
+          "Item1": 4,
+          "Item2": 4
+        }
+      },
+      "Present": 20,
+      "Caught": 20,
+      "EntitiesPresent": 19,
+      "EntitiesFullyCaught": 19,
+      "LostToExtraction": 0,
+      "Leaks": [],
+      "Edits": 20,
+      "TruePositives": 20,
+      "TypeCorrect": 20,
+      "FalsePositives": [],
+      "EditsByType": {
+        "PERSON": {
+          "Item1": 4,
+          "Item2": 4
+        },
+        "EMAIL": {
+          "Item1": 4,
+          "Item2": 4
+        },
+        "PHONE": {
+          "Item1": 4,
+          "Item2": 4
+        },
+        "DATE_OF_BIRTH": {
+          "Item1": 4,
+          "Item2": 4
+        },
+        "COMPANY": {
+          "Item1": 4,
+          "Item2": 4
+        }
+      },
+      "MustPreserve": 0,
+      "PreserveBroken": [],
+      "DetectSeconds": 28.5804977,
+      "WriteSeconds": 0.0009605,
+      "PromptTokens": 793,
+      "OutputTokens": 1427,
+      "Discarded": 0,
+      "OutputOk": true,
+      "OutputError": null
+    },
+    {
+      "File": "docx/01-hr-letter.docx",
+      "Group": "Word",
+      "Model": "phi4",
+      "ByCategory": {
+        "COMPANY": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "ADDRESS": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "PHONE": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "EMAIL": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "GENDER": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "PERSON": {
+          "Item1": 3,
+          "Item2": 3
+        },
+        "DATE_OF_BIRTH": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "AGE": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ID_NUMBER": {
+          "Item1": 2,
+          "Item2": 2
+        }
+      },
+      "Present": 17,
+      "Caught": 17,
+      "EntitiesPresent": 16,
+      "EntitiesFullyCaught": 16,
+      "LostToExtraction": 0,
+      "Leaks": [],
+      "Edits": 15,
+      "TruePositives": 15,
+      "TypeCorrect": 15,
+      "FalsePositives": [],
+      "EditsByType": {
+        "COMPANY": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "ADDRESS": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "PHONE": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "EMAIL": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "PERSON": {
+          "Item1": 3,
+          "Item2": 3
+        },
+        "DATE_OF_BIRTH": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "AGE": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ID_NUMBER": {
+          "Item1": 2,
+          "Item2": 2
+        }
+      },
+      "MustPreserve": 0,
+      "PreserveBroken": [],
+      "DetectSeconds": 14.2791153,
+      "WriteSeconds": 0.0213068,
+      "PromptTokens": 861,
+      "OutputTokens": 724,
+      "Discarded": 0,
+      "OutputOk": true,
+      "OutputError": null
+    },
+    {
+      "File": "docx/02-services-agreement.docx",
+      "Group": "Word",
+      "Model": "phi4",
+      "ByCategory": {
+        "COMPANY": {
+          "Item1": 3,
+          "Item2": 3
+        },
+        "COMPANY_ID": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "ADDRESS": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "PERSON": {
+          "Item1": 3,
+          "Item2": 3
+        },
+        "EMAIL": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "PHONE": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ID_NUMBER": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "DOMAIN": {
+          "Item1": 1,
+          "Item2": 1
+        }
+      },
+      "Present": 14,
+      "Caught": 14,
+      "EntitiesPresent": 14,
+      "EntitiesFullyCaught": 14,
+      "LostToExtraction": 0,
+      "Leaks": [],
+      "Edits": 14,
+      "TruePositives": 14,
+      "TypeCorrect": 14,
+      "FalsePositives": [],
+      "EditsByType": {
+        "COMPANY": {
+          "Item1": 3,
+          "Item2": 3
+        },
+        "COMPANY_ID": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "ADDRESS": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "PERSON": {
+          "Item1": 3,
+          "Item2": 3
+        },
+        "EMAIL": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "PHONE": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ID_NUMBER": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "DOMAIN": {
+          "Item1": 1,
+          "Item2": 1
+        }
+      },
+      "MustPreserve": 0,
+      "PreserveBroken": [],
+      "DetectSeconds": 10.662329,
+      "WriteSeconds": 0.005487,
+      "PromptTokens": 830,
+      "OutputTokens": 535,
+      "Discarded": 0,
+      "OutputOk": true,
+      "OutputError": null
+    },
+    {
+      "File": "docx/04-meeting-notes.docx",
+      "Group": "Word",
+      "Model": "phi4",
+      "ByCategory": {
+        "CONTEXTUAL": {
+          "Item1": 1,
+          "Item2": 0
+        },
+        "PERSON": {
+          "Item1": 5,
+          "Item2": 5
+        },
+        "COMPANY": {
+          "Item1": 3,
+          "Item2": 3
+        },
+        "GENDER": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "AGE": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "EMAIL": {
+          "Item1": 1,
+          "Item2": 1
+        }
+      },
+      "Present": 12,
+      "Caught": 11,
+      "EntitiesPresent": 12,
+      "EntitiesFullyCaught": 11,
+      "LostToExtraction": 0,
+      "Leaks": [
+        {
+          "Type": "CONTEXTUAL",
+          "Text": "Kestrel",
+          "Count": 1
+        }
+      ],
+      "Edits": 10,
+      "TruePositives": 9,
+      "TypeCorrect": 9,
+      "FalsePositives": [
+        {
+          "Type": "DATE_OF_BIRTH",
+          "Text": "in January"
+        }
+      ],
+      "EditsByType": {
+        "PERSON": {
+          "Item1": 4,
+          "Item2": 4
+        },
+        "COMPANY": {
+          "Item1": 3,
+          "Item2": 3
+        },
+        "AGE": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "DATE_OF_BIRTH": {
+          "Item1": 1,
+          "Item2": 0
+        },
+        "EMAIL": {
+          "Item1": 1,
+          "Item2": 1
+        }
+      },
+      "MustPreserve": 0,
+      "PreserveBroken": [],
+      "DetectSeconds": 7.4535106,
+      "WriteSeconds": 0.0028663,
+      "PromptTokens": 739,
+      "OutputTokens": 374,
+      "Discarded": 0,
+      "OutputOk": true,
+      "OutputError": null
+    },
+    {
+      "File": "docx/09-gp-referral.docx",
+      "Group": "Word",
+      "Model": "phi4",
+      "ByCategory": {
+        "PERSON": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "GENDER": {
+          "Item1": 3,
+          "Item2": 3
+        },
+        "AGE": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "DATE_OF_BIRTH": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ID_NUMBER": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ADDRESS": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "PHONE": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "COMPANY": {
+          "Item1": 2,
+          "Item2": 2
+        }
+      },
+      "Present": 13,
+      "Caught": 13,
+      "EntitiesPresent": 12,
+      "EntitiesFullyCaught": 12,
+      "LostToExtraction": 0,
+      "Leaks": [],
+      "Edits": 13,
+      "TruePositives": 13,
+      "TypeCorrect": 13,
+      "FalsePositives": [],
+      "EditsByType": {
+        "PERSON": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "GENDER": {
+          "Item1": 3,
+          "Item2": 3
+        },
+        "AGE": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "DATE_OF_BIRTH": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ID_NUMBER": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ADDRESS": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "PHONE": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "COMPANY": {
+          "Item1": 2,
+          "Item2": 2
+        }
+      },
+      "MustPreserve": 0,
+      "PreserveBroken": [],
+      "DetectSeconds": 9.5813815,
+      "WriteSeconds": 0.0033111,
+      "PromptTokens": 762,
+      "OutputTokens": 478,
+      "Discarded": 0,
+      "OutputOk": true,
+      "OutputError": null
+    },
+    {
+      "File": "docx/11-hard-negatives.docx",
+      "Group": "Word",
+      "Model": "phi4",
+      "ByCategory": {},
+      "Present": 0,
+      "Caught": 0,
+      "EntitiesPresent": 0,
+      "EntitiesFullyCaught": 0,
+      "LostToExtraction": 0,
+      "Leaks": [],
+      "Edits": 1,
+      "TruePositives": 0,
+      "TypeCorrect": 0,
+      "FalsePositives": [
+        {
+          "Type": "AGE",
+          "Text": "42"
+        }
+      ],
+      "EditsByType": {
+        "AGE": {
+          "Item1": 1,
+          "Item2": 0
+        }
+      },
+      "MustPreserve": 5,
+      "PreserveBroken": [
+        "42"
+      ],
+      "DetectSeconds": 1.6461605,
+      "WriteSeconds": 0.0026681,
+      "PromptTokens": 732,
+      "OutputTokens": 76,
+      "Discarded": 0,
+      "OutputOk": true,
+      "OutputError": null
+    },
+    {
+      "File": "docx/12-hygiene-docx.docx",
+      "Group": "Word",
+      "Model": "phi4",
+      "ByCategory": {
+        "PERSON": {
+          "Item1": 4,
+          "Item2": 4
+        },
+        "COMPANY": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "EMAIL": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ADDRESS": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "GENDER": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "PHONE": {
+          "Item1": 1,
+          "Item2": 1
+        }
+      },
+      "Present": 10,
+      "Caught": 10,
+      "EntitiesPresent": 10,
+      "EntitiesFullyCaught": 10,
+      "LostToExtraction": 0,
+      "Leaks": [],
+      "Edits": 9,
+      "TruePositives": 9,
+      "TypeCorrect": 9,
+      "FalsePositives": [],
+      "EditsByType": {
+        "PERSON": {
+          "Item1": 3,
+          "Item2": 3
+        },
+        "COMPANY": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "EMAIL": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ADDRESS": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "GENDER": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "PHONE": {
+          "Item1": 1,
+          "Item2": 1
+        }
+      },
+      "MustPreserve": 0,
+      "PreserveBroken": [],
+      "DetectSeconds": 6.6138067,
+      "WriteSeconds": 0.0090827,
+      "PromptTokens": 743,
+      "OutputTokens": 327,
+      "Discarded": 0,
+      "OutputOk": true,
+      "OutputError": null
+    },
+    {
+      "File": "json/07-app-config.json",
+      "Group": "Plain text",
+      "Model": "phi4",
+      "ByCategory": {
+        "EMAIL": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "SECRET": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "PERSON": {
+          "Item1": 1,
+          "Item2": 1
+        }
+      },
+      "Present": 4,
+      "Caught": 4,
+      "EntitiesPresent": 4,
+      "EntitiesFullyCaught": 4,
+      "LostToExtraction": 0,
+      "Leaks": [],
+      "Edits": 4,
+      "TruePositives": 4,
+      "TypeCorrect": 4,
+      "FalsePositives": [],
+      "EditsByType": {
+        "EMAIL": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "SECRET": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "PERSON": {
+          "Item1": 1,
+          "Item2": 1
+        }
+      },
+      "MustPreserve": 0,
+      "PreserveBroken": [],
+      "DetectSeconds": 4.5993084,
+      "WriteSeconds": 0.0007638,
+      "PromptTokens": 766,
+      "OutputTokens": 224,
+      "Discarded": 0,
+      "OutputOk": true,
+      "OutputError": null
+    },
+    {
+      "File": "markdown/03-customer-email.md",
+      "Group": "Plain text",
+      "Model": "phi4",
+      "ByCategory": {
+        "PERSON": {
+          "Item1": 4,
+          "Item2": 4
+        },
+        "EMAIL": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ADDRESS": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "PHONE": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "SECRET": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "COMPANY": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "GENDER": {
+          "Item1": 1,
+          "Item2": 1
+        }
+      },
+      "Present": 10,
+      "Caught": 10,
+      "EntitiesPresent": 9,
+      "EntitiesFullyCaught": 9,
+      "LostToExtraction": 0,
+      "Leaks": [],
+      "Edits": 10,
+      "TruePositives": 9,
+      "TypeCorrect": 9,
+      "FalsePositives": [
+        {
+          "Type": "AGE",
+          "Text": "61"
+        }
+      ],
+      "EditsByType": {
+        "PERSON": {
+          "Item1": 3,
+          "Item2": 3
+        },
+        "EMAIL": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ADDRESS": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "AGE": {
+          "Item1": 1,
+          "Item2": 0
+        },
+        "PHONE": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "SECRET": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "COMPANY": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "GENDER": {
+          "Item1": 1,
+          "Item2": 1
+        }
+      },
+      "MustPreserve": 0,
+      "PreserveBroken": [],
+      "DetectSeconds": 7.6020522,
+      "WriteSeconds": 0.000854,
+      "PromptTokens": 805,
+      "OutputTokens": 372,
+      "Discarded": 0,
+      "OutputOk": true,
+      "OutputError": null
+    },
+    {
+      "File": "markdown/04-meeting-notes.md",
+      "Group": "Plain text",
+      "Model": "phi4",
+      "ByCategory": {
+        "CONTEXTUAL": {
+          "Item1": 1,
+          "Item2": 0
+        },
+        "PERSON": {
+          "Item1": 5,
+          "Item2": 5
+        },
+        "COMPANY": {
+          "Item1": 3,
+          "Item2": 3
+        },
+        "GENDER": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "AGE": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "EMAIL": {
+          "Item1": 1,
+          "Item2": 1
+        }
+      },
+      "Present": 12,
+      "Caught": 11,
+      "EntitiesPresent": 12,
+      "EntitiesFullyCaught": 11,
+      "LostToExtraction": 0,
+      "Leaks": [
+        {
+          "Type": "CONTEXTUAL",
+          "Text": "Kestrel",
+          "Count": 1
+        }
+      ],
+      "Edits": 10,
+      "TruePositives": 9,
+      "TypeCorrect": 9,
+      "FalsePositives": [
+        {
+          "Type": "DATE_OF_BIRTH",
+          "Text": "in January"
+        }
+      ],
+      "EditsByType": {
+        "PERSON": {
+          "Item1": 4,
+          "Item2": 4
+        },
+        "COMPANY": {
+          "Item1": 3,
+          "Item2": 3
+        },
+        "AGE": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "DATE_OF_BIRTH": {
+          "Item1": 1,
+          "Item2": 0
+        },
+        "EMAIL": {
+          "Item1": 1,
+          "Item2": 1
+        }
+      },
+      "MustPreserve": 0,
+      "PreserveBroken": [],
+      "DetectSeconds": 7.6047225,
+      "WriteSeconds": 0.0009978,
+      "PromptTokens": 744,
+      "OutputTokens": 374,
+      "Discarded": 0,
+      "OutputOk": true,
+      "OutputError": null
+    },
+    {
+      "File": "pdf/01-hr-letter.pdf",
+      "Group": "PDF (text layer)",
+      "Model": "phi4",
+      "ByCategory": {
+        "COMPANY": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "ADDRESS": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "PHONE": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "EMAIL": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "GENDER": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "PERSON": {
+          "Item1": 3,
+          "Item2": 3
+        },
+        "DATE_OF_BIRTH": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "AGE": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ID_NUMBER": {
+          "Item1": 2,
+          "Item2": 2
+        }
+      },
+      "Present": 17,
+      "Caught": 17,
+      "EntitiesPresent": 16,
+      "EntitiesFullyCaught": 16,
+      "LostToExtraction": 0,
+      "Leaks": [],
+      "Edits": 15,
+      "TruePositives": 15,
+      "TypeCorrect": 15,
+      "FalsePositives": [],
+      "EditsByType": {
+        "COMPANY": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "ADDRESS": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "PHONE": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "EMAIL": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "PERSON": {
+          "Item1": 3,
+          "Item2": 3
+        },
+        "DATE_OF_BIRTH": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "AGE": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ID_NUMBER": {
+          "Item1": 2,
+          "Item2": 2
+        }
+      },
+      "MustPreserve": 0,
+      "PreserveBroken": [],
+      "DetectSeconds": 15.9185497,
+      "WriteSeconds": 0.0372651,
+      "PromptTokens": 863,
+      "OutputTokens": 774,
+      "Discarded": 0,
+      "OutputOk": true,
+      "OutputError": null
+    },
+    {
+      "File": "pdf/02-services-agreement.pdf",
+      "Group": "PDF (text layer)",
+      "Model": "phi4",
+      "ByCategory": {
+        "COMPANY": {
+          "Item1": 3,
+          "Item2": 3
+        },
+        "COMPANY_ID": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "ADDRESS": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "PERSON": {
+          "Item1": 3,
+          "Item2": 3
+        },
+        "EMAIL": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "PHONE": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ID_NUMBER": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "DOMAIN": {
+          "Item1": 1,
+          "Item2": 1
+        }
+      },
+      "Present": 13,
+      "Caught": 13,
+      "EntitiesPresent": 13,
+      "EntitiesFullyCaught": 13,
+      "LostToExtraction": 0,
+      "Leaks": [],
+      "Edits": 11,
+      "TruePositives": 11,
+      "TypeCorrect": 11,
+      "FalsePositives": [],
+      "EditsByType": {
+        "COMPANY": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "COMPANY_ID": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "ADDRESS": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "PERSON": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "EMAIL": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "PHONE": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ID_NUMBER": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "DOMAIN": {
+          "Item1": 1,
+          "Item2": 1
+        }
+      },
+      "MustPreserve": 0,
+      "PreserveBroken": [],
+      "DetectSeconds": 9.991839,
+      "WriteSeconds": 0.0251109,
+      "PromptTokens": 812,
+      "OutputTokens": 475,
+      "Discarded": 0,
+      "OutputOk": true,
+      "OutputError": null
+    },
+    {
+      "File": "pdf/08-invoice.pdf",
+      "Group": "PDF (text layer)",
+      "Model": "phi4",
+      "ByCategory": {
+        "COMPANY": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "ADDRESS": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "COMPANY_ID": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "PERSON": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ID_NUMBER": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "EMAIL": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "PHONE": {
+          "Item1": 1,
+          "Item2": 1
+        }
+      },
+      "Present": 9,
+      "Caught": 9,
+      "EntitiesPresent": 9,
+      "EntitiesFullyCaught": 9,
+      "LostToExtraction": 0,
+      "Leaks": [],
+      "Edits": 10,
+      "TruePositives": 10,
+      "TypeCorrect": 8,
+      "FalsePositives": [],
+      "EditsByType": {
+        "COMPANY": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "ADDRESS": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "ID_NUMBER": {
+          "Item1": 3,
+          "Item2": 3
+        },
+        "PERSON": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "EMAIL": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "PHONE": {
+          "Item1": 1,
+          "Item2": 1
+        }
+      },
+      "MustPreserve": 0,
+      "PreserveBroken": [],
+      "DetectSeconds": 13.2667865,
+      "WriteSeconds": 0.0155481,
+      "PromptTokens": 808,
+      "OutputTokens": 612,
+      "Discarded": 0,
+      "OutputOk": true,
+      "OutputError": null
+    },
+    {
+      "File": "pdf/09-gp-referral.pdf",
+      "Group": "PDF (text layer)",
+      "Model": "phi4",
+      "ByCategory": {
+        "PERSON": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "GENDER": {
+          "Item1": 3,
+          "Item2": 3
+        },
+        "AGE": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "DATE_OF_BIRTH": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ID_NUMBER": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ADDRESS": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "PHONE": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "COMPANY": {
+          "Item1": 2,
+          "Item2": 2
+        }
+      },
+      "Present": 13,
+      "Caught": 13,
+      "EntitiesPresent": 12,
+      "EntitiesFullyCaught": 12,
+      "LostToExtraction": 0,
+      "Leaks": [],
+      "Edits": 13,
+      "TruePositives": 13,
+      "TypeCorrect": 13,
+      "FalsePositives": [],
+      "EditsByType": {
+        "PERSON": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "GENDER": {
+          "Item1": 3,
+          "Item2": 3
+        },
+        "AGE": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "DATE_OF_BIRTH": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ID_NUMBER": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ADDRESS": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "PHONE": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "COMPANY": {
+          "Item1": 2,
+          "Item2": 2
+        }
+      },
+      "MustPreserve": 0,
+      "PreserveBroken": [],
+      "DetectSeconds": 9.1204326,
+      "WriteSeconds": 0.0161966,
+      "PromptTokens": 765,
+      "OutputTokens": 425,
+      "Discarded": 0,
+      "OutputOk": true,
+      "OutputError": null
+    },
+    {
+      "File": "scans/01-hr-letter-scan-clean.png",
+      "Group": "Scan: clean image",
+      "Model": "phi4",
+      "ByCategory": {
+        "COMPANY": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "ADDRESS": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "PHONE": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "EMAIL": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "GENDER": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "PERSON": {
+          "Item1": 3,
+          "Item2": 3
+        },
+        "DATE_OF_BIRTH": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "AGE": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ID_NUMBER": {
+          "Item1": 2,
+          "Item2": 2
+        }
+      },
+      "Present": 17,
+      "Caught": 17,
+      "EntitiesPresent": 16,
+      "EntitiesFullyCaught": 16,
+      "LostToExtraction": 0,
+      "Leaks": [],
+      "Edits": 15,
+      "TruePositives": 15,
+      "TypeCorrect": 15,
+      "FalsePositives": [],
+      "EditsByType": {
+        "COMPANY": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "ADDRESS": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "PHONE": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "EMAIL": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "PERSON": {
+          "Item1": 3,
+          "Item2": 3
+        },
+        "DATE_OF_BIRTH": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "AGE": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ID_NUMBER": {
+          "Item1": 2,
+          "Item2": 2
+        }
+      },
+      "MustPreserve": 0,
+      "PreserveBroken": [],
+      "DetectSeconds": 17.5234919,
+      "WriteSeconds": 0.4786287,
+      "PromptTokens": 864,
+      "OutputTokens": 798,
+      "Discarded": 1,
+      "OutputOk": true,
+      "OutputError": null
+    },
+    {
+      "File": "scans/01-hr-letter-scan-degraded.jpg",
+      "Group": "Scan: degraded image",
+      "Model": "phi4",
+      "ByCategory": {
+        "COMPANY": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "ADDRESS": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "PHONE": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "EMAIL": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "GENDER": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "PERSON": {
+          "Item1": 3,
+          "Item2": 3
+        },
+        "DATE_OF_BIRTH": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "AGE": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ID_NUMBER": {
+          "Item1": 2,
+          "Item2": 2
+        }
+      },
+      "Present": 17,
+      "Caught": 17,
+      "EntitiesPresent": 16,
+      "EntitiesFullyCaught": 16,
+      "LostToExtraction": 0,
+      "Leaks": [],
+      "Edits": 15,
+      "TruePositives": 15,
+      "TypeCorrect": 15,
+      "FalsePositives": [],
+      "EditsByType": {
+        "COMPANY": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "ADDRESS": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "PHONE": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "EMAIL": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "PERSON": {
+          "Item1": 3,
+          "Item2": 3
+        },
+        "DATE_OF_BIRTH": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "AGE": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ID_NUMBER": {
+          "Item1": 2,
+          "Item2": 2
+        }
+      },
+      "MustPreserve": 0,
+      "PreserveBroken": [],
+      "DetectSeconds": 17.4280091,
+      "WriteSeconds": 0.2177746,
+      "PromptTokens": 864,
+      "OutputTokens": 798,
+      "Discarded": 1,
+      "OutputOk": true,
+      "OutputError": null
+    },
+    {
+      "File": "scans/01-hr-letter-scan.pdf",
+      "Group": "Scan: image-only PDF",
+      "Model": "phi4",
+      "ByCategory": {
+        "COMPANY": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "ADDRESS": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "PHONE": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "EMAIL": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "GENDER": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "PERSON": {
+          "Item1": 3,
+          "Item2": 3
+        },
+        "DATE_OF_BIRTH": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "AGE": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ID_NUMBER": {
+          "Item1": 2,
+          "Item2": 2
+        }
+      },
+      "Present": 17,
+      "Caught": 17,
+      "EntitiesPresent": 16,
+      "EntitiesFullyCaught": 16,
+      "LostToExtraction": 0,
+      "Leaks": [],
+      "Edits": 15,
+      "TruePositives": 15,
+      "TypeCorrect": 15,
+      "FalsePositives": [],
+      "EditsByType": {
+        "COMPANY": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "ADDRESS": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "PHONE": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "EMAIL": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "PERSON": {
+          "Item1": 3,
+          "Item2": 3
+        },
+        "DATE_OF_BIRTH": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "AGE": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ID_NUMBER": {
+          "Item1": 2,
+          "Item2": 2
+        }
+      },
+      "MustPreserve": 0,
+      "PreserveBroken": [],
+      "DetectSeconds": 16.8835371,
+      "WriteSeconds": 0.5895391,
+      "PromptTokens": 863,
+      "OutputTokens": 750,
+      "Discarded": 0,
+      "OutputOk": true,
+      "OutputError": null
+    },
+    {
+      "File": "scans/08-invoice-scan-clean.png",
+      "Group": "Scan: clean image",
+      "Model": "phi4",
+      "ByCategory": {
+        "COMPANY": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "ADDRESS": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "COMPANY_ID": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "PERSON": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ID_NUMBER": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "EMAIL": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "PHONE": {
+          "Item1": 1,
+          "Item2": 1
+        }
+      },
+      "Present": 9,
+      "Caught": 9,
+      "EntitiesPresent": 9,
+      "EntitiesFullyCaught": 9,
+      "LostToExtraction": 0,
+      "Leaks": [],
+      "Edits": 9,
+      "TruePositives": 9,
+      "TypeCorrect": 8,
+      "FalsePositives": [],
+      "EditsByType": {
+        "COMPANY": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "ADDRESS": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "ID_NUMBER": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "PERSON": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "EMAIL": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "PHONE": {
+          "Item1": 1,
+          "Item2": 1
+        }
+      },
+      "MustPreserve": 0,
+      "PreserveBroken": [],
+      "DetectSeconds": 12.3606307,
+      "WriteSeconds": 0.4139105,
+      "PromptTokens": 811,
+      "OutputTokens": 551,
+      "Discarded": 0,
+      "OutputOk": true,
+      "OutputError": null
+    },
+    {
+      "File": "scans/08-invoice-scan-degraded.jpg",
+      "Group": "Scan: degraded image",
+      "Model": "phi4",
+      "ByCategory": {
+        "COMPANY": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "ADDRESS": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "COMPANY_ID": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "PERSON": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ID_NUMBER": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "EMAIL": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "PHONE": {
+          "Item1": 1,
+          "Item2": 1
+        }
+      },
+      "Present": 9,
+      "Caught": 9,
+      "EntitiesPresent": 9,
+      "EntitiesFullyCaught": 9,
+      "LostToExtraction": 0,
+      "Leaks": [],
+      "Edits": 9,
+      "TruePositives": 9,
+      "TypeCorrect": 8,
+      "FalsePositives": [],
+      "EditsByType": {
+        "COMPANY": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "ADDRESS": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "ID_NUMBER": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "PERSON": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "EMAIL": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "PHONE": {
+          "Item1": 1,
+          "Item2": 1
+        }
+      },
+      "MustPreserve": 0,
+      "PreserveBroken": [],
+      "DetectSeconds": 12.527084,
+      "WriteSeconds": 0.1781325,
+      "PromptTokens": 815,
+      "OutputTokens": 554,
+      "Discarded": 0,
+      "OutputOk": true,
+      "OutputError": null
+    },
+    {
+      "File": "scans/08-invoice-scan.pdf",
+      "Group": "Scan: image-only PDF",
+      "Model": "phi4",
+      "ByCategory": {
+        "COMPANY": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "ADDRESS": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "COMPANY_ID": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "PERSON": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ID_NUMBER": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "EMAIL": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "PHONE": {
+          "Item1": 1,
+          "Item2": 1
+        }
+      },
+      "Present": 9,
+      "Caught": 9,
+      "EntitiesPresent": 9,
+      "EntitiesFullyCaught": 9,
+      "LostToExtraction": 0,
+      "Leaks": [],
+      "Edits": 9,
+      "TruePositives": 9,
+      "TypeCorrect": 8,
+      "FalsePositives": [],
+      "EditsByType": {
+        "COMPANY": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "ADDRESS": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "ID_NUMBER": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "PERSON": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "EMAIL": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "PHONE": {
+          "Item1": 1,
+          "Item2": 1
+        }
+      },
+      "MustPreserve": 0,
+      "PreserveBroken": [],
+      "DetectSeconds": 12.4982922,
+      "WriteSeconds": 0.5139231,
+      "PromptTokens": 809,
+      "OutputTokens": 551,
+      "Discarded": 0,
+      "OutputOk": true,
+      "OutputError": null
+    },
+    {
+      "File": "scans/09-gp-referral-scan-clean.png",
+      "Group": "Scan: clean image",
+      "Model": "phi4",
+      "ByCategory": {
+        "PERSON": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "GENDER": {
+          "Item1": 3,
+          "Item2": 3
+        },
+        "AGE": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "DATE_OF_BIRTH": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ID_NUMBER": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ADDRESS": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "PHONE": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "COMPANY": {
+          "Item1": 2,
+          "Item2": 2
+        }
+      },
+      "Present": 13,
+      "Caught": 13,
+      "EntitiesPresent": 12,
+      "EntitiesFullyCaught": 12,
+      "LostToExtraction": 0,
+      "Leaks": [],
+      "Edits": 13,
+      "TruePositives": 13,
+      "TypeCorrect": 13,
+      "FalsePositives": [],
+      "EditsByType": {
+        "PERSON": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "GENDER": {
+          "Item1": 3,
+          "Item2": 3
+        },
+        "AGE": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "DATE_OF_BIRTH": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ID_NUMBER": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ADDRESS": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "PHONE": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "COMPANY": {
+          "Item1": 2,
+          "Item2": 2
+        }
+      },
+      "MustPreserve": 0,
+      "PreserveBroken": [],
+      "DetectSeconds": 9.3918804,
+      "WriteSeconds": 0.4057246,
+      "PromptTokens": 765,
+      "OutputTokens": 425,
+      "Discarded": 0,
+      "OutputOk": true,
+      "OutputError": null
+    },
+    {
+      "File": "scans/09-gp-referral-scan-degraded.jpg",
+      "Group": "Scan: degraded image",
+      "Model": "phi4",
+      "ByCategory": {
+        "PERSON": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "GENDER": {
+          "Item1": 3,
+          "Item2": 3
+        },
+        "AGE": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "DATE_OF_BIRTH": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ID_NUMBER": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ADDRESS": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "PHONE": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "COMPANY": {
+          "Item1": 2,
+          "Item2": 2
+        }
+      },
+      "Present": 13,
+      "Caught": 13,
+      "EntitiesPresent": 12,
+      "EntitiesFullyCaught": 12,
+      "LostToExtraction": 0,
+      "Leaks": [],
+      "Edits": 13,
+      "TruePositives": 13,
+      "TypeCorrect": 13,
+      "FalsePositives": [],
+      "EditsByType": {
+        "PERSON": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "GENDER": {
+          "Item1": 3,
+          "Item2": 3
+        },
+        "AGE": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "DATE_OF_BIRTH": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ID_NUMBER": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ADDRESS": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "PHONE": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "COMPANY": {
+          "Item1": 2,
+          "Item2": 2
+        }
+      },
+      "MustPreserve": 0,
+      "PreserveBroken": [],
+      "DetectSeconds": 9.352456,
+      "WriteSeconds": 0.177063,
+      "PromptTokens": 765,
+      "OutputTokens": 425,
+      "Discarded": 0,
+      "OutputOk": true,
+      "OutputError": null
+    },
+    {
+      "File": "text/01-hr-letter.txt",
+      "Group": "Plain text",
+      "Model": "phi4",
+      "ByCategory": {
+        "COMPANY": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "ADDRESS": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "PHONE": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "EMAIL": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "GENDER": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "PERSON": {
+          "Item1": 3,
+          "Item2": 3
+        },
+        "DATE_OF_BIRTH": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "AGE": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ID_NUMBER": {
+          "Item1": 2,
+          "Item2": 2
+        }
+      },
+      "Present": 17,
+      "Caught": 17,
+      "EntitiesPresent": 16,
+      "EntitiesFullyCaught": 16,
+      "LostToExtraction": 0,
+      "Leaks": [],
+      "Edits": 16,
+      "TruePositives": 16,
+      "TypeCorrect": 16,
+      "FalsePositives": [],
+      "EditsByType": {
+        "COMPANY": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "ADDRESS": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "PHONE": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "EMAIL": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "PERSON": {
+          "Item1": 3,
+          "Item2": 3
+        },
+        "GENDER": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "DATE_OF_BIRTH": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "AGE": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ID_NUMBER": {
+          "Item1": 2,
+          "Item2": 2
+        }
+      },
+      "MustPreserve": 0,
+      "PreserveBroken": [],
+      "DetectSeconds": 14.3714657,
+      "WriteSeconds": 0.0007143,
+      "PromptTokens": 862,
+      "OutputTokens": 637,
+      "Discarded": 0,
+      "OutputOk": true,
+      "OutputError": null
+    },
+    {
+      "File": "text/03-customer-email.txt",
+      "Group": "Plain text",
+      "Model": "phi4",
+      "ByCategory": {
+        "PERSON": {
+          "Item1": 4,
+          "Item2": 4
+        },
+        "EMAIL": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ADDRESS": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "PHONE": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "SECRET": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "COMPANY": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "GENDER": {
+          "Item1": 1,
+          "Item2": 1
+        }
+      },
+      "Present": 10,
+      "Caught": 10,
+      "EntitiesPresent": 9,
+      "EntitiesFullyCaught": 9,
+      "LostToExtraction": 0,
+      "Leaks": [],
+      "Edits": 10,
+      "TruePositives": 9,
+      "TypeCorrect": 9,
+      "FalsePositives": [
+        {
+          "Type": "AGE",
+          "Text": "61"
+        }
+      ],
+      "EditsByType": {
+        "PERSON": {
+          "Item1": 3,
+          "Item2": 3
+        },
+        "EMAIL": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ADDRESS": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "AGE": {
+          "Item1": 1,
+          "Item2": 0
+        },
+        "PHONE": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "SECRET": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "COMPANY": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "GENDER": {
+          "Item1": 1,
+          "Item2": 1
+        }
+      },
+      "MustPreserve": 0,
+      "PreserveBroken": [],
+      "DetectSeconds": 8.5077767,
+      "WriteSeconds": 0.0006861,
+      "PromptTokens": 799,
+      "OutputTokens": 372,
+      "Discarded": 0,
+      "OutputOk": true,
+      "OutputError": null
+    },
+    {
+      "File": "text/05-incident-report.txt",
+      "Group": "Plain text",
+      "Model": "phi4",
+      "ByCategory": {
+        "PERSON": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "COMPANY": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "SECRET": {
+          "Item1": 3,
+          "Item2": 3
+        },
+        "ONLINE_ID": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "PHONE": {
+          "Item1": 1,
+          "Item2": 1
+        }
+      },
+      "Present": 9,
+      "Caught": 9,
+      "EntitiesPresent": 8,
+      "EntitiesFullyCaught": 8,
+      "LostToExtraction": 0,
+      "Leaks": [],
+      "Edits": 9,
+      "TruePositives": 9,
+      "TypeCorrect": 9,
+      "FalsePositives": [],
+      "EditsByType": {
+        "PERSON": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "COMPANY": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "SECRET": {
+          "Item1": 3,
+          "Item2": 3
+        },
+        "ONLINE_ID": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "PHONE": {
+          "Item1": 1,
+          "Item2": 1
+        }
+      },
+      "MustPreserve": 0,
+      "PreserveBroken": [],
+      "DetectSeconds": 9.4593428,
+      "WriteSeconds": 0.0008235,
+      "PromptTokens": 809,
+      "OutputTokens": 417,
+      "Discarded": 0,
+      "OutputOk": true,
+      "OutputError": null
+    },
+    {
+      "File": "text/10-contextual-profile.txt",
+      "Group": "Plain text",
+      "Model": "phi4",
+      "ByCategory": {
+        "GENDER": {
+          "Item1": 4,
+          "Item2": 4
+        },
+        "COMPANY": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "CONTEXTUAL": {
+          "Item1": 4,
+          "Item2": 2
+        },
+        "PERSON": {
+          "Item1": 1,
+          "Item2": 1
+        }
+      },
+      "Present": 10,
+      "Caught": 8,
+      "EntitiesPresent": 10,
+      "EntitiesFullyCaught": 8,
+      "LostToExtraction": 0,
+      "Leaks": [
+        {
+          "Type": "CONTEXTUAL",
+          "Text": "2019 data breach at the Bristol depot",
+          "Count": 1
+        },
+        {
+          "Type": "CONTEXTUAL",
+          "Text": "GBP 92,000",
+          "Count": 1
+        }
+      ],
+      "Edits": 9,
+      "TruePositives": 8,
+      "TypeCorrect": 6,
+      "FalsePositives": [
+        {
+          "Type": "PERSON",
+          "Text": "regional director"
+        }
+      ],
+      "EditsByType": {
+        "PERSON": {
+          "Item1": 2,
+          "Item2": 1
+        },
+        "GENDER": {
+          "Item1": 4,
+          "Item2": 4
+        },
+        "COMPANY": {
+          "Item1": 3,
+          "Item2": 3
+        }
+      },
+      "MustPreserve": 0,
+      "PreserveBroken": [],
+      "DetectSeconds": 8.430157,
+      "WriteSeconds": 0.0007997,
+      "PromptTokens": 723,
+      "OutputTokens": 368,
+      "Discarded": 0,
+      "OutputOk": true,
+      "OutputError": null
+    },
+    {
+      "File": "text/11-hard-negatives.txt",
+      "Group": "Plain text",
+      "Model": "phi4",
+      "ByCategory": {},
+      "Present": 0,
+      "Caught": 0,
+      "EntitiesPresent": 0,
+      "EntitiesFullyCaught": 0,
+      "LostToExtraction": 0,
+      "Leaks": [],
+      "Edits": 1,
+      "TruePositives": 0,
+      "TypeCorrect": 0,
+      "FalsePositives": [
+        {
+          "Type": "AGE",
+          "Text": "42"
+        }
+      ],
+      "EditsByType": {
+        "AGE": {
+          "Item1": 1,
+          "Item2": 0
+        }
+      },
+      "MustPreserve": 5,
+      "PreserveBroken": [
+        "42"
+      ],
+      "DetectSeconds": 1.8381192,
+      "WriteSeconds": 0.0007365,
+      "PromptTokens": 732,
+      "OutputTokens": 76,
+      "Discarded": 0,
+      "OutputOk": true,
+      "OutputError": null
+    },
+    {
+      "File": "text/context-text-01.txt",
+      "Group": "Plain text",
+      "Model": "phi4",
+      "ByCategory": {
+        "PERSON": {
+          "Item1": 6,
+          "Item2": 6
+        },
+        "GENDER": {
+          "Item1": 1,
+          "Item2": 1
+        }
+      },
+      "Present": 7,
+      "Caught": 7,
+      "EntitiesPresent": 3,
+      "EntitiesFullyCaught": 3,
+      "LostToExtraction": 0,
+      "Leaks": [],
+      "Edits": 7,
+      "TruePositives": 7,
+      "TypeCorrect": 7,
+      "FalsePositives": [],
+      "EditsByType": {
+        "PERSON": {
+          "Item1": 6,
+          "Item2": 6
+        },
+        "GENDER": {
+          "Item1": 1,
+          "Item2": 1
+        }
+      },
+      "MustPreserve": 0,
+      "PreserveBroken": [],
+      "DetectSeconds": 3.473144,
+      "WriteSeconds": 0.0006429,
+      "PromptTokens": 702,
+      "OutputTokens": 151,
+      "Discarded": 0,
+      "OutputOk": true,
+      "OutputError": null
+    },
+    {
+      "File": "text/context-text-02.txt",
+      "Group": "Plain text",
+      "Model": "phi4",
+      "ByCategory": {
+        "PERSON": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "GENDER": {
+          "Item1": 1,
+          "Item2": 1
+        }
+      },
+      "Present": 2,
+      "Caught": 2,
+      "EntitiesPresent": 2,
+      "EntitiesFullyCaught": 2,
+      "LostToExtraction": 0,
+      "Leaks": [],
+      "Edits": 2,
+      "TruePositives": 2,
+      "TypeCorrect": 2,
+      "FalsePositives": [],
+      "EditsByType": {
+        "PERSON": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "GENDER": {
+          "Item1": 1,
+          "Item2": 1
+        }
+      },
+      "MustPreserve": 2,
+      "PreserveBroken": [],
+      "DetectSeconds": 4.3833421,
+      "WriteSeconds": 0.00074,
+      "PromptTokens": 714,
+      "OutputTokens": 189,
+      "Discarded": 0,
+      "OutputOk": true,
+      "OutputError": null
+    },
+    {
+      "File": "text/context-text-03.txt",
+      "Group": "Plain text",
+      "Model": "phi4",
+      "ByCategory": {
+        "PERSON": {
+          "Item1": 5,
+          "Item2": 5
+        },
+        "EMAIL": {
+          "Item1": 1,
+          "Item2": 1
+        }
+      },
+      "Present": 6,
+      "Caught": 6,
+      "EntitiesPresent": 3,
+      "EntitiesFullyCaught": 3,
+      "LostToExtraction": 0,
+      "Leaks": [],
+      "Edits": 6,
+      "TruePositives": 6,
+      "TypeCorrect": 6,
+      "FalsePositives": [],
+      "EditsByType": {
+        "PERSON": {
+          "Item1": 5,
+          "Item2": 5
+        },
+        "EMAIL": {
+          "Item1": 1,
+          "Item2": 1
+        }
+      },
+      "MustPreserve": 0,
+      "PreserveBroken": [],
+      "DetectSeconds": 4.5454752,
+      "WriteSeconds": 0.0007978,
+      "PromptTokens": 700,
+      "OutputTokens": 196,
+      "Discarded": 0,
+      "OutputOk": true,
+      "OutputError": null
+    },
+    {
+      "File": "text/context-text-04.txt",
+      "Group": "Plain text",
+      "Model": "phi4",
+      "ByCategory": {
+        "PERSON": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "EMAIL": {
+          "Item1": 1,
+          "Item2": 1
+        }
+      },
+      "Present": 2,
+      "Caught": 2,
+      "EntitiesPresent": 2,
+      "EntitiesFullyCaught": 2,
+      "LostToExtraction": 0,
+      "Leaks": [],
+      "Edits": 2,
+      "TruePositives": 2,
+      "TypeCorrect": 2,
+      "FalsePositives": [],
+      "EditsByType": {
+        "PERSON": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "EMAIL": {
+          "Item1": 1,
+          "Item2": 1
+        }
+      },
+      "MustPreserve": 2,
+      "PreserveBroken": [],
+      "DetectSeconds": 4.3287806,
+      "WriteSeconds": 0.0008596,
+      "PromptTokens": 712,
+      "OutputTokens": 186,
+      "Discarded": 0,
+      "OutputOk": true,
+      "OutputError": null
+    },
+    {
+      "File": "text/context-text-05.txt",
+      "Group": "Plain text",
+      "Model": "phi4",
+      "ByCategory": {
+        "PERSON": {
+          "Item1": 8,
+          "Item2": 8
+        }
+      },
+      "Present": 8,
+      "Caught": 8,
+      "EntitiesPresent": 6,
+      "EntitiesFullyCaught": 6,
+      "LostToExtraction": 0,
+      "Leaks": [],
+      "Edits": 8,
+      "TruePositives": 8,
+      "TypeCorrect": 8,
+      "FalsePositives": [],
+      "EditsByType": {
+        "PERSON": {
+          "Item1": 8,
+          "Item2": 8
+        }
+      },
+      "MustPreserve": 0,
+      "PreserveBroken": [],
+      "DetectSeconds": 6.2242423,
+      "WriteSeconds": 0.0005132,
+      "PromptTokens": 695,
+      "OutputTokens": 270,
+      "Discarded": 0,
+      "OutputOk": true,
+      "OutputError": null
+    },
+    {
+      "File": "text/context-text-06.txt",
+      "Group": "Plain text",
+      "Model": "phi4",
+      "ByCategory": {},
+      "Present": 0,
+      "Caught": 0,
+      "EntitiesPresent": 0,
+      "EntitiesFullyCaught": 0,
+      "LostToExtraction": 0,
+      "Leaks": [],
+      "Edits": 0,
+      "TruePositives": 0,
+      "TypeCorrect": 0,
+      "FalsePositives": [],
+      "EditsByType": {},
+      "MustPreserve": 7,
+      "PreserveBroken": [],
+      "DetectSeconds": 0.354602,
+      "WriteSeconds": 0.0007445,
+      "PromptTokens": 707,
+      "OutputTokens": 8,
+      "Discarded": 0,
+      "OutputOk": true,
+      "OutputError": null
+    },
+    {
+      "File": "text/context-text-07.txt",
+      "Group": "Plain text",
+      "Model": "phi4",
+      "ByCategory": {
+        "COMPANY": {
+          "Item1": 6,
+          "Item2": 6
+        }
+      },
+      "Present": 6,
+      "Caught": 6,
+      "EntitiesPresent": 4,
+      "EntitiesFullyCaught": 4,
+      "LostToExtraction": 0,
+      "Leaks": [],
+      "Edits": 6,
+      "TruePositives": 6,
+      "TypeCorrect": 6,
+      "FalsePositives": [],
+      "EditsByType": {
+        "COMPANY": {
+          "Item1": 6,
+          "Item2": 6
+        }
+      },
+      "MustPreserve": 0,
+      "PreserveBroken": [],
+      "DetectSeconds": 5.4496413,
+      "WriteSeconds": 0.0005072,
+      "PromptTokens": 699,
+      "OutputTokens": 238,
+      "Discarded": 0,
+      "OutputOk": true,
+      "OutputError": null
+    },
+    {
+      "File": "text/context-text-08.txt",
+      "Group": "Plain text",
+      "Model": "phi4",
+      "ByCategory": {},
+      "Present": 0,
+      "Caught": 0,
+      "EntitiesPresent": 0,
+      "EntitiesFullyCaught": 0,
+      "LostToExtraction": 0,
+      "Leaks": [],
+      "Edits": 1,
+      "TruePositives": 0,
+      "TypeCorrect": 0,
+      "FalsePositives": [
+        {
+          "Type": "CONTEXTUAL",
+          "Text": "a school trip"
+        }
+      ],
+      "EditsByType": {
+        "CONTEXTUAL": {
+          "Item1": 1,
+          "Item2": 0
+        }
+      },
+      "MustPreserve": 4,
+      "PreserveBroken": [],
+      "DetectSeconds": 7.0062089,
+      "WriteSeconds": 0.000793,
+      "PromptTokens": 705,
+      "OutputTokens": 303,
+      "Discarded": 2,
+      "OutputOk": true,
+      "OutputError": null
+    },
+    {
+      "File": "text/context-text-09.txt",
+      "Group": "Plain text",
+      "Model": "phi4",
+      "ByCategory": {
+        "PERSON": {
+          "Item1": 8,
+          "Item2": 8
+        }
+      },
+      "Present": 8,
+      "Caught": 8,
+      "EntitiesPresent": 4,
+      "EntitiesFullyCaught": 4,
+      "LostToExtraction": 0,
+      "Leaks": [],
+      "Edits": 8,
+      "TruePositives": 8,
+      "TypeCorrect": 8,
+      "FalsePositives": [],
+      "EditsByType": {
+        "PERSON": {
+          "Item1": 8,
+          "Item2": 8
+        }
+      },
+      "MustPreserve": 0,
+      "PreserveBroken": [],
+      "DetectSeconds": 6.4054442,
+      "WriteSeconds": 0.0006819,
+      "PromptTokens": 686,
+      "OutputTokens": 280,
+      "Discarded": 0,
+      "OutputOk": true,
+      "OutputError": null
+    },
+    {
+      "File": "text/context-text-10.txt",
+      "Group": "Plain text",
+      "Model": "phi4",
+      "ByCategory": {},
+      "Present": 0,
+      "Caught": 0,
+      "EntitiesPresent": 0,
+      "EntitiesFullyCaught": 0,
+      "LostToExtraction": 0,
+      "Leaks": [],
+      "Edits": 0,
+      "TruePositives": 0,
+      "TypeCorrect": 0,
+      "FalsePositives": [],
+      "EditsByType": {},
+      "MustPreserve": 6,
+      "PreserveBroken": [],
+      "DetectSeconds": 6.9304513,
+      "WriteSeconds": 0.000649,
+      "PromptTokens": 698,
+      "OutputTokens": 300,
+      "Discarded": 0,
+      "OutputOk": true,
+      "OutputError": null
+    },
+    {
+      "File": "text/context-text-11-mixed.txt",
+      "Group": "Plain text",
+      "Model": "phi4",
+      "ByCategory": {
+        "PERSON": {
+          "Item1": 5,
+          "Item2": 3
+        }
+      },
+      "Present": 5,
+      "Caught": 3,
+      "EntitiesPresent": 4,
+      "EntitiesFullyCaught": 2,
+      "LostToExtraction": 0,
+      "Leaks": [
+        {
+          "Type": "PERSON",
+          "Text": "Paris",
+          "Count": 1
+        },
+        {
+          "Type": "PERSON",
+          "Text": "Jordan",
+          "Count": 1
+        }
+      ],
+      "Edits": 3,
+      "TruePositives": 3,
+      "TypeCorrect": 3,
+      "FalsePositives": [],
+      "EditsByType": {
+        "PERSON": {
+          "Item1": 3,
+          "Item2": 3
+        }
+      },
+      "MustPreserve": 0,
+      "PreserveBroken": [],
+      "DetectSeconds": 6.202648,
+      "WriteSeconds": 0.0006323,
+      "PromptTokens": 719,
+      "OutputTokens": 266,
+      "Discarded": 0,
+      "OutputOk": true,
+      "OutputError": null
+    },
+    {
+      "File": "csv/06-customer-list.csv",
+      "Group": "Plain text",
+      "Model": "gemma4:e4b",
+      "ByCategory": {
+        "PERSON": {
+          "Item1": 4,
+          "Item2": 4
+        },
+        "EMAIL": {
+          "Item1": 4,
+          "Item2": 4
+        },
+        "PHONE": {
+          "Item1": 4,
+          "Item2": 4
+        },
+        "DATE_OF_BIRTH": {
+          "Item1": 4,
+          "Item2": 4
+        },
+        "COMPANY": {
+          "Item1": 4,
+          "Item2": 4
+        }
+      },
+      "Present": 20,
+      "Caught": 20,
+      "EntitiesPresent": 19,
+      "EntitiesFullyCaught": 19,
+      "LostToExtraction": 0,
+      "Leaks": [],
+      "Edits": 20,
+      "TruePositives": 20,
+      "TypeCorrect": 20,
+      "FalsePositives": [],
+      "EditsByType": {
+        "PERSON": {
+          "Item1": 4,
+          "Item2": 4
+        },
+        "EMAIL": {
+          "Item1": 4,
+          "Item2": 4
+        },
+        "PHONE": {
+          "Item1": 4,
+          "Item2": 4
+        },
+        "DATE_OF_BIRTH": {
+          "Item1": 4,
+          "Item2": 4
+        },
+        "COMPANY": {
+          "Item1": 4,
+          "Item2": 4
+        }
+      },
+      "MustPreserve": 0,
+      "PreserveBroken": [],
+      "DetectSeconds": 10.9715041,
+      "WriteSeconds": 0.0005996,
+      "PromptTokens": 860,
+      "OutputTokens": 1324,
+      "Discarded": 0,
+      "OutputOk": true,
+      "OutputError": null
+    },
+    {
+      "File": "docx/01-hr-letter.docx",
+      "Group": "Word",
+      "Model": "gemma4:e4b",
+      "ByCategory": {
+        "COMPANY": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "ADDRESS": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "PHONE": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "EMAIL": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "GENDER": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "PERSON": {
+          "Item1": 3,
+          "Item2": 3
+        },
+        "DATE_OF_BIRTH": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "AGE": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ID_NUMBER": {
+          "Item1": 2,
+          "Item2": 2
+        }
+      },
+      "Present": 17,
+      "Caught": 17,
+      "EntitiesPresent": 16,
+      "EntitiesFullyCaught": 16,
+      "LostToExtraction": 0,
+      "Leaks": [],
+      "Edits": 18,
+      "TruePositives": 15,
+      "TypeCorrect": 15,
+      "FalsePositives": [
+        {
+          "Type": "DATE_OF_BIRTH",
+          "Text": "14 October 2025"
+        },
+        {
+          "Type": "CONTEXTUAL",
+          "Text": "Senior Data Scientist"
+        },
+        {
+          "Type": "CONTEXTUAL",
+          "Text": "Head of People"
+        }
+      ],
+      "EditsByType": {
+        "COMPANY": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "ADDRESS": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "PHONE": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "EMAIL": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "DATE_OF_BIRTH": {
+          "Item1": 2,
+          "Item2": 1
+        },
+        "PERSON": {
+          "Item1": 3,
+          "Item2": 3
+        },
+        "CONTEXTUAL": {
+          "Item1": 2,
+          "Item2": 0
+        },
+        "AGE": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ID_NUMBER": {
+          "Item1": 2,
+          "Item2": 2
+        }
+      },
+      "MustPreserve": 0,
+      "PreserveBroken": [],
+      "DetectSeconds": 6.3278642,
+      "WriteSeconds": 0.0024239,
+      "PromptTokens": 906,
+      "OutputTokens": 987,
+      "Discarded": 0,
+      "OutputOk": true,
+      "OutputError": null
+    },
+    {
+      "File": "docx/02-services-agreement.docx",
+      "Group": "Word",
+      "Model": "gemma4:e4b",
+      "ByCategory": {
+        "COMPANY": {
+          "Item1": 3,
+          "Item2": 3
+        },
+        "COMPANY_ID": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "ADDRESS": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "PERSON": {
+          "Item1": 3,
+          "Item2": 3
+        },
+        "EMAIL": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "PHONE": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ID_NUMBER": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "DOMAIN": {
+          "Item1": 1,
+          "Item2": 1
+        }
+      },
+      "Present": 14,
+      "Caught": 14,
+      "EntitiesPresent": 14,
+      "EntitiesFullyCaught": 14,
+      "LostToExtraction": 0,
+      "Leaks": [],
+      "Edits": 14,
+      "TruePositives": 14,
+      "TypeCorrect": 12,
+      "FalsePositives": [],
+      "EditsByType": {
+        "COMPANY": {
+          "Item1": 3,
+          "Item2": 3
+        },
+        "ID_NUMBER": {
+          "Item1": 3,
+          "Item2": 3
+        },
+        "ADDRESS": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "PERSON": {
+          "Item1": 3,
+          "Item2": 3
+        },
+        "EMAIL": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "PHONE": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "DOMAIN": {
+          "Item1": 1,
+          "Item2": 1
+        }
+      },
+      "MustPreserve": 0,
+      "PreserveBroken": [],
+      "DetectSeconds": 4.6950944,
+      "WriteSeconds": 0.0035965,
+      "PromptTokens": 875,
+      "OutputTokens": 750,
+      "Discarded": 0,
+      "OutputOk": true,
+      "OutputError": null
+    },
+    {
+      "File": "docx/04-meeting-notes.docx",
+      "Group": "Word",
+      "Model": "gemma4:e4b",
+      "ByCategory": {
+        "CONTEXTUAL": {
+          "Item1": 1,
+          "Item2": 0
+        },
+        "PERSON": {
+          "Item1": 5,
+          "Item2": 5
+        },
+        "COMPANY": {
+          "Item1": 3,
+          "Item2": 3
+        },
+        "GENDER": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "AGE": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "EMAIL": {
+          "Item1": 1,
+          "Item2": 1
+        }
+      },
+      "Present": 12,
+      "Caught": 11,
+      "EntitiesPresent": 12,
+      "EntitiesFullyCaught": 11,
+      "LostToExtraction": 0,
+      "Leaks": [
+        {
+          "Type": "CONTEXTUAL",
+          "Text": "Kestrel",
+          "Count": 1
+        }
+      ],
+      "Edits": 10,
+      "TruePositives": 10,
+      "TypeCorrect": 10,
+      "FalsePositives": [],
+      "EditsByType": {
+        "PERSON": {
+          "Item1": 4,
+          "Item2": 4
+        },
+        "COMPANY": {
+          "Item1": 3,
+          "Item2": 3
+        },
+        "GENDER": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "AGE": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "EMAIL": {
+          "Item1": 1,
+          "Item2": 1
+        }
+      },
+      "MustPreserve": 0,
+      "PreserveBroken": [],
+      "DetectSeconds": 2.4835155,
+      "WriteSeconds": 0.0021739,
+      "PromptTokens": 751,
+      "OutputTokens": 406,
+      "Discarded": 0,
+      "OutputOk": true,
+      "OutputError": null
+    },
+    {
+      "File": "docx/09-gp-referral.docx",
+      "Group": "Word",
+      "Model": "gemma4:e4b",
+      "ByCategory": {
+        "PERSON": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "GENDER": {
+          "Item1": 3,
+          "Item2": 3
+        },
+        "AGE": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "DATE_OF_BIRTH": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ID_NUMBER": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ADDRESS": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "PHONE": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "COMPANY": {
+          "Item1": 2,
+          "Item2": 2
+        }
+      },
+      "Present": 13,
+      "Caught": 13,
+      "EntitiesPresent": 12,
+      "EntitiesFullyCaught": 12,
+      "LostToExtraction": 0,
+      "Leaks": [],
+      "Edits": 13,
+      "TruePositives": 13,
+      "TypeCorrect": 13,
+      "FalsePositives": [],
+      "EditsByType": {
+        "PERSON": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "GENDER": {
+          "Item1": 3,
+          "Item2": 3
+        },
+        "AGE": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "DATE_OF_BIRTH": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ID_NUMBER": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ADDRESS": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "PHONE": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "COMPANY": {
+          "Item1": 2,
+          "Item2": 2
+        }
+      },
+      "MustPreserve": 0,
+      "PreserveBroken": [],
+      "DetectSeconds": 3.6420263,
+      "WriteSeconds": 0.0014893,
+      "PromptTokens": 792,
+      "OutputTokens": 610,
+      "Discarded": 0,
+      "OutputOk": true,
+      "OutputError": null
+    },
+    {
+      "File": "docx/11-hard-negatives.docx",
+      "Group": "Word",
+      "Model": "gemma4:e4b",
+      "ByCategory": {},
+      "Present": 0,
+      "Caught": 0,
+      "EntitiesPresent": 0,
+      "EntitiesFullyCaught": 0,
+      "LostToExtraction": 0,
+      "Leaks": [],
+      "Edits": 0,
+      "TruePositives": 0,
+      "TypeCorrect": 0,
+      "FalsePositives": [],
+      "EditsByType": {},
+      "MustPreserve": 5,
+      "PreserveBroken": [],
+      "DetectSeconds": 0.1751362,
+      "WriteSeconds": 0.0013277,
+      "PromptTokens": 751,
+      "OutputTokens": 6,
+      "Discarded": 0,
+      "OutputOk": true,
+      "OutputError": null
+    },
+    {
+      "File": "docx/12-hygiene-docx.docx",
+      "Group": "Word",
+      "Model": "gemma4:e4b",
+      "ByCategory": {
+        "PERSON": {
+          "Item1": 4,
+          "Item2": 4
+        },
+        "COMPANY": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "EMAIL": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ADDRESS": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "GENDER": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "PHONE": {
+          "Item1": 1,
+          "Item2": 1
+        }
+      },
+      "Present": 10,
+      "Caught": 10,
+      "EntitiesPresent": 10,
+      "EntitiesFullyCaught": 10,
+      "LostToExtraction": 0,
+      "Leaks": [],
+      "Edits": 9,
+      "TruePositives": 9,
+      "TypeCorrect": 9,
+      "FalsePositives": [],
+      "EditsByType": {
+        "PERSON": {
+          "Item1": 3,
+          "Item2": 3
+        },
+        "COMPANY": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "EMAIL": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ADDRESS": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "GENDER": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "PHONE": {
+          "Item1": 1,
+          "Item2": 1
+        }
+      },
+      "MustPreserve": 0,
+      "PreserveBroken": [],
+      "DetectSeconds": 2.2271175,
+      "WriteSeconds": 0.0036071,
+      "PromptTokens": 768,
+      "OutputTokens": 365,
+      "Discarded": 0,
+      "OutputOk": true,
+      "OutputError": null
+    },
+    {
+      "File": "json/07-app-config.json",
+      "Group": "Plain text",
+      "Model": "gemma4:e4b",
+      "ByCategory": {
+        "EMAIL": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "SECRET": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "PERSON": {
+          "Item1": 1,
+          "Item2": 1
+        }
+      },
+      "Present": 4,
+      "Caught": 4,
+      "EntitiesPresent": 4,
+      "EntitiesFullyCaught": 4,
+      "LostToExtraction": 0,
+      "Leaks": [],
+      "Edits": 4,
+      "TruePositives": 4,
+      "TypeCorrect": 4,
+      "FalsePositives": [],
+      "EditsByType": {
+        "EMAIL": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "SECRET": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "PERSON": {
+          "Item1": 1,
+          "Item2": 1
+        }
+      },
+      "MustPreserve": 0,
+      "PreserveBroken": [],
+      "DetectSeconds": 1.6140135,
+      "WriteSeconds": 0.0007133,
+      "PromptTokens": 793,
+      "OutputTokens": 261,
+      "Discarded": 0,
+      "OutputOk": true,
+      "OutputError": null
+    },
+    {
+      "File": "markdown/03-customer-email.md",
+      "Group": "Plain text",
+      "Model": "gemma4:e4b",
+      "ByCategory": {
+        "PERSON": {
+          "Item1": 4,
+          "Item2": 4
+        },
+        "EMAIL": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ADDRESS": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "PHONE": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "SECRET": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "COMPANY": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "GENDER": {
+          "Item1": 1,
+          "Item2": 1
+        }
+      },
+      "Present": 10,
+      "Caught": 10,
+      "EntitiesPresent": 9,
+      "EntitiesFullyCaught": 9,
+      "LostToExtraction": 0,
+      "Leaks": [],
+      "Edits": 10,
+      "TruePositives": 9,
+      "TypeCorrect": 9,
+      "FalsePositives": [
+        {
+          "Type": "AGE",
+          "Text": "61"
+        }
+      ],
+      "EditsByType": {
+        "PERSON": {
+          "Item1": 4,
+          "Item2": 4
+        },
+        "EMAIL": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ADDRESS": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "AGE": {
+          "Item1": 1,
+          "Item2": 0
+        },
+        "PHONE": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "SECRET": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "COMPANY": {
+          "Item1": 1,
+          "Item2": 1
+        }
+      },
+      "MustPreserve": 0,
+      "PreserveBroken": [],
+      "DetectSeconds": 2.8004144,
+      "WriteSeconds": 0.0008708,
+      "PromptTokens": 831,
+      "OutputTokens": 452,
+      "Discarded": 0,
+      "OutputOk": true,
+      "OutputError": null
+    },
+    {
+      "File": "markdown/04-meeting-notes.md",
+      "Group": "Plain text",
+      "Model": "gemma4:e4b",
+      "ByCategory": {
+        "CONTEXTUAL": {
+          "Item1": 1,
+          "Item2": 0
+        },
+        "PERSON": {
+          "Item1": 5,
+          "Item2": 5
+        },
+        "COMPANY": {
+          "Item1": 3,
+          "Item2": 3
+        },
+        "GENDER": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "AGE": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "EMAIL": {
+          "Item1": 1,
+          "Item2": 1
+        }
+      },
+      "Present": 12,
+      "Caught": 11,
+      "EntitiesPresent": 12,
+      "EntitiesFullyCaught": 11,
+      "LostToExtraction": 0,
+      "Leaks": [
+        {
+          "Type": "CONTEXTUAL",
+          "Text": "Kestrel",
+          "Count": 1
+        }
+      ],
+      "Edits": 10,
+      "TruePositives": 10,
+      "TypeCorrect": 10,
+      "FalsePositives": [],
+      "EditsByType": {
+        "PERSON": {
+          "Item1": 4,
+          "Item2": 4
+        },
+        "COMPANY": {
+          "Item1": 3,
+          "Item2": 3
+        },
+        "GENDER": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "AGE": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "EMAIL": {
+          "Item1": 1,
+          "Item2": 1
+        }
+      },
+      "MustPreserve": 0,
+      "PreserveBroken": [],
+      "DetectSeconds": 2.4910898,
+      "WriteSeconds": 0.0008487,
+      "PromptTokens": 756,
+      "OutputTokens": 406,
+      "Discarded": 0,
+      "OutputOk": true,
+      "OutputError": null
+    },
+    {
+      "File": "pdf/01-hr-letter.pdf",
+      "Group": "PDF (text layer)",
+      "Model": "gemma4:e4b",
+      "ByCategory": {
+        "COMPANY": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "ADDRESS": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "PHONE": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "EMAIL": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "GENDER": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "PERSON": {
+          "Item1": 3,
+          "Item2": 3
+        },
+        "DATE_OF_BIRTH": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "AGE": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ID_NUMBER": {
+          "Item1": 2,
+          "Item2": 2
+        }
+      },
+      "Present": 17,
+      "Caught": 17,
+      "EntitiesPresent": 16,
+      "EntitiesFullyCaught": 16,
+      "LostToExtraction": 0,
+      "Leaks": [],
+      "Edits": 17,
+      "TruePositives": 15,
+      "TypeCorrect": 15,
+      "FalsePositives": [
+        {
+          "Type": "DATE_OF_BIRTH",
+          "Text": "14 October 2025"
+        },
+        {
+          "Type": "CONTEXTUAL",
+          "Text": "Senior Data Scientist"
+        }
+      ],
+      "EditsByType": {
+        "COMPANY": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "ADDRESS": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "PHONE": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "EMAIL": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "DATE_OF_BIRTH": {
+          "Item1": 2,
+          "Item2": 1
+        },
+        "PERSON": {
+          "Item1": 3,
+          "Item2": 3
+        },
+        "CONTEXTUAL": {
+          "Item1": 1,
+          "Item2": 0
+        },
+        "AGE": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ID_NUMBER": {
+          "Item1": 2,
+          "Item2": 2
+        }
+      },
+      "MustPreserve": 0,
+      "PreserveBroken": [],
+      "DetectSeconds": 5.7145365,
+      "WriteSeconds": 0.0299944,
+      "PromptTokens": 908,
+      "OutputTokens": 946,
+      "Discarded": 0,
+      "OutputOk": true,
+      "OutputError": null
+    },
+    {
+      "File": "pdf/02-services-agreement.pdf",
+      "Group": "PDF (text layer)",
+      "Model": "gemma4:e4b",
+      "ByCategory": {
+        "COMPANY": {
+          "Item1": 3,
+          "Item2": 3
+        },
+        "COMPANY_ID": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "ADDRESS": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "PERSON": {
+          "Item1": 3,
+          "Item2": 3
+        },
+        "EMAIL": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "PHONE": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ID_NUMBER": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "DOMAIN": {
+          "Item1": 1,
+          "Item2": 1
+        }
+      },
+      "Present": 13,
+      "Caught": 13,
+      "EntitiesPresent": 13,
+      "EntitiesFullyCaught": 13,
+      "LostToExtraction": 0,
+      "Leaks": [],
+      "Edits": 11,
+      "TruePositives": 11,
+      "TypeCorrect": 11,
+      "FalsePositives": [],
+      "EditsByType": {
+        "COMPANY": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "COMPANY_ID": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "ADDRESS": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "PERSON": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "EMAIL": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "PHONE": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ID_NUMBER": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "DOMAIN": {
+          "Item1": 1,
+          "Item2": 1
+        }
+      },
+      "MustPreserve": 0,
+      "PreserveBroken": [],
+      "DetectSeconds": 3.9870949,
+      "WriteSeconds": 0.0273485,
+      "PromptTokens": 856,
+      "OutputTokens": 620,
+      "Discarded": 0,
+      "OutputOk": true,
+      "OutputError": null
+    },
+    {
+      "File": "pdf/08-invoice.pdf",
+      "Group": "PDF (text layer)",
+      "Model": "gemma4:e4b",
+      "ByCategory": {
+        "COMPANY": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "ADDRESS": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "COMPANY_ID": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "PERSON": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ID_NUMBER": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "EMAIL": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "PHONE": {
+          "Item1": 1,
+          "Item2": 1
+        }
+      },
+      "Present": 9,
+      "Caught": 9,
+      "EntitiesPresent": 9,
+      "EntitiesFullyCaught": 9,
+      "LostToExtraction": 0,
+      "Leaks": [],
+      "Edits": 9,
+      "TruePositives": 9,
+      "TypeCorrect": 9,
+      "FalsePositives": [],
+      "EditsByType": {
+        "COMPANY": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "ADDRESS": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "COMPANY_ID": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "PERSON": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ID_NUMBER": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "EMAIL": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "PHONE": {
+          "Item1": 1,
+          "Item2": 1
+        }
+      },
+      "MustPreserve": 0,
+      "PreserveBroken": [],
+      "DetectSeconds": 3.4611007,
+      "WriteSeconds": 0.0259209,
+      "PromptTokens": 852,
+      "OutputTokens": 564,
+      "Discarded": 0,
+      "OutputOk": true,
+      "OutputError": null
+    },
+    {
+      "File": "pdf/09-gp-referral.pdf",
+      "Group": "PDF (text layer)",
+      "Model": "gemma4:e4b",
+      "ByCategory": {
+        "PERSON": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "GENDER": {
+          "Item1": 3,
+          "Item2": 3
+        },
+        "AGE": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "DATE_OF_BIRTH": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ID_NUMBER": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ADDRESS": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "PHONE": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "COMPANY": {
+          "Item1": 2,
+          "Item2": 2
+        }
+      },
+      "Present": 13,
+      "Caught": 13,
+      "EntitiesPresent": 12,
+      "EntitiesFullyCaught": 12,
+      "LostToExtraction": 0,
+      "Leaks": [],
+      "Edits": 13,
+      "TruePositives": 13,
+      "TypeCorrect": 13,
+      "FalsePositives": [],
+      "EditsByType": {
+        "PERSON": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "GENDER": {
+          "Item1": 3,
+          "Item2": 3
+        },
+        "AGE": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "DATE_OF_BIRTH": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ID_NUMBER": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ADDRESS": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "PHONE": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "COMPANY": {
+          "Item1": 2,
+          "Item2": 2
+        }
+      },
+      "MustPreserve": 0,
+      "PreserveBroken": [],
+      "DetectSeconds": 3.5922663,
+      "WriteSeconds": 0.0258455,
+      "PromptTokens": 794,
+      "OutputTokens": 595,
+      "Discarded": 0,
+      "OutputOk": true,
+      "OutputError": null
+    },
+    {
+      "File": "scans/01-hr-letter-scan-clean.png",
+      "Group": "Scan: clean image",
+      "Model": "gemma4:e4b",
+      "ByCategory": {
+        "COMPANY": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "ADDRESS": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "PHONE": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "EMAIL": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "GENDER": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "PERSON": {
+          "Item1": 3,
+          "Item2": 3
+        },
+        "DATE_OF_BIRTH": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "AGE": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ID_NUMBER": {
+          "Item1": 2,
+          "Item2": 2
+        }
+      },
+      "Present": 17,
+      "Caught": 17,
+      "EntitiesPresent": 16,
+      "EntitiesFullyCaught": 16,
+      "LostToExtraction": 0,
+      "Leaks": [],
+      "Edits": 18,
+      "TruePositives": 15,
+      "TypeCorrect": 15,
+      "FalsePositives": [
+        {
+          "Type": "DATE_OF_BIRTH",
+          "Text": "14 October 2025"
+        },
+        {
+          "Type": "CONTEXTUAL",
+          "Text": "Senior Data Scientist"
+        },
+        {
+          "Type": "CONTEXTUAL",
+          "Text": "Head of People"
+        }
+      ],
+      "EditsByType": {
+        "COMPANY": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "ADDRESS": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "PHONE": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "EMAIL": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "DATE_OF_BIRTH": {
+          "Item1": 2,
+          "Item2": 1
+        },
+        "PERSON": {
+          "Item1": 3,
+          "Item2": 3
+        },
+        "CONTEXTUAL": {
+          "Item1": 2,
+          "Item2": 0
+        },
+        "AGE": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ID_NUMBER": {
+          "Item1": 2,
+          "Item2": 2
+        }
+      },
+      "MustPreserve": 0,
+      "PreserveBroken": [],
+      "DetectSeconds": 6.1526882,
+      "WriteSeconds": 0.4460354,
+      "PromptTokens": 909,
+      "OutputTokens": 989,
+      "Discarded": 0,
+      "OutputOk": true,
+      "OutputError": null
+    },
+    {
+      "File": "scans/01-hr-letter-scan-degraded.jpg",
+      "Group": "Scan: degraded image",
+      "Model": "gemma4:e4b",
+      "ByCategory": {
+        "COMPANY": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "ADDRESS": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "PHONE": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "EMAIL": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "GENDER": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "PERSON": {
+          "Item1": 3,
+          "Item2": 3
+        },
+        "DATE_OF_BIRTH": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "AGE": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ID_NUMBER": {
+          "Item1": 2,
+          "Item2": 2
+        }
+      },
+      "Present": 17,
+      "Caught": 17,
+      "EntitiesPresent": 16,
+      "EntitiesFullyCaught": 16,
+      "LostToExtraction": 0,
+      "Leaks": [],
+      "Edits": 18,
+      "TruePositives": 15,
+      "TypeCorrect": 15,
+      "FalsePositives": [
+        {
+          "Type": "DATE_OF_BIRTH",
+          "Text": "14 October 2025"
+        },
+        {
+          "Type": "CONTEXTUAL",
+          "Text": "Senior Data Scientist"
+        },
+        {
+          "Type": "CONTEXTUAL",
+          "Text": "Head of People"
+        }
+      ],
+      "EditsByType": {
+        "COMPANY": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "ADDRESS": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "PHONE": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "EMAIL": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "DATE_OF_BIRTH": {
+          "Item1": 2,
+          "Item2": 1
+        },
+        "PERSON": {
+          "Item1": 3,
+          "Item2": 3
+        },
+        "CONTEXTUAL": {
+          "Item1": 2,
+          "Item2": 0
+        },
+        "AGE": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ID_NUMBER": {
+          "Item1": 2,
+          "Item2": 2
+        }
+      },
+      "MustPreserve": 0,
+      "PreserveBroken": [],
+      "DetectSeconds": 5.824425,
+      "WriteSeconds": 0.2065904,
+      "PromptTokens": 909,
+      "OutputTokens": 989,
+      "Discarded": 0,
+      "OutputOk": true,
+      "OutputError": null
+    },
+    {
+      "File": "scans/01-hr-letter-scan.pdf",
+      "Group": "Scan: image-only PDF",
+      "Model": "gemma4:e4b",
+      "ByCategory": {
+        "COMPANY": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "ADDRESS": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "PHONE": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "EMAIL": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "GENDER": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "PERSON": {
+          "Item1": 3,
+          "Item2": 3
+        },
+        "DATE_OF_BIRTH": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "AGE": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ID_NUMBER": {
+          "Item1": 2,
+          "Item2": 2
+        }
+      },
+      "Present": 17,
+      "Caught": 17,
+      "EntitiesPresent": 16,
+      "EntitiesFullyCaught": 16,
+      "LostToExtraction": 0,
+      "Leaks": [],
+      "Edits": 18,
+      "TruePositives": 15,
+      "TypeCorrect": 15,
+      "FalsePositives": [
+        {
+          "Type": "DATE_OF_BIRTH",
+          "Text": "14 October 2025"
+        },
+        {
+          "Type": "CONTEXTUAL",
+          "Text": "Senior Data Scientist"
+        },
+        {
+          "Type": "CONTEXTUAL",
+          "Text": "Head of People"
+        }
+      ],
+      "EditsByType": {
+        "COMPANY": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "ADDRESS": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "PHONE": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "EMAIL": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "DATE_OF_BIRTH": {
+          "Item1": 2,
+          "Item2": 1
+        },
+        "PERSON": {
+          "Item1": 3,
+          "Item2": 3
+        },
+        "CONTEXTUAL": {
+          "Item1": 2,
+          "Item2": 0
+        },
+        "AGE": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ID_NUMBER": {
+          "Item1": 2,
+          "Item2": 2
+        }
+      },
+      "MustPreserve": 0,
+      "PreserveBroken": [],
+      "DetectSeconds": 6.2147515,
+      "WriteSeconds": 0.5626167,
+      "PromptTokens": 909,
+      "OutputTokens": 990,
+      "Discarded": 0,
+      "OutputOk": true,
+      "OutputError": null
+    },
+    {
+      "File": "scans/08-invoice-scan-clean.png",
+      "Group": "Scan: clean image",
+      "Model": "gemma4:e4b",
+      "ByCategory": {
+        "COMPANY": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "ADDRESS": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "COMPANY_ID": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "PERSON": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ID_NUMBER": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "EMAIL": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "PHONE": {
+          "Item1": 1,
+          "Item2": 1
+        }
+      },
+      "Present": 9,
+      "Caught": 9,
+      "EntitiesPresent": 9,
+      "EntitiesFullyCaught": 9,
+      "LostToExtraction": 0,
+      "Leaks": [],
+      "Edits": 9,
+      "TruePositives": 9,
+      "TypeCorrect": 9,
+      "FalsePositives": [],
+      "EditsByType": {
+        "COMPANY": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "ADDRESS": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "COMPANY_ID": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "PERSON": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ID_NUMBER": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "EMAIL": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "PHONE": {
+          "Item1": 1,
+          "Item2": 1
+        }
+      },
+      "MustPreserve": 0,
+      "PreserveBroken": [],
+      "DetectSeconds": 3.229342,
+      "WriteSeconds": 0.4155626,
+      "PromptTokens": 855,
+      "OutputTokens": 534,
+      "Discarded": 1,
+      "OutputOk": true,
+      "OutputError": null
+    },
+    {
+      "File": "scans/08-invoice-scan-degraded.jpg",
+      "Group": "Scan: degraded image",
+      "Model": "gemma4:e4b",
+      "ByCategory": {
+        "COMPANY": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "ADDRESS": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "COMPANY_ID": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "PERSON": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ID_NUMBER": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "EMAIL": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "PHONE": {
+          "Item1": 1,
+          "Item2": 1
+        }
+      },
+      "Present": 9,
+      "Caught": 9,
+      "EntitiesPresent": 9,
+      "EntitiesFullyCaught": 9,
+      "LostToExtraction": 0,
+      "Leaks": [],
+      "Edits": 9,
+      "TruePositives": 9,
+      "TypeCorrect": 9,
+      "FalsePositives": [],
+      "EditsByType": {
+        "COMPANY": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "ADDRESS": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "COMPANY_ID": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "PERSON": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ID_NUMBER": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "EMAIL": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "PHONE": {
+          "Item1": 1,
+          "Item2": 1
+        }
+      },
+      "MustPreserve": 0,
+      "PreserveBroken": [],
+      "DetectSeconds": 3.4128196,
+      "WriteSeconds": 0.1743105,
+      "PromptTokens": 858,
+      "OutputTokens": 556,
+      "Discarded": 0,
+      "OutputOk": true,
+      "OutputError": null
+    },
+    {
+      "File": "scans/08-invoice-scan.pdf",
+      "Group": "Scan: image-only PDF",
+      "Model": "gemma4:e4b",
+      "ByCategory": {
+        "COMPANY": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "ADDRESS": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "COMPANY_ID": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "PERSON": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ID_NUMBER": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "EMAIL": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "PHONE": {
+          "Item1": 1,
+          "Item2": 1
+        }
+      },
+      "Present": 9,
+      "Caught": 9,
+      "EntitiesPresent": 9,
+      "EntitiesFullyCaught": 9,
+      "LostToExtraction": 0,
+      "Leaks": [],
+      "Edits": 9,
+      "TruePositives": 9,
+      "TypeCorrect": 9,
+      "FalsePositives": [],
+      "EditsByType": {
+        "COMPANY": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "ADDRESS": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "COMPANY_ID": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "PERSON": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ID_NUMBER": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "EMAIL": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "PHONE": {
+          "Item1": 1,
+          "Item2": 1
+        }
+      },
+      "MustPreserve": 0,
+      "PreserveBroken": [],
+      "DetectSeconds": 3.35475,
+      "WriteSeconds": 0.5037557,
+      "PromptTokens": 853,
+      "OutputTokens": 534,
+      "Discarded": 1,
+      "OutputOk": true,
+      "OutputError": null
+    },
+    {
+      "File": "scans/09-gp-referral-scan-clean.png",
+      "Group": "Scan: clean image",
+      "Model": "gemma4:e4b",
+      "ByCategory": {
+        "PERSON": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "GENDER": {
+          "Item1": 3,
+          "Item2": 3
+        },
+        "AGE": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "DATE_OF_BIRTH": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ID_NUMBER": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ADDRESS": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "PHONE": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "COMPANY": {
+          "Item1": 2,
+          "Item2": 2
+        }
+      },
+      "Present": 13,
+      "Caught": 13,
+      "EntitiesPresent": 12,
+      "EntitiesFullyCaught": 12,
+      "LostToExtraction": 0,
+      "Leaks": [],
+      "Edits": 13,
+      "TruePositives": 13,
+      "TypeCorrect": 13,
+      "FalsePositives": [],
+      "EditsByType": {
+        "PERSON": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "GENDER": {
+          "Item1": 3,
+          "Item2": 3
+        },
+        "AGE": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "DATE_OF_BIRTH": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ID_NUMBER": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ADDRESS": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "PHONE": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "COMPANY": {
+          "Item1": 2,
+          "Item2": 2
+        }
+      },
+      "MustPreserve": 0,
+      "PreserveBroken": [],
+      "DetectSeconds": 3.4370359,
+      "WriteSeconds": 0.4110792,
+      "PromptTokens": 794,
+      "OutputTokens": 595,
+      "Discarded": 0,
+      "OutputOk": true,
+      "OutputError": null
+    },
+    {
+      "File": "scans/09-gp-referral-scan-degraded.jpg",
+      "Group": "Scan: degraded image",
+      "Model": "gemma4:e4b",
+      "ByCategory": {
+        "PERSON": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "GENDER": {
+          "Item1": 3,
+          "Item2": 3
+        },
+        "AGE": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "DATE_OF_BIRTH": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ID_NUMBER": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ADDRESS": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "PHONE": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "COMPANY": {
+          "Item1": 2,
+          "Item2": 2
+        }
+      },
+      "Present": 13,
+      "Caught": 13,
+      "EntitiesPresent": 12,
+      "EntitiesFullyCaught": 12,
+      "LostToExtraction": 0,
+      "Leaks": [],
+      "Edits": 13,
+      "TruePositives": 13,
+      "TypeCorrect": 13,
+      "FalsePositives": [],
+      "EditsByType": {
+        "PERSON": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "GENDER": {
+          "Item1": 3,
+          "Item2": 3
+        },
+        "AGE": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "DATE_OF_BIRTH": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ID_NUMBER": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ADDRESS": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "PHONE": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "COMPANY": {
+          "Item1": 2,
+          "Item2": 2
+        }
+      },
+      "MustPreserve": 0,
+      "PreserveBroken": [],
+      "DetectSeconds": 3.4335109,
+      "WriteSeconds": 0.1712924,
+      "PromptTokens": 794,
+      "OutputTokens": 595,
+      "Discarded": 0,
+      "OutputOk": true,
+      "OutputError": null
+    },
+    {
+      "File": "text/01-hr-letter.txt",
+      "Group": "Plain text",
+      "Model": "gemma4:e4b",
+      "ByCategory": {
+        "COMPANY": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "ADDRESS": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "PHONE": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "EMAIL": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "GENDER": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "PERSON": {
+          "Item1": 3,
+          "Item2": 3
+        },
+        "DATE_OF_BIRTH": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "AGE": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ID_NUMBER": {
+          "Item1": 2,
+          "Item2": 2
+        }
+      },
+      "Present": 17,
+      "Caught": 17,
+      "EntitiesPresent": 16,
+      "EntitiesFullyCaught": 16,
+      "LostToExtraction": 0,
+      "Leaks": [],
+      "Edits": 16,
+      "TruePositives": 15,
+      "TypeCorrect": 14,
+      "FalsePositives": [
+        {
+          "Type": "DATE_OF_BIRTH",
+          "Text": "14 October 2025"
+        }
+      ],
+      "EditsByType": {
+        "COMPANY": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ADDRESS": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "PHONE": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "EMAIL": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "DATE_OF_BIRTH": {
+          "Item1": 2,
+          "Item2": 1
+        },
+        "PERSON": {
+          "Item1": 3,
+          "Item2": 3
+        },
+        "AGE": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ID_NUMBER": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "CONTEXTUAL": {
+          "Item1": 1,
+          "Item2": 1
+        }
+      },
+      "MustPreserve": 0,
+      "PreserveBroken": [],
+      "DetectSeconds": 6.3030967,
+      "WriteSeconds": 0.0002455,
+      "PromptTokens": 907,
+      "OutputTokens": 1025,
+      "Discarded": 0,
+      "OutputOk": true,
+      "OutputError": null
+    },
+    {
+      "File": "text/03-customer-email.txt",
+      "Group": "Plain text",
+      "Model": "gemma4:e4b",
+      "ByCategory": {
+        "PERSON": {
+          "Item1": 4,
+          "Item2": 4
+        },
+        "EMAIL": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ADDRESS": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "PHONE": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "SECRET": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "COMPANY": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "GENDER": {
+          "Item1": 1,
+          "Item2": 1
+        }
+      },
+      "Present": 10,
+      "Caught": 10,
+      "EntitiesPresent": 9,
+      "EntitiesFullyCaught": 9,
+      "LostToExtraction": 0,
+      "Leaks": [],
+      "Edits": 10,
+      "TruePositives": 9,
+      "TypeCorrect": 9,
+      "FalsePositives": [
+        {
+          "Type": "AGE",
+          "Text": "61"
+        }
+      ],
+      "EditsByType": {
+        "PERSON": {
+          "Item1": 4,
+          "Item2": 4
+        },
+        "EMAIL": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "ADDRESS": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "AGE": {
+          "Item1": 1,
+          "Item2": 0
+        },
+        "PHONE": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "SECRET": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "COMPANY": {
+          "Item1": 1,
+          "Item2": 1
+        }
+      },
+      "MustPreserve": 0,
+      "PreserveBroken": [],
+      "DetectSeconds": 3.2901201,
+      "WriteSeconds": 0.0008444,
+      "PromptTokens": 824,
+      "OutputTokens": 489,
+      "Discarded": 0,
+      "OutputOk": true,
+      "OutputError": null
+    },
+    {
+      "File": "text/05-incident-report.txt",
+      "Group": "Plain text",
+      "Model": "gemma4:e4b",
+      "ByCategory": {
+        "PERSON": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "COMPANY": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "SECRET": {
+          "Item1": 3,
+          "Item2": 3
+        },
+        "ONLINE_ID": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "PHONE": {
+          "Item1": 1,
+          "Item2": 1
+        }
+      },
+      "Present": 9,
+      "Caught": 9,
+      "EntitiesPresent": 8,
+      "EntitiesFullyCaught": 8,
+      "LostToExtraction": 0,
+      "Leaks": [],
+      "Edits": 9,
+      "TruePositives": 9,
+      "TypeCorrect": 9,
+      "FalsePositives": [],
+      "EditsByType": {
+        "PERSON": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "COMPANY": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "SECRET": {
+          "Item1": 3,
+          "Item2": 3
+        },
+        "ONLINE_ID": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "PHONE": {
+          "Item1": 1,
+          "Item2": 1
+        }
+      },
+      "MustPreserve": 0,
+      "PreserveBroken": [],
+      "DetectSeconds": 3.4654146,
+      "WriteSeconds": 0.000824,
+      "PromptTokens": 842,
+      "OutputTokens": 545,
+      "Discarded": 0,
+      "OutputOk": true,
+      "OutputError": null
+    },
+    {
+      "File": "text/10-contextual-profile.txt",
+      "Group": "Plain text",
+      "Model": "gemma4:e4b",
+      "ByCategory": {
+        "GENDER": {
+          "Item1": 4,
+          "Item2": 4
+        },
+        "COMPANY": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "CONTEXTUAL": {
+          "Item1": 4,
+          "Item2": 2
+        },
+        "PERSON": {
+          "Item1": 1,
+          "Item2": 1
+        }
+      },
+      "Present": 10,
+      "Caught": 8,
+      "EntitiesPresent": 10,
+      "EntitiesFullyCaught": 8,
+      "LostToExtraction": 0,
+      "Leaks": [
+        {
+          "Type": "CONTEXTUAL",
+          "Text": "2019 data breach at the Bristol depot",
+          "Count": 1
+        },
+        {
+          "Type": "CONTEXTUAL",
+          "Text": "GBP 92,000",
+          "Count": 1
+        }
+      ],
+      "Edits": 8,
+      "TruePositives": 8,
+      "TypeCorrect": 6,
+      "FalsePositives": [],
+      "EditsByType": {
+        "GENDER": {
+          "Item1": 4,
+          "Item2": 4
+        },
+        "COMPANY": {
+          "Item1": 3,
+          "Item2": 3
+        },
+        "PERSON": {
+          "Item1": 1,
+          "Item2": 1
+        }
+      },
+      "MustPreserve": 0,
+      "PreserveBroken": [],
+      "DetectSeconds": 1.8509927,
+      "WriteSeconds": 0.0007935,
+      "PromptTokens": 745,
+      "OutputTokens": 267,
+      "Discarded": 0,
+      "OutputOk": true,
+      "OutputError": null
+    },
+    {
+      "File": "text/11-hard-negatives.txt",
+      "Group": "Plain text",
+      "Model": "gemma4:e4b",
+      "ByCategory": {},
+      "Present": 0,
+      "Caught": 0,
+      "EntitiesPresent": 0,
+      "EntitiesFullyCaught": 0,
+      "LostToExtraction": 0,
+      "Leaks": [],
+      "Edits": 0,
+      "TruePositives": 0,
+      "TypeCorrect": 0,
+      "FalsePositives": [],
+      "EditsByType": {},
+      "MustPreserve": 5,
+      "PreserveBroken": [],
+      "DetectSeconds": 0.1697912,
+      "WriteSeconds": 0.0004731,
+      "PromptTokens": 751,
+      "OutputTokens": 6,
+      "Discarded": 0,
+      "OutputOk": true,
+      "OutputError": null
+    },
+    {
+      "File": "text/context-text-01.txt",
+      "Group": "Plain text",
+      "Model": "gemma4:e4b",
+      "ByCategory": {
+        "PERSON": {
+          "Item1": 6,
+          "Item2": 6
+        },
+        "GENDER": {
+          "Item1": 1,
+          "Item2": 1
+        }
+      },
+      "Present": 7,
+      "Caught": 7,
+      "EntitiesPresent": 3,
+      "EntitiesFullyCaught": 3,
+      "LostToExtraction": 0,
+      "Leaks": [],
+      "Edits": 7,
+      "TruePositives": 7,
+      "TypeCorrect": 7,
+      "FalsePositives": [],
+      "EditsByType": {
+        "PERSON": {
+          "Item1": 6,
+          "Item2": 6
+        },
+        "GENDER": {
+          "Item1": 1,
+          "Item2": 1
+        }
+      },
+      "MustPreserve": 0,
+      "PreserveBroken": [],
+      "DetectSeconds": 1.0880999,
+      "WriteSeconds": 0.000426,
+      "PromptTokens": 719,
+      "OutputTokens": 151,
+      "Discarded": 0,
+      "OutputOk": true,
+      "OutputError": null
+    },
+    {
+      "File": "text/context-text-02.txt",
+      "Group": "Plain text",
+      "Model": "gemma4:e4b",
+      "ByCategory": {
+        "PERSON": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "GENDER": {
+          "Item1": 1,
+          "Item2": 1
+        }
+      },
+      "Present": 2,
+      "Caught": 2,
+      "EntitiesPresent": 2,
+      "EntitiesFullyCaught": 2,
+      "LostToExtraction": 0,
+      "Leaks": [],
+      "Edits": 2,
+      "TruePositives": 2,
+      "TypeCorrect": 2,
+      "FalsePositives": [],
+      "EditsByType": {
+        "PERSON": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "GENDER": {
+          "Item1": 1,
+          "Item2": 1
+        }
+      },
+      "MustPreserve": 2,
+      "PreserveBroken": [],
+      "DetectSeconds": 1.0809503,
+      "WriteSeconds": 0.0005917,
+      "PromptTokens": 731,
+      "OutputTokens": 139,
+      "Discarded": 0,
+      "OutputOk": true,
+      "OutputError": null
+    },
+    {
+      "File": "text/context-text-03.txt",
+      "Group": "Plain text",
+      "Model": "gemma4:e4b",
+      "ByCategory": {
+        "PERSON": {
+          "Item1": 5,
+          "Item2": 2
+        },
+        "EMAIL": {
+          "Item1": 1,
+          "Item2": 1
+        }
+      },
+      "Present": 6,
+      "Caught": 3,
+      "EntitiesPresent": 3,
+      "EntitiesFullyCaught": 2,
+      "LostToExtraction": 0,
+      "Leaks": [
+        {
+          "Type": "PERSON",
+          "Text": "Jordan",
+          "Count": 3
+        }
+      ],
+      "Edits": 3,
+      "TruePositives": 3,
+      "TypeCorrect": 3,
+      "FalsePositives": [],
+      "EditsByType": {
+        "PERSON": {
+          "Item1": 2,
+          "Item2": 2
+        },
+        "EMAIL": {
+          "Item1": 1,
+          "Item2": 1
+        }
+      },
+      "MustPreserve": 0,
+      "PreserveBroken": [],
+      "DetectSeconds": 1.4096109,
+      "WriteSeconds": 0.0006784,
+      "PromptTokens": 718,
+      "OutputTokens": 202,
+      "Discarded": 0,
+      "OutputOk": true,
+      "OutputError": null
+    },
+    {
+      "File": "text/context-text-04.txt",
+      "Group": "Plain text",
+      "Model": "gemma4:e4b",
+      "ByCategory": {
+        "PERSON": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "EMAIL": {
+          "Item1": 1,
+          "Item2": 1
+        }
+      },
+      "Present": 2,
+      "Caught": 2,
+      "EntitiesPresent": 2,
+      "EntitiesFullyCaught": 2,
+      "LostToExtraction": 0,
+      "Leaks": [],
+      "Edits": 2,
+      "TruePositives": 2,
+      "TypeCorrect": 2,
+      "FalsePositives": [],
+      "EditsByType": {
+        "PERSON": {
+          "Item1": 1,
+          "Item2": 1
+        },
+        "EMAIL": {
+          "Item1": 1,
+          "Item2": 1
+        }
+      },
+      "MustPreserve": 2,
+      "PreserveBroken": [],
+      "DetectSeconds": 1.5853745,
+      "WriteSeconds": 0.0007635,
+      "PromptTokens": 728,
+      "OutputTokens": 246,
+      "Discarded": 0,
+      "OutputOk": true,
+      "OutputError": null
+    },
+    {
+      "File": "text/context-text-05.txt",
+      "Group": "Plain text",
+      "Model": "gemma4:e4b",
+      "ByCategory": {
+        "PERSON": {
+          "Item1": 8,
+          "Item2": 0
+        }
+      },
+      "Present": 8,
+      "Caught": 0,
+      "EntitiesPresent": 6,
+      "EntitiesFullyCaught": 0,
+      "LostToExtraction": 0,
+      "Leaks": [
+        {
+          "Type": "PERSON",
+          "Text": "Will",
+          "Count": 2
+        },
+        {
+          "Type": "PERSON",
+          "Text": "Mark",
+          "Count": 2
+        },
+        {
+          "Type": "PERSON",
+          "Text": "Rose",
+          "Count": 1
+        },
+        {
+          "Type": "PERSON",
+          "Text": "Bill",
+          "Count": 1
+        },
+        {
+          "Type": "PERSON",
+          "Text": "Grace",
+          "Count": 1
+        },
+        {
+          "Type": "PERSON",
+          "Text": "Hope",
+          "Count": 1
+        }
+      ],
+      "Edits": 0,
+      "TruePositives": 0,
+      "TypeCorrect": 0,
+      "FalsePositives": [],
+      "EditsByType": {},
+      "MustPreserve": 0,
+      "PreserveBroken": [],
+      "DetectSeconds": 0.1717444,
+      "WriteSeconds": 0.0006095,
+      "PromptTokens": 713,
+      "OutputTokens": 6,
+      "Discarded": 0,
+      "OutputOk": true,
+      "OutputError": null
+    },
+    {
+      "File": "text/context-text-06.txt",
+      "Group": "Plain text",
+      "Model": "gemma4:e4b",
+      "ByCategory": {},
+      "Present": 0,
+      "Caught": 0,
+      "EntitiesPresent": 0,
+      "EntitiesFullyCaught": 0,
+      "LostToExtraction": 0,
+      "Leaks": [],
+      "Edits": 0,
+      "TruePositives": 0,
+      "TypeCorrect": 0,
+      "FalsePositives": [],
+      "EditsByType": {},
+      "MustPreserve": 7,
+      "PreserveBroken": [],
+      "DetectSeconds": 0.2060066,
+      "WriteSeconds": 0.0005834,
+      "PromptTokens": 725,
+      "OutputTokens": 9,
+      "Discarded": 0,
+      "OutputOk": true,
+      "OutputError": null
+    },
+    {
+      "File": "text/context-text-07.txt",
+      "Group": "Plain text",
+      "Model": "gemma4:e4b",
+      "ByCategory": {
+        "COMPANY": {
+          "Item1": 6,
+          "Item2": 0
+        }
+      },
+      "Present": 6,
+      "Caught": 0,
+      "EntitiesPresent": 4,
+      "EntitiesFullyCaught": 0,
+      "LostToExtraction": 0,
+      "Leaks": [
+        {
+          "Type": "COMPANY",
+          "Text": "Apple",
+          "Count": 2
+        },
+        {
+          "Type": "COMPANY",
+          "Text": "Shell",
+          "Count": 2
+        },
+        {
+          "Type": "COMPANY",
+          "Text": "Amazon",
+          "Count": 1
+        },
+        {
+          "Type": "COMPANY",
+          "Text": "Target",
+          "Count": 1
+        }
+      ],
+      "Edits": 0,
+      "TruePositives": 0,
+      "TypeCorrect": 0,
+      "FalsePositives": [],
+      "EditsByType": {},
+      "MustPreserve": 0,
+      "PreserveBroken": [],
+      "DetectSeconds": 0.1713698,
+      "WriteSeconds": 0.0007725,
+      "PromptTokens": 716,
+      "OutputTokens": 6,
+      "Discarded": 0,
+      "OutputOk": true,
+      "OutputError": null
+    },
+    {
+      "File": "text/context-text-08.txt",
+      "Group": "Plain text",
+      "Model": "gemma4:e4b",
+      "ByCategory": {},
+      "Present": 0,
+      "Caught": 0,
+      "EntitiesPresent": 0,
+      "EntitiesFullyCaught": 0,
+      "LostToExtraction": 0,
+      "Leaks": [],
+      "Edits": 0,
+      "TruePositives": 0,
+      "TypeCorrect": 0,
+      "FalsePositives": [],
+      "EditsByType": {},
+      "MustPreserve": 4,
+      "PreserveBroken": [],
+      "DetectSeconds": 0.1936883,
+      "WriteSeconds": 0.0007908,
+      "PromptTokens": 721,
+      "OutputTokens": 9,
+      "Discarded": 0,
+      "OutputOk": true,
+      "OutputError": null
+    },
+    {
+      "File": "text/context-text-09.txt",
+      "Group": "Plain text",
+      "Model": "gemma4:e4b",
+      "ByCategory": {
+        "PERSON": {
+          "Item1": 8,
+          "Item2": 8
+        }
+      },
+      "Present": 8,
+      "Caught": 8,
+      "EntitiesPresent": 4,
+      "EntitiesFullyCaught": 4,
+      "LostToExtraction": 0,
+      "Leaks": [],
+      "Edits": 8,
+      "TruePositives": 8,
+      "TypeCorrect": 8,
+      "FalsePositives": [],
+      "EditsByType": {
+        "PERSON": {
+          "Item1": 8,
+          "Item2": 8
+        }
+      },
+      "MustPreserve": 0,
+      "PreserveBroken": [],
+      "DetectSeconds": 1.2584726,
+      "WriteSeconds": 0.0006012,
+      "PromptTokens": 703,
+      "OutputTokens": 177,
+      "Discarded": 0,
+      "OutputOk": true,
+      "OutputError": null
+    },
+    {
+      "File": "text/context-text-10.txt",
+      "Group": "Plain text",
+      "Model": "gemma4:e4b",
+      "ByCategory": {},
+      "Present": 0,
+      "Caught": 0,
+      "EntitiesPresent": 0,
+      "EntitiesFullyCaught": 0,
+      "LostToExtraction": 0,
+      "Leaks": [],
+      "Edits": 0,
+      "TruePositives": 0,
+      "TypeCorrect": 0,
+      "FalsePositives": [],
+      "EditsByType": {},
+      "MustPreserve": 6,
+      "PreserveBroken": [],
+      "DetectSeconds": 1.5661311,
+      "WriteSeconds": 0.0007977,
+      "PromptTokens": 716,
+      "OutputTokens": 239,
+      "Discarded": 0,
+      "OutputOk": true,
+      "OutputError": null
+    },
+    {
+      "File": "text/context-text-11-mixed.txt",
+      "Group": "Plain text",
+      "Model": "gemma4:e4b",
+      "ByCategory": {
+        "PERSON": {
+          "Item1": 5,
+          "Item2": 2
+        }
+      },
+      "Present": 5,
+      "Caught": 2,
+      "EntitiesPresent": 4,
+      "EntitiesFullyCaught": 2,
+      "LostToExtraction": 0,
+      "Leaks": [
+        {
+          "Type": "PERSON",
+          "Text": "Paris",
+          "Count": 2
+        },
+        {
+          "Type": "PERSON",
+          "Text": "Jordan",
+          "Count": 1
+        }
+      ],
+      "Edits": 2,
+      "TruePositives": 2,
+      "TypeCorrect": 2,
+      "FalsePositives": [],
+      "EditsByType": {
+        "PERSON": {
+          "Item1": 2,
+          "Item2": 2
+        }
+      },
+      "MustPreserve": 0,
+      "PreserveBroken": [],
+      "DetectSeconds": 1.804172,
+      "WriteSeconds": 0.0006183,
+      "PromptTokens": 736,
+      "OutputTokens": 275,
+      "Discarded": 0,
+      "OutputOk": true,
+      "OutputError": null
+    }
+  ]
+}
