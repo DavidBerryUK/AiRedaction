@@ -249,6 +249,10 @@ public class OllamaDetector(HttpClient http, RedactorOptions options) : IEntityD
         }
     }
 
+    /// <summary>What to send as the model's think setting. Most thinking models take true/false, but gpt-oss ignores false and only takes a level, so "off" becomes its lowest level, "low".</summary>
+    static object? ThinkSetting(string model, bool? think) =>
+        think == false && model.StartsWith("gpt-oss", StringComparison.OrdinalIgnoreCase) ? "low" : think;
+
     /// <summary>Set when the model refused the think setting (it has no thinking mode), so later calls leave it out.</summary>
     bool thinkRejected;
 
@@ -265,7 +269,7 @@ public class OllamaDetector(HttpClient http, RedactorOptions options) : IEntityD
             model = options.Llm.Model,
             stream = false,
             keep_alive = options.Llm.KeepAlive,
-            think = sendThink ? options.Llm.Think : null,
+            think = sendThink ? ThinkSetting(options.Llm.Model, options.Llm.Think) : null,
             format = PromptBuilder.Schema(types),
             options = new {
                 temperature = options.Llm.Temperature,
