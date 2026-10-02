@@ -33,6 +33,37 @@ public record Totals(int Present, int Caught, int Edits, int TruePositives, int 
 /// <summary>Turns the scores into a Markdown report a person can read, share or paste into a document.</summary>
 public static class MarkdownReport
 {
+    /// <summary>The 95% Wilson score range for a share of <paramref name="k"/> out of <paramref name="n"/>. Items inside one document are not independent, so the range is a little optimistic.</summary>
+    public static (double Low, double High) Wilson(int k, int n)
+    {
+        if (n == 0)
+        {
+            return (0, 1);
+        }
+
+        const double z = 1.96;
+        var p = (double)k / n;
+        var denom = 1 + z * z / n;
+        var centre = (p + z * z / (2 * n)) / denom;
+        var half = z * Math.Sqrt(p * (1 - p) / n + z * z / (4.0 * n * n)) / denom;
+        return (Math.Max(0, centre - half), Math.Min(1, centre + half));
+    }
+
+    /// <summary>A share with its 95% range, such as "98.3% (96.5–99.2)".</summary>
+    public static string Rng(int k, int n)
+    {
+        if (n == 0)
+        {
+            return "–";
+        }
+
+        var (lo, hi) = Wilson(k, n);
+        return $"{P((double)k / n)} ({(lo * 100).ToString("0.0", CultureInfo.InvariantCulture)}–{(hi * 100).ToString("0.0", CultureInfo.InvariantCulture)})";
+    }
+
+    /// <summary>True for a real model on its own, as opposed to the no-model baselines and the model-plus-GLiNER rows.</summary>
+    public static bool IsPlain(string m) => !m.Contains(" + GLiNER", StringComparison.Ordinal) && m is not ("rules only" or "GLiNER only" or "rules + GLiNER");
+
     static string P(double v) => (v * 100).ToString("0.0", CultureInfo.InvariantCulture) + "%";
     static string Cell(string s) => s.Replace("|", "\\|").Replace("\n", " ");
     /// <summary>One table row from single cells and lists of cells, flattened.</summary>
@@ -67,12 +98,12 @@ public static class MarkdownReport
         }
 
         sb.AppendLine("## Summary").AppendLine();
-        Table(sb, ["Model", "Size", "Recall", "Precision", "F1", "Sensitive items missed", "Over-redactions", "Must-keep items damaged", "Time per document", "Output tokens/s"],
+        Table(sb, ["Model", "Size", "Recall (95% range)", "Precision (95% range)", "F1", "Sensitive items missed", "Over-redactions", "Must-keep items damaged", "Time per document", "Output tokens/s"],
             models.Select(m =>
             {
                 var t = tot[m];
                 var info = run.Models.First(x => x.Model == m).Info;
-                return new[] { m, info is null ? "?" : $"{info.ParameterSize} · {info.SizeBytes / 1_000_000_000.0:0.0} GB", P(t.Recall), P(t.Precision), P(t.F1),
+                return new[] { m, info is null ? "–" : $"{info.ParameterSize} · {info.SizeBytes / 1_000_000_000.0:0.0} GB", Rng(t.Caught, t.Present), Rng(t.TruePositives, t.Edits), P(t.F1),
                     $"{t.Leaked} of {t.Present}", $"{t.Edits - t.TruePositives} of {t.Edits}", t.PreserveTotal == 0 ? "–" : $"{t.PreserveBroken} of {t.PreserveTotal}",
                     TimeSpan.FromSeconds(t.Docs == 0 ? 0 : t.Seconds / t.Docs).ToString(@"m\:ss\.f"), t.TokensPerSecond.ToString("0", CultureInfo.InvariantCulture) };
             }));
@@ -80,14 +111,15 @@ public static class MarkdownReport
         sb.AppendLine("- **Recall** answers: *of everything that should have been hidden, how much did the model hide?* If a document has 100 sensitive items and the model hides 95, recall is 95%. The other 5 are leaks, so for a redaction tool this is the most important number. It is strict: hiding only the surname of \"Jane Smith\" leaves the first name visible and counts as a miss.");
         sb.AppendLine("- **Precision** answers: *of everything the model hid, how much really needed hiding?* If it hides 100 things and 90 were sensitive, precision is 90%. The other 10 are over-redactions: harmless, but they make the document harder to read.");
         sb.AppendLine("- **F1** is a single score that blends recall and precision. It is high only when both are high, so a model cannot score well by hiding everything (perfect recall, poor precision) or by hiding almost nothing (high precision, poor recall). Use it for a quick ranking, but look at recall first.");
+        sb.AppendLine("- **95% range** is how far a figure could move if the same test were run on a different, similar set of documents. A wide range means the test is too small to tell models apart; when two ranges overlap, the models are not clearly different. (Items in one document are not independent, so the ranges are a little optimistic.)");
         sb.AppendLine("- **Sensitive items missed** is the count behind recall (\"3 of 120\" means 3 sensitive items were left visible).");
         sb.AppendLine("- **Over-redactions** is the count behind precision (\"8 of 130\" means 8 of the 130 redactions covered text that did not need hiding).");
         sb.AppendLine("- **Must-keep items damaged** (also called *preserved*) checks the opposite risk. Each test document contains ordinary text that must survive, such as dates, job titles, amounts, product names and general places. This counts how many of those were wrongly removed. \"0 of 40\" is ideal, and each one damaged is information the reader needed that is now gone.");
         sb.AppendLine("- **Time per document** is the average wall-clock time to redact one document, and **Output tokens/s** is how fast the model writes its answer (a hardware and model-size measure).").AppendLine();
 
         sb.AppendLine("## Detail per model").AppendLine();
-        sb.AppendLine("Where each model's time and effort went, and how many documents it could not process. *Items fully caught* counts whole items (a full name is one item) rather than every occurrence; *label accuracy* is the share of correct redactions given the right category; *lost to OCR* counts items the scan reader never produced, which no model could have found. For rows that include **GLiNER**, *flagged for review* counts things only GLiNER found, which are left in the text for a person to check, with how many of them really were sensitive. A row marked *(flags accepted)* shows the result if the reviewer accepted every flag.").AppendLine();
-        Table(sb, ["Model", "Documents scored", "Documents failed", "Total model time", "Median document", "Slowest document", "Prompt tokens", "Output tokens", "Items fully caught", "Label accuracy", "Lost to OCR", "Flagged for review (really sensitive)"],
+        sb.AppendLine("Where each model's time and effort went, and how many documents it could not process. *Items fully caught* counts whole items (a full name is one item) rather than every occurrence; *label accuracy* is the share of correct redactions given the right category; *lost to OCR* counts items the scan reader never produced, which no model could have found. For rows that include **GLiNER**, *flagged for review* counts things only GLiNER found, which are left in the text for a person to check, with how many of them really were sensitive. A row marked *(all flags accepted)* shows the result if the reviewer accepted every flag, and *(correct flags accepted)* if the reviewer accepted only the flags that really were sensitive. **Rows without a model** (*rules only*, *GLiNER only*, *rules + GLiNER*) show what the cheap layers do alone, which is what the language model has to improve on.").AppendLine();
+        Table(sb, ["Model", "Documents scored", "Documents failed", "Total model time", "Median document", "Slowest document", "Prompt tokens", "Output tokens", "Items fully caught", "Label accuracy", "Lost to OCR", "Flagged for review (really sensitive)", "GLiNER time"],
             models.Select(m =>
             {
                 var d = by[m];
@@ -97,10 +129,13 @@ public static class MarkdownReport
                 return new[] { m, d.Count.ToString(), run.Skipped.Count(x => x.Contains($"with {m}:")).ToString(), TimeSpan.FromSeconds(t.Seconds).ToString(@"h\:mm\:ss"),
                     sorted.Count == 0 ? "–" : $"{sorted[sorted.Count / 2]:0.0} s", slow is null ? "–" : $"{slow.DetectSeconds:0.0} s ({slow.File})",
                     t.Tokens.ToString("N0", CultureInfo.InvariantCulture), t.OutTokens.ToString("N0", CultureInfo.InvariantCulture),
-                    $"{d.Sum(x => x.EntitiesFullyCaught)} of {d.Sum(x => x.EntitiesPresent)}", P(t.TruePositives == 0 ? 1 : (double)t.TypeCorrect / t.TruePositives), t.Lost.ToString(), d.Sum(x => x.FlagsRaised) == 0 ? "–" : $"{d.Sum(x => x.FlagsRaised)} ({d.Sum(x => x.FlagsCorrect)})" };
+                    $"{d.Sum(x => x.EntitiesFullyCaught)} of {d.Sum(x => x.EntitiesPresent)}", P(t.TruePositives == 0 ? 1 : (double)t.TypeCorrect / t.TruePositives), t.Lost.ToString(), d.Sum(x => x.FlagsRaised) == 0 ? "–" : $"{d.Sum(x => x.FlagsRaised)} ({d.Sum(x => x.FlagsCorrect)})", d.Sum(x => x.GlinerSeconds) == 0 ? "–" : $"{d.Sum(x => x.GlinerSeconds):0.0} s" };
             }));
 
-        Findings(sb, run, models, tot, by);
+        var plain = models.Where(IsPlain).ToList();
+        Findings(sb, run, plain.Count > 0 ? plain : models, tot, by);
+        // The detail tables below show each model and the no-model baselines; the model-plus-GLiNER rows stay in the summary and detail tables above.
+        models = models.Where(m => !m.Contains(" + GLiNER", StringComparison.Ordinal)).ToList();
 
         sb.AppendLine("## Recall by category").AppendLine();
         var cats = scores.SelectMany(s => s.ByCategory.Keys).Distinct().Order().ToList();
@@ -124,6 +159,29 @@ public static class MarkdownReport
             sb.AppendLine($"For scans, {lost} answer-key item(s) were not readable by OCR at all, so no model could see them. They are **not** counted above but may still be visible in the output image; they are a limit of OCR, not of the model.").AppendLine();
         }
 
+        var docTypes = scores.Select(s => s.DocType).Where(t => t != "").Distinct().Order().ToList();
+        if (docTypes.Count > 1)
+        {
+            sb.AppendLine("## Recall by document type").AppendLine();
+            sb.AppendLine("Where each model is strong or weak, by the kind of document. Cells show recall and (items caught/items present); a dash means the type has no sensitive items on the answer key.").AppendLine();
+            var fold = docTypes.Count > 20;
+            if (fold)
+            {
+                sb.AppendLine($"<details><summary>Show the table ({docTypes.Count} document types)</summary>").AppendLine();
+            }
+
+            Table(sb, ["Document type", "Documents", "Items", .. models], docTypes.Select(t =>
+            {
+                var docs = by[models[0]].Count(s => s.DocType == t);
+                var present = by[models[0]].Where(s => s.DocType == t).Sum(s => s.Present);
+                return Row(t, docs.ToString(), present.ToString(), models.Select(m => { var x = Totals.Of(by[m].Where(s => s.DocType == t)); return x.Present == 0 ? "–" : $"{P(x.Recall)} ({x.Caught}/{x.Present})"; }));
+            }));
+            if (fold)
+            {
+                sb.AppendLine("</details>").AppendLine();
+            }
+        }
+
         sb.AppendLine("## Precision by redaction category").AppendLine();
         var etypes = scores.SelectMany(s => s.EditsByType.Keys).Distinct().Order().ToList();
         Table(sb, ["Category", .. models], etypes.Select(c => Row(c, models.Select(m =>
@@ -136,11 +194,21 @@ public static class MarkdownReport
 
         sb.AppendLine("## Per document").AppendLine();
         var files = scores.Select(s => s.File).Distinct().Order().ToList();
+        var collapse = files.Count > 60;
+        if (collapse)
+        {
+            sb.AppendLine($"<details><summary>Show the per-document table ({files.Count} documents)</summary>").AppendLine();
+        }
+
         Table(sb, ["Document", "Format", "Items", .. models.Select(m => m + " (recall · missed · over)")], files.Select(f =>
         {
             var any = scores.First(s => s.File == f);
             return Row(f, any.Group, any.Present.ToString(), models.Select(m => scores.FirstOrDefault(s => s.File == f && s.Model == m) is { } s ? (s.Present == 0 ? "–" : P((double)s.Caught / s.Present)) + $" · {s.Present - s.Caught} · {s.FalsePositives.Count + s.PreserveBroken.Count}" : "–"));
         }));
+        if (collapse)
+        {
+            sb.AppendLine("</details>").AppendLine();
+        }
 
         sb.AppendLine("## Timings").AppendLine();
         sb.AppendLine("Seconds for each document and model. The first figure is the model finding the sensitive items" + (run.WroteOutputs ? "; the second is writing and verifying the redacted file (PDF render, OCR re-read of scans, and so on)" : "") + ". Models are run one after another, every document with one model before the next model is loaded, so a model is loaded into memory once.").AppendLine();
@@ -148,7 +216,16 @@ public static class MarkdownReport
         var timeRows = files.Select(f => Row(f, models.Select(m => Time(scores.FirstOrDefault(s => s.File == f && s.Model == m))))).ToList();
         timeRows.Add(Row("**Total**", models.Select(m => $"**{by[m].Sum(s => s.DetectSeconds):0.0}" + (run.WroteOutputs ? $" + {by[m].Sum(s => s.WriteSeconds):0.0}" : "") + "**")));
         timeRows.Add(Row("Average per document", models.Select(m => by[m].Count == 0 ? "–" : $"{by[m].Average(s => s.DetectSeconds):0.0}")));
+        if (collapse)
+        {
+            sb.AppendLine($"<details><summary>Show the timing table ({files.Count} documents)</summary>").AppendLine();
+        }
+
         Table(sb, ["Document", .. models], timeRows);
+        if (collapse)
+        {
+            sb.AppendLine("</details>").AppendLine();
+        }
 
         if (run.ShowText)
         {
@@ -188,13 +265,39 @@ public static class MarkdownReport
 
                 sb.AppendLine();
             }
+
+            var realModels = models.Where(IsPlain).ToList();
+            if (realModels.Count >= 3)
+            {
+                var needed = (int)Math.Ceiling(realModels.Count * 0.6);
+                var gaps = realModels
+                    .SelectMany(m => by[m].SelectMany(sc => sc.FalsePositives.Select(f => (sc.File, f.Type, f.Text, Model: m))))
+                    .GroupBy(x => (x.File, x.Text))
+                    .Where(g => g.Select(x => x.Model).Distinct().Count() >= needed)
+                    .OrderByDescending(g => g.Select(x => x.Model).Distinct().Count()).ThenBy(g => g.Key.File)
+                    .ToList();
+                sb.AppendLine("### Likely answer-key gaps").AppendLine();
+                sb.AppendLine($"The answer key was made by the data generator, not checked by a person. Text that at least {needed} of the {realModels.Count} models redacted but the key does not list is more likely a gap in the key than a mistake by all of them. These are worth a look before trusting the over-redaction figures.").AppendLine();
+                if (gaps.Count == 0)
+                {
+                    sb.AppendLine("- none").AppendLine();
+                }
+                else
+                {
+                    Table(sb, ["Document", "Text redacted", "Category", "Models"], gaps.Take(60).Select(g => new[] { g.Key.File, $"“{g.Key.Text}”", g.GroupBy(x => x.Type).OrderByDescending(t => t.Count()).First().Key, g.Select(x => x.Model).Distinct().Count().ToString() }));
+                    if (gaps.Count > 60)
+                    {
+                        sb.AppendLine($"…and {gaps.Count - 60} more.").AppendLine();
+                    }
+                }
+            }
         }
 
         if (run.WroteOutputs)
         {
             sb.AppendLine("## Output safety").AppendLine();
             sb.AppendLine("Each redacted file was also written and passed through the tool's own checks (no text layer in PDFs, nothing recoverable in Word files, OCR re-read of scans). A file that fails is refused rather than written.").AppendLine();
-            Table(sb, ["Model", "Files written and verified", "Refused or failed"], models.Select(m =>
+            Table(sb, ["Model", "Files written and verified", "Refused or failed"], models.Where(m => by[m].Any(sc => sc.OutputOk is not null)).Select(m =>
             {
                 var w = by[m].Where(s => s.OutputOk is not null).ToList();
                 return new[] { m, $"{w.Count(s => s.OutputOk == true)} of {w.Count}", w.Count(s => s.OutputOk == false) == 0 ? "none" : string.Join("; ", w.Where(s => s.OutputOk == false).Select(s => $"{s.File}: {s.OutputError}")) };
@@ -227,7 +330,7 @@ public static class MarkdownReport
 
         sb.AppendLine("- Models: " + string.Join("; ", run.Models.Select(m => m.Info is null ? m.Model : $"{m.Model} ({m.Info.Summary}, digest {m.Info.ShortDigest})")) + ".").AppendLine();
 
-        Combinations(sb, run, models, by);
+        Combinations(sb, run, plain.Count > 0 ? plain : models, by);
 
         sb.AppendLine("## Beyond one model: combining models, and a model of our own").AppendLine();
         sb.AppendLine("A finished product would not have to rely on one model. The table above shows each model's strengths and gaps, and they are not the same gaps, so combining models is a real option. There are four common ways. **Union:** run two models and redact whatever either finds. Recall rises, because an item has to be missed by both to leak, but over-redaction and run time add up. This suits a tool where a leak costs far more than an extra black box. **Agreement:** with three or more models, redact only what at least two agree on, or send the disagreements to a person; this cuts over-redaction but gives up some recall, and the app's manual review screen is already the right place for the disagreements. **Cascade:** a small, fast model reads everything, and a larger one is used only on documents or passages where the small one is unsure or found something odd. **Specialists:** reliable patterns such as emails, phone numbers, postcodes and ID formats are better found by fixed rules, which are fast and never forget, leaving the model for names, companies and the contextual judgement calls where only a language model does well.").AppendLine();

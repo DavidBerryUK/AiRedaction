@@ -137,3 +137,25 @@ The report explains these itself, under the Summary table, in plain language:
 | "No models to run" | switch at least one model on in `evaluation.models`, or use `--models` |
 | No ground-truth folder | run from the repository root, or pass `--corpus` |
 | Scans are skipped | OCR is switched off (`ocr.enabled` in the config) |
+
+## Running on the held-out corpus, and what takes how long
+
+`tests/HeldOutCorpus` holds 300 synthetic finance documents (see its README) that nothing in this project was tuned against. To run on it:
+
+```bash
+./run-eval.sh --corpus tests/HeldOutCorpus --gliner --models phi4,gpt-oss,qwen3.6:27b --no-write
+```
+
+`--no-write` skips writing and verifying redacted files (these documents are text only), and `--gliner` adds the second-opinion rows. Measured on a 10-document sample, a document takes about 6–7 s with phi4, about 6 s with gpt-oss and about 15 s with qwen3.6:27b (the first document includes loading the model), and GLiNER adds about 0.06 s. For 300 documents that is roughly **35–45 minutes for phi4, 30–40 for gpt-oss and 70–90 for qwen3.6:27b**, so about **2½ hours for these three**; all five configured models would take about 4 hours. The rows without a model take under a minute.
+
+New in the report: 95% ranges on recall and precision, *Recall by document type* (collapsed when long), the no-model baseline rows (*rules only*, and with `--gliner` also *GLiNER only* and *rules + GLiNER*; `--no-baselines` skips them), a row for **correct flags accepted** (an ideal reviewer), a **GLiNER time** column, and, when the report shows document text, a **Likely answer-key gaps** list: text most models redacted that the answer key does not list.
+
+## Scoring combinations of detectors for real
+
+Every run now saves each detector's spans (positions only, no text) in its `.scores.json`. To score combinations without running any model again:
+
+```bash
+dotnet src/AiDocumentRedactor.Eval/bin/Debug/net10.0/AiDocumentRedactor.Eval.dll --combine eval/<run>.scores.json --models phi4,qwen3.6:27b --out eval/combos.md
+```
+
+It scores each model alone, their union, agreement (all agree, majority, or two-or-more with singles flagged), and, if the run had `--gliner`, the union with GLiNER's flags and a vote with GLiNER counting as one detector, each with the flags left in the text and with an ideal reviewer accepting only the correct flags.

@@ -7,11 +7,19 @@ namespace AiDocumentRedactor.Eval;
 public record Leak(string Type, string Text, int Count);
 /// <summary>A redaction that covers nothing on the answer key.</summary>
 public record FalsePositive(string Type, string Text);
+/// <summary>A span a detector produced, kept as positions only (no document text), so combinations of detectors can be scored later without running the models again.</summary>
+public record SavedSpan(string Type, int Start, int Length, double Confidence, string Source, bool Flag);
 
 /// <summary>The scores of one model on one document.</summary>
 public class DocScore
 {
     public string File = string.Empty, Group = string.Empty, Model = string.Empty;
+    /// <summary>The kind of document (from the answer key's title), for the by-type table.</summary>
+    public string DocType = string.Empty;
+    /// <summary>Seconds GLiNER took, when it was used.</summary>
+    public double GlinerSeconds;
+    /// <summary>What this detector found, as positions only, for combining detectors later.</summary>
+    public List<SavedSpan> Spans = [];
     /// <summary>Per category: occurrences that were in the text, and how many of them the model removed.</summary>
     public Dictionary<string, (int Present, int Caught)> ByCategory = new();
     public int Present, Caught, EntitiesPresent, EntitiesFullyCaught;
@@ -51,10 +59,18 @@ public static class Scoring
     public static List<(int Start, int Length)> Find(string document, string text) =>
         string.IsNullOrWhiteSpace(text) ? [] : Pattern(text).Matches(document).Select(m => (m.Index, m.Length)).ToList();
 
+    /// <summary>Where each answer-key item sits in the text, with its category (every occurrence).</summary>
+    public static List<(int Start, int Length, string Type)> KeySpans(string original, GroundTruth gt) =>
+        gt.Entities.SelectMany(e => Find(original, e.Text).Select(p => (p.Start, p.Length, e.Type))).ToList();
+
+    /// <summary>True if a span overlaps something on the answer key.</summary>
+    public static bool OverlapsKey(IEnumerable<(int Start, int Length, string Type)> key, int start, int length) =>
+        key.Any(k => k.Start < start + length && start < k.Start + k.Length);
+
     /// <summary>Scores one redaction. <paramref name="original"/> is the text the model saw, <paramref name="result"/> what came out.</summary>
     public static DocScore Score(string original, RedactionResult result, GroundTruth gt, string group)
     {
-        var s = new DocScore { Group = group };
+        var s = new DocScore { Group = group, DocType = gt.Title };
         // Recall: for every answer-key item, how many of its occurrences are gone from the redacted text.
         foreach (var e in gt.Entities)
         {

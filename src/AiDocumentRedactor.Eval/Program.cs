@@ -19,8 +19,15 @@ string? Arg(string name)
 }
 if (args.Contains("--help") || args.Contains("-h"))
 {
-    Console.WriteLine("Evaluates local models on the test corpus and writes a Markdown report.\n\n  --config <file>   settings (default redactor.config.json)\n  --corpus <dir>    test corpus (default tests/TestCorpus)\n  --models a,b      models to compare (default: those with include: true in the config's evaluation.models list)\n  --out <file>      report path (default eval/eval-<date-time>.md; a .json with the raw scores is written beside it)\n  --only <text>     only corpus files whose path contains this text\n  --no-write        score the text only; skip writing and verifying the redacted files (faster)\n  --gliner          also score each model combined with GLiNER by agreement (needs the model files; see gliner in the config)\n  --show-text       list missed and over-redacted strings in the report (synthetic data only)\n  --merge a,b       rebuild one report from saved runs (the .scores.json beside each report); a model in a later file replaces the same model in earlier ones. Use --out for the report path.");
+    Console.WriteLine("Evaluates local models on the test corpus and writes a Markdown report.\n\n  --config <file>   settings (default redactor.config.json)\n  --corpus <dir>    test corpus (default tests/TestCorpus)\n  --models a,b      models to compare (default: those with include: true in the config's evaluation.models list)\n  --out <file>      report path (default eval/eval-<date-time>.md; a .json with the raw scores is written beside it)\n  --only <text>     only corpus files whose path contains this text\n  --no-write        score the text only; skip writing and verifying the redacted files (faster)\n  --no-baselines    skip the no-model baseline rows (rules only; with --gliner also GLiNER only and rules + GLiNER)\n  --gliner          also score each model combined with GLiNER by agreement (needs the model files; see gliner in the config)\n  --show-text       list missed and over-redacted strings in the report (synthetic data only)\n  --combine run.scores.json --models a,b[,c]   score real combinations (union, agreement, with GLiNER flags) from the spans saved in an earlier run, without running any model again\n  --merge a,b       rebuild one report from saved runs (the .scores.json beside each report); a model in a later file replaces the same model in earlier ones. Use --out for the report path.");
     return 0;
+}
+
+if (Arg("--combine") is { } savedRun)
+{
+    // Score real combinations of the detectors saved in an earlier run, without running any model again.
+    var combined = (Arg("--models") ?? throw new ArgumentException("--combine needs --models a,b[,c]")).Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+    return await Combos.RunAsync(savedRun, combined, Path.GetFullPath(Arg("--out") ?? Path.Combine("eval", $"eval-combos-{DateTime.Now:yyyyMMdd-HHmm}.md")));
 }
 
 if (Arg("--merge") is { } toMerge)
@@ -156,6 +163,58 @@ void Save()
     File.WriteAllText(Path.ChangeExtension(outPath, ".scores.json"), SavedRun.From(run, scores).ToJson());
 }
 
+// No-model baselines: what the cheap layers do alone, which is what a language model has to improve on.
+if (!args.Contains("--no-baselines"))
+{
+    var baselineGliner = GlinerDetector.Create(options);   // null unless GLiNER is on
+    var names = new List<string> { "rules only" };
+    if (baselineGliner is not null)
+    {
+        names.AddRange(["GLiNER only", "rules + GLiNER"]);
+    }
+
+    foreach (var name in names)
+    {
+        modelInfos.Add((name, null));
+    }
+
+    Console.WriteLine($"\n=== Baselines without a language model: {string.Join(", ", names)} ===");
+    foreach (var d in docs)
+    {
+        var text = d.Doc.Text;
+        var ruleClock = Stopwatch.StartNew();
+        var rules = RuleDetector.Find(text, options);
+        var ruleSeconds = ruleClock.Elapsed.TotalSeconds;
+        var glinerClock = Stopwatch.StartNew();
+        var gl = baselineGliner?.Detect(text) ?? [];
+        var glinerSeconds = glinerClock.Elapsed.TotalSeconds;
+        foreach (var (name, spans, seconds) in new[] { ("rules only", rules, ruleSeconds), ("GLiNER only", gl.ToList(), glinerSeconds), ("rules + GLiNER", rules.Concat(gl).ToList(), ruleSeconds + glinerSeconds) })
+        {
+            if (!names.Contains(name))
+            {
+                continue;
+            }
+
+            var result = Redactor.Apply(text, spans, options.Redaction.PlaceholderTemplate);
+            var score = Scoring.Score(text, result, d.Truth, d.Group);
+            score.File = d.Name;
+            score.Model = name;
+            score.DetectSeconds = seconds;
+            score.GlinerSeconds = name == "rules only" ? 0 : glinerSeconds;
+            score.Spans = spans.Select(ToSaved).ToList();
+            scores.Add(score);
+        }
+    }
+
+    foreach (var name in names)
+    {
+        var t = Totals.Of(scores.Where(x => x.Model == name));
+        Console.WriteLine($"  {name}: recall {t.Recall:P1}, precision {t.Precision:P1}, {t.Leaked} missed of {t.Present}");
+    }
+
+    Save();
+}
+
 var modelNumber = 0;
 foreach (var model in wanted)
 {
@@ -166,11 +225,13 @@ foreach (var model in wanted)
     var detector = new OllamaDetector(OllamaDetector.CreateClient(o.Llm), o, GlinerDetector.Create(o));
     var withGliner = o.Gliner.Enabled;
     var variantAuto = $"{model} + GLiNER";
-    var variantAccepted = $"{model} + GLiNER (flags accepted)";
+    var variantAccepted = $"{model} + GLiNER (all flags accepted)";
+    var variantReviewed = $"{model} + GLiNER (correct flags accepted)";
     if (withGliner)
     {
         modelInfos.Add((variantAuto, installed.First(i => i.Name == model)));
         modelInfos.Add((variantAccepted, installed.First(i => i.Name == model)));
+        modelInfos.Add((variantReviewed, installed.First(i => i.Name == model)));
     }
 
     await detector.CheckAvailableAsync(CancellationToken.None);
@@ -205,6 +266,7 @@ foreach (var model in wanted)
         score.PromptTokens = detector.PromptTokens - p0;
         score.OutputTokens = detector.OutputTokens - o0;
         score.Discarded = detector.Discarded - x0;
+        score.Spans = detector.LastPrimarySpans.Select(ToSaved).ToList();
         if (write && writers.FirstOrDefault(w => w.CanWrite(d.Doc)) is { } writer)
         {
             var tmp = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString("N") + Path.GetExtension(d.Path));
@@ -231,11 +293,14 @@ foreach (var model in wanted)
             // With GLiNER: its solo finds are left in the text and flagged ("auto"), or, if a reviewer accepted every flag, redacted.
             var auto = Scoring.Score(d.Doc.Text, Redactor.Apply(d.Doc.Text, combined, o.Redaction.PlaceholderTemplate), d.Truth, d.Group);
             var accepted = Scoring.Score(d.Doc.Text, Redactor.Apply(d.Doc.Text, combined.Select(s => s.Source == "gliner-only" ? s with { Flag = false } : s), o.Redaction.PlaceholderTemplate), d.Truth, d.Group);
-            foreach (var (name, v) in new[] { (variantAuto, auto), (variantAccepted, accepted) })
+            var key = Scoring.KeySpans(d.Doc.Text, d.Truth);
+            var reviewed = Scoring.Score(d.Doc.Text, Redactor.Apply(d.Doc.Text, combined.Select(s => s.Source == "gliner-only" && Scoring.OverlapsKey(key, s.Start, s.Length) ? s with { Flag = false } : s), o.Redaction.PlaceholderTemplate), d.Truth, d.Group);
+            foreach (var (name, v) in new[] { (variantAuto, auto), (variantAccepted, accepted), (variantReviewed, reviewed) })
             {
                 v.File = d.Name;
                 v.Model = name;
                 v.DetectSeconds = sw.Elapsed.TotalSeconds;
+                v.GlinerSeconds = detector.LastGlinerSeconds;
                 v.PromptTokens = score.PromptTokens;
                 v.OutputTokens = score.OutputTokens;
                 v.FlagsRaised = accepted.Edits - auto.Edits;
@@ -254,6 +319,9 @@ foreach (var model in wanted)
 }
 Console.WriteLine($"\nReport: {outPath}");
 return 0;
+
+/// <summary>A span reduced to positions only, for saving.</summary>
+static SavedSpan ToSaved(DetectedEntity e) => new(e.Type, e.Start, e.Length, e.Confidence, e.Source, e.Flag);
 
 /// <summary>The Ollama server version, for the report (null when it cannot be read).</summary>
 static async Task<string?> OllamaVersionAsync(LlmOptions llm)
