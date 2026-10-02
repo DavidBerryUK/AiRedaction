@@ -1,6 +1,6 @@
 # AI Document Redactor — Specification & Approach
 
-**Status:** Draft v0.40 (prototype)
+**Status:** Draft v0.41 (prototype)
 **Owner:** David Berry
 **Last updated:** 2026-10-03
 
