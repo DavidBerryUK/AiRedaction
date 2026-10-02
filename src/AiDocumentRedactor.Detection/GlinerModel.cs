@@ -20,7 +20,11 @@ public sealed class Prepared
 /// overlapping windows, and turns the scores into spans. Everything runs in this process; nothing leaves the machine.</summary>
 public sealed class GlinerModel : IDisposable
 {
-    static readonly Regex WordPattern = new(@"\w+(?:[-_]\w+)*|\S", RegexOptions.Compiled);
+    // A word, or a single symbol. An emoji or other character outside the basic plane is two UTF-16 halves and must stay one symbol, so a pair is matched first.
+    static readonly Regex WordPattern = new(@"\w+(?:[-_]\w+)*|[\uD800-\uDBFF][\uDC00-\uDFFF]|\S", RegexOptions.Compiled);
+
+    /// <summary>The words of a text as (start, end) positions: runs of letters and digits (joined by - or _), and single symbols.</summary>
+    public static List<(int Start, int End)> Words(string text) => WordPattern.Matches(text).Select(m => (m.Index, m.Index + m.Length)).ToList();
     const int OverlapWords = 30, MaxSpanWords = 30;
 
     readonly InferenceSession session;
@@ -53,10 +57,7 @@ public sealed class GlinerModel : IDisposable
     public Prepared Run(string text, IReadOnlyList<string> labels)
     {
         var p = new Prepared { Labels = [.. labels] };
-        foreach (Match m in WordPattern.Matches(text))
-        {
-            p.Words.Add((m.Index, m.Index + m.Length));
-        }
+        p.Words.AddRange(Words(text));
 
         var prompt = new List<int>();
         foreach (var l in labels)

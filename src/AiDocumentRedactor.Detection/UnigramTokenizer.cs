@@ -63,7 +63,7 @@ public sealed class UnigramTokenizer : IWordTokenizer
         }
 
         var ids = new List<int>();
-        foreach (var part in word.Normalize(NormalizationForm.FormKC).Split((char[]?)null, StringSplitOptions.RemoveEmptyEntries))
+        foreach (var part in TextSafe.Clean(word).Normalize(NormalizationForm.FormKC).Split((char[]?)null, StringSplitOptions.RemoveEmptyEntries))
         {
             ids.AddRange(Segment("▁" + part));
         }

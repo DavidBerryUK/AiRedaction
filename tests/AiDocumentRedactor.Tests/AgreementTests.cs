@@ -75,3 +75,31 @@ public class AgreementTests
         Assert.Contains("GLiNER is switched on but its model is missing", ex.Message);
     }
 }
+
+/// <summary>Tests for text that is awkward for the GLiNER tokeniser: emoji and invalid UTF-16.</summary>
+public class GlinerTextTests
+{
+    /// <summary>An emoji stays whole as one symbol when a text is split into words, instead of being cut into two invalid halves.</summary>
+    [Fact]
+    public void Emoji_is_one_word()
+    {
+        const string text = "Hi 🚀 team, call Eleanor 👉 now";
+        var words = GlinerModel.Words(text).Select(w => text[w.Start..w.End]).ToList();
+        Assert.Contains("🚀", words);
+        Assert.Contains("👉", words);
+        Assert.Contains("Eleanor", words);
+        Assert.All(words, w => Assert.Equal(w, TextSafe.Clean(w)));   // no word contains a half-emoji
+    }
+
+    /// <summary>An unpaired surrogate is replaced one for one so the text can be normalised; valid text is untouched.</summary>
+    [Fact]
+    public void Lone_surrogates_are_replaced_without_moving_positions()
+    {
+        var bad = "ab\uD83Dcd\uDE80e";
+        var clean = TextSafe.Clean(bad);
+        Assert.Equal(bad.Length, clean.Length);
+        Assert.Equal("ab�cd�e", clean);
+        _ = clean.Normalize(System.Text.NormalizationForm.FormC);   // does not throw
+        Assert.Equal("plain 🚀 text", TextSafe.Clean("plain 🚀 text"));
+    }
+}

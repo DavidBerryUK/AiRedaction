@@ -73,7 +73,7 @@ public sealed class BpeTokenizer : IWordTokenizer
             return hit;
         }
 
-        var text = word.Normalize(NormalizationForm.FormC);
+        var text = TextSafe.Clean(word).Normalize(NormalizationForm.FormC);
         if (!text.StartsWith(' '))
         {
             text = " " + text;
