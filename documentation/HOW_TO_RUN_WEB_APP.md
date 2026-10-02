@@ -93,3 +93,12 @@ Everything is in `redactor.config.json`: folders, which categories are on, the m
 | Redact button is greyed out | the hint text next to it says why (no document, unreadable file, model missing) |
 | A scan takes a few seconds to open | it is being read with OCR; this happens once per file per session |
 | Port already in use | add `--port 5200` |
+
+## Optional: the GLiNER second opinion
+
+The app can run a small second detector (GLiNER) next to the language model. Where both find something, it is marked as agreed; something **only GLiNER found** is flagged for review and left in the text, with its reason and score, and you can accept it (**Redact this**) or dismiss it. It is off by default.
+
+1. Put the model files in `models/gliner-pii-edge/` (not part of the repository; they are about 50 MB): `model_quint8.onnx`, `tokenizer.json`, `gliner_config.json`. They come from `knowledgator/gliner-pii-edge-v1.0` on Hugging Face (Apache 2.0), downloaded once; the app never downloads anything while it runs.
+2. In `redactor.config.json` add `"gliner": { "enabled": true }` (other settings, such as the threshold, what happens to GLiNER-only finds, and the label wording per category, are described in the specification, requirement FR73).
+3. Start the app as usual. If GLiNER is on and the model files are missing, a run stops with a message saying so.
+4. In the edit list, each edit shows where it came from (Rule, AI, AI + GLiNER, GLiNER only, and so on). Use the filter *Flagged for review only* to see the GLiNER flags.

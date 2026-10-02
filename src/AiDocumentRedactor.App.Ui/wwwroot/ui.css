@@ -234,6 +234,8 @@ mark.m.flagged { background: transparent !important; box-shadow: none; outline: 
 .review-tools { display: flex; align-items: center; gap: 6px; margin-left: auto; font-weight: 400; letter-spacing: 0; }
 .chip.modified { background: var(--brand-yellow); color: var(--brand-slate); font-weight: 700; }
 .chip.src { background: var(--panel-2); color: var(--muted); border: 1px solid var(--border); font-size: 10.5px; } .chip.src.manual { color: var(--text); border-color: var(--brand-slate); font-weight: 700; }
+.chip.src.gliner { color: var(--text); border: 1px dashed var(--brand-slate); font-weight: 700; }
+.chip.src.agreed { color: var(--text); border-color: var(--brand-slate); }
 .bm.rejected { opacity: .65; } .bm.rejected .bm-snippet { text-decoration: line-through; }
 .bm-actions { display: flex; gap: 6px; margin-top: 6px; align-items: center; }
 mark.m.rejected { background: transparent !important; box-shadow: none; text-decoration: line-through; text-decoration-color: var(--bad); outline: 1px dotted var(--muted); }

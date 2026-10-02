@@ -246,6 +246,7 @@
                 <option value="Low" selected="@(confFilter == "Low")">Low only</option>
                 <option value="Medium" selected="@(confFilter == "Medium")">Medium only</option>
                 <option value="High" selected="@(confFilter == "High")">High only</option>
+                <option value="Flagged" selected="@(confFilter == "Flagged")">Flagged for review only</option>
             </select>
             <select aria-label="Sort edits" @onchange="OnEditSort">
                 <option value="doc" selected="@(!sortByConfidence)">Document order</option>
@@ -256,7 +257,7 @@
             @foreach (var b in Visible)
             {
                 <li class="bm @(selectedBookmark == b.Id ? "selected" : "") @(b.Rejected ? "rejected" : "")" @onclick="() => OnMarkClicked(b.Id)">
-                    <div class="bm-top"><span class="chip type t-@b.Type">@(b.IsArea ? "AREA" : b.Type)</span><span class="chip src @(b.Source == "human" ? "manual" : "")" title="@(b.Source == "human" ? "Added by a person" : "Found by the model")">@(b.Source == "human" ? "Manual" : "AI")</span>@if (b.Rejected) { <span class="chip conf-Flag" title="You rejected this edit. The text is left in the output.">Rejected</span> } else if (b.Flagged) { <span class="chip conf-Flag" title="@b.Confidence.Reason">Flagged</span> } else { <span class="chip conf-@b.Confidence.Level" title="@b.Confidence.Reason">@b.Confidence.Level</span> }<span class="bm-line">@(b.IsArea ? "page" : "line") @b.Line</span></div>
+                    <div class="bm-top"><span class="chip type t-@b.Type">@(b.IsArea ? "AREA" : b.Type)</span><span class="chip src @(b.Source == "human" ? "manual" : "") @(EditSource.IsGlinerOnly(b.Source) ? "gliner" : "") @(EditSource.IsGlinerAgreed(b.Source) ? "agreed" : "")" title="@EditSource.Tooltip(b.Source)">@EditSource.Label(b.Source)</span>@if (b.Rejected) { <span class="chip conf-Flag" title="You rejected this edit. The text is left in the output.">Rejected</span> } else if (b.Flagged) { <span class="chip conf-Flag" title="@b.Confidence.Reason">Flagged</span> } else { <span class="chip conf-@b.Confidence.Level" title="@b.Confidence.Reason">@b.Confidence.Level</span> }<span class="bm-line">@(b.IsArea ? "page" : "line") @b.Line</span></div>
                     <div class="bm-snippet">@b.Snippet</div>
                     @if (!b.Rejected && b.Confidence.Level != ConfidenceLevel.High && b.Confidence.Reason != "")
                     {
@@ -275,13 +276,17 @@
                             }
                             else
                             {
+                                @if (b.Flagged)
+                                {
+                                    <button class="btn small primary" title="Redact this text from now on" @onclick="() => AcceptFlag(b.Id)">✓ Redact this</button>
+                                }
                                 <select aria-label="Change category" @onchange="e => Retype(b.Id, e.Value?.ToString())">
                                     @foreach (var t in S.ManualTypes)
                                     {
                                         <option value="@t" selected="@(t == b.Type)">@t</option>
                                     }
                                 </select>
-                                <button class="btn small" title="@(b.Source == "human" ? "Remove this manual redaction" : "Leave this text unredacted. You can restore it.")" @onclick="() => Reject(b.Id)">@(b.Source == "human" ? "✕ Remove" : "✕ Reject")</button>
+                                <button class="btn small" title="@(b.Source == "human" ? "Remove this manual redaction" : "Leave this text unredacted. You can restore it.")" @onclick="() => Reject(b.Id)">@(b.Source == "human" ? "✕ Remove" : b.Flagged ? "✕ Dismiss" : "✕ Reject")</button>
                             }
                         </div>
                     }
@@ -426,6 +431,11 @@
         S.RemoveArea(id);
         selectedBookmark = null;
     }
+    void AcceptFlag(int id)
+    {
+        S.AcceptFlag(id);
+        selectedBookmark = null;
+    }
     void Restore(int id)
     {
         S.RestoreEdit(id);
@@ -511,7 +521,7 @@
     {
         get
         {
-            var q = AllBookmarks.Where(b => (typeFilter == "" || b.Type == typeFilter) && (confFilter == "" || b.Confidence.Level.ToString() == confFilter));
+            var q = AllBookmarks.Where(b => (typeFilter == "" || b.Type == typeFilter) && (confFilter == "" || (confFilter == "Flagged" ? b.Flagged : b.Confidence.Level.ToString() == confFilter)));
             return (sortByConfidence ? q.OrderBy(b => b.Confidence.Level).ThenBy(b => b.IsArea ? int.MaxValue : b.OriginalStart) : q.OrderBy(b => b.IsArea ? int.MaxValue : b.OriginalStart).ThenBy(b => b.Page)).ToList();
         }
     }

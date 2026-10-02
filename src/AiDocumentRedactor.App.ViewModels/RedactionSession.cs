@@ -434,7 +434,9 @@ public class RedactionSession
             var snippet = red[from..to].Replace('\n', ' ').Replace('\r', ' ');
             var line = 1 + OriginalText.AsSpan(0, Math.Min(e.OriginalStart, OriginalText.Length)).Count('\n');
             return new Bookmark(e.Id, e.Type, (from > 0 ? "…" : "") + snippet + (to < red.Length ? "…" : ""), line, e.OriginalStart, e.RedactedStart,
-                conf.GetValueOrDefault(e.Id) ?? new EditConfidence(ConfidenceLevel.Medium, 1, 1, e.Status == EditStatus.Flagged ? "Flagged for review. Left in the text, not redacted." : ""),
+                e.Status == EditStatus.Flagged && EditSource.IsGlinerOnly(e.Source)
+                    ? new EditConfidence(ConfidenceLevel.Low, 1, 1, EditSource.GlinerOnlyReason(e.Confidence))
+                    : conf.GetValueOrDefault(e.Id) ?? new EditConfidence(ConfidenceLevel.Medium, 1, 1, e.Status == EditStatus.Flagged ? "Flagged for review. Left in the text, not redacted." : ""),
                 e.Status == EditStatus.Flagged, e.Source, e.Status == EditStatus.Rejected);
         }).ToList();
     }
@@ -857,6 +859,21 @@ public class RedactionSession
         }
 
         Commit(Without(rv.Current, e));
+    }
+
+    /// <summary>Accepts a flagged edit: the text it covers is redacted from now on, as a redaction chosen by the reviewer (so it is kept, and shown as manual, in every
+    /// model's result for this document). Does nothing for an edit that is not flagged.</summary>
+    public void AcceptFlag(int editId)
+    {
+        if (CurrentReview is not { } rv || FindEdit(editId) is not { Status: EditStatus.Flagged } e)
+        {
+            return;
+        }
+
+        var without = Without(rv.Current, e);
+        Commit(without with {
+            Manual = [.. without.Manual, new ManualSpan(e.Type, e.OriginalStart, e.OriginalLength)]
+        });
     }
 
     /// <summary>Puts a rejected AI edit back.</summary>
