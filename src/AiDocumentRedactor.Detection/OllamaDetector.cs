@@ -249,6 +249,9 @@ public class OllamaDetector(HttpClient http, RedactorOptions options) : IEntityD
         }
     }
 
+    /// <summary>Set when the model refused the think setting (it has no thinking mode), so later calls leave it out.</summary>
+    bool thinkRejected;
+
     /// <summary>What one model call produced: the parsed items plus everything the inspector needs.</summary>
     record AskResult(List<Item> Items, string UserMessage, string RawReply, long PromptTokens, long OutputTokens, TimeSpan Elapsed, int Attempts);
 
@@ -257,10 +260,12 @@ public class OllamaDetector(HttpClient http, RedactorOptions options) : IEntityD
     {
         var types = PromptBuilder.EnabledTypes(options).ToList();
         var userMessage = PromptBuilder.UserMessage(chunkText);
+        var sendThink = options.Llm.Think is not null && !thinkRejected;
         var body = new {
             model = options.Llm.Model,
             stream = false,
             keep_alive = options.Llm.KeepAlive,
+            think = sendThink ? options.Llm.Think : null,
             format = PromptBuilder.Schema(types),
             options = new {
                 temperature = options.Llm.Temperature,
@@ -278,6 +283,13 @@ public class OllamaDetector(HttpClient http, RedactorOptions options) : IEntityD
         for (var attempt = 1; ; attempt++)
         {
             using var resp = await http.PostAsJsonAsync("/api/chat", body, ct);
+            if (sendThink && resp.StatusCode == System.Net.HttpStatusCode.BadRequest
+                && (await resp.Content.ReadAsStringAsync(ct)).Contains("think", StringComparison.OrdinalIgnoreCase))
+            {
+                // This model has no thinking mode, so it refuses the setting: remember that and ask again without it.
+                thinkRejected = true;
+                return await AskAsync(chunkText, ct);
+            }
             resp.EnsureSuccessStatusCode();
             var json = await resp.Content.ReadFromJsonAsync<JsonElement>(ct);
             if (json.TryGetProperty("prompt_eval_count", out var pe))

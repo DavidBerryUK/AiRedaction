@@ -185,6 +185,8 @@ public class LlmOptions
     public int NumCtx { get; set; } = 8192;
     /// <summary>How long the model stays loaded in memory after use.</summary>
     public string KeepAlive { get; set; } = "60m";
+    /// <summary>Switch a thinking model's reasoning on or off. false skips the long chain of thought (much faster, and the answer is not cut short); null leaves the model's own default.</summary>
+    public bool? Think { get; set; }
     /// <summary>Approximate size of each piece of text sent to the model.</summary>
     public int ChunkChars { get; set; } = 4800;
     /// <summary>How much of the end of one piece is repeated at the start of the next, so a name split across a boundary is still seen whole.</summary>

@@ -1,6 +1,6 @@
 # AI Document Redactor — Specification & Approach
 
-**Status:** Draft v0.36 (prototype)
+**Status:** Draft v0.37 (prototype)
 **Owner:** David Berry
 **Last updated:** 2026-10-02
 
@@ -946,7 +946,7 @@ Security is the second-highest demo priority, so the prototype should be able to
 | PDF "fake" redaction (box drawn, text still underneath) | Text recoverable by copy/extract | Rasterise-and-redact: output has no text layer (§7.4); automated check that output PDFs contain no extractable text; OCR the output as a second check |
 | OCR errors on scans (garbled or missed words) | LLM never sees the sensitive text, so it is not detected | Preprocessing; per-word confidence; flag low-confidence pages for review; report OCR error rate per corpus; compare engines |
 | Redaction box misplaced or too tight on scans/PDFs | Partial text visible at box edges | Pad boxes; OCR the output and scan for redacted strings; visual check in the UI (page-image view, Phase 3d) |
-| Thinking models (qwen3.x) are slow and may return an empty reply; switching thinking off (`think:false`) is not built | Their evaluation timings and scores are not comparable with the other models | Add a `think` option to the Ollama request, then re-run those models |
+| Thinking models (qwen3.x) are slow and can return a cut-off reply if their reasoning is left on | Failed documents and 10-20 times longer runs | Built: `llm.think` (default false in the config) switches reasoning off; a model without a thinking mode ignores it |
 | Same word used as a person and as a place in one document (Paris, Jordan, Georgia) | The model may label every use the same way, so the city is redacted or the person is missed | Reduced by context-aware placement (FR69), which depends on the model labelling each use; shown by `context-text-11-mixed`; model quality varies |
 | Non-text content in images/PDFs (signatures, logos, stamps, faces, handwriting) | Identifying content survives | Out of scope for the prototype; documented limitation; flag documents containing images for review |
 | Text-format syntax broken by redaction (JSON/XML/HTML/CSV) | Output unparseable | Clip spans at delimiters; re-parse output; flag file |

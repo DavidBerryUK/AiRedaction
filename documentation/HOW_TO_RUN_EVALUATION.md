@@ -103,7 +103,7 @@ The report explains these itself, under the Summary table, in plain language:
 ### Things to keep in mind
 
 - The corpus is synthetic. Scores compare models fairly with each other, but a client's real documents will be messier.
-- **Thinking models** (the qwen3.x family) write a long chain of reasoning before answering, so they are much slower per document and can return an empty reply. Support for switching thinking off is not built yet, so their scores and timings are not a fair comparison with the others.
+- **Thinking models** (the qwen3.x family) write a long chain of reasoning before answering. Left on, they were 10-20 times slower and often returned an empty or cut-off reply, so documents failed. `llm.think` in `redactor.config.json` is set to `false` to switch the reasoning off; a model with no thinking mode ignores it. Set it to `null` to leave each model's own default.
 - Ollama keeps each model in memory for a while after it is used, so the previous model may still show in `ollama ps`; it is idle and harmless (`ollama stop <model>` unloads it).
 - Recall is strict: a partial redaction (for example only a surname) counts as a miss.
 - Scans are read by OCR first, so scan scores mix model quality and OCR quality. Items OCR could not read at all are reported separately.

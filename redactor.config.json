@@ -105,6 +105,7 @@
     "temperature": 0,
     "seed": 42,
     "numCtx": 8192,
+    "think": false,
     "keepAlive": "60m"
   },
   "ocr": {
