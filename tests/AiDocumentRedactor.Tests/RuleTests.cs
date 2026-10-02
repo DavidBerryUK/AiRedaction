@@ -34,6 +34,24 @@ public class RuleTests
         Assert.Contains("ONLINE_ID:203.0.113.45", f);
     }
 
+    /// <summary>Organisation names ending in a known suffix are found; leading words are dropped and a suffix on its own is ignored.</summary>
+    [Fact]
+    public void Organisation_names_by_suffix()
+    {
+        var f = Found("Please contact Dr Helen Okafor at Fernleigh\nSurgery or Fernleigh Surgery. Dear Brightwater Analytics Ltd, the Council and a Surgery " +
+                      "replied, as did Harbourside Credit Union and The Leeds Building Society.");
+        Assert.Contains("COMPANY:Fernleigh Surgery", f);
+        Assert.Contains("COMPANY:Fernleigh\nSurgery", f);
+        Assert.Contains("COMPANY:Brightwater Analytics Ltd", f);
+        Assert.Contains("COMPANY:Harbourside Credit Union", f);
+        Assert.Contains("COMPANY:Leeds Building Society", f);
+        Assert.DoesNotContain(f, x => x.EndsWith(":Council") || x.EndsWith(":Surgery") || x.Contains("Dear") || x.Contains("The "));
+
+        var o = new RedactorOptions();
+        o.Entities["COMPANY"] = new EntityOptions { Enabled = false };
+        Assert.DoesNotContain(Found("Fernleigh Surgery", o), x => x.StartsWith("COMPANY"));
+    }
+
     /// <summary>Gender words are found; pronouns only when the GENDER category asks for them; switched-off categories are skipped.</summary>
     [Fact]
     public void Gender_words_pronouns_and_switched_off_categories()

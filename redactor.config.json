@@ -110,7 +110,12 @@
     "keepAlive": "60m"
   },
   "rules": {
-    "enabled": true
+    "enabled": true,
+    "organisationSuffixes": [
+      "Ltd", "Limited", "PLC", "LLP", "LLC", "Inc", "Corp", "Corporation", "Group", "Holdings", "Partners", "Associates",
+      "Surgery", "Practice", "Clinic", "Hospital", "Trust", "School", "Academy", "College", "University",
+      "Council", "Bank", "Building Society", "Credit Union", "Charity", "Foundation", "Society", "Association"
+    ]
   },
   "ocr": {
     "enabled": true,

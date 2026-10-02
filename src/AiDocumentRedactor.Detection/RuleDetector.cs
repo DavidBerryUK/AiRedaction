@@ -4,7 +4,7 @@ using AiDocumentRedactor.Core;
 namespace AiDocumentRedactor.Detection;
 
 /// <summary>Finds predictable items with fixed rules, before and alongside the model: emails, UK phone numbers, postcodes, NHS and
-/// National Insurance numbers, IBANs, sort codes, account and card numbers, IP addresses, and gender words. Rules are instant,
+/// National Insurance numbers, IBANs, sort codes, account and card numbers, IP addresses, organisation names ending in a suffix such as Ltd or Surgery, and gender words. Rules are instant,
 /// repeatable and never forget, so these categories no longer depend on the model noticing them. Each rule only runs when its
 /// category is switched on, and numbers with a check digit (NHS, IBAN, card) must pass it.</summary>
 public static class RuleDetector
@@ -103,6 +103,11 @@ public static class RuleDetector
             }
         }
 
+        foreach (var (start, length) in Organisations(text, options.Rules.OrganisationSuffixes))
+        {
+            Add(EntityTypes.Company, start, length);
+        }
+
         foreach (Match m in GenderWords.Matches(text))
         {
             Add(EntityTypes.Gender, m.Index, m.Length);
@@ -117,6 +122,45 @@ public static class RuleDetector
         }
 
         return found;
+    }
+
+    /// <summary>Words that start a sentence or a phrase rather than a name, dropped from the front of a match ("The Council", "Dear Fernleigh Surgery").</summary>
+    static readonly HashSet<string> Leading = new(StringComparer.Ordinal)
+    {
+        "The", "A", "An", "Our", "Your", "Their", "His", "Her", "Its", "This", "That", "These", "Those", "Dear", "At", "From", "To", "For", "With", "By", "Of", "In", "On", "And", "Or", "Contact", "Please",
+    };
+
+    /// <summary>One to five capitalised words (letters, digits, &amp;, ' and -; a single line break between them is allowed, as PDFs wrap names) followed by an organisation suffix, such as "Fernleigh Surgery" or
+    /// "Corvid Logistics PLC". Leading words like "The" or "Dear" are dropped, and a match left with no name before the suffix is ignored, so
+    /// "the Council" or "a Surgery" on its own is not redacted.</summary>
+    public static IEnumerable<(int Start, int Length)> Organisations(string text, IEnumerable<string> suffixes)
+    {
+        var list = suffixes.Where(x => !string.IsNullOrWhiteSpace(x)).OrderByDescending(x => x.Length).Select(x => string.Join(@"\s+", x.Split(' ', StringSplitOptions.RemoveEmptyEntries).Select(Regex.Escape))).ToList();
+        if (list.Count == 0)
+        {
+            yield break;
+        }
+
+        var word = @"(?:\p{Lu}[\p{L}\p{N}'&-]*|&)";
+        var rx = new Regex($@"(?<![\p{{L}}\p{{N}}])((?:{word}(?:[ \t]+|[ \t]*\n[ \t]*)){{1,5}})({string.Join("|", list)})\.?(?![\p{{L}}\p{{N}}])", Opt);
+        foreach (Match m in rx.Matches(text))
+        {
+            var start = m.Index;
+            var words = m.Groups[1].Value.Split([' ', '\t', '\n'], StringSplitOptions.RemoveEmptyEntries).ToList();
+            while (words.Count > 0 && Leading.Contains(words[0]))
+            {
+                start = text.IndexOf(words[1 < words.Count ? 1 : 0], start + words[0].Length, StringComparison.Ordinal);
+                words.RemoveAt(0);
+            }
+
+            if (words.Count == 0 || words.All(w => w == "&"))
+            {
+                continue;
+            }
+
+            var end = m.Groups[2].Index + m.Groups[2].Length;
+            yield return (start, end - start);
+        }
     }
 
     static string Digits(string s) => new(s.Where(char.IsDigit).ToArray());

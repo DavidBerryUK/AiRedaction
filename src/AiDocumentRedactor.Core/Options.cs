@@ -140,6 +140,14 @@ public class RulesOptions
 {
     /// <summary>Find predictable items with fixed rules as well as the model. Each rule runs only when its category is switched on.</summary>
     public bool Enabled { get; set; } = true;
+    /// <summary>Words that end an organisation's name. One to five capitalised words followed by one of these ("Fernleigh Surgery",
+    /// "Brightwater Analytics Ltd") are marked as COMPANY by rule, so the name is found even when the model leaves it out.</summary>
+    public string[] OrganisationSuffixes { get; set; } =
+    [
+        "Ltd", "Limited", "PLC", "LLP", "LLC", "Inc", "Corp", "Corporation", "Group", "Holdings", "Partners", "Associates",
+        "Surgery", "Practice", "Clinic", "Hospital", "Trust", "School", "Academy", "College", "University",
+        "Council", "Bank", "Building Society", "Credit Union", "Charity", "Foundation", "Society", "Association",
+    ];
 }
 
 public class EntityOptions

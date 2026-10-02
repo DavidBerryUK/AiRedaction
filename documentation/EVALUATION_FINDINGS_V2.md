@@ -33,6 +33,10 @@
 3. **What remains is mostly the hard category.** Of the 9 misses, 5 are "Fernleigh Surgery", 2 are "Kestrel" (a project codename) and the rest are contextual identifiers and the mixed document. These point to the next steps from version 1: a second model, the second-pass check and human review of disagreements.
 4. **Over-redactions are small and policy-shaped:** ages in passing, "in January" read as a date of birth, and job titles.
 
+## Added after this run (not yet measured)
+
+An **organisation-name rule**: capitalised words ending in a suffix such as Ltd, PLC, Surgery, School, Council or Credit Union (the list is `rules.organisationSuffixes` in the config) are marked as COMPANY by rule. It targets the names every model missed in the PDF and scan versions ("Fernleigh Surgery", "Brightwater Analytics Ltd"). Its effect on the scores, including any extra over-redaction, will show in the next evaluation run. A name directly above an organisation on the next line (a signature block) may be joined into one company redaction: still redacted, but labelled as a company.
+
 ## Next
 
 Re-run all ten models to see whether the rules lift the other models as much, then build phase 2 (a second model with agreement scoring, and the second-pass check).
