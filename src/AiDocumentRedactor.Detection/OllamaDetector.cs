@@ -6,8 +6,14 @@ namespace AiDocumentRedactor.Detection;
 
 /// <summary>LLM detection via a local Ollama server. The model returns quoted strings; this class
 /// locates them (never trusts offsets), discards non-verbatim answers, and propagates repeats.</summary>
-public class OllamaDetector(HttpClient http, RedactorOptions options) : IEntityDetector, IDetectorMetrics, IDetectorTrace
+public class OllamaDetector(HttpClient http, RedactorOptions options, GlinerDetector? gliner = null) : IEntityDetector, IDetectorMetrics, IDetectorTrace
 {
+    /// <summary>The spans from the language model and the fixed rules alone, before GLiNER's agreement was applied (the same as the result when GLiNER is off).
+    /// Kept for the last text detected, so an evaluation can score both with and without GLiNER from one run.</summary>
+    public IReadOnlyList<DetectedEntity> LastPrimarySpans { get; private set; } = [];
+    /// <summary>Seconds GLiNER took on the last text (0 when it is off).</summary>
+    public double LastGlinerSeconds { get; private set; }
+
     /// <summary>Answers dropped because they were not in the text (the model made them up or altered them).</summary>
     public int Discarded
     {
@@ -174,7 +180,19 @@ public class OllamaDetector(HttpClient http, RedactorOptions options) : IEntityD
         }
         // Categories set to "flag" are listed for review but left in the text.
         var flagTypes = PromptBuilder.DefaultDescriptions.Keys.Where(t => options.ModeOf(t) == "flag").ToHashSet();
-        return spans.Select(s => flagTypes.Contains(s.Type) ? s with { Flag = true } : s).DistinctBy(s => (s.Start, s.Length)).ToList();
+        var primary = spans.Select(s => flagTypes.Contains(s.Type) ? s with { Flag = true } : s).DistinctBy(s => (s.Start, s.Length)).ToList();
+        LastPrimarySpans = primary;
+        if (gliner is null)
+        {
+            return primary;
+        }
+
+        progress?.Report(new(RedactionStage.Locating, "Second opinion (GLiNER)", 0, 0, liveCount, sw.Elapsed));
+        var glinerClock = System.Diagnostics.Stopwatch.StartNew();
+        var second = gliner.Detect(text);
+        LastGlinerSeconds = glinerClock.Elapsed.TotalSeconds;
+        var combined = AgreementCombiner.Combine(primary, second, options);
+        return combined.Select(s => flagTypes.Contains(s.Type) ? s with { Flag = true } : s).ToList();
     }
 
     static readonly HashSet<string> Titles = new(StringComparer.OrdinalIgnoreCase) { "mr", "mrs", "ms", "miss", "mx", "dr", "prof", "sir", "madam", "lord", "lady" };

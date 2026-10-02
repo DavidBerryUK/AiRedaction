@@ -86,8 +86,8 @@ public static class MarkdownReport
         sb.AppendLine("- **Time per document** is the average wall-clock time to redact one document, and **Output tokens/s** is how fast the model writes its answer (a hardware and model-size measure).").AppendLine();
 
         sb.AppendLine("## Detail per model").AppendLine();
-        sb.AppendLine("Where each model's time and effort went, and how many documents it could not process. *Items fully caught* counts whole items (a full name is one item) rather than every occurrence; *label accuracy* is the share of correct redactions given the right category; *lost to OCR* counts items the scan reader never produced, which no model could have found.").AppendLine();
-        Table(sb, ["Model", "Documents scored", "Documents failed", "Total model time", "Median document", "Slowest document", "Prompt tokens", "Output tokens", "Items fully caught", "Label accuracy", "Lost to OCR"],
+        sb.AppendLine("Where each model's time and effort went, and how many documents it could not process. *Items fully caught* counts whole items (a full name is one item) rather than every occurrence; *label accuracy* is the share of correct redactions given the right category; *lost to OCR* counts items the scan reader never produced, which no model could have found. For rows that include **GLiNER**, *flagged for review* counts things only GLiNER found, which are left in the text for a person to check, with how many of them really were sensitive. A row marked *(flags accepted)* shows the result if the reviewer accepted every flag.").AppendLine();
+        Table(sb, ["Model", "Documents scored", "Documents failed", "Total model time", "Median document", "Slowest document", "Prompt tokens", "Output tokens", "Items fully caught", "Label accuracy", "Lost to OCR", "Flagged for review (really sensitive)"],
             models.Select(m =>
             {
                 var d = by[m];
@@ -97,7 +97,7 @@ public static class MarkdownReport
                 return new[] { m, d.Count.ToString(), run.Skipped.Count(x => x.Contains($"with {m}:")).ToString(), TimeSpan.FromSeconds(t.Seconds).ToString(@"h\:mm\:ss"),
                     sorted.Count == 0 ? "–" : $"{sorted[sorted.Count / 2]:0.0} s", slow is null ? "–" : $"{slow.DetectSeconds:0.0} s ({slow.File})",
                     t.Tokens.ToString("N0", CultureInfo.InvariantCulture), t.OutTokens.ToString("N0", CultureInfo.InvariantCulture),
-                    $"{d.Sum(x => x.EntitiesFullyCaught)} of {d.Sum(x => x.EntitiesPresent)}", P(t.TruePositives == 0 ? 1 : (double)t.TypeCorrect / t.TruePositives), t.Lost.ToString() };
+                    $"{d.Sum(x => x.EntitiesFullyCaught)} of {d.Sum(x => x.EntitiesPresent)}", P(t.TruePositives == 0 ? 1 : (double)t.TypeCorrect / t.TruePositives), t.Lost.ToString(), d.Sum(x => x.FlagsRaised) == 0 ? "–" : $"{d.Sum(x => x.FlagsRaised)} ({d.Sum(x => x.FlagsCorrect)})" };
             }));
 
         Findings(sb, run, models, tot, by);

@@ -1,6 +1,6 @@
 # Phase 2 plan: layered detection with GLiNER, and benchmarking it
 
-**Status:** planned, not started
+**Status:** in progress. GLiNER spike done and agreement scoring built and measured ([version 4 findings](EVALUATION_FINDINGS_V4.md)); the review-screen reasons, held-out set, per-category thresholds and second-pass check remain
 **Owner:** David Berry
 **Follows:** [Version 1 findings](EVALUATION_FINDINGS_V1.md) and [Version 2 findings](EVALUATION_FINDINGS_V2.md)
 

@@ -2,7 +2,7 @@ using System.Text.RegularExpressions;
 using Microsoft.ML.OnnxRuntime;
 using Microsoft.ML.OnnxRuntime.Tensors;
 
-namespace AiDocumentRedactor.GlinerSpike;
+namespace AiDocumentRedactor.Detection;
 
 /// <summary>One stretch of the document that GLiNER marked: where it is, which label matched, and how sure the model was.</summary>
 public record GlinerSpan(int Start, int Length, string Label, double Score);

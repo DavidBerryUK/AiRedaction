@@ -17,7 +17,7 @@ public static class PipelineBuilder
         {
             try
             {
-                var ollama = new OllamaDetector(OllamaDetector.CreateClient(options.Llm), options);
+                var ollama = new OllamaDetector(OllamaDetector.CreateClient(options.Llm), options, GlinerDetector.Create(options));
                 await ollama.CheckAvailableAsync(CancellationToken.None);
                 detector = ollama;
                 Console.WriteLine($"Model: {options.Llm.Model} at {options.Llm.Endpoint}");

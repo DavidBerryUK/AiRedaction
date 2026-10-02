@@ -19,7 +19,7 @@ string? Arg(string name)
 }
 if (args.Contains("--help") || args.Contains("-h"))
 {
-    Console.WriteLine("Evaluates local models on the test corpus and writes a Markdown report.\n\n  --config <file>   settings (default redactor.config.json)\n  --corpus <dir>    test corpus (default tests/TestCorpus)\n  --models a,b      models to compare (default: those with include: true in the config's evaluation.models list)\n  --out <file>      report path (default eval/eval-<date-time>.md; a .json with the raw scores is written beside it)\n  --only <text>     only corpus files whose path contains this text\n  --no-write        score the text only; skip writing and verifying the redacted files (faster)\n  --show-text       list missed and over-redacted strings in the report (synthetic data only)\n  --merge a,b       rebuild one report from saved runs (the .scores.json beside each report); a model in a later file replaces the same model in earlier ones. Use --out for the report path.");
+    Console.WriteLine("Evaluates local models on the test corpus and writes a Markdown report.\n\n  --config <file>   settings (default redactor.config.json)\n  --corpus <dir>    test corpus (default tests/TestCorpus)\n  --models a,b      models to compare (default: those with include: true in the config's evaluation.models list)\n  --out <file>      report path (default eval/eval-<date-time>.md; a .json with the raw scores is written beside it)\n  --only <text>     only corpus files whose path contains this text\n  --no-write        score the text only; skip writing and verifying the redacted files (faster)\n  --gliner          also score each model combined with GLiNER by agreement (needs the model files; see gliner in the config)\n  --show-text       list missed and over-redacted strings in the report (synthetic data only)\n  --merge a,b       rebuild one report from saved runs (the .scores.json beside each report); a model in a later file replaces the same model in earlier ones. Use --out for the report path.");
     return 0;
 }
 
@@ -54,6 +54,11 @@ if (!Directory.Exists(Path.Combine(corpus, "ground-truth")))
 }
 var truth = GroundTruthStore.Load(corpus);
 var showText = args.Contains("--show-text");
+if (args.Contains("--gliner"))
+{
+    options.Gliner.Enabled = true;   // also score each model combined with GLiNER by agreement
+}
+
 var write = !args.Contains("--no-write");
 var only = Arg("--only");
 
@@ -158,7 +163,16 @@ foreach (var model in wanted)
     modelInfos.Add((model, installed.First(i => i.Name == model)));
     var o = JsonSerializer.Deserialize<RedactorOptions>(JsonSerializer.Serialize(options, RedactorOptions.JsonOptions), RedactorOptions.JsonOptions)!;
     o.Llm.Model = model;
-    var detector = new OllamaDetector(OllamaDetector.CreateClient(o.Llm), o);
+    var detector = new OllamaDetector(OllamaDetector.CreateClient(o.Llm), o, GlinerDetector.Create(o));
+    var withGliner = o.Gliner.Enabled;
+    var variantAuto = $"{model} + GLiNER";
+    var variantAccepted = $"{model} + GLiNER (flags accepted)";
+    if (withGliner)
+    {
+        modelInfos.Add((variantAuto, installed.First(i => i.Name == model)));
+        modelInfos.Add((variantAccepted, installed.First(i => i.Name == model)));
+    }
+
     await detector.CheckAvailableAsync(CancellationToken.None);
     Console.WriteLine($"\n=== Model {modelNumber} of {wanted.Length}: {model} ===");
     var modelClock = Stopwatch.StartNew();   // every document is run with this model before the next model is loaded
@@ -171,9 +185,11 @@ foreach (var model in wanted)
         var x0 = detector.Discarded;
         var sw = Stopwatch.StartNew();
         RedactionResult result;
+        IReadOnlyList<DetectedEntity> combined;
         try
         {
-            result = Redactor.Apply(d.Doc.Text, await detector.DetectAsync(d.Doc.Text, null, CancellationToken.None), o.Redaction.PlaceholderTemplate);
+            combined = await detector.DetectAsync(d.Doc.Text, null, CancellationToken.None);
+            result = Redactor.Apply(d.Doc.Text, withGliner ? detector.LastPrimarySpans : combined, o.Redaction.PlaceholderTemplate);
         }
         catch (Exception ex)
         {
@@ -185,7 +201,7 @@ foreach (var model in wanted)
         var score = Scoring.Score(d.Doc.Text, result, d.Truth, d.Group);
         score.File = d.Name;
         score.Model = model;
-        score.DetectSeconds = sw.Elapsed.TotalSeconds;
+        score.DetectSeconds = sw.Elapsed.TotalSeconds - detector.LastGlinerSeconds;
         score.PromptTokens = detector.PromptTokens - p0;
         score.OutputTokens = detector.OutputTokens - o0;
         score.Discarded = detector.Discarded - x0;
@@ -210,6 +226,26 @@ foreach (var model in wanted)
             }
         }
         scores.Add(score);
+        if (withGliner)
+        {
+            // With GLiNER: its solo finds are left in the text and flagged ("auto"), or, if a reviewer accepted every flag, redacted.
+            var auto = Scoring.Score(d.Doc.Text, Redactor.Apply(d.Doc.Text, combined, o.Redaction.PlaceholderTemplate), d.Truth, d.Group);
+            var accepted = Scoring.Score(d.Doc.Text, Redactor.Apply(d.Doc.Text, combined.Select(s => s.Source == "gliner-only" ? s with { Flag = false } : s), o.Redaction.PlaceholderTemplate), d.Truth, d.Group);
+            foreach (var (name, v) in new[] { (variantAuto, auto), (variantAccepted, accepted) })
+            {
+                v.File = d.Name;
+                v.Model = name;
+                v.DetectSeconds = sw.Elapsed.TotalSeconds;
+                v.PromptTokens = score.PromptTokens;
+                v.OutputTokens = score.OutputTokens;
+                v.FlagsRaised = accepted.Edits - auto.Edits;
+                v.FlagsCorrect = accepted.TruePositives - auto.TruePositives;
+                scores.Add(v);
+            }
+
+            Console.Write($"[+GLiNER: caught {auto.Caught}/{auto.Present}, {auto.FalsePositives.Count} over, {accepted.Edits - auto.Edits} flagged ({accepted.TruePositives - auto.TruePositives} right)] ");
+        }
+
         Console.WriteLine($"caught {score.Caught}/{score.Present}, {score.FalsePositives.Count} over, {score.DetectSeconds:0.0}s{(score.OutputOk is null ? "" : $" + {score.WriteSeconds:0.0}s writing")}{(score.OutputOk == false ? " (output refused)" : "")}");
     }
     Console.WriteLine($"  {model} finished in {modelClock.Elapsed:hh\\:mm\\:ss}");

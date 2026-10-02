@@ -30,6 +30,8 @@ public class RedactorOptions
     public OcrOptions Ocr { get; set; } = new();
     /// <summary>Fixed rules for predictable items (emails, phone numbers, postcodes, ID numbers, gender words), run alongside the model.</summary>
     public RulesOptions Rules { get; set; } = new();
+    /// <summary>A small second detector (GLiNER) whose agreement with the main model decides what is redacted and what is flagged for review.</summary>
+    public GlinerOptions Gliner { get; set; } = new();
     /// <summary>Which models the evaluation command (not the app) compares.</summary>
     public EvaluationOptions Evaluation { get; set; } = new();
 
@@ -136,6 +138,30 @@ public class OutputOptions
 }
 
 /// <summary>Settings for one sensitive-data category.</summary>
+public class GlinerOptions
+{
+    /// <summary>Run the GLiNER detector alongside the main model and combine the two by agreement. Off by default; needs the model files.</summary>
+    public bool Enabled { get; set; }
+    /// <summary>Folder holding the ONNX file, tokenizer.json and gliner_config.json. Nothing is downloaded at run time.</summary>
+    public string ModelDirectory { get; set; } = "models/gliner-pii-edge";
+    /// <summary>The ONNX file inside the folder.</summary>
+    public string OnnxFile { get; set; } = "model_quint8.onnx";
+    /// <summary>Lowest confidence at which GLiNER marks something. Lower finds more and adds more noise; its scores are low, so 0.3 is already a firm mark.</summary>
+    public double Threshold { get; set; } = 0.3;
+    /// <summary>What to do with something only GLiNER found (the main model and rules did not): "flag" lists it for review and leaves it in the text, "redact" removes it, "ignore" drops it.</summary>
+    public string SoloAction { get; set; } = "flag";
+    /// <summary>With SoloAction "flag", a solo find at or above this confidence is redacted anyway (1.1 means never).</summary>
+    public double SoloRedactMinScore { get; set; } = 1.1;
+    /// <summary>The words GLiNER is asked for, per category. Short everyday words work best. A category left out here, or switched off, is not asked for.</summary>
+    public Dictionary<string, string[]> Labels { get; set; } = new()
+    {
+        ["PERSON"] = ["person"], ["PHONE"] = ["phone number"], ["EMAIL"] = ["email"], ["ADDRESS"] = ["address"],
+        ["ID_NUMBER"] = ["identification number"], ["ONLINE_ID"] = ["ip address"], ["AGE"] = ["age"], ["DATE_OF_BIRTH"] = ["date of birth"],
+        ["GENDER"] = ["gender"], ["COMPANY"] = ["organization"], ["COMPANY_ID"] = ["company registration number"], ["DOMAIN"] = ["website"],
+        ["CONTEXTUAL"] = ["job title"], ["SECRET"] = ["password"],
+    };
+}
+
 public class RulesOptions
 {
     /// <summary>Find predictable items with fixed rules as well as the model. Each rule runs only when its category is switched on.</summary>

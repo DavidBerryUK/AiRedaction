@@ -1,7 +1,7 @@
 using System.Text;
 using System.Text.Json;
 
-namespace AiDocumentRedactor.GlinerSpike;
+namespace AiDocumentRedactor.Detection;
 
 /// <summary>What the model runner needs from a tokeniser: encode a word, and know the start, end and special tokens.</summary>
 public interface IWordTokenizer

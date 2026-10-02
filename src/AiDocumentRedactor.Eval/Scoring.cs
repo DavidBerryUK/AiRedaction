@@ -27,6 +27,8 @@ public class DocScore
     /// <summary>Seconds the model took to find the sensitive items, and seconds to write and verify the redacted file (0 when files were not written).</summary>
     public double DetectSeconds, WriteSeconds;
     public long PromptTokens, OutputTokens; public int Discarded;
+    /// <summary>With GLiNER on: things only GLiNER found that were left in the text for a person to review, and how many of them really were sensitive.</summary>
+    public int FlagsRaised, FlagsCorrect;
     /// <summary>Whether the redacted file was written and passed its own safety checks (null = not tried).</summary>
     public bool? OutputOk; public string? OutputError;
 }

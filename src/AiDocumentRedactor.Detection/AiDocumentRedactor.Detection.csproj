@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AiDocumentRedactor.Core\AiDocumentRedactor.Core.csproj" />
+    <PackageReference Include="Microsoft.ML.OnnxRuntime" Version="1.29.0" />
   </ItemGroup>
 
   <PropertyGroup>
