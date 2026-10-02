@@ -1,0 +1,215 @@
+# Redaction evaluation report
+
+Run on 2026-10-02 12:16 (macOS 27.0.1, 18 cores); took 02:19:54. 38 documents, 143 items on the answer key, 10 models. Everything ran on this machine through local models.
+
+> **Merged report.** Nine models come from the full run of 2026-10-02 12:16. **gpt-oss** comes from a separate run of 2026-10-02 14:41, after a fix: the first run sent `think:false`, which gpt-oss ignores, so it reasoned at length and failed on 25 of 38 documents; the second run sends its lowest reasoning level (`low`). All other settings are identical. Times are from each model's own run.
+
+> This report contains **no document text**: only counts, categories and file names. Run with `--show-text` to list the missed and over-redacted strings (only sensible on synthetic data).
+
+## Summary
+
+| Model | Size | Recall | Precision | F1 | Sensitive items missed | Over-redactions | Must-keep items damaged | Time per document | Output tokens/s |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| phi4 | 14.7B · 9.1 GB | 95.3% | 95.9% | 95.6% | 16 of 337 | 13 of 316 | 2 of 31 | 0:09.0 | 48 |
+| gemma4:e4b | 7.5B · 6.6 GB | 89.9% | 91.7% | 90.8% | 34 of 337 | 26 of 312 | 0 of 31 | 0:02.9 | 157 |
+| mistral-small3.2 | 24.0B · 15.2 GB | 86.9% | 95.1% | 90.8% | 44 of 337 | 15 of 306 | 4 of 31 | 0:13.9 | 29 |
+| qwen3.6:27b | 27.3B · 17.8 GB | 96.7% | 85.0% | 90.5% | 11 of 337 | 57 of 380 | 3 of 31 | 0:14.9 | 38 |
+| qwen3.5:4b | 4.7B · 3.4 GB | 88.7% | 92.9% | 90.8% | 38 of 337 | 22 of 309 | 3 of 31 | 0:04.1 | 106 |
+| gemma4:31b | 30.7B · 20.4 GB | 96.7% | 86.0% | 91.0% | 11 of 337 | 53 of 378 | 3 of 31 | 0:13.0 | 31 |
+| gpt-oss | 20.9B · 13.8 GB | 92.6% | 93.7% | 93.1% | 25 of 337 | 20 of 317 | 0 of 31 | 0:08.0 | 107 |
+| llama3.1:8b | 8.0B · 4.9 GB | 89.9% | 93.7% | 91.8% | 34 of 337 | 20 of 316 | 5 of 31 | 0:04.9 | 84 |
+| qwen2.5:14b | 14.8B · 9.0 GB | 90.5% | 96.4% | 93.3% | 32 of 337 | 11 of 303 | 2 of 31 | 0:09.3 | 46 |
+| granite4.2:30b | 29.3B · 17.7 GB | 93.5% | 93.4% | 93.4% | 22 of 337 | 21 of 318 | 7 of 31 | 0:38.4 | 22 |
+
+### What the columns mean
+
+- **Recall** answers: *of everything that should have been hidden, how much did the model hide?* If a document has 100 sensitive items and the model hides 95, recall is 95%. The other 5 are leaks, so for a redaction tool this is the most important number. It is strict: hiding only the surname of "Jane Smith" leaves the first name visible and counts as a miss.
+- **Precision** answers: *of everything the model hid, how much really needed hiding?* If it hides 100 things and 90 were sensitive, precision is 90%. The other 10 are over-redactions: harmless, but they make the document harder to read.
+- **F1** is a single score that blends recall and precision. It is high only when both are high, so a model cannot score well by hiding everything (perfect recall, poor precision) or by hiding almost nothing (high precision, poor recall). Use it for a quick ranking, but look at recall first.
+- **Sensitive items missed** is the count behind recall ("3 of 120" means 3 sensitive items were left visible).
+- **Over-redactions** is the count behind precision ("8 of 130" means 8 of the 130 redactions covered text that did not need hiding).
+- **Must-keep items damaged** (also called *preserved*) checks the opposite risk. Each test document contains ordinary text that must survive, such as dates, job titles, amounts, product names and general places. This counts how many of those were wrongly removed. "0 of 40" is ideal, and each one damaged is information the reader needed that is now gone.
+- **Time per document** is the average wall-clock time to redact one document, and **Output tokens/s** is how fast the model writes its answer (a hardware and model-size measure).
+
+## Headline findings
+
+- **Best at finding sensitive data:** gemma4:31b, removing 96.7% of items (11 missed) with 86.0% precision.
+- **Best balance (F1):** phi4 at 95.6%. **Fastest:** gemma4:e4b at about 2.9 s per document.
+- **Weakest category for gemma4:31b:** CONTEXTUAL (50.0%, 3 of 6 missed).
+- **Hardest format:** PDF (text layer) (94.0% recall).
+- **Over-redaction check:** gemma4:31b damaged 3 of 31 must-keep items.
+
+## Recall by category
+
+| Category | Items | phi4 | gemma4:e4b | mistral-small3.2 | qwen3.6:27b | qwen3.5:4b | gemma4:31b | gpt-oss | llama3.1:8b | qwen2.5:14b | granite4.2:30b |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| ADDRESS | 29 | 100.0% (29/29) | 86.2% (25/29) | 65.5% (19/29) | 86.2% (25/29) | 89.7% (26/29) | 86.2% (25/29) | 86.2% (25/29) | 82.8% (24/29) | 86.2% (25/29) | 100.0% (29/29) |
+| AGE | 16 | 100.0% (16/16) | 100.0% (16/16) | 100.0% (16/16) | 100.0% (16/16) | 100.0% (16/16) | 100.0% (16/16) | 93.8% (15/16) | 93.8% (15/16) | 100.0% (16/16) | 93.8% (15/16) |
+| COMPANY | 56 | 92.9% (52/56) | 82.1% (46/56) | 92.9% (52/56) | 92.9% (52/56) | 91.1% (51/56) | 92.9% (52/56) | 82.1% (46/56) | 91.1% (51/56) | 92.9% (52/56) | 91.1% (51/56) |
+| COMPANY_ID | 8 | 100.0% (8/8) | 100.0% (8/8) | 100.0% (8/8) | 100.0% (8/8) | 100.0% (8/8) | 100.0% (8/8) | 100.0% (8/8) | 100.0% (8/8) | 100.0% (8/8) | 100.0% (8/8) |
+| CONTEXTUAL | 6 | 33.3% (2/6) | 33.3% (2/6) | 50.0% (3/6) | 66.7% (4/6) | 50.0% (3/6) | 50.0% (3/6) | 33.3% (2/6) | 66.7% (4/6) | 33.3% (2/6) | 50.0% (3/6) |
+| DATE_OF_BIRTH | 14 | 100.0% (14/14) | 100.0% (14/14) | 100.0% (14/14) | 100.0% (14/14) | 100.0% (14/14) | 100.0% (14/14) | 100.0% (14/14) | 100.0% (14/14) | 100.0% (14/14) | 100.0% (14/14) |
+| DOMAIN | 2 | 100.0% (2/2) | 100.0% (2/2) | 100.0% (2/2) | 100.0% (2/2) | 100.0% (2/2) | 100.0% (2/2) | 100.0% (2/2) | 100.0% (2/2) | 100.0% (2/2) | 100.0% (2/2) |
+| EMAIL | 29 | 100.0% (29/29) | 100.0% (29/29) | 100.0% (29/29) | 100.0% (29/29) | 100.0% (29/29) | 100.0% (29/29) | 100.0% (29/29) | 100.0% (29/29) | 100.0% (29/29) | 96.6% (28/29) |
+| GENDER | 22 | 72.7% (16/22) | 90.9% (20/22) | 36.4% (8/22) | 95.5% (21/22) | 31.8% (7/22) | 100.0% (22/22) | 72.7% (16/22) | 50.0% (11/22) | 40.9% (9/22) | 72.7% (16/22) |
+| ID_NUMBER | 16 | 100.0% (16/16) | 100.0% (16/16) | 100.0% (16/16) | 100.0% (16/16) | 100.0% (16/16) | 100.0% (16/16) | 100.0% (16/16) | 100.0% (16/16) | 100.0% (16/16) | 100.0% (16/16) |
+| ONLINE_ID | 2 | 100.0% (2/2) | 100.0% (2/2) | 50.0% (1/2) | 100.0% (2/2) | 50.0% (1/2) | 100.0% (2/2) | 100.0% (2/2) | 50.0% (1/2) | 50.0% (1/2) | 100.0% (2/2) |
+| PERSON | 100 | 98.0% (98/100) | 86.0% (86/100) | 88.0% (88/100) | 100.0% (100/100) | 90.0% (90/100) | 100.0% (100/100) | 100.0% (100/100) | 93.0% (93/100) | 96.0% (96/100) | 96.0% (96/100) |
+| PHONE | 30 | 100.0% (30/30) | 100.0% (30/30) | 100.0% (30/30) | 100.0% (30/30) | 100.0% (30/30) | 100.0% (30/30) | 100.0% (30/30) | 93.3% (28/30) | 93.3% (28/30) | 96.7% (29/30) |
+| SECRET | 7 | 100.0% (7/7) | 100.0% (7/7) | 100.0% (7/7) | 100.0% (7/7) | 85.7% (6/7) | 100.0% (7/7) | 100.0% (7/7) | 100.0% (7/7) | 100.0% (7/7) | 85.7% (6/7) |
+
+## Recall by document format
+
+| Format | Documents | Items | phi4 | gemma4:e4b | mistral-small3.2 | qwen3.6:27b | qwen3.5:4b | gemma4:31b | gpt-oss | llama3.1:8b | qwen2.5:14b | granite4.2:30b |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| PDF (text layer) | 4 | 50 | 94.0% (47/50) | 94.0% (47/50) | 84.0% (42/50) | 94.0% (47/50) | 88.0% (44/50) | 94.0% (47/50) | 92.0% (46/50) | 90.0% (45/50) | 88.0% (44/50) | 92.0% (46/50) |
+| Plain text | 20 | 128 | 94.5% (121/128) | 80.5% (103/128) | 92.2% (118/128) | 98.4% (126/128) | 86.7% (111/128) | 98.4% (126/128) | 91.4% (117/128) | 90.6% (116/128) | 92.2% (118/128) | 89.8% (115/128) |
+| Scan: clean image | 3 | 36 | 94.4% (34/36) | 94.4% (34/36) | 80.6% (29/36) | 94.4% (34/36) | 86.1% (31/36) | 94.4% (34/36) | 91.7% (33/36) | 91.7% (33/36) | 88.9% (32/36) | 94.4% (34/36) |
+| Scan: degraded image | 3 | 37 | 94.6% (35/37) | 94.6% (35/37) | 81.1% (30/37) | 94.6% (35/37) | 89.2% (33/37) | 94.6% (35/37) | 91.9% (34/37) | 91.9% (34/37) | 86.5% (32/37) | 94.6% (35/37) |
+| Scan: image-only PDF | 2 | 24 | 100.0% (24/24) | 95.8% (23/24) | 75.0% (18/24) | 95.8% (23/24) | 91.7% (22/24) | 95.8% (23/24) | 91.7% (22/24) | 87.5% (21/24) | 87.5% (21/24) | 100.0% (24/24) |
+| Word | 6 | 62 | 96.8% (60/62) | 98.4% (61/62) | 90.3% (56/62) | 98.4% (61/62) | 93.5% (58/62) | 98.4% (61/62) | 96.8% (60/62) | 87.1% (54/62) | 93.5% (58/62) | 98.4% (61/62) |
+
+For scans, 2 answer-key item(s) were not readable by OCR at all, so no model could see them. They are **not** counted above but may still be visible in the output image; they are a limit of OCR, not of the model.
+
+## Precision by redaction category
+
+| Category | phi4 | gemma4:e4b | mistral-small3.2 | qwen3.6:27b | qwen3.5:4b | gemma4:31b | gpt-oss | llama3.1:8b | qwen2.5:14b | granite4.2:30b |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| ADDRESS | 100.0% (28/28) | 100.0% (25/25) | 100.0% (19/19) | 92.6% (25/27) | 100.0% (27/27) | 89.3% (25/28) | 100.0% (25/25) | 100.0% (26/26) | 100.0% (25/25) | 94.1% (32/34) |
+| AGE | 80.0% (16/20) | 88.9% (16/18) | 80.0% (16/20) | 88.9% (16/18) | 81.0% (17/21) | 88.9% (16/18) | 88.2% (15/17) | 80.0% (16/20) | 83.3% (15/18) | 84.2% (16/19) |
+| COMPANY | 100.0% (53/53) | 100.0% (46/46) | 96.3% (52/54) | 96.3% (52/54) | 100.0% (46/46) | 96.4% (53/55) | 100.0% (45/45) | 95.8% (46/48) | 98.1% (52/53) | 92.3% (48/52) |
+| COMPANY_ID | 100.0% (4/4) | 100.0% (6/6) | 100.0% (8/8) | 100.0% (8/8) | 100.0% (2/2) | 100.0% (8/8) | 100.0% (1/1) | 33.3% (1/3) | 100.0% (4/4) | 100.0% (8/8) |
+| CONTEXTUAL | 0.0% (0/1) | 10.0% (1/10) | 60.0% (3/5) | 11.1% (2/18) | – | 10.5% (2/19) | 0.0% (0/5) | 0.0% (0/1) | – | 33.3% (1/3) |
+| DATE_OF_BIRTH | 87.5% (14/16) | 70.0% (14/20) | 100.0% (14/14) | 51.7% (15/29) | 93.8% (15/16) | 100.0% (14/14) | 100.0% (14/14) | 88.2% (15/17) | 87.5% (14/16) | 88.2% (15/17) |
+| DOMAIN | 100.0% (2/2) | 100.0% (2/2) | 100.0% (2/2) | 100.0% (2/2) | 100.0% (2/2) | 100.0% (2/2) | 100.0% (3/3) | 100.0% (3/3) | 100.0% (2/2) | 100.0% (2/2) |
+| EMAIL | 93.5% (29/31) | 100.0% (29/29) | 93.5% (29/31) | 93.5% (29/31) | 93.5% (29/31) | 93.5% (29/31) | 93.5% (29/31) | 92.6% (25/27) | 93.8% (30/32) | 93.3% (28/30) |
+| GENDER | 83.3% (5/6) | 72.7% (8/11) | 100.0% (8/8) | 61.8% (21/34) | 100.0% (1/1) | 52.4% (22/42) | 50.0% (5/10) | 100.0% (8/8) | 66.7% (4/6) | 83.3% (5/6) |
+| ID_NUMBER | 91.3% (21/23) | 75.0% (18/24) | 80.0% (16/20) | 72.7% (16/22) | 72.2% (26/36) | 72.7% (16/22) | 82.1% (23/28) | 86.2% (25/29) | 95.2% (20/21) | 80.0% (16/20) |
+| ONLINE_ID | 100.0% (2/2) | 100.0% (2/2) | 100.0% (1/1) | 100.0% (2/2) | 100.0% (2/2) | 66.7% (2/3) | 100.0% (3/3) | 100.0% (1/1) | 100.0% (2/2) | 66.7% (2/3) |
+| PERSON | 98.9% (92/93) | 100.0% (82/82) | 98.9% (86/87) | 100.0% (98/98) | 94.6% (88/93) | 100.0% (99/99) | 99.0% (97/98) | 96.9% (94/97) | 100.0% (92/92) | 100.0% (92/92) |
+| PHONE | 100.0% (30/30) | 100.0% (30/30) | 100.0% (30/30) | 100.0% (30/30) | 100.0% (30/30) | 100.0% (30/30) | 100.0% (30/30) | 100.0% (32/32) | 100.0% (28/28) | 100.0% (26/26) |
+| SECRET | 100.0% (7/7) | 100.0% (7/7) | 100.0% (7/7) | 100.0% (7/7) | 100.0% (2/2) | 100.0% (7/7) | 100.0% (7/7) | 100.0% (4/4) | 100.0% (4/4) | 100.0% (6/6) |
+
+Of the correct redactions, the share given the right category label: phi4 97.7%; gemma4:e4b 98.3%; mistral-small3.2 99.7%; qwen3.6:27b 99.4%; qwen3.5:4b 94.1%; gemma4:31b 99.4%; gpt-oss 100.0%; llama3.1:8b 90.5%; qwen2.5:14b 96.9%; granite4.2:30b 98.3%.
+
+## Per document
+
+| Document | Format | Items | phi4 (recall · missed · over) | gemma4:e4b (recall · missed · over) | mistral-small3.2 (recall · missed · over) | qwen3.6:27b (recall · missed · over) | qwen3.5:4b (recall · missed · over) | gemma4:31b (recall · missed · over) | gpt-oss (recall · missed · over) | llama3.1:8b (recall · missed · over) | qwen2.5:14b (recall · missed · over) | granite4.2:30b (recall · missed · over) |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| csv/06-customer-list.csv | Plain text | 20 | 100.0% · 0 · 0 | 100.0% · 0 · 0 | 100.0% · 0 · 0 | 100.0% · 0 · 0 | 100.0% · 0 · 0 | 100.0% · 0 · 0 | 100.0% · 0 · 0 | 100.0% · 0 · 0 | 100.0% · 0 · 0 | 100.0% · 0 · 0 |
+| docx/01-hr-letter.docx | Word | 16 | 100.0% · 0 · 1 | 100.0% · 0 · 4 | 68.8% · 5 · 1 | 100.0% · 0 · 5 | 93.8% · 1 · 1 | 100.0% · 0 · 3 | 100.0% · 0 · 1 | 75.0% · 4 · 0 | 87.5% · 2 · 1 | 100.0% · 0 · 0 |
+| docx/02-services-agreement.docx | Word | 14 | 100.0% · 0 · 0 | 100.0% · 0 · 0 | 100.0% · 0 · 0 | 100.0% · 0 · 0 | 92.9% · 1 · 0 | 100.0% · 0 · 0 | 100.0% · 0 · 0 | 100.0% · 0 · 0 | 100.0% · 0 · 0 | 100.0% · 0 · 0 |
+| docx/04-meeting-notes.docx | Word | 11 | 90.9% · 1 · 1 | 90.9% · 1 · 1 | 90.9% · 1 · 0 | 90.9% · 1 · 1 | 90.9% · 1 · 1 | 90.9% · 1 · 1 | 90.9% · 1 · 0 | 90.9% · 1 · 0 | 90.9% · 1 · 1 | 90.9% · 1 · 0 |
+| docx/09-gp-referral.docx | Word | 12 | 91.7% · 1 · 0 | 100.0% · 0 · 0 | 100.0% · 0 · 1 | 100.0% · 0 · 3 | 91.7% · 1 · 0 | 100.0% · 0 · 3 | 91.7% · 1 · 0 | 75.0% · 3 · 0 | 91.7% · 1 · 0 | 100.0% · 0 · 0 |
+| docx/11-hard-negatives.docx | Word | 0 | – · 0 · 2 | – · 0 · 0 | – · 0 · 4 | – · 0 · 3 | – · 0 · 2 | – · 0 · 2 | – · 0 · 0 | – · 0 · 4 | – · 0 · 3 | – · 0 · 7 |
+| docx/12-hygiene-docx.docx | Word | 9 | 100.0% · 0 · 0 | 100.0% · 0 · 0 | 100.0% · 0 · 0 | 100.0% · 0 · 3 | 100.0% · 0 · 0 | 100.0% · 0 · 2 | 100.0% · 0 · 0 | 100.0% · 0 · 0 | 100.0% · 0 · 0 | 100.0% · 0 · 0 |
+| json/07-app-config.json | Plain text | 4 | 100.0% · 0 · 0 | 100.0% · 0 · 0 | 100.0% · 0 · 0 | 100.0% · 0 · 0 | 100.0% · 0 · 0 | 100.0% · 0 · 1 | 100.0% · 0 · 0 | 100.0% · 0 · 0 | 100.0% · 0 · 0 | 100.0% · 0 · 1 |
+| markdown/03-customer-email.md | Plain text | 9 | 100.0% · 0 · 1 | 100.0% · 0 · 1 | 100.0% · 0 · 1 | 100.0% · 0 · 1 | 100.0% · 0 · 1 | 100.0% · 0 · 4 | 100.0% · 0 · 1 | 100.0% · 0 · 2 | 88.9% · 1 · 1 | 44.4% · 5 · 0 |
+| markdown/04-meeting-notes.md | Plain text | 11 | 90.9% · 1 · 1 | 90.9% · 1 · 1 | 90.9% · 1 · 0 | 90.9% · 1 · 1 | 90.9% · 1 · 0 | 90.9% · 1 · 1 | 90.9% · 1 · 4 | 90.9% · 1 · 0 | 90.9% · 1 · 1 | 90.9% · 1 · 1 |
+| pdf/01-hr-letter.pdf | PDF (text layer) | 16 | 100.0% · 0 · 0 | 100.0% · 0 · 3 | 68.8% · 5 · 0 | 100.0% · 0 · 5 | 93.8% · 1 · 1 | 100.0% · 0 · 3 | 100.0% · 0 · 1 | 93.8% · 1 · 2 | 87.5% · 2 · 0 | 93.8% · 1 · 1 |
+| pdf/02-services-agreement.pdf | PDF (text layer) | 13 | 92.3% · 1 · 0 | 92.3% · 1 · 0 | 92.3% · 1 · 0 | 92.3% · 1 · 0 | 92.3% · 1 · 0 | 92.3% · 1 · 0 | 92.3% · 1 · 0 | 92.3% · 1 · 0 | 92.3% · 1 · 0 | 92.3% · 1 · 0 |
+| pdf/08-invoice.pdf | PDF (text layer) | 9 | 100.0% · 0 · 0 | 88.9% · 1 · 0 | 88.9% · 1 · 0 | 88.9% · 1 · 0 | 88.9% · 1 · 1 | 88.9% · 1 · 0 | 88.9% · 1 · 0 | 88.9% · 1 · 0 | 88.9% · 1 · 0 | 100.0% · 0 · 0 |
+| pdf/09-gp-referral.pdf | PDF (text layer) | 12 | 83.3% · 2 · 0 | 91.7% · 1 · 0 | 91.7% · 1 · 0 | 91.7% · 1 · 3 | 75.0% · 3 · 0 | 91.7% · 1 · 3 | 83.3% · 2 · 0 | 83.3% · 2 · 0 | 83.3% · 2 · 0 | 83.3% · 2 · 0 |
+| scans/01-hr-letter-scan-clean.png | Scan: clean image | 16 | 100.0% · 0 · 0 | 100.0% · 0 · 4 | 68.8% · 5 · 1 | 100.0% · 0 · 5 | 93.8% · 1 · 1 | 100.0% · 0 · 3 | 100.0% · 0 · 2 | 100.0% · 0 · 1 | 93.8% · 1 · 0 | 100.0% · 0 · 1 |
+| scans/01-hr-letter-scan-degraded.jpg | Scan: degraded image | 16 | 100.0% · 0 · 0 | 100.0% · 0 · 4 | 68.8% · 5 · 0 | 100.0% · 0 · 5 | 93.8% · 1 · 1 | 100.0% · 0 · 3 | 100.0% · 0 · 1 | 100.0% · 0 · 1 | 87.5% · 2 · 0 | 100.0% · 0 · 1 |
+| scans/01-hr-letter-scan.pdf | Scan: image-only PDF | 16 | 100.0% · 0 · 0 | 100.0% · 0 · 4 | 68.8% · 5 · 1 | 100.0% · 0 · 5 | 93.8% · 1 · 1 | 100.0% · 0 · 3 | 93.8% · 1 · 0 | 87.5% · 2 · 1 | 87.5% · 2 · 0 | 100.0% · 0 · 1 |
+| scans/08-invoice-scan-clean.png | Scan: clean image | 8 | 100.0% · 0 · 1 | 87.5% · 1 · 0 | 87.5% · 1 · 1 | 87.5% · 1 · 1 | 87.5% · 1 · 2 | 87.5% · 1 · 1 | 87.5% · 1 · 1 | 87.5% · 1 · 1 | 87.5% · 1 · 1 | 100.0% · 0 · 1 |
+| scans/08-invoice-scan-degraded.jpg | Scan: degraded image | 9 | 100.0% · 0 · 0 | 88.9% · 1 · 0 | 88.9% · 1 · 0 | 88.9% · 1 · 0 | 100.0% · 0 · 1 | 88.9% · 1 · 0 | 88.9% · 1 · 0 | 88.9% · 1 · 0 | 88.9% · 1 · 0 | 100.0% · 0 · 0 |
+| scans/08-invoice-scan.pdf | Scan: image-only PDF | 8 | 100.0% · 0 · 1 | 87.5% · 1 · 0 | 87.5% · 1 · 1 | 87.5% · 1 · 1 | 87.5% · 1 · 2 | 87.5% · 1 · 1 | 87.5% · 1 · 1 | 87.5% · 1 · 1 | 87.5% · 1 · 1 | 100.0% · 0 · 1 |
+| scans/09-gp-referral-scan-clean.png | Scan: clean image | 12 | 83.3% · 2 · 0 | 91.7% · 1 · 0 | 91.7% · 1 · 0 | 91.7% · 1 · 3 | 75.0% · 3 · 0 | 91.7% · 1 · 3 | 83.3% · 2 · 0 | 83.3% · 2 · 0 | 83.3% · 2 · 0 | 83.3% · 2 · 0 |
+| scans/09-gp-referral-scan-degraded.jpg | Scan: degraded image | 12 | 83.3% · 2 · 0 | 91.7% · 1 · 0 | 91.7% · 1 · 0 | 91.7% · 1 · 3 | 75.0% · 3 · 0 | 91.7% · 1 · 3 | 83.3% · 2 · 0 | 83.3% · 2 · 0 | 83.3% · 2 · 0 | 83.3% · 2 · 0 |
+| text/01-hr-letter.txt | Plain text | 16 | 100.0% · 0 · 1 | 100.0% · 0 · 2 | 68.8% · 5 · 1 | 100.0% · 0 · 4 | 93.8% · 1 · 1 | 100.0% · 0 · 3 | 100.0% · 0 · 3 | 93.8% · 1 · 1 | 93.8% · 1 · 0 | 93.8% · 1 · 0 |
+| text/03-customer-email.txt | Plain text | 9 | 100.0% · 0 · 1 | 100.0% · 0 · 1 | 100.0% · 0 · 1 | 100.0% · 0 · 1 | 100.0% · 0 · 1 | 100.0% · 0 · 2 | 100.0% · 0 · 1 | 100.0% · 0 · 1 | 100.0% · 0 · 1 | 100.0% · 0 · 1 |
+| text/05-incident-report.txt | Plain text | 9 | 100.0% · 0 · 0 | 100.0% · 0 · 0 | 88.9% · 1 · 0 | 100.0% · 0 · 0 | 77.8% · 2 · 0 | 100.0% · 0 · 0 | 100.0% · 0 · 0 | 88.9% · 1 · 0 | 88.9% · 1 · 0 | 100.0% · 0 · 0 |
+| text/10-contextual-profile.txt | Plain text | 6 | 66.7% · 2 · 2 | 66.7% · 2 · 1 | 83.3% · 1 · 2 | 100.0% · 0 · 1 | 83.3% · 1 · 4 | 83.3% · 1 · 6 | 66.7% · 2 · 4 | 100.0% · 0 · 3 | 66.7% · 2 · 1 | 83.3% · 1 · 1 |
+| text/11-hard-negatives.txt | Plain text | 0 | – · 0 · 2 | – · 0 · 0 | – · 0 · 4 | – · 0 · 3 | – · 0 · 2 | – · 0 · 2 | – · 0 · 0 | – · 0 · 4 | – · 0 · 2 | – · 0 · 6 |
+| text/context-text-01.txt | Plain text | 7 | 85.7% · 1 · 0 | 85.7% · 1 · 0 | 85.7% · 1 · 0 | 100.0% · 0 · 0 | 85.7% · 1 · 0 | 100.0% · 0 · 0 | 85.7% · 1 · 0 | 57.1% · 3 · 0 | 57.1% · 3 · 0 | 85.7% · 1 · 0 |
+| text/context-text-02.txt | Plain text | 2 | 50.0% · 1 · 0 | 50.0% · 1 · 0 | 50.0% · 1 · 0 | 50.0% · 1 · 0 | 50.0% · 1 · 0 | 100.0% · 0 · 0 | 50.0% · 1 · 0 | 50.0% · 1 · 0 | 50.0% · 1 · 0 | 50.0% · 1 · 0 |
+| text/context-text-03.txt | Plain text | 6 | 100.0% · 0 · 0 | 50.0% · 3 · 0 | 100.0% · 0 · 0 | 100.0% · 0 · 0 | 100.0% · 0 · 0 | 100.0% · 0 · 0 | 100.0% · 0 · 0 | 50.0% · 3 · 0 | 100.0% · 0 · 0 | 100.0% · 0 · 0 |
+| text/context-text-04.txt | Plain text | 2 | 100.0% · 0 · 0 | 100.0% · 0 · 0 | 100.0% · 0 · 0 | 100.0% · 0 · 0 | 100.0% · 0 · 0 | 100.0% · 0 · 0 | 100.0% · 0 · 0 | 100.0% · 0 · 0 | 100.0% · 0 · 0 | 100.0% · 0 · 1 |
+| text/context-text-05.txt | Plain text | 8 | 100.0% · 0 · 0 | 0.0% · 8 · 0 | 100.0% · 0 · 0 | 100.0% · 0 · 0 | 0.0% · 8 · 0 | 100.0% · 0 · 0 | 100.0% · 0 · 0 | 100.0% · 0 · 0 | 100.0% · 0 · 0 | 100.0% · 0 · 0 |
+| text/context-text-06.txt | Plain text | 0 | – · 0 · 0 | – · 0 · 0 | – · 0 · 0 | – · 0 · 0 | – · 0 · 2 | – · 0 · 0 | – · 0 · 0 | – · 0 · 2 | – · 0 · 0 | – · 0 · 0 |
+| text/context-text-07.txt | Plain text | 6 | 100.0% · 0 · 0 | 0.0% · 6 · 0 | 100.0% · 0 · 0 | 100.0% · 0 · 0 | 100.0% · 0 · 0 | 100.0% · 0 · 0 | 0.0% · 6 · 0 | 100.0% · 0 · 0 | 100.0% · 0 · 0 | 100.0% · 0 · 0 |
+| text/context-text-08.txt | Plain text | 0 | – · 0 · 1 | – · 0 · 0 | – · 0 · 0 | – · 0 · 0 | – · 0 · 0 | – · 0 · 0 | – · 0 · 0 | – · 0 · 0 | – · 0 · 0 | – · 0 · 0 |
+| text/context-text-09.txt | Plain text | 8 | 100.0% · 0 · 0 | 100.0% · 0 · 0 | 100.0% · 0 · 0 | 100.0% · 0 · 0 | 100.0% · 0 · 0 | 100.0% · 0 · 0 | 100.0% · 0 · 0 | 100.0% · 0 · 1 | 100.0% · 0 · 0 | 100.0% · 0 · 0 |
+| text/context-text-10.txt | Plain text | 0 | – · 0 · 0 | – · 0 · 0 | – · 0 · 0 | – · 0 · 3 | – · 0 · 0 | – · 0 · 3 | – · 0 · 0 | – · 0 · 0 | – · 0 · 0 | – · 0 · 3 |
+| text/context-text-11-mixed.txt | Plain text | 5 | 60.0% · 2 · 0 | 40.0% · 3 · 0 | 100.0% · 0 · 0 | 100.0% · 0 · 0 | 60.0% · 2 · 0 | 100.0% · 0 · 0 | 100.0% · 0 · 0 | 60.0% · 2 · 0 | 100.0% · 0 · 0 | 40.0% · 3 · 1 |
+
+## Timings
+
+Seconds for each document and model. The first figure is the model finding the sensitive items; the second is writing and verifying the redacted file (PDF render, OCR re-read of scans, and so on). Models are run one after another, every document with one model before the next model is loaded, so a model is loaded into memory once.
+
+| Document | phi4 | gemma4:e4b | mistral-small3.2 | qwen3.6:27b | qwen3.5:4b | gemma4:31b | gpt-oss | llama3.1:8b | qwen2.5:14b | granite4.2:30b |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| csv/06-customer-list.csv | 27.3 + 0.0 | 10.6 + 0.0 | 60.0 + 0.0 | 33.0 + 0.0 | 12.3 + 0.0 | 35.9 + 0.0 | 9.3 + 0.0 | 10.8 + 0.0 | 21.9 + 0.0 | 74.6 + 0.0 |
+| docx/01-hr-letter.docx | 14.1 + 0.0 | 6.2 + 0.0 | 20.8 + 0.0 | 27.8 + 0.0 | 8.5 + 0.0 | 22.1 + 0.0 | 25.7 + 0.0 | 7.3 + 0.0 | 22.5 + 0.0 | 46.1 + 0.0 |
+| docx/02-services-agreement.docx | 10.4 + 0.0 | 4.6 + 0.0 | 22.0 + 0.0 | 20.1 + 0.0 | 6.2 + 0.0 | 18.5 + 0.0 | 13.2 + 0.0 | 10.1 + 0.0 | 16.3 + 0.0 | 37.9 + 0.0 |
+| docx/04-meeting-notes.docx | 7.4 + 0.0 | 2.5 + 0.0 | 15.0 + 0.0 | 13.2 + 0.0 | 2.8 + 0.0 | 10.9 + 0.0 | 14.4 + 0.0 | 5.0 + 0.0 | 10.0 + 0.0 | 19.0 + 0.0 |
+| docx/09-gp-referral.docx | 9.5 + 0.0 | 3.6 + 0.0 | 19.7 + 0.0 | 18.5 + 0.0 | 4.2 + 0.0 | 16.8 + 0.0 | 9.8 + 0.0 | 5.2 + 0.0 | 11.1 + 0.0 | 41.0 + 0.0 |
+| docx/11-hard-negatives.docx | 1.6 + 0.0 | 0.2 + 0.0 | 4.0 + 0.0 | 4.7 + 0.0 | 0.8 + 0.0 | 3.3 + 0.0 | 0.3 + 0.0 | 1.4 + 0.0 | 2.6 + 0.0 | 9.5 + 0.0 |
+| docx/12-hygiene-docx.docx | 6.5 + 0.0 | 2.2 + 0.0 | 10.3 + 0.0 | 11.9 + 0.0 | 2.5 + 0.0 | 10.3 + 0.0 | 11.7 + 0.0 | 3.6 + 0.0 | 7.0 + 0.0 | 15.1 + 0.0 |
+| json/07-app-config.json | 4.5 + 0.0 | 1.6 + 0.0 | 8.4 + 0.0 | 8.4 + 0.0 | 2.7 + 0.0 | 10.4 + 0.0 | 3.1 + 0.0 | 2.9 + 0.0 | 4.7 + 0.0 | 24.4 + 0.0 |
+| markdown/03-customer-email.md | 7.5 + 0.0 | 2.8 + 0.0 | 13.7 + 0.0 | 14.1 + 0.0 | 4.9 + 0.0 | 14.9 + 0.0 | 5.9 + 0.0 | 4.7 + 0.0 | 8.3 + 0.0 | 22.9 + 0.0 |
+| markdown/04-meeting-notes.md | 7.4 + 0.0 | 2.5 + 0.0 | 14.9 + 0.0 | 14.2 + 0.0 | 4.0 + 0.0 | 11.5 + 0.0 | 10.7 + 0.0 | 4.4 + 0.0 | 7.8 + 0.0 | 26.4 + 0.0 |
+| pdf/01-hr-letter.pdf | 15.4 + 0.0 | 5.7 + 0.0 | 17.5 + 0.0 | 29.1 + 0.0 | 8.7 + 0.0 | 22.5 + 0.0 | 7.2 + 0.0 | 9.4 + 0.0 | 15.4 + 0.0 | 41.2 + 0.0 |
+| pdf/02-services-agreement.pdf | 9.6 + 0.0 | 4.0 + 0.0 | 18.8 + 0.0 | 17.5 + 0.0 | 5.7 + 0.0 | 16.1 + 0.0 | 5.6 + 0.0 | 7.3 + 0.0 | 16.2 + 0.0 | 40.3 + 0.0 |
+| pdf/08-invoice.pdf | 12.5 + 0.0 | 3.5 + 0.0 | 18.4 + 0.0 | 16.1 + 0.0 | 6.2 + 0.0 | 14.1 + 0.0 | 5.7 + 0.0 | 4.5 + 0.0 | 11.4 + 0.0 | 49.2 + 0.0 |
+| pdf/09-gp-referral.pdf | 8.7 + 0.0 | 3.5 + 0.0 | 17.5 + 0.0 | 18.3 + 0.0 | 3.7 + 0.0 | 15.8 + 0.0 | 7.7 + 0.0 | 5.2 + 0.0 | 10.8 + 0.0 | 27.7 + 0.0 |
+| scans/01-hr-letter-scan-clean.png | 16.8 + 0.5 | 6.1 + 0.4 | 19.1 + 0.5 | 29.9 + 0.4 | 8.8 + 0.6 | 22.5 + 0.4 | 7.4 + 0.6 | 11.0 + 0.6 | 19.9 + 1.0 | 182.7 + 0.5 |
+| scans/01-hr-letter-scan-degraded.jpg | 16.9 + 0.2 | 6.1 + 0.2 | 17.1 + 0.2 | 29.9 + 0.2 | 8.6 + 0.3 | 22.4 + 0.2 | 7.5 + 0.3 | 10.5 + 0.2 | 14.9 + 0.2 | 181.6 + 0.2 |
+| scans/01-hr-letter-scan.pdf | 16.3 + 0.6 | 6.2 + 0.6 | 19.4 + 0.6 | 29.6 + 0.5 | 8.7 + 0.7 | 22.5 + 0.6 | 13.3 + 0.7 | 9.2 + 0.7 | 15.7 + 0.6 | 180.0 + 0.6 |
+| scans/08-invoice-scan-clean.png | 11.8 + 0.4 | 3.2 + 0.4 | 18.2 + 0.4 | 15.9 + 0.4 | 6.1 + 0.5 | 14.0 + 0.4 | 5.7 + 0.5 | 4.5 + 0.4 | 11.3 + 0.4 | 47.9 + 0.4 |
+| scans/08-invoice-scan-degraded.jpg | 11.9 + 0.2 | 3.4 + 0.2 | 18.7 + 0.2 | 15.9 + 0.2 | 6.1 + 0.2 | 14.5 + 0.2 | 6.7 + 0.2 | 6.0 + 0.2 | 12.3 + 0.2 | 28.3 + 0.2 |
+| scans/08-invoice-scan.pdf | 12.1 + 0.5 | 3.4 + 0.5 | 18.4 + 0.5 | 16.0 + 0.5 | 6.1 + 0.6 | 14.2 + 0.5 | 6.2 + 0.6 | 4.6 + 0.5 | 11.3 + 0.5 | 56.7 + 0.5 |
+| scans/09-gp-referral-scan-clean.png | 9.2 + 0.4 | 3.4 + 0.4 | 17.3 + 0.4 | 16.4 + 0.4 | 3.5 + 0.5 | 15.8 + 0.4 | 7.4 + 0.5 | 5.0 + 0.4 | 9.2 + 0.4 | 26.3 + 0.4 |
+| scans/09-gp-referral-scan-degraded.jpg | 9.3 + 0.2 | 3.4 + 0.2 | 16.9 + 0.2 | 16.6 + 0.2 | 3.4 + 0.2 | 13.9 + 0.2 | 7.8 + 0.2 | 5.0 + 0.2 | 9.1 + 0.2 | 26.1 + 0.2 |
+| text/01-hr-letter.txt | 14.1 + 0.0 | 6.4 + 0.0 | 20.0 + 0.0 | 28.3 + 0.0 | 7.4 + 0.0 | 22.2 + 0.0 | 41.4 + 0.0 | 7.5 + 0.0 | 16.2 + 0.0 | 47.5 + 0.0 |
+| text/03-customer-email.txt | 8.5 + 0.0 | 3.2 + 0.0 | 13.6 + 0.0 | 14.0 + 0.0 | 4.6 + 0.0 | 13.7 + 0.0 | 7.1 + 0.0 | 4.2 + 0.0 | 8.7 + 0.0 | 26.0 + 0.0 |
+| text/05-incident-report.txt | 9.4 + 0.0 | 3.4 + 0.0 | 14.2 + 0.0 | 14.2 + 0.0 | 4.0 + 0.0 | 13.5 + 0.0 | 10.0 + 0.0 | 4.5 + 0.0 | 12.0 + 0.0 | 25.5 + 0.0 |
+| text/10-contextual-profile.txt | 8.2 + 0.0 | 1.8 + 0.0 | 12.9 + 0.0 | 10.5 + 0.0 | 3.8 + 0.0 | 12.1 + 0.0 | 20.0 + 0.0 | 7.5 + 0.0 | 6.8 + 0.0 | 20.4 + 0.0 |
+| text/11-hard-negatives.txt | 1.8 + 0.0 | 0.2 + 0.0 | 3.9 + 0.0 | 4.7 + 0.0 | 0.8 + 0.0 | 3.2 + 0.0 | 0.3 + 0.0 | 1.2 + 0.0 | 1.7 + 0.0 | 8.1 + 0.0 |
+| text/context-text-01.txt | 3.4 + 0.0 | 1.1 + 0.0 | 3.5 + 0.0 | 7.8 + 0.0 | 1.4 + 0.0 | 6.5 + 0.0 | 4.1 + 0.0 | 5.9 + 0.0 | 1.8 + 0.0 | 13.2 + 0.0 |
+| text/context-text-02.txt | 4.3 + 0.0 | 1.1 + 0.0 | 6.1 + 0.0 | 6.5 + 0.0 | 1.6 + 0.0 | 6.0 + 0.0 | 2.5 + 0.0 | 2.0 + 0.0 | 4.2 + 0.0 | 10.1 + 0.0 |
+| text/context-text-03.txt | 4.5 + 0.0 | 1.4 + 0.0 | 5.4 + 0.0 | 8.6 + 0.0 | 1.1 + 0.0 | 7.3 + 0.0 | 4.6 + 0.0 | 2.0 + 0.0 | 6.8 + 0.0 | 9.1 + 0.0 |
+| text/context-text-04.txt | 4.2 + 0.0 | 1.6 + 0.0 | 8.3 + 0.0 | 8.5 + 0.0 | 1.4 + 0.0 | 6.4 + 0.0 | 2.8 + 0.0 | 2.3 + 0.0 | 4.6 + 0.0 | 13.1 + 0.0 |
+| text/context-text-05.txt | 6.0 + 0.0 | 0.2 + 0.0 | 8.3 + 0.0 | 8.6 + 0.0 | 0.3 + 0.0 | 7.4 + 0.0 | 3.8 + 0.0 | 2.2 + 0.0 | 3.6 + 0.0 | 14.6 + 0.0 |
+| text/context-text-06.txt | 0.4 + 0.0 | 0.2 + 0.0 | 0.5 + 0.0 | 1.8 + 0.0 | 0.6 + 0.0 | 2.1 + 0.0 | 0.3 + 0.0 | 1.9 + 0.0 | 0.4 + 0.0 | 0.6 + 0.0 |
+| text/context-text-07.txt | 5.2 + 0.0 | 0.2 + 0.0 | 4.6 + 0.0 | 6.9 + 0.0 | 1.7 + 0.0 | 6.1 + 0.0 | 0.3 + 0.0 | 1.6 + 0.0 | 4.7 + 0.0 | 11.9 + 0.0 |
+| text/context-text-08.txt | 6.7 + 0.0 | 0.2 + 0.0 | 0.5 + 0.0 | 1.8 + 0.0 | 0.4 + 0.0 | 2.2 + 0.0 | 0.3 + 0.0 | 1.8 + 0.0 | 0.4 + 0.0 | 2.9 + 0.0 |
+| text/context-text-09.txt | 6.2 + 0.0 | 1.2 + 0.0 | 4.7 + 0.0 | 8.6 + 0.0 | 1.1 + 0.0 | 7.2 + 0.0 | 7.6 + 0.0 | 2.1 + 0.0 | 2.6 + 0.0 | 8.0 + 0.0 |
+| text/context-text-10.txt | 6.8 + 0.0 | 1.5 + 0.0 | 8.1 + 0.0 | 8.5 + 0.0 | 1.5 + 0.0 | 7.0 + 0.0 | 4.3 + 0.0 | 2.2 + 0.0 | 4.8 + 0.0 | 15.9 + 0.0 |
+| text/context-text-11-mixed.txt | 6.0 + 0.0 | 1.8 + 0.0 | 10.5 + 0.0 | 9.9 + 0.0 | 2.1 + 0.0 | 8.1 + 0.0 | 3.4 + 0.0 | 3.0 + 0.0 | 6.8 + 0.0 | 27.6 + 0.0 |
+| **Total** | **342.2 + 3.0** | **113.9 + 3.0** | **531.2 + 3.0** | **566.3 + 2.9** | **158.1 + 3.6** | **494.0 + 3.0** | **304.9 + 3.8** | **189.4 + 3.4** | **355.9 + 3.6** | **1459.5 + 3.0** |
+| Average per document | 9.0 | 3.0 | 14.0 | 14.9 | 4.2 | 13.0 | 8.0 | 5.0 | 9.4 | 38.4 |
+
+## Output safety
+
+Each redacted file was also written and passed through the tool's own checks (no text layer in PDFs, nothing recoverable in Word files, OCR re-read of scans). A file that fails is refused rather than written.
+
+| Model | Files written and verified | Refused or failed |
+|---|---:|---:|
+| phi4 | 38 of 38 | none |
+| gemma4:e4b | 38 of 38 | none |
+| mistral-small3.2 | 38 of 38 | none |
+| qwen3.6:27b | 38 of 38 | none |
+| qwen3.5:4b | 38 of 38 | none |
+| gemma4:31b | 38 of 38 | none |
+| gpt-oss | 38 of 38 | none |
+| llama3.1:8b | 38 of 38 | none |
+| qwen2.5:14b | 38 of 38 | none |
+| granite4.2:30b | 38 of 38 | none |
+
+## Settings used
+
+- Temperature 0, seed 42, context 8192 tokens, chunks of about 4800 characters with 400 overlap.
+- Categories on: PERSON, PHONE, EMAIL, ADDRESS, ID_NUMBER, ONLINE_ID, AGE, DATE_OF_BIRTH, GENDER, COMPANY, COMPANY_ID, DOMAIN, CONTEXTUAL, LOCATION, SECRET (pronouns included).
+- Flag-only (reported, not redacted, so they count as missed here): LOCATION.
+- Models: phi4 (14.7B · Q4_K_M · 16K ctx, digest ac896e5b); gemma4:e4b (7.5B · Q4_K_M · 128K ctx, digest dc35e8d9); mistral-small3.2 (24.0B · Q4_K_M · 128K ctx, digest 5a408ab5); qwen3.6:27b (27.3B · Q4_K_M · 256K ctx, digest bcbdbd4b); qwen3.5:4b (4.7B · Q4_K_M · 256K ctx, digest 2a654d98); gemma4:31b (30.7B · Q4_K_M · 256K ctx, digest 17ba34c0); gpt-oss (20.9B · MXFP4 · 128K ctx, digest 17052f91); llama3.1:8b (8.0B · Q4_K_M · 128K ctx, digest 46e0c10c); qwen2.5:14b (14.8B · Q4_K_M · 32K ctx, digest 7cdf5a01); granite4.2:30b (29.3B · Q4_K_M · 128K ctx, digest be22829a).
+
+## How to read this, and its limits
+
+- **Synthetic corpus.** The documents are invented and every sensitive item is known exactly. The scores compare models fairly with each other; they are not a promise about a client's real documents, which are messier.
+- **Strict recall.** An item counts as caught only when its text is gone from the redacted text. A partial redaction (for example only the surname of a full name) leaves the rest visible and counts as a miss.
+- **Precision** counts a redaction as correct if it overlaps anything on the answer key, whatever its label; label accuracy is reported separately. Text the key does not list but which a person might also want removed counts against precision.
+- **Scans** are read by OCR first. Words OCR misreads can't be found by the model, so scan scores mix model and OCR quality.
+- Results with a local model can vary slightly between runs and machines; the temperature and seed are fixed to keep this small.

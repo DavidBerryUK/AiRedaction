@@ -1,0 +1,1751 @@
+{
+  "started": "2026-10-02T14:41:48.707566+01:00",
+  "elapsedSeconds": 308.7573433,
+  "models": [
+    "gpt-oss"
+  ],
+  "documents": [
+    {
+      "File": "csv/06-customer-list.csv",
+      "Group": "Plain text",
+      "Model": "gpt-oss",
+      "Present": 20,
+      "Caught": 20,
+      "Edits": 20,
+      "TruePositives": 20,
+      "TypeCorrect": 20,
+      "LostToExtraction": 0,
+      "DetectSeconds": 9.3249976,
+      "WriteSeconds": 0.0006852,
+      "PromptTokens": 844,
+      "OutputTokens": 1054,
+      "Discarded": 0,
+      "OutputOk": true,
+      "byCategory": {
+        "PERSON": {
+          "present": 4,
+          "caught": 4
+        },
+        "EMAIL": {
+          "present": 4,
+          "caught": 4
+        },
+        "PHONE": {
+          "present": 4,
+          "caught": 4
+        },
+        "DATE_OF_BIRTH": {
+          "present": 4,
+          "caught": 4
+        },
+        "COMPANY": {
+          "present": 4,
+          "caught": 4
+        }
+      },
+      "leaks": [],
+      "falsePositives": [],
+      "preserveBrokenCount": 0
+    },
+    {
+      "File": "docx/01-hr-letter.docx",
+      "Group": "Word",
+      "Model": "gpt-oss",
+      "Present": 16,
+      "Caught": 16,
+      "Edits": 15,
+      "TruePositives": 14,
+      "TypeCorrect": 14,
+      "LostToExtraction": 0,
+      "DetectSeconds": 25.655581,
+      "WriteSeconds": 0.0106837,
+      "PromptTokens": 918,
+      "OutputTokens": 2882,
+      "Discarded": 0,
+      "OutputOk": true,
+      "byCategory": {
+        "COMPANY": {
+          "present": 2,
+          "caught": 2
+        },
+        "ADDRESS": {
+          "present": 2,
+          "caught": 2
+        },
+        "PHONE": {
+          "present": 2,
+          "caught": 2
+        },
+        "EMAIL": {
+          "present": 2,
+          "caught": 2
+        },
+        "GENDER": {
+          "present": 2,
+          "caught": 2
+        },
+        "PERSON": {
+          "present": 3,
+          "caught": 3
+        },
+        "DATE_OF_BIRTH": {
+          "present": 1,
+          "caught": 1
+        },
+        "AGE": {
+          "present": 1,
+          "caught": 1
+        },
+        "ID_NUMBER": {
+          "present": 1,
+          "caught": 1
+        }
+      },
+      "leaks": [],
+      "falsePositives": [
+        {
+          "Type": "ID_NUMBER"
+        }
+      ],
+      "preserveBrokenCount": 0
+    },
+    {
+      "File": "docx/02-services-agreement.docx",
+      "Group": "Word",
+      "Model": "gpt-oss",
+      "Present": 14,
+      "Caught": 14,
+      "Edits": 14,
+      "TruePositives": 14,
+      "TypeCorrect": 12,
+      "LostToExtraction": 0,
+      "DetectSeconds": 13.1940909,
+      "WriteSeconds": 0.0041541,
+      "PromptTokens": 886,
+      "OutputTokens": 1483,
+      "Discarded": 0,
+      "OutputOk": true,
+      "byCategory": {
+        "COMPANY": {
+          "present": 3,
+          "caught": 3
+        },
+        "COMPANY_ID": {
+          "present": 2,
+          "caught": 2
+        },
+        "ADDRESS": {
+          "present": 1,
+          "caught": 1
+        },
+        "PERSON": {
+          "present": 3,
+          "caught": 3
+        },
+        "EMAIL": {
+          "present": 2,
+          "caught": 2
+        },
+        "PHONE": {
+          "present": 1,
+          "caught": 1
+        },
+        "ID_NUMBER": {
+          "present": 1,
+          "caught": 1
+        },
+        "DOMAIN": {
+          "present": 1,
+          "caught": 1
+        }
+      },
+      "leaks": [],
+      "falsePositives": [],
+      "preserveBrokenCount": 0
+    },
+    {
+      "File": "docx/04-meeting-notes.docx",
+      "Group": "Word",
+      "Model": "gpt-oss",
+      "Present": 11,
+      "Caught": 10,
+      "Edits": 9,
+      "TruePositives": 9,
+      "TypeCorrect": 9,
+      "LostToExtraction": 0,
+      "DetectSeconds": 14.3690745,
+      "WriteSeconds": 0.0026696,
+      "PromptTokens": 793,
+      "OutputTokens": 1570,
+      "Discarded": 0,
+      "OutputOk": true,
+      "byCategory": {
+        "CONTEXTUAL": {
+          "present": 1,
+          "caught": 0
+        },
+        "PERSON": {
+          "present": 5,
+          "caught": 5
+        },
+        "COMPANY": {
+          "present": 3,
+          "caught": 3
+        },
+        "AGE": {
+          "present": 1,
+          "caught": 1
+        },
+        "EMAIL": {
+          "present": 1,
+          "caught": 1
+        }
+      },
+      "leaks": [
+        {
+          "Type": "CONTEXTUAL",
+          "Count": 1
+        }
+      ],
+      "falsePositives": [],
+      "preserveBrokenCount": 0
+    },
+    {
+      "File": "docx/09-gp-referral.docx",
+      "Group": "Word",
+      "Model": "gpt-oss",
+      "Present": 12,
+      "Caught": 11,
+      "Edits": 11,
+      "TruePositives": 11,
+      "TypeCorrect": 11,
+      "LostToExtraction": 0,
+      "DetectSeconds": 9.8009569,
+      "WriteSeconds": 0.0018237,
+      "PromptTokens": 815,
+      "OutputTokens": 1096,
+      "Discarded": 0,
+      "OutputOk": true,
+      "byCategory": {
+        "PERSON": {
+          "present": 2,
+          "caught": 2
+        },
+        "GENDER": {
+          "present": 2,
+          "caught": 1
+        },
+        "AGE": {
+          "present": 2,
+          "caught": 2
+        },
+        "DATE_OF_BIRTH": {
+          "present": 1,
+          "caught": 1
+        },
+        "ID_NUMBER": {
+          "present": 1,
+          "caught": 1
+        },
+        "ADDRESS": {
+          "present": 1,
+          "caught": 1
+        },
+        "PHONE": {
+          "present": 1,
+          "caught": 1
+        },
+        "COMPANY": {
+          "present": 2,
+          "caught": 2
+        }
+      },
+      "leaks": [
+        {
+          "Type": "GENDER",
+          "Count": 1
+        }
+      ],
+      "falsePositives": [],
+      "preserveBrokenCount": 0
+    },
+    {
+      "File": "docx/11-hard-negatives.docx",
+      "Group": "Word",
+      "Model": "gpt-oss",
+      "Present": 0,
+      "Caught": 0,
+      "Edits": 0,
+      "TruePositives": 0,
+      "TypeCorrect": 0,
+      "LostToExtraction": 0,
+      "DetectSeconds": 0.2655883,
+      "WriteSeconds": 0.001119,
+      "PromptTokens": 789,
+      "OutputTokens": 19,
+      "Discarded": 0,
+      "OutputOk": true,
+      "byCategory": {},
+      "leaks": [],
+      "falsePositives": [],
+      "preserveBrokenCount": 0
+    },
+    {
+      "File": "docx/12-hygiene-docx.docx",
+      "Group": "Word",
+      "Model": "gpt-oss",
+      "Present": 9,
+      "Caught": 9,
+      "Edits": 8,
+      "TruePositives": 8,
+      "TypeCorrect": 8,
+      "LostToExtraction": 0,
+      "DetectSeconds": 11.6711619,
+      "WriteSeconds": 0.0078653,
+      "PromptTokens": 799,
+      "OutputTokens": 1301,
+      "Discarded": 0,
+      "OutputOk": true,
+      "byCategory": {
+        "PERSON": {
+          "present": 4,
+          "caught": 4
+        },
+        "COMPANY": {
+          "present": 2,
+          "caught": 2
+        },
+        "EMAIL": {
+          "present": 1,
+          "caught": 1
+        },
+        "ADDRESS": {
+          "present": 1,
+          "caught": 1
+        },
+        "PHONE": {
+          "present": 1,
+          "caught": 1
+        }
+      },
+      "leaks": [],
+      "falsePositives": [],
+      "preserveBrokenCount": 0
+    },
+    {
+      "File": "json/07-app-config.json",
+      "Group": "Plain text",
+      "Model": "gpt-oss",
+      "Present": 4,
+      "Caught": 4,
+      "Edits": 4,
+      "TruePositives": 4,
+      "TypeCorrect": 4,
+      "LostToExtraction": 0,
+      "DetectSeconds": 3.1104816,
+      "WriteSeconds": 0.000678,
+      "PromptTokens": 823,
+      "OutputTokens": 342,
+      "Discarded": 0,
+      "OutputOk": true,
+      "byCategory": {
+        "EMAIL": {
+          "present": 1,
+          "caught": 1
+        },
+        "SECRET": {
+          "present": 2,
+          "caught": 2
+        },
+        "PERSON": {
+          "present": 1,
+          "caught": 1
+        }
+      },
+      "leaks": [],
+      "falsePositives": [],
+      "preserveBrokenCount": 0
+    },
+    {
+      "File": "markdown/03-customer-email.md",
+      "Group": "Plain text",
+      "Model": "gpt-oss",
+      "Present": 9,
+      "Caught": 9,
+      "Edits": 10,
+      "TruePositives": 9,
+      "TypeCorrect": 9,
+      "LostToExtraction": 0,
+      "DetectSeconds": 5.8541437,
+      "WriteSeconds": 0.0006416,
+      "PromptTokens": 852,
+      "OutputTokens": 651,
+      "Discarded": 0,
+      "OutputOk": true,
+      "byCategory": {
+        "PERSON": {
+          "present": 4,
+          "caught": 4
+        },
+        "EMAIL": {
+          "present": 1,
+          "caught": 1
+        },
+        "ADDRESS": {
+          "present": 1,
+          "caught": 1
+        },
+        "PHONE": {
+          "present": 1,
+          "caught": 1
+        },
+        "SECRET": {
+          "present": 1,
+          "caught": 1
+        },
+        "COMPANY": {
+          "present": 1,
+          "caught": 1
+        }
+      },
+      "leaks": [],
+      "falsePositives": [
+        {
+          "Type": "AGE"
+        }
+      ],
+      "preserveBrokenCount": 0
+    },
+    {
+      "File": "markdown/04-meeting-notes.md",
+      "Group": "Plain text",
+      "Model": "gpt-oss",
+      "Present": 11,
+      "Caught": 10,
+      "Edits": 12,
+      "TruePositives": 8,
+      "TypeCorrect": 8,
+      "LostToExtraction": 0,
+      "DetectSeconds": 10.741466,
+      "WriteSeconds": 0.0008705,
+      "PromptTokens": 798,
+      "OutputTokens": 1204,
+      "Discarded": 0,
+      "OutputOk": true,
+      "byCategory": {
+        "CONTEXTUAL": {
+          "present": 1,
+          "caught": 0
+        },
+        "PERSON": {
+          "present": 5,
+          "caught": 5
+        },
+        "COMPANY": {
+          "present": 3,
+          "caught": 3
+        },
+        "AGE": {
+          "present": 1,
+          "caught": 1
+        },
+        "EMAIL": {
+          "present": 1,
+          "caught": 1
+        }
+      },
+      "leaks": [
+        {
+          "Type": "CONTEXTUAL",
+          "Count": 1
+        }
+      ],
+      "falsePositives": [
+        {
+          "Type": "CONTEXTUAL"
+        },
+        {
+          "Type": "CONTEXTUAL"
+        },
+        {
+          "Type": "GENDER"
+        },
+        {
+          "Type": "CONTEXTUAL"
+        }
+      ],
+      "preserveBrokenCount": 0
+    },
+    {
+      "File": "pdf/01-hr-letter.pdf",
+      "Group": "PDF (text layer)",
+      "Model": "gpt-oss",
+      "Present": 16,
+      "Caught": 16,
+      "Edits": 15,
+      "TruePositives": 14,
+      "TypeCorrect": 14,
+      "LostToExtraction": 0,
+      "DetectSeconds": 7.2400824,
+      "WriteSeconds": 0.0354791,
+      "PromptTokens": 920,
+      "OutputTokens": 800,
+      "Discarded": 0,
+      "OutputOk": true,
+      "byCategory": {
+        "COMPANY": {
+          "present": 2,
+          "caught": 2
+        },
+        "ADDRESS": {
+          "present": 2,
+          "caught": 2
+        },
+        "PHONE": {
+          "present": 2,
+          "caught": 2
+        },
+        "EMAIL": {
+          "present": 2,
+          "caught": 2
+        },
+        "GENDER": {
+          "present": 2,
+          "caught": 2
+        },
+        "PERSON": {
+          "present": 3,
+          "caught": 3
+        },
+        "DATE_OF_BIRTH": {
+          "present": 1,
+          "caught": 1
+        },
+        "AGE": {
+          "present": 1,
+          "caught": 1
+        },
+        "ID_NUMBER": {
+          "present": 1,
+          "caught": 1
+        }
+      },
+      "leaks": [],
+      "falsePositives": [
+        {
+          "Type": "ID_NUMBER"
+        }
+      ],
+      "preserveBrokenCount": 0
+    },
+    {
+      "File": "pdf/02-services-agreement.pdf",
+      "Group": "PDF (text layer)",
+      "Model": "gpt-oss",
+      "Present": 13,
+      "Caught": 12,
+      "Edits": 10,
+      "TruePositives": 10,
+      "TypeCorrect": 8,
+      "LostToExtraction": 0,
+      "DetectSeconds": 5.5819135,
+      "WriteSeconds": 0.0254717,
+      "PromptTokens": 868,
+      "OutputTokens": 615,
+      "Discarded": 1,
+      "OutputOk": true,
+      "byCategory": {
+        "COMPANY": {
+          "present": 3,
+          "caught": 2
+        },
+        "COMPANY_ID": {
+          "present": 2,
+          "caught": 2
+        },
+        "ADDRESS": {
+          "present": 1,
+          "caught": 1
+        },
+        "PERSON": {
+          "present": 3,
+          "caught": 3
+        },
+        "EMAIL": {
+          "present": 1,
+          "caught": 1
+        },
+        "PHONE": {
+          "present": 1,
+          "caught": 1
+        },
+        "ID_NUMBER": {
+          "present": 1,
+          "caught": 1
+        },
+        "DOMAIN": {
+          "present": 1,
+          "caught": 1
+        }
+      },
+      "leaks": [
+        {
+          "Type": "COMPANY",
+          "Count": 1
+        }
+      ],
+      "falsePositives": [],
+      "preserveBrokenCount": 0
+    },
+    {
+      "File": "pdf/08-invoice.pdf",
+      "Group": "PDF (text layer)",
+      "Model": "gpt-oss",
+      "Present": 9,
+      "Caught": 8,
+      "Edits": 8,
+      "TruePositives": 8,
+      "TypeCorrect": 8,
+      "LostToExtraction": 0,
+      "DetectSeconds": 5.6926149,
+      "WriteSeconds": 0.0300667,
+      "PromptTokens": 861,
+      "OutputTokens": 625,
+      "Discarded": 1,
+      "OutputOk": true,
+      "byCategory": {
+        "COMPANY": {
+          "present": 2,
+          "caught": 2
+        },
+        "ADDRESS": {
+          "present": 2,
+          "caught": 1
+        },
+        "COMPANY_ID": {
+          "present": 1,
+          "caught": 1
+        },
+        "PERSON": {
+          "present": 1,
+          "caught": 1
+        },
+        "ID_NUMBER": {
+          "present": 1,
+          "caught": 1
+        },
+        "EMAIL": {
+          "present": 1,
+          "caught": 1
+        },
+        "PHONE": {
+          "present": 1,
+          "caught": 1
+        }
+      },
+      "leaks": [
+        {
+          "Type": "ADDRESS",
+          "Count": 1
+        }
+      ],
+      "falsePositives": [],
+      "preserveBrokenCount": 0
+    },
+    {
+      "File": "pdf/09-gp-referral.pdf",
+      "Group": "PDF (text layer)",
+      "Model": "gpt-oss",
+      "Present": 12,
+      "Caught": 10,
+      "Edits": 10,
+      "TruePositives": 10,
+      "TypeCorrect": 10,
+      "LostToExtraction": 0,
+      "DetectSeconds": 7.6593306,
+      "WriteSeconds": 0.0252064,
+      "PromptTokens": 818,
+      "OutputTokens": 836,
+      "Discarded": 0,
+      "OutputOk": true,
+      "byCategory": {
+        "PERSON": {
+          "present": 2,
+          "caught": 2
+        },
+        "GENDER": {
+          "present": 2,
+          "caught": 1
+        },
+        "AGE": {
+          "present": 2,
+          "caught": 2
+        },
+        "DATE_OF_BIRTH": {
+          "present": 1,
+          "caught": 1
+        },
+        "ID_NUMBER": {
+          "present": 1,
+          "caught": 1
+        },
+        "ADDRESS": {
+          "present": 1,
+          "caught": 1
+        },
+        "PHONE": {
+          "present": 1,
+          "caught": 1
+        },
+        "COMPANY": {
+          "present": 2,
+          "caught": 1
+        }
+      },
+      "leaks": [
+        {
+          "Type": "GENDER",
+          "Count": 1
+        },
+        {
+          "Type": "COMPANY",
+          "Count": 1
+        }
+      ],
+      "falsePositives": [],
+      "preserveBrokenCount": 0
+    },
+    {
+      "File": "scans/01-hr-letter-scan-clean.png",
+      "Group": "Scan: clean image",
+      "Model": "gpt-oss",
+      "Present": 16,
+      "Caught": 16,
+      "Edits": 16,
+      "TruePositives": 14,
+      "TypeCorrect": 14,
+      "LostToExtraction": 0,
+      "DetectSeconds": 7.3844329,
+      "WriteSeconds": 0.5548294,
+      "PromptTokens": 921,
+      "OutputTokens": 795,
+      "Discarded": 0,
+      "OutputOk": true,
+      "byCategory": {
+        "COMPANY": {
+          "present": 2,
+          "caught": 2
+        },
+        "ADDRESS": {
+          "present": 2,
+          "caught": 2
+        },
+        "PHONE": {
+          "present": 2,
+          "caught": 2
+        },
+        "EMAIL": {
+          "present": 2,
+          "caught": 2
+        },
+        "GENDER": {
+          "present": 2,
+          "caught": 2
+        },
+        "PERSON": {
+          "present": 3,
+          "caught": 3
+        },
+        "DATE_OF_BIRTH": {
+          "present": 1,
+          "caught": 1
+        },
+        "AGE": {
+          "present": 1,
+          "caught": 1
+        },
+        "ID_NUMBER": {
+          "present": 1,
+          "caught": 1
+        }
+      },
+      "leaks": [],
+      "falsePositives": [
+        {
+          "Type": "ID_NUMBER"
+        },
+        {
+          "Type": "PERSON"
+        }
+      ],
+      "preserveBrokenCount": 0
+    },
+    {
+      "File": "scans/01-hr-letter-scan-degraded.jpg",
+      "Group": "Scan: degraded image",
+      "Model": "gpt-oss",
+      "Present": 16,
+      "Caught": 16,
+      "Edits": 15,
+      "TruePositives": 14,
+      "TypeCorrect": 14,
+      "LostToExtraction": 0,
+      "DetectSeconds": 7.5318475,
+      "WriteSeconds": 0.2609807,
+      "PromptTokens": 922,
+      "OutputTokens": 825,
+      "Discarded": 0,
+      "OutputOk": true,
+      "byCategory": {
+        "COMPANY": {
+          "present": 2,
+          "caught": 2
+        },
+        "ADDRESS": {
+          "present": 2,
+          "caught": 2
+        },
+        "PHONE": {
+          "present": 2,
+          "caught": 2
+        },
+        "EMAIL": {
+          "present": 2,
+          "caught": 2
+        },
+        "GENDER": {
+          "present": 2,
+          "caught": 2
+        },
+        "PERSON": {
+          "present": 3,
+          "caught": 3
+        },
+        "DATE_OF_BIRTH": {
+          "present": 1,
+          "caught": 1
+        },
+        "AGE": {
+          "present": 1,
+          "caught": 1
+        },
+        "ID_NUMBER": {
+          "present": 1,
+          "caught": 1
+        }
+      },
+      "leaks": [],
+      "falsePositives": [
+        {
+          "Type": "ID_NUMBER"
+        }
+      ],
+      "preserveBrokenCount": 0
+    },
+    {
+      "File": "scans/01-hr-letter-scan.pdf",
+      "Group": "Scan: image-only PDF",
+      "Model": "gpt-oss",
+      "Present": 16,
+      "Caught": 15,
+      "Edits": 13,
+      "TruePositives": 13,
+      "TypeCorrect": 13,
+      "LostToExtraction": 0,
+      "DetectSeconds": 13.298962,
+      "WriteSeconds": 0.6693562,
+      "PromptTokens": 920,
+      "OutputTokens": 1438,
+      "Discarded": 1,
+      "OutputOk": true,
+      "byCategory": {
+        "COMPANY": {
+          "present": 2,
+          "caught": 2
+        },
+        "ADDRESS": {
+          "present": 2,
+          "caught": 2
+        },
+        "PHONE": {
+          "present": 2,
+          "caught": 2
+        },
+        "EMAIL": {
+          "present": 2,
+          "caught": 2
+        },
+        "GENDER": {
+          "present": 2,
+          "caught": 2
+        },
+        "PERSON": {
+          "present": 3,
+          "caught": 3
+        },
+        "DATE_OF_BIRTH": {
+          "present": 1,
+          "caught": 1
+        },
+        "AGE": {
+          "present": 1,
+          "caught": 0
+        },
+        "ID_NUMBER": {
+          "present": 1,
+          "caught": 1
+        }
+      },
+      "leaks": [
+        {
+          "Type": "AGE",
+          "Count": 1
+        }
+      ],
+      "falsePositives": [],
+      "preserveBrokenCount": 0
+    },
+    {
+      "File": "scans/08-invoice-scan-clean.png",
+      "Group": "Scan: clean image",
+      "Model": "gpt-oss",
+      "Present": 8,
+      "Caught": 7,
+      "Edits": 8,
+      "TruePositives": 7,
+      "TypeCorrect": 6,
+      "LostToExtraction": 1,
+      "DetectSeconds": 5.7427188,
+      "WriteSeconds": 0.5156195,
+      "PromptTokens": 864,
+      "OutputTokens": 626,
+      "Discarded": 1,
+      "OutputOk": true,
+      "byCategory": {
+        "COMPANY": {
+          "present": 2,
+          "caught": 2
+        },
+        "ADDRESS": {
+          "present": 2,
+          "caught": 1
+        },
+        "COMPANY_ID": {
+          "present": 1,
+          "caught": 1
+        },
+        "PERSON": {
+          "present": 1,
+          "caught": 1
+        },
+        "ID_NUMBER": {
+          "present": 1,
+          "caught": 1
+        },
+        "PHONE": {
+          "present": 1,
+          "caught": 1
+        }
+      },
+      "leaks": [
+        {
+          "Type": "ADDRESS",
+          "Count": 1
+        }
+      ],
+      "falsePositives": [
+        {
+          "Type": "EMAIL"
+        }
+      ],
+      "preserveBrokenCount": 0
+    },
+    {
+      "File": "scans/08-invoice-scan-degraded.jpg",
+      "Group": "Scan: degraded image",
+      "Model": "gpt-oss",
+      "Present": 9,
+      "Caught": 8,
+      "Edits": 8,
+      "TruePositives": 8,
+      "TypeCorrect": 7,
+      "LostToExtraction": 0,
+      "DetectSeconds": 6.7439543,
+      "WriteSeconds": 0.2433262,
+      "PromptTokens": 867,
+      "OutputTokens": 729,
+      "Discarded": 1,
+      "OutputOk": true,
+      "byCategory": {
+        "COMPANY": {
+          "present": 2,
+          "caught": 2
+        },
+        "ADDRESS": {
+          "present": 2,
+          "caught": 1
+        },
+        "COMPANY_ID": {
+          "present": 1,
+          "caught": 1
+        },
+        "PERSON": {
+          "present": 1,
+          "caught": 1
+        },
+        "ID_NUMBER": {
+          "present": 1,
+          "caught": 1
+        },
+        "EMAIL": {
+          "present": 1,
+          "caught": 1
+        },
+        "PHONE": {
+          "present": 1,
+          "caught": 1
+        }
+      },
+      "leaks": [
+        {
+          "Type": "ADDRESS",
+          "Count": 1
+        }
+      ],
+      "falsePositives": [],
+      "preserveBrokenCount": 0
+    },
+    {
+      "File": "scans/08-invoice-scan.pdf",
+      "Group": "Scan: image-only PDF",
+      "Model": "gpt-oss",
+      "Present": 8,
+      "Caught": 7,
+      "Edits": 8,
+      "TruePositives": 7,
+      "TypeCorrect": 6,
+      "LostToExtraction": 1,
+      "DetectSeconds": 6.2210691,
+      "WriteSeconds": 0.6421603,
+      "PromptTokens": 862,
+      "OutputTokens": 658,
+      "Discarded": 1,
+      "OutputOk": true,
+      "byCategory": {
+        "COMPANY": {
+          "present": 2,
+          "caught": 2
+        },
+        "ADDRESS": {
+          "present": 2,
+          "caught": 1
+        },
+        "COMPANY_ID": {
+          "present": 1,
+          "caught": 1
+        },
+        "PERSON": {
+          "present": 1,
+          "caught": 1
+        },
+        "ID_NUMBER": {
+          "present": 1,
+          "caught": 1
+        },
+        "PHONE": {
+          "present": 1,
+          "caught": 1
+        }
+      },
+      "leaks": [
+        {
+          "Type": "ADDRESS",
+          "Count": 1
+        }
+      ],
+      "falsePositives": [
+        {
+          "Type": "EMAIL"
+        }
+      ],
+      "preserveBrokenCount": 0
+    },
+    {
+      "File": "scans/09-gp-referral-scan-clean.png",
+      "Group": "Scan: clean image",
+      "Model": "gpt-oss",
+      "Present": 12,
+      "Caught": 10,
+      "Edits": 10,
+      "TruePositives": 10,
+      "TypeCorrect": 10,
+      "LostToExtraction": 0,
+      "DetectSeconds": 7.4418175,
+      "WriteSeconds": 0.5326704,
+      "PromptTokens": 818,
+      "OutputTokens": 809,
+      "Discarded": 0,
+      "OutputOk": true,
+      "byCategory": {
+        "PERSON": {
+          "present": 2,
+          "caught": 2
+        },
+        "GENDER": {
+          "present": 2,
+          "caught": 1
+        },
+        "AGE": {
+          "present": 2,
+          "caught": 2
+        },
+        "DATE_OF_BIRTH": {
+          "present": 1,
+          "caught": 1
+        },
+        "ID_NUMBER": {
+          "present": 1,
+          "caught": 1
+        },
+        "ADDRESS": {
+          "present": 1,
+          "caught": 1
+        },
+        "PHONE": {
+          "present": 1,
+          "caught": 1
+        },
+        "COMPANY": {
+          "present": 2,
+          "caught": 1
+        }
+      },
+      "leaks": [
+        {
+          "Type": "GENDER",
+          "Count": 1
+        },
+        {
+          "Type": "COMPANY",
+          "Count": 1
+        }
+      ],
+      "falsePositives": [],
+      "preserveBrokenCount": 0
+    },
+    {
+      "File": "scans/09-gp-referral-scan-degraded.jpg",
+      "Group": "Scan: degraded image",
+      "Model": "gpt-oss",
+      "Present": 12,
+      "Caught": 10,
+      "Edits": 10,
+      "TruePositives": 10,
+      "TypeCorrect": 10,
+      "LostToExtraction": 0,
+      "DetectSeconds": 7.7713062,
+      "WriteSeconds": 0.2457062,
+      "PromptTokens": 818,
+      "OutputTokens": 842,
+      "Discarded": 0,
+      "OutputOk": true,
+      "byCategory": {
+        "PERSON": {
+          "present": 2,
+          "caught": 2
+        },
+        "GENDER": {
+          "present": 2,
+          "caught": 1
+        },
+        "AGE": {
+          "present": 2,
+          "caught": 2
+        },
+        "DATE_OF_BIRTH": {
+          "present": 1,
+          "caught": 1
+        },
+        "ID_NUMBER": {
+          "present": 1,
+          "caught": 1
+        },
+        "ADDRESS": {
+          "present": 1,
+          "caught": 1
+        },
+        "PHONE": {
+          "present": 1,
+          "caught": 1
+        },
+        "COMPANY": {
+          "present": 2,
+          "caught": 1
+        }
+      },
+      "leaks": [
+        {
+          "Type": "GENDER",
+          "Count": 1
+        },
+        {
+          "Type": "COMPANY",
+          "Count": 1
+        }
+      ],
+      "falsePositives": [],
+      "preserveBrokenCount": 0
+    },
+    {
+      "File": "text/01-hr-letter.txt",
+      "Group": "Plain text",
+      "Model": "gpt-oss",
+      "Present": 16,
+      "Caught": 16,
+      "Edits": 18,
+      "TruePositives": 15,
+      "TypeCorrect": 15,
+      "LostToExtraction": 0,
+      "DetectSeconds": 41.3727153,
+      "WriteSeconds": 0.0013252,
+      "PromptTokens": 919,
+      "OutputTokens": 4247,
+      "Discarded": 0,
+      "OutputOk": true,
+      "byCategory": {
+        "COMPANY": {
+          "present": 2,
+          "caught": 2
+        },
+        "ADDRESS": {
+          "present": 2,
+          "caught": 2
+        },
+        "PHONE": {
+          "present": 2,
+          "caught": 2
+        },
+        "EMAIL": {
+          "present": 2,
+          "caught": 2
+        },
+        "GENDER": {
+          "present": 2,
+          "caught": 2
+        },
+        "PERSON": {
+          "present": 3,
+          "caught": 3
+        },
+        "DATE_OF_BIRTH": {
+          "present": 1,
+          "caught": 1
+        },
+        "AGE": {
+          "present": 1,
+          "caught": 1
+        },
+        "ID_NUMBER": {
+          "present": 1,
+          "caught": 1
+        }
+      },
+      "leaks": [],
+      "falsePositives": [
+        {
+          "Type": "CONTEXTUAL"
+        },
+        {
+          "Type": "ID_NUMBER"
+        },
+        {
+          "Type": "CONTEXTUAL"
+        }
+      ],
+      "preserveBrokenCount": 0
+    },
+    {
+      "File": "text/03-customer-email.txt",
+      "Group": "Plain text",
+      "Model": "gpt-oss",
+      "Present": 9,
+      "Caught": 9,
+      "Edits": 10,
+      "TruePositives": 9,
+      "TypeCorrect": 9,
+      "LostToExtraction": 0,
+      "DetectSeconds": 7.0667425,
+      "WriteSeconds": 0.0005192,
+      "PromptTokens": 846,
+      "OutputTokens": 724,
+      "Discarded": 0,
+      "OutputOk": true,
+      "byCategory": {
+        "PERSON": {
+          "present": 4,
+          "caught": 4
+        },
+        "EMAIL": {
+          "present": 1,
+          "caught": 1
+        },
+        "ADDRESS": {
+          "present": 1,
+          "caught": 1
+        },
+        "PHONE": {
+          "present": 1,
+          "caught": 1
+        },
+        "SECRET": {
+          "present": 1,
+          "caught": 1
+        },
+        "COMPANY": {
+          "present": 1,
+          "caught": 1
+        }
+      },
+      "leaks": [],
+      "falsePositives": [
+        {
+          "Type": "AGE"
+        }
+      ],
+      "preserveBrokenCount": 0
+    },
+    {
+      "File": "text/05-incident-report.txt",
+      "Group": "Plain text",
+      "Model": "gpt-oss",
+      "Present": 9,
+      "Caught": 9,
+      "Edits": 11,
+      "TruePositives": 11,
+      "TypeCorrect": 9,
+      "LostToExtraction": 0,
+      "DetectSeconds": 9.9692658,
+      "WriteSeconds": 0.0004746,
+      "PromptTokens": 861,
+      "OutputTokens": 1033,
+      "Discarded": 0,
+      "OutputOk": true,
+      "byCategory": {
+        "PERSON": {
+          "present": 2,
+          "caught": 2
+        },
+        "COMPANY": {
+          "present": 1,
+          "caught": 1
+        },
+        "SECRET": {
+          "present": 3,
+          "caught": 3
+        },
+        "ONLINE_ID": {
+          "present": 2,
+          "caught": 2
+        },
+        "PHONE": {
+          "present": 1,
+          "caught": 1
+        }
+      },
+      "leaks": [],
+      "falsePositives": [],
+      "preserveBrokenCount": 0
+    },
+    {
+      "File": "text/10-contextual-profile.txt",
+      "Group": "Plain text",
+      "Model": "gpt-oss",
+      "Present": 6,
+      "Caught": 4,
+      "Edits": 8,
+      "TruePositives": 4,
+      "TypeCorrect": 2,
+      "LostToExtraction": 0,
+      "DetectSeconds": 19.998983,
+      "WriteSeconds": 0.0007424,
+      "PromptTokens": 779,
+      "OutputTokens": 2054,
+      "Discarded": 0,
+      "OutputOk": true,
+      "byCategory": {
+        "COMPANY": {
+          "present": 1,
+          "caught": 1
+        },
+        "CONTEXTUAL": {
+          "present": 4,
+          "caught": 2
+        },
+        "PERSON": {
+          "present": 1,
+          "caught": 1
+        }
+      },
+      "leaks": [
+        {
+          "Type": "CONTEXTUAL",
+          "Count": 1
+        },
+        {
+          "Type": "CONTEXTUAL",
+          "Count": 1
+        }
+      ],
+      "falsePositives": [
+        {
+          "Type": "GENDER"
+        },
+        {
+          "Type": "GENDER"
+        },
+        {
+          "Type": "GENDER"
+        },
+        {
+          "Type": "GENDER"
+        }
+      ],
+      "preserveBrokenCount": 0
+    },
+    {
+      "File": "text/11-hard-negatives.txt",
+      "Group": "Plain text",
+      "Model": "gpt-oss",
+      "Present": 0,
+      "Caught": 0,
+      "Edits": 0,
+      "TruePositives": 0,
+      "TypeCorrect": 0,
+      "LostToExtraction": 0,
+      "DetectSeconds": 0.3184443,
+      "WriteSeconds": 0.000682,
+      "PromptTokens": 789,
+      "OutputTokens": 19,
+      "Discarded": 0,
+      "OutputOk": true,
+      "byCategory": {},
+      "leaks": [],
+      "falsePositives": [],
+      "preserveBrokenCount": 0
+    },
+    {
+      "File": "text/context-text-01.txt",
+      "Group": "Plain text",
+      "Model": "gpt-oss",
+      "Present": 7,
+      "Caught": 6,
+      "Edits": 6,
+      "TruePositives": 6,
+      "TypeCorrect": 6,
+      "LostToExtraction": 0,
+      "DetectSeconds": 4.0616182,
+      "WriteSeconds": 0.0005138,
+      "PromptTokens": 759,
+      "OutputTokens": 414,
+      "Discarded": 0,
+      "OutputOk": true,
+      "byCategory": {
+        "PERSON": {
+          "present": 6,
+          "caught": 6
+        },
+        "GENDER": {
+          "present": 1,
+          "caught": 0
+        }
+      },
+      "leaks": [
+        {
+          "Type": "GENDER",
+          "Count": 1
+        }
+      ],
+      "falsePositives": [],
+      "preserveBrokenCount": 0
+    },
+    {
+      "File": "text/context-text-02.txt",
+      "Group": "Plain text",
+      "Model": "gpt-oss",
+      "Present": 2,
+      "Caught": 1,
+      "Edits": 1,
+      "TruePositives": 1,
+      "TypeCorrect": 1,
+      "LostToExtraction": 0,
+      "DetectSeconds": 2.521982,
+      "WriteSeconds": 0.0006304,
+      "PromptTokens": 771,
+      "OutputTokens": 253,
+      "Discarded": 0,
+      "OutputOk": true,
+      "byCategory": {
+        "PERSON": {
+          "present": 1,
+          "caught": 1
+        },
+        "GENDER": {
+          "present": 1,
+          "caught": 0
+        }
+      },
+      "leaks": [
+        {
+          "Type": "GENDER",
+          "Count": 1
+        }
+      ],
+      "falsePositives": [],
+      "preserveBrokenCount": 0
+    },
+    {
+      "File": "text/context-text-03.txt",
+      "Group": "Plain text",
+      "Model": "gpt-oss",
+      "Present": 6,
+      "Caught": 6,
+      "Edits": 6,
+      "TruePositives": 6,
+      "TypeCorrect": 6,
+      "LostToExtraction": 0,
+      "DetectSeconds": 4.5746972,
+      "WriteSeconds": 0.0005811,
+      "PromptTokens": 756,
+      "OutputTokens": 459,
+      "Discarded": 0,
+      "OutputOk": true,
+      "byCategory": {
+        "PERSON": {
+          "present": 5,
+          "caught": 5
+        },
+        "EMAIL": {
+          "present": 1,
+          "caught": 1
+        }
+      },
+      "leaks": [],
+      "falsePositives": [],
+      "preserveBrokenCount": 0
+    },
+    {
+      "File": "text/context-text-04.txt",
+      "Group": "Plain text",
+      "Model": "gpt-oss",
+      "Present": 2,
+      "Caught": 2,
+      "Edits": 2,
+      "TruePositives": 2,
+      "TypeCorrect": 2,
+      "LostToExtraction": 0,
+      "DetectSeconds": 2.804398,
+      "WriteSeconds": 0.0006064,
+      "PromptTokens": 767,
+      "OutputTokens": 279,
+      "Discarded": 0,
+      "OutputOk": true,
+      "byCategory": {
+        "PERSON": {
+          "present": 1,
+          "caught": 1
+        },
+        "EMAIL": {
+          "present": 1,
+          "caught": 1
+        }
+      },
+      "leaks": [],
+      "falsePositives": [],
+      "preserveBrokenCount": 0
+    },
+    {
+      "File": "text/context-text-05.txt",
+      "Group": "Plain text",
+      "Model": "gpt-oss",
+      "Present": 8,
+      "Caught": 8,
+      "Edits": 8,
+      "TruePositives": 8,
+      "TypeCorrect": 8,
+      "LostToExtraction": 0,
+      "DetectSeconds": 3.7604739,
+      "WriteSeconds": 0.0005992,
+      "PromptTokens": 752,
+      "OutputTokens": 382,
+      "Discarded": 0,
+      "OutputOk": true,
+      "byCategory": {
+        "PERSON": {
+          "present": 8,
+          "caught": 8
+        }
+      },
+      "leaks": [],
+      "falsePositives": [],
+      "preserveBrokenCount": 0
+    },
+    {
+      "File": "text/context-text-06.txt",
+      "Group": "Plain text",
+      "Model": "gpt-oss",
+      "Present": 0,
+      "Caught": 0,
+      "Edits": 0,
+      "TruePositives": 0,
+      "TypeCorrect": 0,
+      "LostToExtraction": 0,
+      "DetectSeconds": 0.2826067,
+      "WriteSeconds": 0.0004578,
+      "PromptTokens": 763,
+      "OutputTokens": 19,
+      "Discarded": 0,
+      "OutputOk": true,
+      "byCategory": {},
+      "leaks": [],
+      "falsePositives": [],
+      "preserveBrokenCount": 0
+    },
+    {
+      "File": "text/context-text-07.txt",
+      "Group": "Plain text",
+      "Model": "gpt-oss",
+      "Present": 6,
+      "Caught": 0,
+      "Edits": 0,
+      "TruePositives": 0,
+      "TypeCorrect": 0,
+      "LostToExtraction": 0,
+      "DetectSeconds": 0.2780872,
+      "WriteSeconds": 0.0008422,
+      "PromptTokens": 755,
+      "OutputTokens": 19,
+      "Discarded": 0,
+      "OutputOk": true,
+      "byCategory": {
+        "COMPANY": {
+          "present": 6,
+          "caught": 0
+        }
+      },
+      "leaks": [
+        {
+          "Type": "COMPANY",
+          "Count": 2
+        },
+        {
+          "Type": "COMPANY",
+          "Count": 2
+        },
+        {
+          "Type": "COMPANY",
+          "Count": 1
+        },
+        {
+          "Type": "COMPANY",
+          "Count": 1
+        }
+      ],
+      "falsePositives": [],
+      "preserveBrokenCount": 0
+    },
+    {
+      "File": "text/context-text-08.txt",
+      "Group": "Plain text",
+      "Model": "gpt-oss",
+      "Present": 0,
+      "Caught": 0,
+      "Edits": 0,
+      "TruePositives": 0,
+      "TypeCorrect": 0,
+      "LostToExtraction": 0,
+      "DetectSeconds": 0.2765208,
+      "WriteSeconds": 0.0006172,
+      "PromptTokens": 761,
+      "OutputTokens": 19,
+      "Discarded": 0,
+      "OutputOk": true,
+      "byCategory": {},
+      "leaks": [],
+      "falsePositives": [],
+      "preserveBrokenCount": 0
+    },
+    {
+      "File": "text/context-text-09.txt",
+      "Group": "Plain text",
+      "Model": "gpt-oss",
+      "Present": 8,
+      "Caught": 8,
+      "Edits": 8,
+      "TruePositives": 8,
+      "TypeCorrect": 8,
+      "LostToExtraction": 0,
+      "DetectSeconds": 7.5783142,
+      "WriteSeconds": 0.0006131,
+      "PromptTokens": 743,
+      "OutputTokens": 790,
+      "Discarded": 0,
+      "OutputOk": true,
+      "byCategory": {
+        "PERSON": {
+          "present": 8,
+          "caught": 8
+        }
+      },
+      "leaks": [],
+      "falsePositives": [],
+      "preserveBrokenCount": 0
+    },
+    {
+      "File": "text/context-text-10.txt",
+      "Group": "Plain text",
+      "Model": "gpt-oss",
+      "Present": 0,
+      "Caught": 0,
+      "Edits": 0,
+      "TruePositives": 0,
+      "TypeCorrect": 0,
+      "LostToExtraction": 0,
+      "DetectSeconds": 4.3383532,
+      "WriteSeconds": 0.0006042,
+      "PromptTokens": 755,
+      "OutputTokens": 447,
+      "Discarded": 0,
+      "OutputOk": true,
+      "byCategory": {},
+      "leaks": [],
+      "falsePositives": [],
+      "preserveBrokenCount": 0
+    },
+    {
+      "File": "text/context-text-11-mixed.txt",
+      "Group": "Plain text",
+      "Model": "gpt-oss",
+      "Present": 5,
+      "Caught": 5,
+      "Edits": 5,
+      "TruePositives": 5,
+      "TypeCorrect": 5,
+      "LostToExtraction": 0,
+      "DetectSeconds": 3.4058294,
+      "WriteSeconds": 0.001206,
+      "PromptTokens": 776,
+      "OutputTokens": 348,
+      "Discarded": 0,
+      "OutputOk": true,
+      "byCategory": {
+        "PERSON": {
+          "present": 5,
+          "caught": 5
+        }
+      },
+      "leaks": [],
+      "falsePositives": [],
+      "preserveBrokenCount": 0
+    }
+  ]
+}
