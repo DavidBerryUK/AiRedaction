@@ -67,6 +67,27 @@ There is no ready-made C# GLiNER library, so the pre- and post-processing (about
 
 Deliverable: a `GlinerDetector` implementing the existing `IEntityDetector`, returning spans with `Source = "gliner"` and the model's confidence. It must keep to the project's rule that **documents never leave the machine** (no network calls and no model downloads at run time).
 
+**Spike result (3 October 2026, `knowledgator/gliner-pii-edge-v1.0`, quantised ONNX, 46 MB, in .NET).** The C# port (tokeniser, prompt, windows, decoding) worked first time and finds names, companies, phone numbers, emails, addresses and dates of birth in a test sentence. The runner is `tools/AiDocumentRedactor.GlinerSpike` and it uses the evaluation's own scoring. On the 30 text-readable corpus documents (plain text, Word, text-layer PDFs; scans not included):
+
+| Threshold | Recall | Precision | F1 | Missed | Over-redactions | Must-keep damaged |
+|---:|---:|---:|---:|---:|---:|---:|
+| 0.2 | 95.3% | 69.9% | 80.7% | 12 of 254 | 116 | 22 of 31 |
+| 0.3 | 87.4% | 82.3% | 84.8% | 32 | 47 | 9 of 31 |
+| 0.5 | 41.7% | 88.5% | 56.7% | 148 | 13 | 5 of 31 |
+
+With the rules layer added at threshold 0.25: recall 98.0% (5 missed), precision 77%, 13 of 31 must-keep items damaged.
+
+What it shows:
+- **Speed is the headline:** about 0.02 s per document, against 3–16 s for the chat models (hundreds of times faster, on the CPU).
+- **Alone it is not strong enough:** the best F1 is about 85%, against 98% for phi4 with the rules, and its confidence scores are low and spread out (typically 0.4–0.9), so no single threshold gives both high recall and high precision.
+- **But it finds different things.** At a low threshold (0.25) it catches the items every chat model missed: both "Kestrel" occurrences, "2019 data breach at the Bristol depot", and the ordinary-word names and companies (Will, Mark, Rose, Apple, Shell, Amazon, Target). It misses "GBP 92,000" and the person "Paris" in the mixed document.
+- **It cannot tell the two uses of a word apart** (a person called Paris and the city), so it also marks the must-keep words, which is why 13 of 31 must-keep items are damaged at 0.25.
+- **So its role is a second opinion, not the redactor:** items it finds that the chat models and rules did not should be **flagged for review**, not redacted automatically, and agreement with a chat model raises confidence.
+
+Caveats: the threshold was looked at on the same corpus (optimistic), scans are not included, the label wording ("person", "organization", "job title", and so on) was a first guess and may change results a lot, and this is the small "edge" variant: larger GLiNER PII models may do better.
+
+**Next experiments:** label wording, a larger variant, scans (through OCR), and the agreement scoring with a chat model.
+
 ### 4.3 Map our categories to GLiNER labels
 
 Our 15 categories are sent to GLiNER as plain-language labels (for example PERSON → "person", ID_NUMBER → "identification number"). Labels and the confidence threshold are **configuration**, not code, so they can be tuned per category, in the same spirit as the category descriptions given to the chat models. Flag-only categories (LOCATION) and the enabled/disabled switches apply exactly as today.
