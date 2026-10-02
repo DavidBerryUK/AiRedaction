@@ -1,0 +1,35 @@
+{
+  "id": "heldout-164-insurance-policy",
+  "title": "Insurance Policy (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "PetCare Cover Ltd.",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "783 Carr Parkway, 02121, New Erin",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Bertrand Lef\u00E8vre-Blanchard",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ID_NUMBER",
+      "text": "GB24RBAL16357958515028",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

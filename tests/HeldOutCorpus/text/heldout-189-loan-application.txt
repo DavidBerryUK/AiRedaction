@@ -1,0 +1,47 @@
+---
+Loan Application
+
+Full Name: John Doe
+Date: March 15, 2023
+Loan Type: Credit Counseling
+
+Personal Information:
+----------------------
+Address: 123 Maple Street, Anytown, USA
+Email: johndoe@example.com
+Phone: (123) 456-7890
+Date of Birth: 01/01/1980
+Social Security Number: 123-45-6789
+
+Financial Information:
+---------------------
+Monthly Income: $4,000
+Monthly Expenses: $2,500
+Current Debts: $15,000 (credit cards, personal loans)
+Credit Score: 650
+
+Employment Information:
+--------------------
+Employer: XYZ Corporation
+Position: Software Engineer
+Years with Employer: 5 years
+
+Loan Information:
+---------------
+Loan Amount: $10,000
+Loan Purpose: Debt Consolidation
+
+Recommendation for Credit Counseling:
+
+Based on your financial situation, we recommend that you seek credit counseling to better manage your debts and improve your credit score. Here are some resources for credit counseling and financial education:
+
+1. National Foundation for Credit Counseling (NFCC): A nonprofit organization that provides credit counseling, debt management, and financial education services. (<https://www.nfcc.org/>)
+2. Financial Counseling Association of America (FCAA): A professional association of certified and trained financial counselors. (<https://www.fcaa.org/>)
+3. Credit.org: A nonprofit credit counseling agency that provides financial education, debt management, and housing counseling services. (<https://www.credit.org/>)
+4. The Federal Trade Commission (FTC): Provides resources on how to choose a credit counselor and avoid scams. (<https://www.ftc.gov/search?q=credit+counseling>)
+
+Please provide the following documents to support your loan application:
+
+1. Recent pay stubs
+2. Recent bank statements
+3. W-2s or

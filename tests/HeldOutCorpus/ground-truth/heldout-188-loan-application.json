@@ -1,0 +1,47 @@
+{
+  "id": "heldout-188-loan-application",
+  "title": "Loan Application (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Johnathan David Smith",
+      "occurrences": 3
+    },
+    {
+      "where": "body",
+      "type": "DATE_OF_BIRTH",
+      "text": "01/02/1980",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "45, Baker Street, London, NW1 6XE",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "EMAIL",
+      "text": "john.smith@example.com",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "XYZ Ltd",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "12, High Street, London, NW1 7XY",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

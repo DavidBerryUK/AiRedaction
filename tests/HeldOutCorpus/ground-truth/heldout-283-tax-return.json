@@ -1,0 +1,35 @@
+{
+  "id": "heldout-283-tax-return",
+  "title": "Tax Return (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Gelsomina Argento",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "65 Strada Antonini, Ruvo Di Puglia",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Artistic Project for XYZ Ltd.",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Artistic Project for ABC Ltd.",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

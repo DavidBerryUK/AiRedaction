@@ -1,0 +1,29 @@
+{
+  "id": "heldout-254-safety-data-sheet",
+  "title": "Safety Data Sheet (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Claus-Peter Ulla S\u00F6ding",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "59, boulevard Alain Guilbert",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PHONE",
+      "text": "\u002B44 1234 567890",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

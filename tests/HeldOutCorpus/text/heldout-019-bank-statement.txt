@@ -1,0 +1,27 @@
+First National Bank
+Interest Summary
+
+Account Holder: Anthony Carpeter
+Account Number: 123456789
+
+Period: 01 Dec 2015 - 31 Dec 2é2015
+
+| Date | Description | Debit (GBP) | Credit (GBP) | Running Balance (GBP) |
+| --- | --- | --- | --- | --- |
+01 Dec 2015 | Opening Balance | | | 5,000.00 |
+17 Dec 2015 | Monthly Interest | | 250.00 | 5,250.00 |
+31 Dec 23 2015 | End of Period | | | 5,250.00 |
+
+Interest Summary:
+Interest Rate: 5.00%
+Opening Balance: 5,000.34
+Interest Earned: 250.00
+Final Balance: 5,250.00
+
+Thank you for choosing First National Bank.
+
+*Statement mailed to: Édith Anthony Carpenter*
+*2345 River Road, Apt. 091*
+*San Francisco, CA 94112*
+
+*[This is a simulated statement for testing and development purposes only.]*

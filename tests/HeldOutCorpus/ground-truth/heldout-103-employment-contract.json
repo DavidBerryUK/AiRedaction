@@ -1,0 +1,29 @@
+{
+  "id": "heldout-103-employment-contract",
+  "title": "Employment Contract (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "ABC Corporation",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "John Doe",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "123 Main Street, Anytown, USA",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

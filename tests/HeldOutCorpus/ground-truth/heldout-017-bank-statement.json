@@ -1,0 +1,17 @@
+{
+  "id": "heldout-017-bank-statement",
+  "title": "Bank Statement (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "John Doe",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

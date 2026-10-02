@@ -1,0 +1,17 @@
+{
+  "id": "heldout-237-regulatory-compliance-guide",
+  "title": "Regulatory Compliance Guide (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Thierry Bonnet",
+      "occurrences": 3
+    }
+  ],
+  "mustPreserve": []
+}

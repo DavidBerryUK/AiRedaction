@@ -1,0 +1,17 @@
+{
+  "id": "heldout-129-financial-regulatory-compliance-report",
+  "title": "Financial Regulatory Compliance Report (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "XYZ Corporation",
+      "occurrences": 6
+    }
+  ],
+  "mustPreserve": []
+}

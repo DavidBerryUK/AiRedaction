@@ -1,0 +1,4 @@
+"id","date","action","ipv4","name","street_address"
+1,"2022-01-01 10:30:00","login","176.169.229.38","Isabella Fredo Storladi","7 Markboulevard, Apt. 782"
+2,"2022-01-01 10:31:00","page_view","176.169.229.38","Isabella Fredo Storladi","7 Markboulevard, Apt. 782"
+3,"2022-01-01 10:32:00","purchase","176.169.229.38","Isabella Fredo Storladi","7 Markboulevard, Apt. 782"

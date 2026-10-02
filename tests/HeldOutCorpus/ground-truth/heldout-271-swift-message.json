@@ -1,0 +1,35 @@
+{
+  "id": "heldout-271-swift-message",
+  "title": "SWIFT Message (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "ID_NUMBER",
+      "text": "2533072862004760",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "GRAY PAUL AND THOMPSON",
+      "occurrences": 2
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "49166 Campos Circle, Apt. 226",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "SABINA \u00C1VILA-BAYO",
+      "occurrences": 2
+    }
+  ],
+  "mustPreserve": []
+}

@@ -1,0 +1,59 @@
+{
+  "id": "heldout-158-insurance-claim-form",
+  "title": "Insurance Claim Form (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Editha K. Beckmann",
+      "occurrences": 3
+    },
+    {
+      "where": "body",
+      "type": "DATE_OF_BIRTH",
+      "text": "03/14/1968",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ID_NUMBER",
+      "text": "750-38-3379",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PHONE",
+      "text": "(123) 456-7890",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "4952 Wendy Flats Apt. 069",
+      "occurrences": 2
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "XYZ Engineering Services",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "ABC Construction Services",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "EMAIL",
+      "text": "editha.beckmann@email.com",
+      "occurrences": 2
+    }
+  ],
+  "mustPreserve": []
+}

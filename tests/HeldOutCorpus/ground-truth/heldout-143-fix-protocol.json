@@ -1,0 +1,29 @@
+{
+  "id": "heldout-143-fix-protocol",
+  "title": "FIX Protocol (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "NILSSON \u0026 JOHANSSON HB",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "MARTIN CLARK",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "2 Rotonda Cuda",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

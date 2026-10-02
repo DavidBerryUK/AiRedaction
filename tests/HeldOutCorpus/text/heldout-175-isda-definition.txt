@@ -1,0 +1,19 @@
+FALLBACK LANGUAGE
+
+1.01 In this Agreement, the following terms shall have the meanings set out below, each of which shall include (where the context so admits) any amendment or variation to, or replacement of, the specified item or rate:
+
+(a) "Benchmark" means any index, rate, price, value or other benchmark or determination (including any rate or determination based on a specified number of days' or weeks' interest or the time period between two dates) specified in the relevant Confirmation or, if not so specified, in the Schedule or, if not so specified in the Schedule, determined in accordance with any methodology or formula specified in the relevant Confirmation or, if not so specified, in the Schedule or, if not so specified in the Schedule, determined in accordance with any market convention or, if there is no market convention, determined in accordance with the determination procedures specified in the Schedule;
+
+(b) "Benchmark Replacement" means, in relation to any Benchmark, the Benchmark Replacement specified in, or determined in accordance with, the Benchmark Replacement Provision;
+
+(c) "Benchmark Replacement Provision" means the provision specified in the Schedule as being the Benchmark Replacement Provision for the relevant Benchmark;
+
+(d) "Benchmark Transition Event" means, in relation to any Benchmark, the occurrence of any event or circumstance that triggers the operation of the Benchmark Replacement Provision for that Benchmark;
+
+(e) "Discontinuation Event" means, in relation to any Benchmark, the permanent discontinuance of the provision of that Benchmark by the relevant Benchmark Administrator or the public cessation of the use of that Benchmark by the Relevant Market;
+
+(f) "Relevant Market" means, in relation to any Benchmark, the market or markets conventionally taken to be the primary market or markets for transactions referencing that Benchmark;
+
+(g) "Relevant Market Participants" means, in relation to any Benchmark, the persons or entities conventionally involved in the determination or calculation of that Benchmark or the administration of the process for the determination or calculation of that Benchmark;
+
+(h) "Benchmark Administrator

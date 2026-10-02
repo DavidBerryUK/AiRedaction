@@ -1,0 +1,23 @@
+{
+  "id": "heldout-219-policyholder-s-report",
+  "title": "Policyholder\u0027s Report (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Ad\u00E9la\u00EFde C. Georges",
+      "occurrences": 4
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "69 Nyv\u00E4gen",
+      "occurrences": 3
+    }
+  ],
+  "mustPreserve": []
+}

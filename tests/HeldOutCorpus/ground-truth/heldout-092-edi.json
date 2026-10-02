@@ -1,0 +1,29 @@
+{
+  "id": "heldout-092-edi",
+  "title": "EDI (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "347 Beth Stream",
+      "occurrences": 2
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Julien Cl\u00E9ment",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ID_NUMBER",
+      "text": "MXAL72620669578837",
+      "occurrences": 2
+    }
+  ],
+  "mustPreserve": []
+}

@@ -1,0 +1,23 @@
+{
+  "id": "heldout-201-mt940",
+  "title": "MT940 (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "LAURENCE T. MORENO",
+      "occurrences": 2
+    },
+    {
+      "where": "body",
+      "type": "PHONE",
+      "text": "(702)986-0107x4484",
+      "occurrences": 2
+    }
+  ],
+  "mustPreserve": []
+}

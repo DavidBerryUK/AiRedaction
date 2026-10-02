@@ -1,0 +1,23 @@
+{
+  "id": "heldout-196-mortgage-contract",
+  "title": "Mortgage Contract (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Yves Monique Guibert",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "226 Brittany Drive, 91541, Wilsonbury",
+      "occurrences": 2
+    }
+  ],
+  "mustPreserve": []
+}

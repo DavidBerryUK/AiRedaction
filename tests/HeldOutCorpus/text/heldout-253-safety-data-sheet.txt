@@ -1,0 +1,46 @@
+Safety Data Sheet
+
+Spill Response Procedure for Handling Chemicals at Logan-Nguyen
+
+1. Purpose
+The purpose of this Safety Data Sheet is to provide information on the properties of hazardous chemicals used at Logan-Nguyen, including physical, health, and environmental hazards, and to establish spill response procedures to contain and clean up chemical spills, minimizing environmental and health impacts.
+
+2. Chemical Identity
+
+* Chemical Name: Hydrochloric Acid
+* Chemical Formula: HCl
+
+3. Physical and Chemical Properties
+
+* Appearance: Clear, colorless liquid
+* Odor: Pungent, irritating
+* Boiling Point: 110°C
+* Melting Point: -85°C
+* pH: 0-1
+* Specific Gravity: 1.18 g/cm³
+
+4. Fire-Fighting Measures
+
+* Fire Extinguishing Media: Dry chemical, carbon dioxide, foam, or water spray when fighting an HCl fire.
+* Special Hazards Arising from the Substance or its Container: Containers may rupture violently when exposed to heat or fire.
+
+5. Accidental Release Measures
+
+* Personal Protection: Wear appropriate personal protective equipment, including chemical-resistant gloves, safety goggles, and protective clothing.
+* Evacuation: Evacuate the area and prevent entry.
+* Spill Response: Contain and absorb the spill with inert materials, such as vermiculite, sand, or earth.
+* Disposal Considerations: Dispose of in accordance with local, state, and federal regulations.
+
+6. Handling and Storage
+
+* Precautions for Safe Handling: Use non-sparking tools and equipment. Avoid contact with skin, eyes, and clothing.
+* Conditions for Safe Storage: Store in a cool, well-ventilated area. Keep containers tightly closed.
+
+7. Exposure Controls/Personal Protection
+
+* Engineering Controls: Use local exhaust ventilation.
+* Personal Protective Equipment: Use chemical-resistant gloves, safety goggles, and protective clothing.
+
+8. Physical and Chemical Properties
+
+* Toxicological Information: HCl is corrosive to

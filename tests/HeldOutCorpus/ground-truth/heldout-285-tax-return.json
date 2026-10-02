@@ -1,0 +1,29 @@
+{
+  "id": "heldout-285-tax-return",
+  "title": "Tax Return (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Gomez-Martin \u0026 Associates",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Jennifer Gomez-Martin",
+      "occurrences": 5
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "70578 Manning Grove",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

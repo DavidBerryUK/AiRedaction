@@ -1,0 +1,47 @@
+---
+Wedding Loan Credit Application
+
+Full Name: Adam Kenneth Törnqvist
+Last Name: Törnqvist
+Driver License Number: C25-9308-090-52
+Permanent Address: 5 Cooper Trace, NR4Y 9LJ, Port Bernard
+
+Loan Details:
+Loan Amount Requested: £25,000
+Loan Purpose: Wedding Expenses
+Wedding Date: 12th June 2023
+
+Employment Details:
+Employer Name: XYZ Ltd
+Position: Software Engineer
+Annual Income: £60,000
+Years Employed: 5
+
+Financial Information:
+Monthly Rent/Mortgage: £1,500
+Other Loans: None
+Credit Card Information:
+- Card Name: Visa
+- Limit: £10,000
+- Monthly Payment: £500
+- Card Open Date: 1st January 2018
+
+Bank Account Information:
+- Bank Name: HSBC
+- Account Type: Current Account
+- Account Number: 12345678
+- Routing Number: 11-22-33
+- Average Monthly Balance: £3,000
+
+References:
+- Name: John Doe
+- Phone: 0712345678
+- Email: [john.doe@email.com](mailto:john.doe@email.com)
+
+Declaration:
+I, Adam Kenneth Törnqvist, hereby declare that all the information provided above is true and accurate to the best of my knowledge. I understand that providing false or misleading information may result in the rejection of my loan application or legal consequences.
+
+Signature: Adam Kenneth Törnqvist
+Date: 1st January 2023
+
+---

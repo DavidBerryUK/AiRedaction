@@ -1,0 +1,23 @@
+{
+  "id": "heldout-149-fpml",
+  "title": "FpML (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "EMAIL",
+      "text": "lynne34@martinez.com",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Mar\u00EDa Fernanda Porras-Vera",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

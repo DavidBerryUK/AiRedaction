@@ -1,0 +1,31 @@
+COLLATERAL MANAGEMENT AGREEMENT
+
+This Collateral Management Agreement (the "Agreement") is entered into as of the date of acceptance by the Party receiving this Agreement, by and between [Counterparty Name], a [Counterparty Jurisdiction] corporation with its head office located at [Counterparty Address] (the "Counterparty"), and [Your Company Name], a [Your Company Jurisdiction] corporation with its head office located at [Your Company Address] (the "Firm").
+
+1. DEFINITIONS
+
+1.1 "Credit Support Document" means this Agreement, any other credit support document, any other agreement between the Parties relating to this Agreement or the transactions under this Agreement and any confirmations of any such agreements.
+
+1.2 "Credit Support Provider" means a person who has entered into a Credit Support Document with a Credit Support User.
+
+1.3 "Credit Support User" means a person who has entered into a Credit Support Document with a Credit Support Provider.
+
+1.4 "Eligible Collateral" means any property (including cash and securities) that is acceptable to the Firm as collateral for a Transaction, as described in Section 2.
+
+1.5 "Transaction" means any over-the-counter derivative transaction entered into between the Parties under the ISDA Master Agreement.
+
+2. COLLATERAL
+
+2.1 The Counterparty shall provide Eligible Collateral to the Firm as security for the Transaction.
+
+2.2 The Eligible Collateral shall be in the name of the Firm or its nominee and shall be held by the Firm or its nominee in accordance with the terms of this Agreement.
+
+2.3 The Eligible Collateral shall be valued in accordance with the valuation methodology set forth in the ISDA Master Agreement.
+
+3. MARGIN CALCULATIONS
+
+3.1 The Firm shall calculate the amount of collateral required to be delivered by the Counterparty in accordance with the margin requirements set forth in the ISDA Master Agreement.
+
+3.2 The Firm shall notify the Counterparty of the amount of collateral required to be delivered in accordance with the notice provisions set forth in the ISDA Master Agreement.
+
+4. COLLATERAL ELIGIBILITY CRITERIA

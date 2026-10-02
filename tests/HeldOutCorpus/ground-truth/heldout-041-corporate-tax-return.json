@@ -1,0 +1,17 @@
+{
+  "id": "heldout-041-corporate-tax-return",
+  "title": "Corporate Tax Return (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "AlphaTech Innovations Inc.",
+      "occurrences": 2
+    }
+  ],
+  "mustPreserve": []
+}

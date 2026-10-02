@@ -1,0 +1,16 @@
+Title: Outlook Calendar Invites Not Receiving Acceptance Responses
+
+Description:
+We have recently noticed an issue with Microsoft Outlook where calendar invites sent from our internal system are not receiving acceptance responses from external recipients. The invites are being sent successfully, but when the external recipients accept or decline the invites, no notification is returned to our system. This has been causing issues with scheduling and managing appointments.
+
+Steps to Reproduce:
+1. Send a calendar invite from our internal system to an external recipient.
+2. Wait for the external recipient to accept or decline the invite.
+3. Check our system for the acceptance or decline notification.
+
+Priority: High
+This issue is causing significant disruptions to our scheduling and appointment management processes. It is crucial that this issue is resolved as soon as possible.
+
+Resolution Status:
+In Progress
+The IT team is currently investigating the issue and working with Microsoft Support to find a solution. We will provide updates as soon as we have more information.

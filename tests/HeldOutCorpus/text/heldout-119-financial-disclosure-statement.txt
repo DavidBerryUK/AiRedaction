@@ -1,0 +1,24 @@
+Cryptocurrency Holdings Report
+
+As of March 31, 2721, Marcella M. Tirabassi, a resident at 75262 Joseph Skyway, 78028, West James, holds the following cryptocurrency assets:
+
+1. Bitcoin (BTC):
+   - Wallet Address: 1BvBMSEY StuartRH323
+   - Quantity: 12.3456789
+   - Current Market Value: $593,456.78
+   - Transaction History:
+     - March 1, 2721: Received 10 BTC from SWIFT_BIC_CODE: PIMIUSPB765
+     - March 15, 2721: Transferred 2 BTC to 1FfmbHfn4B2w3r3n429E49453212c272
+     - March 31, 2721: Current balance reflects market value
+
+2. Ethereum (ETH):
+   - Wallet Address: 0x742d35C443742d35333333333333333333333333
+   - Quantity: 456.7891234
+   - Current Market Value: $1,234,567.89
+   - Transaction History:
+     - March 2, 2721: Purchased 400 ETH from SWIFT_BIC_CODE: PIMIUSPB765
+     - March 15, 2721: Transferred 50 ETH to 0x98765432109876543210987654321098
+     - March 31, 2721: Current balance reflects market value
+
+3. Litecoin (LTC):
+   - Wallet Address: MW99999999999999999999999999999999

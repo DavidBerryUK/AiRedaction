@@ -1,0 +1,65 @@
+{
+  "id": "heldout-186-loan-application",
+  "title": "Loan Application (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Thomas Daniel-Gros",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "690 avenue de Foucher, Brun",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Greenfield Enterprises",
+      "occurrences": 2
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Jane Doe",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "John Smith",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Barclays Bank",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Ms. Francoise Isabelle",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "National Debtline",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "12345678",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

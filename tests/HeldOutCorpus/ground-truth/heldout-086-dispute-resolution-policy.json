@@ -1,0 +1,23 @@
+{
+  "id": "heldout-086-dispute-resolution-policy",
+  "title": "Dispute Resolution Policy (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Marthe Luc Duval",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "EMAIL",
+      "text": "md@company.com",
+      "occurrences": 2
+    }
+  ],
+  "mustPreserve": []
+}

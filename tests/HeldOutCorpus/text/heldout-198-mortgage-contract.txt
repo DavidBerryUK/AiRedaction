@@ -1,0 +1,19 @@
+MORTGAGE CONTRACT
+
+THIS AGREEMENT is made this ______ day of ________, 20__, by and between ABC Lending Inc., a corporation organized and existing under the laws of the province of Ontario, with its head office located at 123 Main Street, Toronto, Ontario (hereinafter "Lender"), and Julia Martinez-Mcdaniel, of 975 Wilson Island Suite 122, Toronto, Ontario (hereinafter "Borrower").
+
+WHEREAS, Borrower is the owner of certain real property described in Schedule "A" attached hereto (hereinafter the "Property");
+
+WHEREAS, Borrower desires to borrow from Lender the sum of $_______, and Lender is willing to lend said sum to Borrower on the terms and conditions hereinafter set forth;
+
+NOW, THEREFORE, in consideration of the mutual covenants and promises herein contained, the parties hereto agree as follows:
+
+1. LOAN AMOUNT: Lender agrees to loan to Borrower the sum of $_______ (the "Loan Amount").
+
+2. REPAYMENT TERMS: The Loan Amount shall be evidenced by a promissory note in the form attached hereto as Schedule "B" (the "Note"). The Note shall provide for monthly payments of principal and interest, based on a 30-year amortization schedule, at an interest rate of ___% per annum. The monthly payments shall be in the amount of $_______ and shall commence on the first day of the month next succeeding the date of this Agreement.
+
+3. BALLOON PAYMENT: On the maturity date of the Note, being the fifth anniversary of the date hereof, Borrower shall pay to Lender a balloon payment equal to the then outstanding principal balance of the Loan Amount, together with any accrued and unpaid interest.
+
+4. COLLATERAL: The Loan Amount, and all accrued and unpaid interest, shall be secured by a mortgage on the Property, in the form attached hereto as Schedule "C" (the "Mortgage").
+
+5. REFINANCING: Borrower shall have the right, at any time on or before the

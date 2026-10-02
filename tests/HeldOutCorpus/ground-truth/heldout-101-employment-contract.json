@@ -1,0 +1,35 @@
+{
+  "id": "heldout-101-employment-contract",
+  "title": "Employment Contract (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "JOHANSSON \u0026 HEDBERG AB",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "8 Renshof",
+      "occurrences": 2
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Johansson \u0026 Hedberg AB",
+      "occurrences": 2
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Hans Dieter E. M\u00F6chlichen",
+      "occurrences": 2
+    }
+  ],
+  "mustPreserve": []
+}

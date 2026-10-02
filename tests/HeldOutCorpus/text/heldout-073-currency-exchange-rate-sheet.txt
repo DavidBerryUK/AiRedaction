@@ -1,0 +1,11 @@
+Currency Exchange Rate Sheet: Seasonal Currency Trends
+
+Date & Time, Name, Street Address, Base Currency, Target Currency, Buying Rate, Selling Rate
+12:58:48, Isabelle Dumas-Brun, 558 Mary Glens, USD, CAD, 1.3125, 1.3150
+12:58:48, Isabelle Dumas-Brun, 558 Mary Glens, USD, EUR, 0.8450, 0.8480
+12:58:48, Isabelle Dumas-Brun, 558 Mary Glens, USD, GBP, 0.7620, 0.7650
+12:58:48, Isabelle Dumas-Brun, 558 Mary Glens, USD, JPY, 109.25, 109.50
+12:58:48, Isabelle Dumas-Brun, 558 Mary Glens, USD, CHF, 0.9100, 0.9130
+12:58:48, Isabelle Dumas-Brun, 558 Mary Glens, USD, AUD, 1.3875, 1.3900
+
+Note: Rates are subject to change and have been calculated based on seasonal trends. The dataset reflects fluctuations during different times of the year.

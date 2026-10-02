@@ -1,0 +1,20 @@
+Credit Card Statement
+
+Account Holder: Julien W. Michel
+Account Number: **** 1234 (Last 4 digits)
+Statement Period: 01/01/2023 - 01/31/2023
+
+Transaction Date | Description | Amount (GBP) | Running Balance (GBP)
+01/05/2023 | Digital Wallet: Starbucks - 899 Hardy Knoll, London | -5.67 | 485.23
+01/10/2023 | Digital Wallet: Uber Eats - Order #123456 | -21.50 | 463.73
+01/15/2023 | Digital Wallet: Amazon - Purchase of books | -35.99 | 427.74
+01/20/2023 | Digital Wallet: Netflix - Monthly Subscription | -11.99 | 415.75
+01/25/2023 | Digital Wallet: Apple - App Store Purchase | -4.99 | 410.76
+01/30/2023 | Digital Wallet: Spotify - Monthly Subscription | -9.99 | 395.77
+01/31/2023 | Payment Received | 400.00 | 0.00
+
+End of Statement
+
+Credit Card Security Code: 921
+
+Please note that for security reasons, the full credit card number is not displayed. If you have any questions or concerns regarding this statement, please contact us at 1-800-123-4567.

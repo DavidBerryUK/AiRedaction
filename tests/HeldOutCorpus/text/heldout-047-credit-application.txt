@@ -1,0 +1,31 @@
+---
+Home Improvement Loan Credit Application
+
+Date: 07/05/1989 03:05 PM
+
+Full Name: Ann T. Davis
+Street Address: 63895 Cole Circles, 22289, Port Lauren
+
+Swift BIC Code: EQREUSUQ895
+
+Loan Request:
+I, Ann T. Davis, am applying for a Home Improvement Loan to finance the following project:
+
+Scope of Work:
+- Kitchen Remodel: Replace countertops, cabinets, and appliances
+- Bathroom Update: Install new tile flooring and vanity
+- Exterior Painting: Repaint entire house
+
+Estimated Costs:
+- Kitchen Remodel: $15,000
+- Bathroom Update: $5,000
+- Exterior Painting: $3,000
+
+Total Loan Amount Requested: $23,000
+
+I confirm that the information provided in this application is true and accurate to the best of my knowledge. I understand that any misrepresentation or omission of material facts may result in the denial of this loan application or the termination of any existing loan agreement.
+
+Signature: Ann T. Davis
+Date: 07/05/1989
+
+---

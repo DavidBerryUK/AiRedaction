@@ -1,0 +1,34 @@
+Tax Invoice
+
+Invoice Number: 001234
+Date: 01/10/2022
+
+Seller:
+Severiano O. Porcel
+48 Vicolo Segrè, Moio Alcantara
+
+Buyer:
+van der Spaendonck-Uphaus
+[23b8:3adf:8e87:51e6:9314:3ed1:1544:4e64]
+
+Itemized List:
+1. Goods/Services provided: [Insert description of goods or services here]
+Quantity: 1
+Price per unit: [Insert price here]
+
+Total Amount: [Insert total amount here]
+
+Taxes:
+VAT: [Insert VAT amount here]
+
+Payment Instructions:
+Please make payment to the following account within 14 days of the invoice date.
+Account Name: Severiano O. Porcel
+Account Number: [Insert account number here]
+Sort Code: [Insert sort code here]
+
+Please note that failure to pay within the specified time frame may result in late payment charges.
+
+Thank you for your business.
+
+[End of Document]

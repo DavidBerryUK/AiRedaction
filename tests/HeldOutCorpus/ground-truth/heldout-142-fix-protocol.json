@@ -1,0 +1,41 @@
+{
+  "id": "heldout-142-fix-protocol",
+  "title": "FIX Protocol (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "ONLINE_ID",
+      "text": "123.100.102.62",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Nadia Wessel Luitgardis van Neustri\u00EB",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "1 Hussain lake",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "EMAIL",
+      "text": "test@example.com",
+      "occurrences": 2
+    },
+    {
+      "where": "body",
+      "type": "PHONE",
+      "text": "\u002B11234567890",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

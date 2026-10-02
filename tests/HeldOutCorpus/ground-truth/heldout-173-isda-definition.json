@@ -1,0 +1,41 @@
+{
+  "id": "heldout-173-isda-definition",
+  "title": "ISDA Definition (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Ronaldo Giacomo Casadei",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "15598 Laura Corner, Apt. 1592",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ID_NUMBER",
+      "text": "GB24CAHL67306072373596",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Casadei",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "---\n\nRonaldo Giacomo Cas",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

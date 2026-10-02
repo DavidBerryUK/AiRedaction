@@ -1,0 +1,29 @@
+{
+  "id": "heldout-292-transaction-confirmation",
+  "title": "Transaction Confirmation (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Eug\u00E8ne Maillot",
+      "occurrences": 2
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "971 Kimberly Spurs, West Ronnieport",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ID_NUMBER",
+      "text": "444",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

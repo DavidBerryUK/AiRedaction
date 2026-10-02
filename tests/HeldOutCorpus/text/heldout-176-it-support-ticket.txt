@@ -1,0 +1,51 @@
+IT Support Ticket #123456
+---------------------------
+
+**User Information**
+
+- Name: Véronique P. Mallet
+- Contact: [veronique.mallet@example.com](mailto:veronique.mallet@example.com)
+- Date & Time: 17 Nov 2022 11:24:54
+
+**Issue Description**
+
+Mirta reported that she has accidentally deleted some important files from the shared drive (81402 Jennifer Extension). She is unable to locate those files and requested urgent assistance to recover them.
+
+**Priority**
+
+High - Urgent file recovery required
+
+**Status**
+
+Assigned - IT Support Agent has been assigned to handle the case
+
+**Resolution Details**
+
+1. **Data Recovery Software Usage**
+   - We recommend using a reliable data recovery software such as 'EaseUS Data Recovery Wizard' or 'Stellar Data Recovery'.
+   - Download and install the software on a separate system (not on the same partition where files were deleted).
+
+2. **Selecting Recovery Destination**
+   - Connect an external storage device (USB drive or external HDD) with sufficient space to the system.
+   - While running the data recovery software, select the external storage device as the recovery destination.
+
+3. **Restoring Recovered Files**
+   - After scanning and locating the deleted files, select them and proceed to recover.
+   - Save the recovered files to the external storage device.
+
+4. **Verifying Recovered Files**
+   - Once the recovery process is complete, ask Mirta to verify if all required files are present and not corrupted.
+
+**Additional Notes**
+
+- Remind Mirta not to save any new data to the partition where the files were deleted, until the recovery process is complete.
+- If the recovery process is unsuccessful or further assistance is required, escalate the issue to the Data Recovery Team.
+
+**Next Steps**
+
+- IT Support Agent to follow up with Mirta within 2 hours to confirm if the issue has been resolved.
+- Update ticket status based on the outcome.
+
+---------------------------
+
+End of Ticket #123456

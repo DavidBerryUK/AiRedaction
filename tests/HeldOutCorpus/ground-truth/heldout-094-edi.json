@@ -1,0 +1,35 @@
+{
+  "id": "heldout-094-edi",
+  "title": "EDI (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Leon Sean Morley",
+      "occurrences": 2
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "7309 Elizabeth Bridge, Apt. 310",
+      "occurrences": 2
+    },
+    {
+      "where": "body",
+      "type": "ID_NUMBER",
+      "text": "16-045597-08",
+      "occurrences": 2
+    },
+    {
+      "where": "body",
+      "type": "ID_NUMBER",
+      "text": "W68435475",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

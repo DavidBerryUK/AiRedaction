@@ -1,0 +1,47 @@
+{
+  "id": "heldout-043-corporate-tax-return",
+  "title": "Corporate Tax Return (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "JHW Enterprises Ltd",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ID_NUMBER",
+      "text": "P2891850",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "Studio 4, Jasmine Pines, London, SE1 2JL",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Joep Huurdeman-Wutke",
+      "occurrences": 2
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "John Doe",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Jane Smith",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

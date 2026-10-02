@@ -1,0 +1,35 @@
+{
+  "id": "heldout-122-financial-forecast",
+  "title": "Financial Forecast (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "June K. Robertson",
+      "occurrences": 2
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "290 Timothy Route",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Real Estate Investment Trusts (REITs)",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Robertson",
+      "occurrences": 3
+    }
+  ],
+  "mustPreserve": []
+}

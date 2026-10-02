@@ -1,0 +1,23 @@
+{
+  "id": "heldout-277-tax-assessment-notice",
+  "title": "Tax Assessment Notice (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "123 Maple Street, Toronto, ON, M5J 1K7",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "John Doe",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

@@ -1,0 +1,22 @@
+EDI Inventory Report
+
+UNB+UNOC:3+5201740824234:5201740824234+5201740824234:5201740824234+210101:0930+73X VDA
+UNH+INVRPT:D:93A:UN:2.8:UTF-8'
+BGM+215+5201740824234:5201740824234'
+DTM+137:20220101:102'
+NAD+SH+5201740824234:5201740824234'
+NAD+SU+Leon Sean Morley+7309 Elizabeth Bridge, Apt. 310'
+LIN+1++123456+20'
+PIA+1:16-045597-08'
+PIA+2:W68435475'
+QTY+45:1000'
+PRI+1:Acme Inc.:123'
+CTA+DS'
+UNT+21+1'
+UNZ+1+73X'
+
+Explanation:
+- The EDI report includes an Inventory Report (INVRPT) with a document type of 93A, which is used for transmitting inventory reports in the VDA (Verband der Automobilindustrie) standard.
+- The report includes a Beginning Segment (BGM) with a document type of 215, indicating an inventory report.
+- The report includes a Name and Address (NAD) segment for the supplier, which includes the name "Leon Sean Morley" and the street address "7309 Elizabeth Bridge, Apt. 310".
+- The report includes a Product Information (PIA) segment for each product, which includes the driver license number (16-045597-08) and passport number (W6843547

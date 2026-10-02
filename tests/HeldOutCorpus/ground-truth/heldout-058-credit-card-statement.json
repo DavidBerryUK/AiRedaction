@@ -1,0 +1,29 @@
+{
+  "id": "heldout-058-credit-card-statement",
+  "title": "Credit Card Statement (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Marko P\u00E4rtzelt",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "870 Joshua Corner, 42199, Port Timothytown",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Netflix",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

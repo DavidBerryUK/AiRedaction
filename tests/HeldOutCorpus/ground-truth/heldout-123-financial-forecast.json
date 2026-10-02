@@ -1,0 +1,10 @@
+{
+  "id": "heldout-123-financial-forecast",
+  "title": "Financial Forecast (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [],
+  "mustPreserve": []
+}

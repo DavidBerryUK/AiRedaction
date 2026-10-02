@@ -1,0 +1,95 @@
+---
+United States Department of the Treasury
+Internal Revenue Service
+
+Form 1040 (US Individual Income Tax Return)
+
+Filing Status: Single
+
+1. **Filer’**s Name: John A. Smith
+   **SSN: 123-45-6789**
+
+2. Address:
+   123 Retirement Lane
+   Retirement City, USA 12345
+
+3. **Filing Status: Single
+
+4. Dependents: None
+
+---
+
+**Part I – Filer’s Income**
+
+---
+
+1. Wages, salaries, tips: $0
+
+2. Taxable interest: $500
+
+3. Qualified dividends: $300
+
+4. **Pension and annuity income: $20,001 (50% taxable)
+
+5. Social security benefits: $15,000 (85% taxable)
+
+6. **IRA distributions: $25,000 (401(k) RMD)**
+
+7. **Qualified charitable distributions: $5,000 (100% tax-free)
+
+---
+
+**Part II – Adjustments to Income**
+
+---
+
+- None
+
+---
+
+**Part III – Tax Computation**
+
+---
+
+- **Taxable income: $33,300
+
+- **Tax due: $4,084
+
+---
+
+**Part IV – Payments**
+
+---
+
+- **Federal income tax withheld: $3,500
+
+- **Estimated tax payments: $0
+
+---
+
+**Part V – Credits**
+
+---
+
+- **Total credits: $0
+
+---
+
+**Part VI – Tax Payments and Refunds**
+
+---
+
+- **Amount you owe: $584
+
+- **Overpayment: $0
+
+- **Amount to be refunded: $0
+
+---
+**Signature of filer or preparer**
+
+---
+**Date**
+
+---
+**Note**: This tax return is a hypothetical example for illustrative purposes only. It does not represent

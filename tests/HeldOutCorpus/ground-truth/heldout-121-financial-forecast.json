@@ -1,0 +1,17 @@
+{
+  "id": "heldout-121-financial-forecast",
+  "title": "Financial Forecast (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "XYZ Corporation",
+      "occurrences": 6
+    }
+  ],
+  "mustPreserve": []
+}

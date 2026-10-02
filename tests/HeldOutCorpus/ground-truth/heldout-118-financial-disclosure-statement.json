@@ -1,0 +1,53 @@
+{
+  "id": "heldout-118-financial-disclosure-statement",
+  "title": "Financial Disclosure Statement (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "XYZ Limited",
+      "occurrences": 8
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "ABC Investment Holdings Inc.",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Jane Doe",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "John Smith",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "XYZ Inc.",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "ABC Manufacturing Ltd.",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "DEF Services Ltd.",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

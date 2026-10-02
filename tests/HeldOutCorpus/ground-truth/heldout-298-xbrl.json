@@ -1,0 +1,23 @@
+{
+  "id": "heldout-298-xbrl",
+  "title": "XBRL (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Liliana Proietti-Trapani",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "SECRET",
+      "text": "gz2\u0026D_aj\u002B\u002Bk5_i@L",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

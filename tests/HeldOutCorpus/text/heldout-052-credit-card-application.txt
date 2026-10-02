@@ -1,0 +1,25 @@
+-----------------------------------------------------------------------------------------------------------------
+
+**RockStar Musician Card Application**
+
+Thank you for your interest in the RockStar Musician Card! This card is designed specifically for musicians and music enthusiasts, offering exclusive benefits for music events and artist collaborations. Please fill out the following application to help us determine your eligibility.
+
+**Personal Information**
+
+1. Full Name: \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+2. Date of Birth: \_\_\_\_\_\_\_\_\_\_\_\_\_\_
+3. Email Address: \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+4. Mobile Phone Number: \_\_\_\_\_\_\_\_\_\_\_\_\_\_
+
+**Permanent Address**
+
+5. Street Address: \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+6. City: \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+7. State/Province: \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+8. Postal Code: \_\_\_\_\_\_\_\_\_\_\_\_\_\_
+9. Country: \_\_\_\_\_\_\_\_\_\_\_\_\_\_
+
+**Financial Information**
+
+10. Employment Status: \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+1

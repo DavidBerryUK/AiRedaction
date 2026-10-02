@@ -1,0 +1,52 @@
+---
+Company Name: AlphaTech Innovations Inc.
+Fiscal Year: 2021
+
+I. Identification of the Corporation
+
+Name of the corporation: AlphaTech Innovations Inc.
+Corporation number: 1234567890
+Tax year-end: December 31, 2021
+
+II. Income
+
+1. Gross income
+a. Business income - $3,500,000
+b. Capital gains - $1,200,000
+
+2. Other income
+a. Rent and royalties - $450,000
+b. Interest - $180,000
+
+III. Deductions
+
+1. Business expenses
+a. Salaries and wages - $1,200,000
+b. Rent and utilities - $320,000
+c. Office supplies - $80,000
+d. Depreciation - $400,000
+e. Advertising and promotion - $150,000
+f. Professional fees - $75,000
+g. Insurance - $60,000
+
+2. Capital cost allowance
+a. Class 1 - $250,000
+b. Class 10 - $150,000
+c. Class 14.1 - $100,000
+
+3. Other deductions
+a. Net capital losses - $50,000
+b. Non-capital losses - $120,000
+c. Taxable dividends received - $150,000
+
+IV. Equity Financing
+
+1. Proceeds from equity financing - $2,000,000
+a. Issued shares - 2,000,000 shares at a price of $1.00 per share
+
+V. Tax Computation
+
+1. Total income - $5,300,000
+2. Total deductions - $3,895,000
+3. Federal taxable income - $1,405,000
+4

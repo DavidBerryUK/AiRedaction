@@ -1,0 +1,17 @@
+{
+  "id": "heldout-137-financial-statement",
+  "title": "Financial Statement (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "International Trade Company",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

@@ -1,0 +1,36 @@
+Her Majesty's Customs and Revenue Service
+
+Tax Assessment Notice
+
+Assessment Number: 213-76554-56
+
+Taxpayer Name: Fem J. Otte
+Iban: FR4855184678937477672584491
+Address: 6 chemin de Jacques, Apt. 63
+
+Customs Duty Tax Assessment
+
+This notice is to inform you of the Customs Duty Tax assessment for the imported goods. The assessment is based on the invoice value, customs duty rate, and any applicable deductions.
+
+Goods Description: Imported Clothing
+Invoice Value: £5,000
+
+Customs Duty Rate: 12%
+
+Applicable Deductions:
+- Import VAT: £1,000
+- Import Duties: £600
+
+Calculated Customs Duty Tax:
+(Invoice Value - Import VAT - Import Duties) x Customs Duty Rate
+(£5,000 - £1,000 - £600) x 12% = £480
+
+Payment Due Date: 15th of March, 2023
+
+Please make the payment on or before the due date to avoid any penalties. If you have any questions or concerns regarding this assessment, please contact us at 0800-322-9435.
+
+Thank you for your cooperation.
+
+Yours sincerely,
+
+Her Majesty's Customs and Revenue Service

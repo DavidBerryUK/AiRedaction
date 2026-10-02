@@ -1,0 +1,17 @@
+{
+  "id": "heldout-001-annual-report",
+  "title": "Annual Report (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Eliana R. Bonolis",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

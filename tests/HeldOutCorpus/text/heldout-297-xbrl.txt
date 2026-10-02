@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xbrl xmlns="http://www.xbrl.org/2003/instance" xmlns:link="http://www.xbrl.org/2003/linkbase" xmlns:iso4217="http://www.xbrl.org/2003/iso4217" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.xbrl.org/2003/instance http://www.xbrl.org/2003/xbrl-instance-2003-12-31.xsd">
+  <link:schemaRef xlink:type="simple" xlink:href="http://www.xbrl.org/2009/examples/financial_reporting_200X-03-31.xsd"/>
+  <context id="gaap_20X-03-31_usd">
+    <entity>
+      <identifier scheme="http://www.xbrl.org/2003/identifier">ABC_Corporation</identifier>
+      <segment>
+        <segmentValue id="jurisdiction" value="US"/>
+      </segment>
+    </entity>
+    <period>
+      <instant>20X-03-31</instant>
+    </period>
+  </context>
+  <unit id="usd">
+    <measure>iso4217:USD</measure>
+  </unit>
+  <scenario id="default">
+    <explicitMember dimension="iso4217">usd</explicitMember>
+  </scenario>
+  <dei:documentationRef contextRef="gaap_20X-03-31_usd" scenarioRef="default">
+    <dei:name>ABC_Corporation_20X-03-31</dei:name>
+    <dei:preparer>John Doe</dei:preparer>
+    <dei:

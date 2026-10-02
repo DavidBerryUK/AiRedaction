@@ -1,0 +1,23 @@
+{
+  "id": "heldout-282-tax-return",
+  "title": "Tax Return (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Richard Mellor",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "62657 Devon Loaf Suite 831",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

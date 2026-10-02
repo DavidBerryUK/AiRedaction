@@ -1,0 +1,24 @@
+--------------------------------------------------------------------------------------------------------------------
+Customer Support Conversational Log
+--------------------------------------------------------------------------------------------------------------------
+
+Timestamp: 2022-03-15 14:32:15
+Customer: Meral Gieß-Beer
+Local LatLng: 74.4284035, 88.884989
+Street Address: 3778 Steven Passage, Thomasview
+
+Customer: Hello, I was hoping you could tell me about any ongoing promotions you have. I'm located at 3778 Steven Passage, Thomasview.
+
+Agent: Hello Meral, thank you for reaching out! I'd be happy to assist you. Based on your location, I see that we have a current promotion for new customers in your area. If you provide me with your Bank Account Number (BBAN), I can verify your eligibility.
+
+Customer: Sure, my BBAN is SMDD83928111582486.
+
+Agent: Thank you, Meral. I've verified your eligibility for our current promotion. As a new customer, you'll receive a 20% discount on your first purchase with us. We hope this helps and look forward to serving you. Have a great day!
+
+Customer: Thank you, that's great news! I appreciate your assistance.
+
+Agent: You're welcome, Meral. If you have any other questions, feel free to reach out. Have a wonderful day!
+
+--------------------------------------------------------------------------------------------------------------------
+End of Customer Support Conversational Log
+--------------------------------------------------------------------------------------------------------------------

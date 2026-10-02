@@ -1,0 +1,47 @@
+{
+  "id": "heldout-025-bill-of-lading",
+  "title": "Bill of Lading (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Margaud O. Weber",
+      "occurrences": 3
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "841 Rios Estate, Suite 427",
+      "occurrences": 2
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Global Logistics Ltd.",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ID_NUMBER",
+      "text": "S87852395",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Atlantic Shipping Lines Inc.",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Sea Transport Services Ltd.",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

@@ -1,0 +1,41 @@
+{
+  "id": "heldout-077-customer-agreement",
+  "title": "Customer Agreement (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Acme Properties Inc.",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "123 Main Street, Toronto, Ontario, Canada, M1A 2Z3",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "John Doe",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "456 Elm Street, Vancouver, BC, Canada, V6G 8H9",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "789 Oak Street, Toronto, Ontario, Canada, M3J 9K8",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

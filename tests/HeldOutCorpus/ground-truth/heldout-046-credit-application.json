@@ -1,0 +1,29 @@
+{
+  "id": "heldout-046-credit-application",
+  "title": "Credit Application (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Evi Coret-Coredo",
+      "occurrences": 3
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "2 avenue Faure",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ID_NUMBER",
+      "text": "3498-2391-8851-275",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

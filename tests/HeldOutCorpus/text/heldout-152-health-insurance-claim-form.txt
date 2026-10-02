@@ -1,0 +1,42 @@
+[Health Insurance Claim Form]
+
+Claim No.: 0012345678
+Claim Type: Hospitalization
+
+Patient Information:
+--------------------
+
+Full Name: John Doe
+Date of Birth: 01/01/1980
+Address: 123 Maple Street, Anytown, CA 12345
+Phone Number: (123) 456-7890
+Email Address: johndoe@example.com
+
+Healthcare Provider Information:
+-------------------------------
+
+Provider Name: Dr. Jane Smith
+Hospital/Clinic Name: Anytown Medical Center
+Address: 456 Oak Street, Anytown, CA 12345
+Phone Number: (123) 456-7890
+
+Hospitalization Information:
+---------------------------
+
+Admission Date: 03/01/2023
+Discharge Date: 03/05/2023
+Admitting Diagnosis: Pneumonia
+Treatment Details:
+- IV Antibiotics
+- Oxygen Therapy
+- Respiratory Therapy
+
+Total Charges: $5,000
+
+Declaration:
+------------
+
+I, John Doe, hereby declare that the above information is true and accurate to the best of my knowledge. I understand that providing false or misleading information is a violation of the terms of my health insurance policy.
+
+Signature: John Doe
+Date: 03/10/2023

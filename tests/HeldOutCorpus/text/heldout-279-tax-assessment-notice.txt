@@ -1,0 +1,43 @@
+---
+Vehicle Tax Assessment Notice
+
+Tax Reference Number: 1234567890
+
+Assessment Period: 01/04/2023 - 31/03/2024
+
+Vehicle Details:
+
+* Make: Toyota
+* Model: Corolla
+* Year: 2019
+* Registration Number: AB12 CD34
+* Fuel Type: Petrol
+* List Price: £23,500
+
+Assessed Tax Amount: £155
+
+Calculation:
+
+* Vehicle List Price: £23,500
+* Tax Rate (Petrol, first year): £1,760
+* Tax Rate (Petrol, subsequent years): £150
+* Tax Rate (Petrol, additional for CO2 emissions): N/A
+
+As the vehicle was registered prior to April 2019, the first-year tax rate does not apply.
+
+Payment Due Date: 01/11/2023
+
+Payment Method:
+You can pay your vehicle tax online, by direct debit, or at a Post Office branch. For more information, visit: https://www.gov.uk/vehicle-tax
+
+Penalties:
+A penalty will be charged if you do not pay your vehicle tax on time. For more information, visit: https://www.gov.uk/vehicle-tax-evasion
+
+Further Information:
+If you have any questions or need further information, please contact the Vehicle Tax Office:
+Phone: 0300 123 4321
+Email: vehicle.tax@hmrc.gov.uk
+
+---
+
+Please note: This is a synthetic document and should be used for testing and development purposes only. It does not represent a real tax assessment or liability.

@@ -21,6 +21,7 @@ It reads text files, Word documents, PDFs and scans (with local OCR), and writes
 - [Version 2 findings: effect of the phase 1 accuracy changes](documentation/EVALUATION_FINDINGS_V2.md)
 - [Version 3 findings: five models after phase 1 and the organisation rule](documentation/EVALUATION_FINDINGS_V3.md)
 - [Versioned evaluation reports (v1, v2, v3)](documentation/evaluation-reports/README.md)
+- [Held-out corpus: 300 synthetic finance documents with answer keys](tests/HeldOutCorpus/README.md)
 - [Version 4 findings: agreement with GLiNER](documentation/EVALUATION_FINDINGS_V4.md)
 - [Phase 2 plan: layered detection with GLiNER, and benchmarking it](documentation/PHASE_2_PLAN.md)
 - [Specification](documentation/SPECIFICATION.md): requirements, approach, security, risks and the delivery plan

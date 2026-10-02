@@ -1,0 +1,23 @@
+{
+  "id": "heldout-245-regulatory-filing",
+  "title": "Regulatory Filing (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "XYZ Limited",
+      "occurrences": 2
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "123 Fake Street, London, EC2A 1BZ",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

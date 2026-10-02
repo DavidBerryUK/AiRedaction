@@ -1,0 +1,27 @@
+Audit Report: Risk Assessment for XYZ Corporation
+
+Introduction
+
+We are pleased to present the risk assessment report for XYZ Corporation as of the fiscal year ending December 31, 2021. Our assessment was conducted in accordance with the standards established by the Professional Institute of Auditors and includes an evaluation of potential risks and vulnerabilities within the organization, considering both internal and external factors.
+
+Internal Control Over Financial Reporting
+
+We evaluated the design and effectiveness of XYZ Corporation's internal control over financial reporting as of December 31, 2021. Our evaluation included procedures to obtain an understanding of XYZ Corporation's control environment, risk assessment process, information and communication systems, control activities, and monitoring activities.
+
+Based on our evaluation, we identified the following key risks and vulnerabilities:
+
+* Lack of segregation of duties in the accounting function, which increases the risk of errors or fraud going undetected. Specifically, we noted that Ugolino Cainero-Paruta, the Accounts Payable clerk, has access to both initiating and approving payments, which could result in unauthorized payments being made.
+* Inadequate controls over the bank reconciliation process, which increases the risk of material misstatements in the financial statements. We noted that the bank reconciliation is performed by the same individual who initiates and approves payments, which could result in errors or fraud going undetected.
+* Inadequate controls over the physical security of assets, which increases the risk of theft or loss. We noted that there are no procedures in place to regularly count and compare the physical assets with the amounts reported in the financial statements.
+
+External Risks
+
+In addition to the internal risks identified above, we also considered external risks that could impact XYZ Corporation's financial statements. These risks include:
+
+* Economic conditions, such as changes in interest rates or inflation, which could impact the value of assets and liabilities reported in the financial statements.
+* Changes in laws and regulations, such as new tax laws or environmental regulations, which could impact XYZ Corporation's operations and financial performance.
+* Technological risks, such as cyber threats or system failures, which could impact XYZ Corporation's ability to operate and report financial information.
+
+Conclusion
+
+Based on our risk assessment, we have identified several key risks and

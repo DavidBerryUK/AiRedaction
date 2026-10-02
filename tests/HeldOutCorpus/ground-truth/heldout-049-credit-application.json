@@ -1,0 +1,47 @@
+{
+  "id": "heldout-049-credit-application",
+  "title": "Credit Application (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Peter Irene Larsson",
+      "occurrences": 2
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "Milousteeg 7",
+      "occurrences": 2
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Bank of Scotland",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Barclays Bank",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Capital One",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "SECRET",
+      "text": "th@*C0rp%t0tr^",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

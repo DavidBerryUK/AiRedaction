@@ -1,0 +1,25 @@
+PRODUCT DISCLOSURE STATEMENT - COMMODITY INVESTMENT DISCLOSURE
+
+Investment Name: Global AgriFutures Fund
+
+Product Description:
+The Global AgriFutures Fund (the "Fund") is a commodity investment fund that offers investors exposure to a diversified portfolio of agricultural commodities. The Fund primarily invests in a range of agricultural commodities such as wheat, corn, soybeans, and livestock, and aims to provide capital appreciation through the trading of futures, options, and other derivatives.
+
+Investment Features:
+- Diversification: The Fund's portfolio is spread across various agricultural commodities, reducing the risk associated with investing in a single commodity.
+- Active Management: The Fund is actively managed by experienced portfolio managers who employ a disciplined investment process to capitalize on market opportunities.
+- Liquidity: The Fund is structured as an exchange-traded fund (ETF), allowing investors to buy and sell shares on a major stock exchange, providing daily liquidity.
+
+Investment Risks:
+- Market Risk: The value of the Fund's investments may fluctuate due to changes in the overall commodity markets, which are affected by various factors such as supply and demand, geopolitical events, and economic conditions.
+- Leverage Risk: The Fund uses leverage through the use of futures, options, and other derivatives, which can result in significant losses if the market moves against the Fund's positions.
+- Counterparty Risk: The Fund is exposed to the risk of default by the counterparties to its derivative transactions, which could result in significant losses.
+- Liquidity Risk: The Fund's investments may become illiquid, making it difficult to sell the investments at a desirable price or time.
+
+Historical Performance:
+The Fund's historical performance is not indicative of its future performance. The following chart compares the Fund's performance to a relevant benchmark, the Bloomberg Commodity Index, over the past 5 years:
+
+Year | Global AgriFutures Fund | Bloomberg Commodity Index
+2017 | 12.34% | 9.21%
+2018 | -3.15% | -4.56%
+2019 | 

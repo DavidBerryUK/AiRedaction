@@ -1,0 +1,16 @@
+MT760 COV CONFIRMATION REQUEST
+
+:20:O1234567890
+:23B:CRED
+:25:WILSON AND SONS
+:28C:USD750000,00
+:50K:/CDR0123456789/WILSON AND SONS/1234567890/USD750000,00
+:52A:FRANCO/LUDOVICA TALIANI
+:57A:/065 ELIZABETH PLAINS, APT. 84659/CITY/CA/91010-1234/US
+:59:/O1234567890/ABC BANK/NY/US
+:71A:BCSMNY33
+:72:/1234567890/20220315
+
+/RME
+
+This SWIFT message is a MT760 Cover Payment Confirmation Request, which is a message format used by financial institutions to securely exchange information about financial transactions. It includes Personally Identifiable Information (PII) such as the first name Franco, company Wilson and Sons, name Ludovica Taliani, and street address 065 Elizabeth Plains, Apt. 84659. This information is used to identify the parties involved in the financial transaction and to ensure that the transaction is secure and properly executed.

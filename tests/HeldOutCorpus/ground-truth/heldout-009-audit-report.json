@@ -1,0 +1,23 @@
+{
+  "id": "heldout-009-audit-report",
+  "title": "Audit Report (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "XYZ Corporation",
+      "occurrences": 6
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "8854 April Lakes",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

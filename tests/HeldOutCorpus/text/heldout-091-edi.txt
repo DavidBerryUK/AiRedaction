@@ -1,0 +1,38 @@
+Here's an example of a Freight Bill EDI document using the X12 standard:
+
+ISA*00*          *00*          *ZZ*company1*ZZ*company2*220309*123456*00501*000001175*1*T*:~
+GS*HP*company1*company2*20230309*123456*1175*X*005010X223A1~
+ST*856*0001~
+BIG*FI*001~
+N1*SU*Shipper Name~
+N3*Shipper Address Line 1~
+N4*Shipper City~
+N5*Shipper State or Province~
+N6*Shipper Postal Code~
+N7*Shipper Country~
+N1*DP*Consignee Name~
+N3*Consignee Address Line 1~
+N4*Consignee City~
+N5*Consignee State or Province~
+N6*Consignee Postal Code~
+N7*Consignee Country~
+LIN*1*1*EA~
+PIA*1*100*EA~
+MEA*1*100*LB~
+MOA*1*EA~
+N1*SG*Carrier Name~
+N3*Carrier Address Line 1~
+N4*Carrier City~
+N5*Carrier State or Province~
+N6*Carrier Postal Code~
+N7*Carrier Country~
+DTM*202*20230309~
+DTM*220*20230310~
+DTM*232*20230315~
+RFF*MA*Freight Bill Number~
+RFF*RM*Additional Reference~
+SE*17*0001~
+GE*1*1175~
+IEA*1*1175*123456*20230309~
+
+This EDI document includes the necessary information for a Freight Bill, including shipper and consignee

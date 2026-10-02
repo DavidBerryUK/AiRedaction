@@ -1,0 +1,55 @@
+Product Safety Testing Report
+
+Regulatory Filing No: 2021-0087
+
+Company Name: AlphaTech Innovations Ltd
+
+Product Name: AlphaHeat Heated Jacket
+
+Date of Submission: November 15, 2021
+
+1. Introduction
+
+This report presents the results of the product safety testing conducted on the AlphaHeat Heated Jacket, manufactured by AlphaTech Innovations Ltd. The testing was carried out to ensure that the product complies with all relevant safety standards and regulations.
+
+2. Testing Scope
+
+The testing encompassed the evaluation of the following safety aspects:
+
+- Electrical safety
+- Temperature control
+- Material safety
+- User instructions
+
+3. Testing Methodology
+
+The testing was conducted in accordance with the following standards:
+
+- IEC 60335-1:2010 - Household and similar electrical appliances - Safety - Part 1: General requirements
+- IEC 60335-2-35:2016 - Household and similar electrical appliances - Safety - Part 2-35: Particular requirements for garment dryers
+- ASTM F1506-18 - Standard Performance Specification for Flame Resistant and Arc Rated Textile Materials for Wearing Apparel for Use by Electrical Workers Exposed to Momentary Electric Arc and Related Thermal Hazards
+
+4. Test Results
+
+The results of the testing are as follows:
+
+4.1 Electrical Safety
+
+- The product was found to be in compliance with the applicable electrical safety standards.
+- The product's insulation resistance, leakage current, and earth continuity were all within the acceptable limits.
+
+4.2 Temperature Control
+
+- The product's temperature control system was found to be functioning properly, and the jacket's surface temperature remained within the safe limit during operation.
+
+4.3 Material Safety
+
+- The jacket's materials were found to be flame-resistant and met the requirements of ASTM F1506-18.
+
+4.4 User Instructions
+
+- The user instructions were found to be clear, concise, and in compliance with the applicable standards.
+
+5. Conclusion
+
+Based on

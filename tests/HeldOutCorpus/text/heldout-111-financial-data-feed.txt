@@ -1,0 +1,40 @@
+{
+  "exchange": "LONDON_EXCHANGE",
+  "timestamp": "2022-03-15T14:36:23.121Z",
+  "sequence_id": 43298715,
+  "trades": [
+    {
+      "instrument": "AAPL",
+      "side": "buy",
+      "price": 154.36,
+      "volume": 100,
+      "order_id": "a741:45da:c53e:2f8:835a:e766:162b:4220",
+      "trade_time": "2022-03-15T14:36:23.119Z"
+    },
+    {
+      "instrument": "GOOGL",
+      "side": "sell",
+      "price": 2401.5,
+      "volume": 25,
+      "order_id": "a741:45da:c53e:2f8:835a:e766:162b:4221",
+      "trade_time": "2022-03-15T14:36:23.120Z"
+    }
+  ],
+  "market_data": {
+    "AAPL": {
+      "price": 154.36,
+      "bid": 154.34,
+      "ask": 154.38,
+      "volume": 158730
+    },
+    "GOOGL": {
+      "price": 2401.5,
+      "bid": 2401.4,
+      "ask": 2401.6,
+      "volume": 128545
+    }
+  },
+  "account": {
+    "name": "Aroa P. Mate",
+    "bank_account_number": "200468649",
+    "address": {

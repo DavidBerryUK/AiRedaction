@@ -1,0 +1,41 @@
+{
+  "id": "heldout-239-regulatory-compliance-guide",
+  "title": "Regulatory Compliance Guide (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Ofcom",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Canadian Radio-television and Telecommunications Commission (CRTC)",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Advertising Standards Authority (ASA)",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Isabell Tr\u00F6st-Trupp",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Isabell",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

@@ -1,0 +1,29 @@
+{
+  "id": "heldout-127-financial-regulatory-compliance-report",
+  "title": "Financial Regulatory Compliance Report (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Richard Martineau-Grenier",
+      "occurrences": 2
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "53471 Matthew Branch",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Martineau-Grenier",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

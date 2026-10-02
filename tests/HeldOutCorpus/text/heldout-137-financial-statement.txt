@@ -1,0 +1,50 @@
+Financial Statement
+
+International Trade Company
+Year Ended December 31, 2021
+
+Balance Sheet
+
+Assets:
+- Cash and cash equivalents: $542,321
+- Accounts receivable: $891,412
+- Inventory: $1,209,000
+- Property, plant, and equipment: $3,500,000
+- Intangible assets: $1,000,000
+Total Assets: $6,132,733
+
+Liabilities and Equity:
+- Accounts payable: $456,108
+- Accrued expenses: $123,456
+- Short-term debt: $750,000
+- Long-term debt: $2,000,000
+- Equity:
+-- Common stock: $1,500,000
+-- Retained earnings: $1,833,179
+Total Liabilities and Equity: $6,132,733
+
+Income Statement
+
+Revenue:
+- Import revenue: $3,500,000
+- Export revenue: $2,500,000
+Total Revenue: $6,000,000
+
+Operating Expenses:
+- Cost of goods sold: $3,000,000
+- Tariff expenses: $250,000
+- Salaries and wages: $800,000
+- Rent and utilities: $200,000
+- Depreciation and amortization: $300,000
+Total Operating Expenses: $4,550,000
+
+Operating Income: $1,450,000
+
+Other Income (Expense):
+- Interest income: $50,000
+- Interest expense: $150,000
+Total Other Income (Expense): -$100,000
+
+Net Income Before Taxes: $1,350,000
+
+Income Taxes: $4

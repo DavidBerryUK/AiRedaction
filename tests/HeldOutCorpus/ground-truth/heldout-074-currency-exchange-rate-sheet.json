@@ -1,0 +1,29 @@
+{
+  "id": "heldout-074-currency-exchange-rate-sheet",
+  "title": "Currency Exchange Rate Sheet (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "63623 Phillips Walk",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Harry Wilson-Hewitt",
+      "occurrences": 2
+    },
+    {
+      "where": "body",
+      "type": "EMAIL",
+      "text": "harry.wilsonhewitt@exchangerates.com",
+      "occurrences": 2
+    }
+  ],
+  "mustPreserve": []
+}

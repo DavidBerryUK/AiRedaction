@@ -1,0 +1,23 @@
+{
+  "id": "heldout-257-securities-prospectus",
+  "title": "Securities Prospectus (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "GlobalTech PLC",
+      "occurrences": 4
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "London, United Kingdom",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

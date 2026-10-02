@@ -1,0 +1,29 @@
+{
+  "id": "heldout-179-it-support-ticket",
+  "title": "IT support ticket (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "external recipient",
+      "occurrences": 4
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "external recipients",
+      "occurrences": 2
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Microsoft Support",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

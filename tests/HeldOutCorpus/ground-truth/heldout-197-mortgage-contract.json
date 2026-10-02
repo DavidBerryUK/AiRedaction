@@ -1,0 +1,35 @@
+{
+  "id": "heldout-197-mortgage-contract",
+  "title": "Mortgage Contract (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Elvira B. J\u00F6nsson",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "395 Hans-J.-Hering-Platz, 82195, Tirschenreuth",
+      "occurrences": 2
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Apex Mortgage Lenders Ltd",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "435 Oxford Street, London, W1C 2PE",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

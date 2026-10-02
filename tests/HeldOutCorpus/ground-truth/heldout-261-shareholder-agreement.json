@@ -1,0 +1,23 @@
+{
+  "id": "heldout-261-shareholder-agreement",
+  "title": "Shareholder Agreement (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "address",
+      "occurrences": 2
+    },
+    {
+      "where": "body",
+      "type": "DATE_OF_BIRTH",
+      "text": "date of birth",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

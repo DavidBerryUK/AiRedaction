@@ -1,0 +1,17 @@
+{
+  "id": "heldout-177-it-support-ticket",
+  "title": "IT support ticket (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "IT Support Team",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

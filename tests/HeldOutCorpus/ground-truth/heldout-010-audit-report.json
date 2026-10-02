@@ -1,0 +1,23 @@
+{
+  "id": "heldout-010-audit-report",
+  "title": "Audit Report (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "XYZ Corporation",
+      "occurrences": 12
+    },
+    {
+      "where": "body",
+      "type": "SECRET",
+      "text": "_wfy65KIEsPmYvs^1z",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

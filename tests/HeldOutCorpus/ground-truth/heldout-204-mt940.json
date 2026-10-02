@@ -1,0 +1,29 @@
+{
+  "id": "heldout-204-mt940",
+  "title": "MT940 (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "ID_NUMBER",
+      "text": "C214-1412-519",
+      "occurrences": 2
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "MARK SIMPSON-TAYLOR",
+      "occurrences": 2
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "603 CAROLYN CIRCLE, 38410, EAST LORETTAMOUTH",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

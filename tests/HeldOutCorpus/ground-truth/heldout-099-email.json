@@ -1,0 +1,23 @@
+{
+  "id": "heldout-099-email",
+  "title": "Email (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Dr. Sarah Smith",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "XYZ Corporation",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

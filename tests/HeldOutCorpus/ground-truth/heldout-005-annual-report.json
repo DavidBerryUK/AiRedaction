@@ -1,0 +1,17 @@
+{
+  "id": "heldout-005-annual-report",
+  "title": "Annual Report (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "ABC Corporation",
+      "occurrences": 7
+    }
+  ],
+  "mustPreserve": []
+}

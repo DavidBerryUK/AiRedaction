@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xbrl xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:link="http://www.xbrl.org/2003/linkbase" xmlns="http://www.example.com/financial-report" xmlns:iso4217="http://www.xbrl.org/2003/iso4217" xmlns:xbrli="http://www.xbrl.org/2003/instance" xmlns:xbrldi="http://www.xbrl.org/2006/xbrldi" xsi:schemaLocation="http://www.example.com/financial-report financial-report.xsd">
+ <xbrli:context id="time-2022-03-31">
+ <xbrli:explicitMember dimension="time">2022-03-31</xbrli:explicitMember>
+ </xbrli:context>
+ <xbrli:context id="entity-Liliana-Proietti-Trapani">
+ <xbrli:entity>
+ <xbrli:identifier scheme="http://www.example.com/entity-identification">Liliana Proietti-Trapani</xbrli:identifier>
+ </xbrli:entity>
+ </xbrli:context>
+ <asset id="cash-on-hand" contextRef="time-2022-03-31" decimals="0">
+ <unit id="iso4217:USD">
+ <iso4217:currency>USD</iso4217:currency>
+ </unit>
+ <amount>50000</amount>
+ </asset>
+ <liability id="password-gz2-D_aj-Liliana-Proietti-Trapani" contextRef="entity-Liliana-Proietti-Trapani" decimals="0">
+ <unit id="string">
+ <string>gz2&D_aj++k5_i@L</string>
+ </unit>
+ <amount

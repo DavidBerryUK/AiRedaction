@@ -1,0 +1,35 @@
+{
+  "id": "heldout-268-supply-chain-management-agreement",
+  "title": "Supply Chain Management Agreement (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Zoe",
+      "occurrences": 12
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "3032 Travis Junctions",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Jennifer Coca",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "45 King\u0027s Cross, London, UK",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

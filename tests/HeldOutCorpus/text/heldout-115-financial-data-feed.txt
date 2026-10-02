@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MarketVolatilityFeed>
+  <Exchange name="London Stock Exchange">
+    <Instrument name="Barclays PLC">
+      <PriceFluctuations>
+        <Day date="2022-03-01">
+          <Open>1.834</Open>
+          <High>1.856</High>
+          <Low>1.799</Low>
+          <Close>1.812</Close>
+        </Day>
+        <Day date="2022-03-02">
+          <Open>1.815</Open>
+          <High>1.847</High>
+          <Low>1.782</Low>
+          <Close>1.806</Close>
+        </Day>
+      </PriceFluctuations>
+      <RiskIndicators>
+        <Beta>1.23</Beta>
+        <Volatility>0.034</Volatility>
+      </RiskIndicators>
+    </Instrument>
+    <Instrument name="HSBC Holdings PLC">
+      <PriceFluctuations>
+        <Day date="2022-03-01">
+          <Open>3.489</Open>
+          <High>3.521</High>
+          <Low>3.445</Low>
+          <Close>3.463</Close>
+        </Day>
+        <Day date="2022-03-02">
+          <Open>3.472</Open>
+          <High>3.498</High>
+          <Low>3.421</Low>
+          <Close>3.445</Close>
+        </Day>
+      </PriceFluctuations>
+      <RiskIndicators>
+        <Beta>1.18</Beta>
+        <Volatility>0.031</Volatility>
+      </RiskIndicators>
+    </Instrument>
+  </Exchange>
+</MarketVolat

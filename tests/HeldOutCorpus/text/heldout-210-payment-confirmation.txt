@@ -1,0 +1,25 @@
+Payment Confirmation
+
+Thank you for your payment! We have received your online invoice payment.
+
+Payment Details:
+Payer: John Doe
+Payee: ABC Company Ltd
+Amount: £250.00
+Date of Transaction: 01/12/2022
+
+Payment Method: Credit Card
+Card Type: Visa
+Last 4 Digits: **** 1234
+
+Receipt Number: INV-2022-12345
+
+If you have any questions or concerns regarding this payment, please contact us at [billing@abc-company.co.uk](mailto:billing@abc-company.co.uk).
+
+Thank you for your business!
+
+Best regards,
+ABC Company Ltd
+Finance Department
+
+Please note: This is a synthetic data sample and should not be used for any real-world transactions or record-keeping.

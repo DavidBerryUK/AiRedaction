@@ -1,0 +1,29 @@
+{
+  "id": "heldout-090-dispute-resolution-policy",
+  "title": "Dispute Resolution Policy (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "ID_NUMBER",
+      "text": "XJRM73197596964372",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Jacques G. Adam",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "7 Tombaan, Apt. 6",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

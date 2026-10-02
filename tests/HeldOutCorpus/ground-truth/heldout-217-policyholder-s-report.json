@@ -1,0 +1,35 @@
+{
+  "id": "heldout-217-policyholder-s-report",
+  "title": "Policyholder\u0027s Report (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Darrell Douglas Harris",
+      "occurrences": 2
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "[Company Address]",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "SECRET",
+      "text": "610fD9cE9AaD346D29F3876ba3b889eb",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "9879 Jamie Mountain, 80450, Lake Stanley",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

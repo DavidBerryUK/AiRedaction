@@ -1,0 +1,28 @@
+---=< Biometric Trade Confirmation >===
+
+Trade Confirmation ID: 001-BIO-2023-04-19-001
+Trade Date: 18/04/2023
+
+Counterparty: Barclays Investment Bank
+Client: John Doe, DOB: 12/09/1980, Passport Number: 12345678A
+Biometric Authentication Method: Fingerprint Scan
+
+Securities Details:
+- ISIN: GB00B1234567
+- Security Name: Barclays PLC
+- Quantity: 5,000
+- Unit Price: 190.50 GBP
+- Currency: GBP
+
+Trade Details:
+- Trade Type: Buy
+- Trade Value: 952,500.00 GBP
+- Commission: 952.50 GBP
+- Net Trade Value: 951,547.50 GBP
+
+Settlement Instructions:
+- Settlement Date: T+2 (20/04/2023)
+- Delivery vs Payment (DvP)
+- Clearing System: Euroclear UK & Ireland
+
+---=< End of Biometric Trade Confirmation >===

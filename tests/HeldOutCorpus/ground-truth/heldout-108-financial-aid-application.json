@@ -1,0 +1,47 @@
+{
+  "id": "heldout-108-financial-aid-application",
+  "title": "Financial Aid Application (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Emergency Fund",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Patrick J. Wheeler",
+      "occurrences": 2
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "49338 Goodman Manors Apt. 601",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "emergency fund",
+      "occurrences": 2
+    },
+    {
+      "where": "body",
+      "type": "ID_NUMBER",
+      "text": "372",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Schmiedecke",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

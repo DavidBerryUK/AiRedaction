@@ -1,0 +1,29 @@
+{
+  "id": "heldout-274-swift-message",
+  "title": "SWIFT Message (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "ID_NUMBER",
+      "text": "C1479015350371735835064",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Cilli Zdravko Schmiedt",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "1/6 Putzweg, 43295, F\u00FCssen",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

@@ -1,0 +1,29 @@
+{
+  "id": "heldout-132-financial-risk-assessment",
+  "title": "Financial Risk Assessment (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Boman",
+      "occurrences": 10
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Martin Gustafsson",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "2 Asptorget, Link\u00F6ping",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

@@ -1,0 +1,10 @@
+{
+  "id": "heldout-192-mortgage-amortization-schedule",
+  "title": "Mortgage Amortization Schedule (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [],
+  "mustPreserve": []
+}

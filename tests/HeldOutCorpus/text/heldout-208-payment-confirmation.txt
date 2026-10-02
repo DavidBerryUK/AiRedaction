@@ -1,0 +1,29 @@
+DIRECT DEBIT AUTHORIZATION
+
+Payment Confirmation
+
+This confirms that we have received your Direct Debit Authorization and will begin processing payments from your account as specified.
+
+Payer Information:
+Name: John Doe
+Address: 123 Maple Street, Anytown, USA
+Bank Name: First National Bank
+Account Number: 123456789
+Branch Code: 123
+
+Payee Information:
+Name: XYZ Company
+Address: 456 Oak Street, Anytown, USA
+
+Authorization Period: This authorization is valid from January 1, 2022, and will continue until further notice.
+
+Amount: The amount will be debited on the 15th of each month, starting from January 15, 2022.
+
+Signature: John Doe
+Date: December 31, 2021
+
+Please retain a copy of this confirmation for your records. You may cancel this authorization at any time by contacting XYZ Company.
+
+If you have any questions or concerns, please contact us at (123) 456-7890 or [email@company.com](mailto:email@company.com).
+
+Thank you for choosing XYZ Company.

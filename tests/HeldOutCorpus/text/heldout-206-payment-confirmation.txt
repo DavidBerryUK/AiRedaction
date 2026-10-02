@@ -1,0 +1,16 @@
+Payment Confirmation
+
+Transaction ID: 7fde39a0-1d2a-4e03-8f4a-d33ae2bf8f5c
+Type: Credit Card Payment
+Amount: $150.00 USD
+Payer: Joaquín Ureña-Vilalta
+Payee: ABC Online Store
+Credit Card Security Code: 338 (last 3 digits)
+Timestamp: 2022-03-15 14:26:01 UTC
+
+Cardholder Name: Joaquín Ureña-Vilalta
+Billing Address: 056 Martinez Island
+
+Thank you for your payment. If you have any questions or concerns, please contact our customer support team.
+
+Note: For your security, please do not share your credit card security code or any other sensitive information in your response.

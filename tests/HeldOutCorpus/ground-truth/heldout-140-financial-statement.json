@@ -1,0 +1,35 @@
+{
+  "id": "heldout-140-financial-statement",
+  "title": "Financial Statement (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Fiona Lauren Barker",
+      "occurrences": 3
+    },
+    {
+      "where": "body",
+      "type": "ID_NUMBER",
+      "text": "X5083723",
+      "occurrences": 3
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Richardshire",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Fiona",
+      "occurrences": 2
+    }
+  ],
+  "mustPreserve": []
+}

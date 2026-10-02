@@ -1,0 +1,59 @@
+---
+Consulting Business Tax Return
+
+Tax Year 2021
+
+Business Name: Richard Mellor Consulting
+EIN: 12-3456789
+
+Address: 62657 Devon Loaf Suite 831, Anytown, CA 94111
+
+---
+
+Form 1120S, U.S. Income Tax Return for an S Corporation
+
+Part I - Income
+
+1. Gross receipts or sales: $250,000
+2. Cost of goods sold: $60,000
+3. Gross profit: $190,000
+
+Part II - Deductions
+
+1. Salaries and wages: $80,000
+2. Rent expense: $12,000
+3. Utilities: $4,000
+4. Insurance: $3,000
+5. Office supplies: $2,000
+6. Depreciation: $15,000
+7. Total deductions: $116,000
+
+Part III - Income
+
+1. Income: $190,000
+2. Deductions: -$116,000
+3. Income before self-employment tax: $74,000
+
+Part IV - Self-Employment Tax
+
+1. Self-employment tax: $10,358
+2. Additions to tax: $0
+3. Deduction for one-half of self-employment tax: -$5,179
+
+Part V - Other Taxes
+
+1. Alternative minimum tax: $0
+2. Regular tax: $11,987
+3. Total tax: $17,166
+
+Part VI - Payments
+
+1. Estimated tax payments: $15,000
+2. Overpayment from 2020: -$2,000
+3. Total payments: $13,000
+
+Part VII - Refundable Credits
+
+1. Refundable credits: $0
+
+Part VIII - Balance Due or Overpayment

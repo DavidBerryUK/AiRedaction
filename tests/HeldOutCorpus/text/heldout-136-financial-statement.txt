@@ -1,0 +1,47 @@
+Audited Financial Statement
+
+For the Period Ending December 31, 2021
+
+Heinz, Belinda & Oswald
+962 Pollard Stravenue Apt. 479
+Toronto, ON M1R 3V8
+Canada
+
+Balance Sheet
+
+| Assets |  |  |
+| --- | --- | --- |
+| Current Assets |  |  |
+| Cash | $23,567 |  |
+| Accounts Receivable | $184,621 |  |
+| Inventory | $145,120 |  |
+| Total Current Assets | $353,308 |  |
+| Fixed Assets |  |  |
+| Property, Plant, and Equipment | $782,540 | |
+| Less: Accumulated Depreciation | ($214,650) | |
+| Net Fixed Assets | $567,890 | |
+| Total Assets | $921,298 | |
+
+---
+
+| Liabilities and Equity |  |  |
+| --- | --- | --- |
+| Current Liabilities |  |  |
+| Accounts Payable | $122,345 |  |
+| Accrued Expenses | $15,671 |  |
+| Total Current Liabilities | $138,016 |  |
+| Long-Term Liabilities |  |  |
+| Long-Term Debt | $350,000 | |
+| Total Liabilities | $488,016 |  |
+| Equity |  |  |
+| Common Stock | $300,000 | |
+| Retained Earnings | $133,282 | |
+| Total Equity | $433,282 | |
+| Total Liabilities and Equity | $921,298 | |
+
+Income Statement
+
+| Revenue |  |  |
+| --- | --- | --- |
+| Service Revenue | $512,500 |  |
+| Total Revenue | $512

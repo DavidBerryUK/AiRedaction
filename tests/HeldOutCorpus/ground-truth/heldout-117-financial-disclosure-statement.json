@@ -1,0 +1,35 @@
+{
+  "id": "heldout-117-financial-disclosure-statement",
+  "title": "Financial Disclosure Statement (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "XYZ Corporation",
+      "occurrences": 4
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "123 Main Street\nAnytown, USA",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Greenpeace",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Sierra Club",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

@@ -1,0 +1,17 @@
+{
+  "id": "heldout-044-corporate-tax-return",
+  "title": "Corporate Tax Return (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Jacques Maurice Regnier",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

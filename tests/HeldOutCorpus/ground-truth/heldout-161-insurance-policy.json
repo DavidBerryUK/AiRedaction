@@ -1,0 +1,35 @@
+{
+  "id": "heldout-161-insurance-policy",
+  "title": "Insurance Policy (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "National Flood Insurance Program",
+      "occurrences": 2
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Virginie",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Flavia Elvira Zacco",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "349 Scott Plaza Suite 058",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

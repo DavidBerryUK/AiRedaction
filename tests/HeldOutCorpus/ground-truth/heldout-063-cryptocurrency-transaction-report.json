@@ -1,0 +1,10 @@
+{
+  "id": "heldout-063-cryptocurrency-transaction-report",
+  "title": "Cryptocurrency Transaction Report (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [],
+  "mustPreserve": []
+}

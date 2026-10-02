@@ -1,0 +1,35 @@
+{
+  "id": "heldout-138-financial-statement",
+  "title": "Financial Statement (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Zoe H. Lucas",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PHONE",
+      "text": "[\u002B44] 20 7122 5555",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Collins PLC",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "EMAIL",
+      "text": "treasurer@collinsplc.org",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

@@ -1,0 +1,23 @@
+{
+  "id": "heldout-087-dispute-resolution-policy",
+  "title": "Dispute Resolution Policy (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Paulino Cuenca-Contreras",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "77263 Cathy Landing",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

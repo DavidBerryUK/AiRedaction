@@ -1,0 +1,23 @@
+{
+  "id": "heldout-113-financial-data-feed",
+  "title": "Financial Data Feed (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Gionata M. Baroffio",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PHONE",
+      "text": "001-438-554-1968x78870",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

@@ -1,0 +1,41 @@
+IT Support Ticket #12345
+--------------------------
+
+**Date:** 2022-03-01
+
+**User:** Pepe Martín Amores
+
+**Contact Information:**
+- Email: [p.amores@example.com](mailto:p.amores@example.com)
+- Phone: +1-555-123-4567
+
+**Issue:** Password Reset
+
+**Priority:** Medium
+
+**Status:** In Progress
+
+**Description:**
+
+The user, Pepe Martín Amores, has reported an issue with his account password. He is unable to log in to the system using his current credentials.
+
+**Resolution Steps:**
+
+1. Direct the user to the password reset portal: https://accounts.example.com/password-reset
+2. Request the user to enter their registered email address (p.amores@example.com) and click on the 'Continue' button.
+3. The user will receive a verification code on their registered email address. Ask the user to enter the received verification code in the 'Verification Code' field and click on the 'Continue' button.
+4. Now, the user should be able to set a new password. Instruct the user to create a strong password following the password policy:
+   - Minimum length: 12 characters
+   - At least one uppercase letter (A-Z)
+   - At least one lowercase letter (a-z)
+   - At least one number (0-9)
+   - At least one special character (!@#$%^&*)
+5. Once the user has created a new password, ask them to confirm the new password by entering it again in the 'Confirm Password' field and click on the 'Reset Password' button.
+6. Inform the user that their password has been successfully reset and they can now log in using their new password.
+
+**System Configuration:**
+- IPv6: 4225:4483:c1e7:5988:b611:114e:dfa:7cfd
+- Device: Windows 10 Enterprise
+- Browser: Google Chrome, version 90.0.4430.212
+
+**Additional

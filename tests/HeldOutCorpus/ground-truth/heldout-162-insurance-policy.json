@@ -1,0 +1,35 @@
+{
+  "id": "heldout-162-insurance-policy",
+  "title": "Insurance Policy (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "SureSafe Marine Insurance Company",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "1234 Fifth Avenue, Wilmington, DE 19801",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "J\u00F6rn Lucia Eimer",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "034 Cervantes Locks, Apt. 409",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

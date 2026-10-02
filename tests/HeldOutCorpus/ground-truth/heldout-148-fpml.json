@@ -1,0 +1,23 @@
+{
+  "id": "heldout-148-fpml",
+  "title": "FpML (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Global Investment Bank",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Hedge Fund Inc.",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

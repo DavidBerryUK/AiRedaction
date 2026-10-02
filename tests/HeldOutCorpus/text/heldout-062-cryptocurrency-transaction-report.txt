@@ -1,0 +1,7 @@
+Security Token Offering Transaction Report
+
+Transaction ID,Wallet Address,Amount,Timestamp,Investor Name,Investor Email,Investor Local LatLng,Investor Street Address
+1,0x8f933868e1e983388e8090666928768a76847b5c,5000,2022-03-15 14:35:18,Karin Sonja Andersson,johanssonevy@bjorklund.com,-25.494573, 101.143160,6 Graham lane
+2,0x23e1e388e1e983388e8090666928768a76847b5c,3000,2022-03-16 10:15:25,Karin Sonja Andersson,johanssonevy@bjorklund.com,-25.494573, 101.143160,6 Graham lane
+3,0x9f933868e1e983388e8090666928768a76847b5c,2500,2022-03-17 16:45:12,Karin Sonja Andersson,johanssonevy@bjorklund.com,-25.494573, 101.143160,6 Graham lane
+4,0x1f933868e1e983388e8090666928768a76847b5c,4000,2022-03-18 09:20:36,Karin Sonja Andersson,johanssonevy@bjorklund.com,-25.494573, 101.143160,6 Graham

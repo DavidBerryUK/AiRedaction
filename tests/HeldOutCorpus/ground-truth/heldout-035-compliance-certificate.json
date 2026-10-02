@@ -1,0 +1,17 @@
+{
+  "id": "heldout-035-compliance-certificate",
+  "title": "Compliance Certificate (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "GreenTech Innovations Ltd.",
+      "occurrences": 4
+    }
+  ],
+  "mustPreserve": []
+}

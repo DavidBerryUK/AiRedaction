@@ -1,0 +1,24 @@
+Audit Report
+
+Independent Auditor's Report
+
+We have audited the IT security measures of XYZ Corporation for the year ended 31 December 2021. The XYZ Corporation's management is responsible for the IT security measures, including network security and data protection protocols. Our responsibility is to express an opinion on the XYZ Corporation's IT security measures based on our audit.
+
+We conducted our audit in accordance with auditing standards generally accepted in the United Kingdom. Those standards require that we plan and perform the audit to obtain reasonable assurance about whether the IT security measures are effective in achieving the entity's objective. Our audit included obtaining an understanding of internal control over IT security, assessing the risk that a material misstatement of the IT security measures would occur, and testing and evaluating the design and operating effectiveness of internal control based on the assessed risk. Our audit also included performing such other procedures as we considered necessary in the circumstances. We believe that the audit evidence we obtained is sufficient and appropriate to provide a basis for our audit opinion.
+
+In our opinion, the XYZ Corporation's IT security measures are effective in achieving the entity's objective of maintaining effective network security and data protection protocols as of 31 December 2021, based on the IT security criteria established by management.
+
+We have not audited and do not express an opinion on the IT security measures of any other entity, or on the effectiveness of the XYZ Corporation's IT security measures in achieving the entity's objectives in future periods.
+
+The XYZ Corporation's management is responsible for maintaining effective IT security measures, including network security and data protection protocols, and for the design, implementation, and maintenance of those measures. Our responsibility is to report on the results of our audit.
+
+This report is intended solely for the information and use of the XYZ Corporation's management and those responsible for oversight of the XYZ Corporation's IT security measures. This report is not intended to be and should not be used by anyone other than these specified parties.
+
+Gösta M. Magnusson
+Independent Auditor
+63 rue Isabelle Rodrigues
+London, EC1A 7BA
+United Kingdom
+
+BBAN: 62997511170555282974
+Account P

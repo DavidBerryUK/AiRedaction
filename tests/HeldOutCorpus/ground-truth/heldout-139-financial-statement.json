@@ -1,0 +1,23 @@
+{
+  "id": "heldout-139-financial-statement",
+  "title": "Financial Statement (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Educational Institution",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "1435 Payne Streets",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

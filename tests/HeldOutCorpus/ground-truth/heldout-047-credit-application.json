@@ -1,0 +1,23 @@
+{
+  "id": "heldout-047-credit-application",
+  "title": "Credit Application (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Ann T. Davis",
+      "occurrences": 3
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "63895 Cole Circles, 22289, Port Lauren",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

@@ -1,0 +1,17 @@
+{
+  "id": "heldout-052-credit-card-application",
+  "title": "Credit Card Application (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "RockStar Musician Card",
+      "occurrences": 2
+    }
+  ],
+  "mustPreserve": []
+}

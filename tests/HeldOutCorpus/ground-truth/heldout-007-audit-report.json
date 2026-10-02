@@ -1,0 +1,35 @@
+{
+  "id": "heldout-007-audit-report",
+  "title": "Audit Report (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "XYZ Corporation",
+      "occurrences": 8
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "G\u00F6sta M. Magnusson",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "63 rue Isabelle Rodrigues",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ID_NUMBER",
+      "text": "62997511170555282974",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

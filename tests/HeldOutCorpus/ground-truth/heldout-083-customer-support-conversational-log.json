@@ -1,0 +1,29 @@
+{
+  "id": "heldout-083-customer-support-conversational-log",
+  "title": "Customer support conversational log (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Edoardo Cheda",
+      "occurrences": 5
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "62625 Harris Stream, Port Pamela",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Edoardo",
+      "occurrences": 3
+    }
+  ],
+  "mustPreserve": []
+}

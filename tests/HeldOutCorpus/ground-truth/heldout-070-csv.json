@@ -1,0 +1,29 @@
+{
+  "id": "heldout-070-csv",
+  "title": "CSV (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "ONLINE_ID",
+      "text": "176.169.229.38",
+      "occurrences": 3
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Isabella Fredo Storladi",
+      "occurrences": 3
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "7 Markboulevard, Apt. 782",
+      "occurrences": 3
+    }
+  ],
+  "mustPreserve": []
+}

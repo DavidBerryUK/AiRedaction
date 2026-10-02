@@ -1,0 +1,26 @@
+UNB+UNOC:300+BILLING3:1.6'230321:1038'
+UNH+BILL:D:98A:UN:EAN008'
+BGM+220+5354321+9'
+DTM+137:20230322'
+DTM+191:20230325'
+NAD+SH+Neil L. Talbot+8666 Boyer Mount'
+NAD+SU+Billing Co.+456 Park Lane'
+NAD+DP+Consignee Name+789 Elm Street'
+LIN+1++123456+10+EA'
+PIA+1+385768114+246879'
+LIN+2++789123+20+EA'
+UNT+21+5354321'
+UNZ+1+5354321'
+
+Explanation:
+- UNB: Uniformity of the message, beginning segment.
+- UNH: Uniformity of the message, heading segment.
+- BGM: Beginning of a functional group, beginning segment.
+- DTM: Date/time/period.
+- NAD: Name and address.
+- LIN: Line item narrative description.
+- PIA: Piece identification.
+- UNT: Uniformity of the message, trailer segment.
+- UNZ: Uniformity of the message, ending segment.
+- The first NAD segment includes the shipper's name, Neil L. Talbot, and street address, 8666 Boyer Mount.
+- The PIA segment includes the bank routing number (385768114) and account pin (246879) for the shipper.

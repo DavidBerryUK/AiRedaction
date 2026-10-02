@@ -1,0 +1,29 @@
+{
+  "id": "heldout-293-transaction-confirmation",
+  "title": "Transaction Confirmation (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "P\u00EDo P. Segura",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "574 Allison Land, Apt. 154",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Dr. Jane Smith",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

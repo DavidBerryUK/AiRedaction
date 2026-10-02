@@ -1,0 +1,37 @@
+**Surveillance Data Privacy Policy**
+
+At [Company Name], we are committed to protecting the privacy and security of our customers. This Surveillance Data Privacy Policy outlines how we collect, use, and manage surveillance data, including privacy protection measures and lawful processing requirements.
+
+**Collection and Use of Surveillance Data**
+
+We collect surveillance data through the use of security cameras and other surveillance technologies installed in our facilities. This data may include video recordings, images, and other information captured by these technologies. We use this data for the following purposes:
+
+* To ensure the safety and security of our customers, employees, and property.
+* To deter and investigate criminal activity.
+* To maintain a safe and secure environment for all individuals on our premises.
+
+**Privacy Safeguards**
+
+We take the privacy of our customers seriously and have implemented the following safeguards to protect their personal information:
+
+* Access to surveillance data is limited to authorized personnel only.
+* Surveillance data is stored in a secure location and is protected by appropriate technical and physical measures.
+* Surveillance data is only retained for as long as necessary to fulfill the purposes outlined above.
+* Surveillance data is not shared with third parties except as required by law or as necessary to fulfill the purposes outlined above.
+
+**Personally Identifiable Information**
+
+In the course of collecting and using surveillance data, we may incidentally collect and use the following personally identifiable information (PII):
+
+* Name: Heidemarie Niemeier
+* Street Address: 6023 Lori Motorway
+
+This PII is collected and used solely for the purposes outlined above and is subject to the same privacy safeguards as all other surveillance data.
+
+**Lawful Processing Requirements**
+
+We collect and use surveillance data in accordance with applicable laws and regulations, including data protection and privacy laws. We only collect and use surveillance data to the extent necessary to fulfill the purposes outlined above.
+
+If you have any questions or concerns about our Surveillance Data Privacy Policy, please contact us at [Company Contact Information].
+
+Last updated: [Date]

@@ -1,0 +1,29 @@
+{
+  "id": "heldout-015-bai-format",
+  "title": "BAI Format (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "BEATRIX SENOL GIRSCHNER",
+      "occurrences": 4
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "295 Ashleyhof",
+      "occurrences": 5
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Beatrix Senol Girschner",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

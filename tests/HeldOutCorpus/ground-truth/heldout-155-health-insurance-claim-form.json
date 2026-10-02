@@ -1,0 +1,47 @@
+{
+  "id": "heldout-155-health-insurance-claim-form",
+  "title": "Health Insurance Claim Form (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Fabrizio",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Beth Jackson",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "6881 Jordan Drive, East Trevorfurt",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Trevorfurt General Hospital",
+      "occurrences": 2
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Dr. Samuel Johnson, MD",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "6769 Main Street\nTrevorfurt, AB T1Y 2S8\nCanada",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

@@ -1,0 +1,2 @@
+"local\_latlng","date\_time","name","street\_address"
+"9.3194175 N, 76.559561 E","1986-03-28 12:05:04","Albert Roberts-McLean","15 Rambla Miguela Carreras"

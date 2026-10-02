@@ -1,0 +1,10 @@
+{
+  "id": "heldout-231-real-estate-loan-agreement",
+  "title": "Real Estate Loan Agreement (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [],
+  "mustPreserve": []
+}

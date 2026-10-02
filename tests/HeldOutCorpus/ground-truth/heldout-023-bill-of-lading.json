@@ -1,0 +1,47 @@
+{
+  "id": "heldout-023-bill-of-lading",
+  "title": "Bill of Lading (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Maritime Express Lines Ltd.",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "45, Dockside Lane, Southampton, SO14 2JQ, United Kingdom",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Fine Furniture Importers Ltd.",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "34, High Street, London, EC4M 7HD, United Kingdom",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "European Luxury Interiors B.V.",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "12, Keizersgracht, 1015 CG Amsterdam, Netherlands",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

@@ -1,0 +1,29 @@
+{
+  "id": "heldout-258-securities-prospectus",
+  "title": "Securities Prospectus (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "XYZ Investment Bank",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "ABC Limited",
+      "occurrences": 2
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "Manchester, UK",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

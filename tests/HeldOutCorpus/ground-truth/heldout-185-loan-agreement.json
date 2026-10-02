@@ -1,0 +1,29 @@
+{
+  "id": "heldout-185-loan-agreement",
+  "title": "Loan Agreement (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Andreas",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "34 Keith light, Flat 95T",
+      "occurrences": 2
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Sharon Whitehead",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

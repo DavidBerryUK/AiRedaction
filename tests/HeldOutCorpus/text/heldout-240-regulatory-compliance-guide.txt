@@ -1,0 +1,37 @@
+Aviation Compliance Guide
+
+1. Aircraft Maintenance
+
+1.1. Regular Inspections
+
+Aircraft maintenance is a critical aspect of the aviation industry, and it is essential to adhere to strict regulations to ensure the safety of passengers, crew members, and people on the ground. Regular inspections of the aircraft's structural components, systems, and engines must be carried out at specified intervals. These inspections include:
+
+- Annual Inspections: An annual inspection is required for all aircraft and must be conducted by a certified aviation maintenance technician. This inspection includes a comprehensive examination of the aircraft's systems, components, and structure.
+
+- 100-Hour Inspections: A 100-hour inspection is required for aircraft used for commercial operations and must be conducted every 100 hours of operation. This inspection includes a thorough examination of the aircraft's engines, propellers, and related components.
+
+1.2. Record Keeping
+
+Accurate record keeping is crucial for maintaining compliance with aviation regulations. All maintenance activities, inspections, and repairs must be documented in the aircraft's maintenance logbook. The logbook should include the following information:
+
+- Date of maintenance activity
+- Type of maintenance activity
+- Name and signature of the maintenance technician
+- Part number and serial number of replaced components
+- Aircraft identification, including the tail number (e.g., 185.131.138.249)
+
+1.3. Modifications and Repairs
+
+Any modifications or repairs made to the aircraft must be approved by the aviation authority and must be carried out by a certified aviation maintenance technician. The technician must document all modifications and repairs in the aircraft's maintenance logbook, including the following information:
+
+- Description of the modification or repair
+- Date of modification or repair
+- Name and signature of the maintenance technician
+- Part number and serial number of replaced components
+
+2. Pilot Training Standards
+
+Pilot training and certification are critical for ensuring the safety of aviation operations. Pilots must undergo rigorous training and pass both written and practical examinations to obtain a pilot's license. The training includes:
+
+- Ground School: Ground school covers theoretical knowledge, including navigation, weather, flight planning, and aircraft systems.
+

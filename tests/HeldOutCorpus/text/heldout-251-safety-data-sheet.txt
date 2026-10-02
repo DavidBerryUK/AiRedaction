@@ -1,0 +1,15 @@
+Safety Data Sheet
+
+SECTION 1: IDENTIFICATION
+
+Product identifier: Hydrochloric Acid
+Chemical formula: HCl
+Recommended use: Laboratory use, cleaning solutions, pH adjustment
+
+SECTION 2: HAZARD IDENTIFICATION
+
+Classification: Corrosive, irritant
+Hazard statement(s): Causes severe skin burns and eye damage. Harmful if swallowed.
+Pictogram(s):
+- Corrosive (GHS05)
+- Health hazard (GHS07)

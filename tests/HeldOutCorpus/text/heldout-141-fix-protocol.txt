@@ -1,0 +1,13 @@
+Sure, here's an example of a FIX Protocol message for a Trade Capture (type 35=A):
+
+`8=FIX.4.4|9=128|35=A|55=RJF|54=1|44=20230322-14:30:45.678|49=USD|52=20230322|56=JPM|15=USD|40=2|43=N|448=TradeID123456|452=4|541=200.00|552=2.00|553=1.00|554=1.00|555=AG|544=JPM|60=20230322-14:30:45.678|600=20230322-14:30:45.678|602=20230322-14:30:45.678|603=1.00|604=20230322-14:30:45.678|605=1.00|606=20230322-14:30:45.678|607=1.00|608=20230322-14:30:45.678|609=1.00|10=123|`
+
+Explanation of the fields:
+
+* 8=FIX.4.4: Protocol version
+* 9=128: Message length
+* 35=A: Message type (Trade Capture)
+* 55=RJF: Sender Comp ID
+* 54=1: Target Comp ID
+* 44=20230322-14:30:45.678: Sending time
+* 49=USD: Currency

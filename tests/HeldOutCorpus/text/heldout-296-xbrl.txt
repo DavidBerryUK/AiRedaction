@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:link="http://www.xbrl.org/2003/linkbase" xmlns:tb="http://www.example.com/taxonomy/2023-03-31/termbase" xmlns:tbx="http://www.xbrl.org/2003/linkbase" xmlns:xbrli="http://www.xbrl.org/2003/instance" targetNamespace="http://www.example.com/taxonomy/2023-03-31/taxonomy" elementFormDefault="qualified" attributeFormDefault="qualified">
+
+ <xsd:import namespace="http://www.xbrl.org/2003/instance" schemaLocation="http://www.xbrl.org/2003/xbrli-data-types-2003-12-31.xsd"/>
+ <xsd:import namespace="http://www.xbrl.org/2003/linkbase" schemaLocation="http://www.xbrl.org/2003/xbrl-linkbase-2003-12-31.xsd"/>
+
+ <xsd:annotation>
+ <xsd:appinfo>
+ <link:schemaRef xlink:href="http://www.xbrl.org/2003/xbrl-valid.xsd" xlink:type="simple"/>
+ <link:schemaRef xlink:href="http://www.xbrl.org/2003/xbrl-frame-2003-12-31.xsd" xlink:type="simple"/>
+ <link:schemaRef xlink:href="http://www.xbrl.org/2003/xbrl-xlink-2003-12-31.xsd" xlink:type="simple"/>
+ </x

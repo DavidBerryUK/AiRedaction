@@ -1,0 +1,29 @@
+{
+  "id": "heldout-172-isda-definition",
+  "title": "ISDA Definition (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "London Court of International Arbitration",
+      "occurrences": 2
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Alicia Salom\u00F3n Vizca\u00EDno",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "340 Ca\u00F1ada de Viviana Sureda, Piso 3",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

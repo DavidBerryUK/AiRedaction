@@ -1,0 +1,17 @@
+{
+  "id": "heldout-265-shareholder-agreement",
+  "title": "Shareholder Agreement (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Corporation",
+      "occurrences": 5
+    }
+  ],
+  "mustPreserve": []
+}

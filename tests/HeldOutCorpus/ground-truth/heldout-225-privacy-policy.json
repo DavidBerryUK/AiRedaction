@@ -1,0 +1,23 @@
+{
+  "id": "heldout-225-privacy-policy",
+  "title": "Privacy Policy (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "addresses",
+      "occurrences": 2
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "[contact information]",
+      "occurrences": 3
+    }
+  ],
+  "mustPreserve": []
+}

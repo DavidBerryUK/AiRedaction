@@ -1,0 +1,10 @@
+{
+  "id": "heldout-178-it-support-ticket",
+  "title": "IT support ticket (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [],
+  "mustPreserve": []
+}

@@ -1,0 +1,17 @@
+{
+  "id": "heldout-228-product-disclosure-statement",
+  "title": "Product Disclosure Statement (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Lee Sharpe",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

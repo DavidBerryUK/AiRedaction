@@ -1,0 +1,35 @@
+{
+  "id": "heldout-021-bill-of-lading",
+  "title": "Bill of Lading (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Blue Ocean Shipping Lines",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "UK Cargo Link Ltd.",
+      "occurrences": 2
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "XYZ Industries Ltd.",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "42 Rue de la R\u00E9publique,\n       75011 Paris,\n       France",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

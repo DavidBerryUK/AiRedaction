@@ -1,0 +1,17 @@
+{
+  "id": "heldout-002-annual-report",
+  "title": "Annual Report (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Sj\u00F6berg Enterprises Limited",
+      "occurrences": 5
+    }
+  ],
+  "mustPreserve": []
+}

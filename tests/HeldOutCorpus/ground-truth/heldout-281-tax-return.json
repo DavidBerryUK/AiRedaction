@@ -1,0 +1,23 @@
+{
+  "id": "heldout-281-tax-return",
+  "title": "Tax Return (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "John A. Smith",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "123 Retirement Lane\n   Retirement City, USA 12345",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

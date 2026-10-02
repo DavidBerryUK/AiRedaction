@@ -1,0 +1,29 @@
+{
+  "id": "heldout-062-cryptocurrency-transaction-report",
+  "title": "Cryptocurrency Transaction Report (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Karin Sonja Andersson",
+      "occurrences": 4
+    },
+    {
+      "where": "body",
+      "type": "EMAIL",
+      "text": "johanssonevy@bjorklund.com",
+      "occurrences": 4
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "6 Graham lane",
+      "occurrences": 3
+    }
+  ],
+  "mustPreserve": []
+}

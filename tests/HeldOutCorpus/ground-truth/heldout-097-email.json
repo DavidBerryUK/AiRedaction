@@ -1,0 +1,41 @@
+{
+  "id": "heldout-097-email",
+  "title": "Email (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Hope and Care Foundation",
+      "occurrences": 3
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Mr. and Mrs. Thompson",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Jane",
+      "occurrences": 7
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Amelia Hartley",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Hope and Care Foundation\n\nP.S.",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

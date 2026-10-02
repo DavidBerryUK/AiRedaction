@@ -1,0 +1,31 @@
+**Sports Fan Credit Card Application**
+
+Thank you for your interest in the Sports Fan Credit Card! To help us process your application, please provide the following information:
+
+1. Full name: Cynthia Hanson-Brown
+2. Date of birth:
+3. Social security number:
+4. Contact information:
+   - Street address: 50304 Petersen Village, Apt. 143
+   - Email address:
+   - Mobile phone number:
+5. Employment status:
+   - Employed / Self-employed
+   - Employer name and address:
+   - Job title and annual income:
+6. Housing status:
+   - Own / Rent
+   - Monthly housing payment:
+7. Credit history:
+   - Have you ever filed for bankruptcy? (Yes / No)
+   - Have you had a property foreclosed? (Yes / No)
+   - Have you had a vehicle repossessed? (Yes / No)
+8. Sports-related spending:
+   - Approximate monthly spending on sports merchandise and events:
+9. Favorite teams and events:
+   - Favorite sports teams:
+   - Favorite sports events:
+10. Security information:
+    - Password: ^mGJ*7Rd7n)
+
+By submitting this application, you authorize us to perform a credit check and verify the information provided. We will contact you within 7-10 business days to inform you of our decision. Thank you for considering the Sports Fan Credit Card!

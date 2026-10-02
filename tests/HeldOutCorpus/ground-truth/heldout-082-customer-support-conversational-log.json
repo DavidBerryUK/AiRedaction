@@ -1,0 +1,17 @@
+{
+  "id": "heldout-082-customer-support-conversational-log",
+  "title": "Customer support conversational log (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Royal Bank of UK",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

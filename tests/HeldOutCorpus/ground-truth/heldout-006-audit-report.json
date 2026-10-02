@@ -1,0 +1,23 @@
+{
+  "id": "heldout-006-audit-report",
+  "title": "Audit Report (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "XYZ Corporation",
+      "occurrences": 7
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Ugolino Cainero-Paruta",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

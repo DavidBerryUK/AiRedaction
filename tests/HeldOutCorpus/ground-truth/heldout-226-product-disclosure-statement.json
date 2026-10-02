@@ -1,0 +1,10 @@
+{
+  "id": "heldout-226-product-disclosure-statement",
+  "title": "Product Disclosure Statement (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [],
+  "mustPreserve": []
+}

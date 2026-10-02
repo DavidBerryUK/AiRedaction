@@ -1,0 +1,21 @@
+Trade-Weighted Currency Exchange Rate Sheet
+------------------------------------------
+
+Date: 2022-03-01
+Base Currency: GBP (British Pound Sterling)
+
+| Target Currency | Trade Weight | Buying Rate | Selling Rate |
+|----------------|--------------|-------------|--------------|
+| USD (US Dollar) | 0.25 | 1.3800 | 1.3900 |
+| EUR (Euro) | 0.20 | 1.1600 | 1.1700 |
+| JPY (Japanese Yen) | 0.15 | 145.00 | 146.00 |
+| CNY (Chinese Yuan) | 0.10 | 8.9000 | 9.0000 |
+| CHF (Swiss Franc) | 0.10 | 1.2500 | 1.2600 |
+| CAD (Canadian Dollar) | 0.05 | 1.7500 | 1.7600 |
+| AUD (Australian Dollar) | 0.05 | 1.8500 | 1.8600 |
+
+Notes:
+
+- The trade weights represent the relative importance of each currency in the trade-weighted index.
+- The buying and selling rates are expressed in GBP per unit of the target currency.
+- This sheet was prepared for Jennifer Isaías Cañas, residing at 348 Industrigränd, Apt. 1.

@@ -1,0 +1,53 @@
+{
+  "id": "heldout-031-compliance-certificate",
+  "title": "Compliance Certificate (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "THE QUEEN\u0027S UNIVERSITY OF BELFAST",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "The Queen\u0027s University of Belfast",
+      "occurrences": 3
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Eberhard L. Knappe",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "60 H\u00F6velgasse",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ID_NUMBER",
+      "text": "853",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Dr. Patrick Johnston",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Knappe",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}
