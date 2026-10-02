@@ -50,6 +50,12 @@
     },
     {
       "where": "comment",
+      "type": "GENDER",
+      "text": "his",
+      "occurrences": 1
+    },
+    {
+      "where": "comment",
       "type": "PHONE",
       "text": "07700 900999",
       "occurrences": 1

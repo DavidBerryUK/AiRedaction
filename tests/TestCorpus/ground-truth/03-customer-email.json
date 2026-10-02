@@ -51,6 +51,12 @@
     },
     {
       "where": "body",
+      "type": "GENDER",
+      "text": "Mr",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
       "type": "PERSON",
       "text": "Kowalczyk",
       "occurrences": 1

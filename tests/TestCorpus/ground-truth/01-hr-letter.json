@@ -81,6 +81,12 @@
     },
     {
       "where": "body",
+      "type": "ID_NUMBER",
+      "text": "4821",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
       "type": "PHONE",
       "text": "07700 900123",
       "occurrences": 1

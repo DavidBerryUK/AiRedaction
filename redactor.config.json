@@ -106,7 +106,11 @@
     "seed": 42,
     "numCtx": 8192,
     "think": false,
+    "fallbackModel": "",
     "keepAlive": "60m"
+  },
+  "rules": {
+    "enabled": true
   },
   "ocr": {
     "enabled": true,

@@ -1,0 +1,1754 @@
+{
+  "started": "2026-10-02T16:31:31.614213+01:00",
+  "elapsedSeconds": 350.5061273,
+  "models": [
+    "phi4"
+  ],
+  "documents": [
+    {
+      "File": "csv/06-customer-list.csv",
+      "Group": "Plain text",
+      "Model": "phi4",
+      "Present": 20,
+      "Caught": 20,
+      "Edits": 20,
+      "TruePositives": 20,
+      "TypeCorrect": 20,
+      "LostToExtraction": 0,
+      "DetectSeconds": 15.9935807,
+      "WriteSeconds": 0.0007761,
+      "PromptTokens": 788,
+      "OutputTokens": 841,
+      "Discarded": 0,
+      "OutputOk": true,
+      "byCategory": {
+        "PERSON": {
+          "present": 4,
+          "caught": 4
+        },
+        "EMAIL": {
+          "present": 4,
+          "caught": 4
+        },
+        "PHONE": {
+          "present": 4,
+          "caught": 4
+        },
+        "DATE_OF_BIRTH": {
+          "present": 4,
+          "caught": 4
+        },
+        "COMPANY": {
+          "present": 4,
+          "caught": 4
+        }
+      },
+      "leaks": [],
+      "falsePositives": [],
+      "preserveBroken": [],
+      "preserveBrokenCount": 0
+    },
+    {
+      "File": "docx/01-hr-letter.docx",
+      "Group": "Word",
+      "Model": "phi4",
+      "Present": 17,
+      "Caught": 17,
+      "Edits": 16,
+      "TruePositives": 15,
+      "TypeCorrect": 15,
+      "LostToExtraction": 0,
+      "DetectSeconds": 15.4082495,
+      "WriteSeconds": 0.0088984,
+      "PromptTokens": 859,
+      "OutputTokens": 793,
+      "Discarded": 0,
+      "OutputOk": true,
+      "byCategory": {
+        "COMPANY": {
+          "present": 2,
+          "caught": 2
+        },
+        "ADDRESS": {
+          "present": 2,
+          "caught": 2
+        },
+        "PHONE": {
+          "present": 2,
+          "caught": 2
+        },
+        "EMAIL": {
+          "present": 2,
+          "caught": 2
+        },
+        "GENDER": {
+          "present": 2,
+          "caught": 2
+        },
+        "PERSON": {
+          "present": 3,
+          "caught": 3
+        },
+        "DATE_OF_BIRTH": {
+          "present": 1,
+          "caught": 1
+        },
+        "AGE": {
+          "present": 1,
+          "caught": 1
+        },
+        "ID_NUMBER": {
+          "present": 2,
+          "caught": 2
+        }
+      },
+      "leaks": [],
+      "falsePositives": [
+        {
+          "Type": "CONTEXTUAL",
+          "text": "Head of People"
+        }
+      ],
+      "preserveBroken": [],
+      "preserveBrokenCount": 0
+    },
+    {
+      "File": "docx/02-services-agreement.docx",
+      "Group": "Word",
+      "Model": "phi4",
+      "Present": 14,
+      "Caught": 14,
+      "Edits": 14,
+      "TruePositives": 14,
+      "TypeCorrect": 14,
+      "LostToExtraction": 0,
+      "DetectSeconds": 10.6384261,
+      "WriteSeconds": 0.004238,
+      "PromptTokens": 829,
+      "OutputTokens": 535,
+      "Discarded": 0,
+      "OutputOk": true,
+      "byCategory": {
+        "COMPANY": {
+          "present": 3,
+          "caught": 3
+        },
+        "COMPANY_ID": {
+          "present": 2,
+          "caught": 2
+        },
+        "ADDRESS": {
+          "present": 1,
+          "caught": 1
+        },
+        "PERSON": {
+          "present": 3,
+          "caught": 3
+        },
+        "EMAIL": {
+          "present": 2,
+          "caught": 2
+        },
+        "PHONE": {
+          "present": 1,
+          "caught": 1
+        },
+        "ID_NUMBER": {
+          "present": 1,
+          "caught": 1
+        },
+        "DOMAIN": {
+          "present": 1,
+          "caught": 1
+        }
+      },
+      "leaks": [],
+      "falsePositives": [],
+      "preserveBroken": [],
+      "preserveBrokenCount": 0
+    },
+    {
+      "File": "docx/04-meeting-notes.docx",
+      "Group": "Word",
+      "Model": "phi4",
+      "Present": 12,
+      "Caught": 11,
+      "Edits": 10,
+      "TruePositives": 9,
+      "TypeCorrect": 9,
+      "LostToExtraction": 0,
+      "DetectSeconds": 7.560283,
+      "WriteSeconds": 0.0020818,
+      "PromptTokens": 738,
+      "OutputTokens": 380,
+      "Discarded": 0,
+      "OutputOk": true,
+      "byCategory": {
+        "CONTEXTUAL": {
+          "present": 1,
+          "caught": 0
+        },
+        "PERSON": {
+          "present": 5,
+          "caught": 5
+        },
+        "COMPANY": {
+          "present": 3,
+          "caught": 3
+        },
+        "GENDER": {
+          "present": 1,
+          "caught": 1
+        },
+        "AGE": {
+          "present": 1,
+          "caught": 1
+        },
+        "EMAIL": {
+          "present": 1,
+          "caught": 1
+        }
+      },
+      "leaks": [
+        {
+          "Type": "CONTEXTUAL",
+          "Count": 1,
+          "text": "Kestrel"
+        }
+      ],
+      "falsePositives": [
+        {
+          "Type": "DATE_OF_BIRTH",
+          "text": "in January"
+        }
+      ],
+      "preserveBroken": [],
+      "preserveBrokenCount": 0
+    },
+    {
+      "File": "docx/09-gp-referral.docx",
+      "Group": "Word",
+      "Model": "phi4",
+      "Present": 13,
+      "Caught": 12,
+      "Edits": 12,
+      "TruePositives": 12,
+      "TypeCorrect": 12,
+      "LostToExtraction": 0,
+      "DetectSeconds": 8.7897807,
+      "WriteSeconds": 0.0023309,
+      "PromptTokens": 761,
+      "OutputTokens": 445,
+      "Discarded": 0,
+      "OutputOk": true,
+      "byCategory": {
+        "PERSON": {
+          "present": 2,
+          "caught": 2
+        },
+        "GENDER": {
+          "present": 3,
+          "caught": 3
+        },
+        "AGE": {
+          "present": 2,
+          "caught": 2
+        },
+        "DATE_OF_BIRTH": {
+          "present": 1,
+          "caught": 1
+        },
+        "ID_NUMBER": {
+          "present": 1,
+          "caught": 1
+        },
+        "ADDRESS": {
+          "present": 1,
+          "caught": 1
+        },
+        "PHONE": {
+          "present": 1,
+          "caught": 1
+        },
+        "COMPANY": {
+          "present": 2,
+          "caught": 1
+        }
+      },
+      "leaks": [
+        {
+          "Type": "COMPANY",
+          "Count": 1,
+          "text": "Fernleigh Surgery"
+        }
+      ],
+      "falsePositives": [],
+      "preserveBroken": [],
+      "preserveBrokenCount": 0
+    },
+    {
+      "File": "docx/11-hard-negatives.docx",
+      "Group": "Word",
+      "Model": "phi4",
+      "Present": 0,
+      "Caught": 0,
+      "Edits": 1,
+      "TruePositives": 0,
+      "TypeCorrect": 0,
+      "LostToExtraction": 0,
+      "DetectSeconds": 1.6125962,
+      "WriteSeconds": 0.0021602,
+      "PromptTokens": 732,
+      "OutputTokens": 76,
+      "Discarded": 0,
+      "OutputOk": true,
+      "byCategory": {},
+      "leaks": [],
+      "falsePositives": [
+        {
+          "Type": "AGE",
+          "text": "42"
+        }
+      ],
+      "preserveBroken": [
+        "42"
+      ],
+      "preserveBrokenCount": 1
+    },
+    {
+      "File": "docx/12-hygiene-docx.docx",
+      "Group": "Word",
+      "Model": "phi4",
+      "Present": 10,
+      "Caught": 10,
+      "Edits": 9,
+      "TruePositives": 9,
+      "TypeCorrect": 9,
+      "LostToExtraction": 0,
+      "DetectSeconds": 6.3788369,
+      "WriteSeconds": 0.0073082,
+      "PromptTokens": 743,
+      "OutputTokens": 319,
+      "Discarded": 0,
+      "OutputOk": true,
+      "byCategory": {
+        "PERSON": {
+          "present": 4,
+          "caught": 4
+        },
+        "COMPANY": {
+          "present": 2,
+          "caught": 2
+        },
+        "EMAIL": {
+          "present": 1,
+          "caught": 1
+        },
+        "ADDRESS": {
+          "present": 1,
+          "caught": 1
+        },
+        "GENDER": {
+          "present": 1,
+          "caught": 1
+        },
+        "PHONE": {
+          "present": 1,
+          "caught": 1
+        }
+      },
+      "leaks": [],
+      "falsePositives": [],
+      "preserveBroken": [],
+      "preserveBrokenCount": 0
+    },
+    {
+      "File": "json/07-app-config.json",
+      "Group": "Plain text",
+      "Model": "phi4",
+      "Present": 4,
+      "Caught": 4,
+      "Edits": 4,
+      "TruePositives": 4,
+      "TypeCorrect": 4,
+      "LostToExtraction": 0,
+      "DetectSeconds": 4.526218,
+      "WriteSeconds": 0.000641,
+      "PromptTokens": 766,
+      "OutputTokens": 224,
+      "Discarded": 0,
+      "OutputOk": true,
+      "byCategory": {
+        "EMAIL": {
+          "present": 1,
+          "caught": 1
+        },
+        "SECRET": {
+          "present": 2,
+          "caught": 2
+        },
+        "PERSON": {
+          "present": 1,
+          "caught": 1
+        }
+      },
+      "leaks": [],
+      "falsePositives": [],
+      "preserveBroken": [],
+      "preserveBrokenCount": 0
+    },
+    {
+      "File": "markdown/03-customer-email.md",
+      "Group": "Plain text",
+      "Model": "phi4",
+      "Present": 10,
+      "Caught": 10,
+      "Edits": 10,
+      "TruePositives": 9,
+      "TypeCorrect": 9,
+      "LostToExtraction": 0,
+      "DetectSeconds": 7.5161759,
+      "WriteSeconds": 0.0008471,
+      "PromptTokens": 805,
+      "OutputTokens": 372,
+      "Discarded": 0,
+      "OutputOk": true,
+      "byCategory": {
+        "PERSON": {
+          "present": 4,
+          "caught": 4
+        },
+        "EMAIL": {
+          "present": 1,
+          "caught": 1
+        },
+        "ADDRESS": {
+          "present": 1,
+          "caught": 1
+        },
+        "PHONE": {
+          "present": 1,
+          "caught": 1
+        },
+        "SECRET": {
+          "present": 1,
+          "caught": 1
+        },
+        "COMPANY": {
+          "present": 1,
+          "caught": 1
+        },
+        "GENDER": {
+          "present": 1,
+          "caught": 1
+        }
+      },
+      "leaks": [],
+      "falsePositives": [
+        {
+          "Type": "AGE",
+          "text": "61"
+        }
+      ],
+      "preserveBroken": [],
+      "preserveBrokenCount": 0
+    },
+    {
+      "File": "markdown/04-meeting-notes.md",
+      "Group": "Plain text",
+      "Model": "phi4",
+      "Present": 12,
+      "Caught": 11,
+      "Edits": 10,
+      "TruePositives": 9,
+      "TypeCorrect": 9,
+      "LostToExtraction": 0,
+      "DetectSeconds": 7.4527742,
+      "WriteSeconds": 0.0006275,
+      "PromptTokens": 744,
+      "OutputTokens": 374,
+      "Discarded": 0,
+      "OutputOk": true,
+      "byCategory": {
+        "CONTEXTUAL": {
+          "present": 1,
+          "caught": 0
+        },
+        "PERSON": {
+          "present": 5,
+          "caught": 5
+        },
+        "COMPANY": {
+          "present": 3,
+          "caught": 3
+        },
+        "GENDER": {
+          "present": 1,
+          "caught": 1
+        },
+        "AGE": {
+          "present": 1,
+          "caught": 1
+        },
+        "EMAIL": {
+          "present": 1,
+          "caught": 1
+        }
+      },
+      "leaks": [
+        {
+          "Type": "CONTEXTUAL",
+          "Count": 1,
+          "text": "Kestrel"
+        }
+      ],
+      "falsePositives": [
+        {
+          "Type": "DATE_OF_BIRTH",
+          "text": "in January"
+        }
+      ],
+      "preserveBroken": [],
+      "preserveBrokenCount": 0
+    },
+    {
+      "File": "pdf/01-hr-letter.pdf",
+      "Group": "PDF (text layer)",
+      "Model": "phi4",
+      "Present": 17,
+      "Caught": 17,
+      "Edits": 16,
+      "TruePositives": 15,
+      "TypeCorrect": 15,
+      "LostToExtraction": 0,
+      "DetectSeconds": 17.5014506,
+      "WriteSeconds": 0.0254035,
+      "PromptTokens": 859,
+      "OutputTokens": 860,
+      "Discarded": 0,
+      "OutputOk": true,
+      "byCategory": {
+        "COMPANY": {
+          "present": 2,
+          "caught": 2
+        },
+        "ADDRESS": {
+          "present": 2,
+          "caught": 2
+        },
+        "PHONE": {
+          "present": 2,
+          "caught": 2
+        },
+        "EMAIL": {
+          "present": 2,
+          "caught": 2
+        },
+        "GENDER": {
+          "present": 2,
+          "caught": 2
+        },
+        "PERSON": {
+          "present": 3,
+          "caught": 3
+        },
+        "DATE_OF_BIRTH": {
+          "present": 1,
+          "caught": 1
+        },
+        "AGE": {
+          "present": 1,
+          "caught": 1
+        },
+        "ID_NUMBER": {
+          "present": 2,
+          "caught": 2
+        }
+      },
+      "leaks": [],
+      "falsePositives": [
+        {
+          "Type": "CONTEXTUAL",
+          "text": "Head of People"
+        }
+      ],
+      "preserveBroken": [],
+      "preserveBrokenCount": 0
+    },
+    {
+      "File": "pdf/02-services-agreement.pdf",
+      "Group": "PDF (text layer)",
+      "Model": "phi4",
+      "Present": 13,
+      "Caught": 13,
+      "Edits": 11,
+      "TruePositives": 11,
+      "TypeCorrect": 11,
+      "LostToExtraction": 0,
+      "DetectSeconds": 10.0396267,
+      "WriteSeconds": 0.0187658,
+      "PromptTokens": 808,
+      "OutputTokens": 483,
+      "Discarded": 0,
+      "OutputOk": true,
+      "byCategory": {
+        "COMPANY": {
+          "present": 3,
+          "caught": 3
+        },
+        "COMPANY_ID": {
+          "present": 2,
+          "caught": 2
+        },
+        "ADDRESS": {
+          "present": 1,
+          "caught": 1
+        },
+        "PERSON": {
+          "present": 3,
+          "caught": 3
+        },
+        "EMAIL": {
+          "present": 1,
+          "caught": 1
+        },
+        "PHONE": {
+          "present": 1,
+          "caught": 1
+        },
+        "ID_NUMBER": {
+          "present": 1,
+          "caught": 1
+        },
+        "DOMAIN": {
+          "present": 1,
+          "caught": 1
+        }
+      },
+      "leaks": [],
+      "falsePositives": [],
+      "preserveBroken": [],
+      "preserveBrokenCount": 0
+    },
+    {
+      "File": "pdf/08-invoice.pdf",
+      "Group": "PDF (text layer)",
+      "Model": "phi4",
+      "Present": 9,
+      "Caught": 9,
+      "Edits": 9,
+      "TruePositives": 9,
+      "TypeCorrect": 9,
+      "LostToExtraction": 0,
+      "DetectSeconds": 12.7139477,
+      "WriteSeconds": 0.015432,
+      "PromptTokens": 808,
+      "OutputTokens": 585,
+      "Discarded": 0,
+      "OutputOk": true,
+      "byCategory": {
+        "COMPANY": {
+          "present": 2,
+          "caught": 2
+        },
+        "ADDRESS": {
+          "present": 2,
+          "caught": 2
+        },
+        "COMPANY_ID": {
+          "present": 1,
+          "caught": 1
+        },
+        "PERSON": {
+          "present": 1,
+          "caught": 1
+        },
+        "ID_NUMBER": {
+          "present": 1,
+          "caught": 1
+        },
+        "EMAIL": {
+          "present": 1,
+          "caught": 1
+        },
+        "PHONE": {
+          "present": 1,
+          "caught": 1
+        }
+      },
+      "leaks": [],
+      "falsePositives": [],
+      "preserveBroken": [],
+      "preserveBrokenCount": 0
+    },
+    {
+      "File": "pdf/09-gp-referral.pdf",
+      "Group": "PDF (text layer)",
+      "Model": "phi4",
+      "Present": 13,
+      "Caught": 12,
+      "Edits": 12,
+      "TruePositives": 12,
+      "TypeCorrect": 12,
+      "LostToExtraction": 0,
+      "DetectSeconds": 9.4652785,
+      "WriteSeconds": 0.0162708,
+      "PromptTokens": 763,
+      "OutputTokens": 425,
+      "Discarded": 0,
+      "OutputOk": true,
+      "byCategory": {
+        "PERSON": {
+          "present": 2,
+          "caught": 2
+        },
+        "GENDER": {
+          "present": 3,
+          "caught": 3
+        },
+        "AGE": {
+          "present": 2,
+          "caught": 2
+        },
+        "DATE_OF_BIRTH": {
+          "present": 1,
+          "caught": 1
+        },
+        "ID_NUMBER": {
+          "present": 1,
+          "caught": 1
+        },
+        "ADDRESS": {
+          "present": 1,
+          "caught": 1
+        },
+        "PHONE": {
+          "present": 1,
+          "caught": 1
+        },
+        "COMPANY": {
+          "present": 2,
+          "caught": 1
+        }
+      },
+      "leaks": [
+        {
+          "Type": "COMPANY",
+          "Count": 1,
+          "text": "Fernleigh Surgery"
+        }
+      ],
+      "falsePositives": [],
+      "preserveBroken": [],
+      "preserveBrokenCount": 0
+    },
+    {
+      "File": "scans/01-hr-letter-scan-clean.png",
+      "Group": "Scan: clean image",
+      "Model": "phi4",
+      "Present": 17,
+      "Caught": 17,
+      "Edits": 15,
+      "TruePositives": 15,
+      "TypeCorrect": 15,
+      "LostToExtraction": 0,
+      "DetectSeconds": 17.2063032,
+      "WriteSeconds": 0.4696246,
+      "PromptTokens": 860,
+      "OutputTokens": 752,
+      "Discarded": 0,
+      "OutputOk": true,
+      "byCategory": {
+        "COMPANY": {
+          "present": 2,
+          "caught": 2
+        },
+        "ADDRESS": {
+          "present": 2,
+          "caught": 2
+        },
+        "PHONE": {
+          "present": 2,
+          "caught": 2
+        },
+        "EMAIL": {
+          "present": 2,
+          "caught": 2
+        },
+        "GENDER": {
+          "present": 2,
+          "caught": 2
+        },
+        "PERSON": {
+          "present": 3,
+          "caught": 3
+        },
+        "DATE_OF_BIRTH": {
+          "present": 1,
+          "caught": 1
+        },
+        "AGE": {
+          "present": 1,
+          "caught": 1
+        },
+        "ID_NUMBER": {
+          "present": 2,
+          "caught": 2
+        }
+      },
+      "leaks": [],
+      "falsePositives": [],
+      "preserveBroken": [],
+      "preserveBrokenCount": 0
+    },
+    {
+      "File": "scans/01-hr-letter-scan-degraded.jpg",
+      "Group": "Scan: degraded image",
+      "Model": "phi4",
+      "Present": 17,
+      "Caught": 17,
+      "Edits": 15,
+      "TruePositives": 15,
+      "TypeCorrect": 15,
+      "LostToExtraction": 0,
+      "DetectSeconds": 17.2015233,
+      "WriteSeconds": 0.2004635,
+      "PromptTokens": 860,
+      "OutputTokens": 752,
+      "Discarded": 0,
+      "OutputOk": true,
+      "byCategory": {
+        "COMPANY": {
+          "present": 2,
+          "caught": 2
+        },
+        "ADDRESS": {
+          "present": 2,
+          "caught": 2
+        },
+        "PHONE": {
+          "present": 2,
+          "caught": 2
+        },
+        "EMAIL": {
+          "present": 2,
+          "caught": 2
+        },
+        "GENDER": {
+          "present": 2,
+          "caught": 2
+        },
+        "PERSON": {
+          "present": 3,
+          "caught": 3
+        },
+        "DATE_OF_BIRTH": {
+          "present": 1,
+          "caught": 1
+        },
+        "AGE": {
+          "present": 1,
+          "caught": 1
+        },
+        "ID_NUMBER": {
+          "present": 2,
+          "caught": 2
+        }
+      },
+      "leaks": [],
+      "falsePositives": [],
+      "preserveBroken": [],
+      "preserveBrokenCount": 0
+    },
+    {
+      "File": "scans/01-hr-letter-scan.pdf",
+      "Group": "Scan: image-only PDF",
+      "Model": "phi4",
+      "Present": 17,
+      "Caught": 17,
+      "Edits": 15,
+      "TruePositives": 15,
+      "TypeCorrect": 15,
+      "LostToExtraction": 0,
+      "DetectSeconds": 17.6436818,
+      "WriteSeconds": 0.5784043,
+      "PromptTokens": 859,
+      "OutputTokens": 753,
+      "Discarded": 0,
+      "OutputOk": true,
+      "byCategory": {
+        "COMPANY": {
+          "present": 2,
+          "caught": 2
+        },
+        "ADDRESS": {
+          "present": 2,
+          "caught": 2
+        },
+        "PHONE": {
+          "present": 2,
+          "caught": 2
+        },
+        "EMAIL": {
+          "present": 2,
+          "caught": 2
+        },
+        "GENDER": {
+          "present": 2,
+          "caught": 2
+        },
+        "PERSON": {
+          "present": 3,
+          "caught": 3
+        },
+        "DATE_OF_BIRTH": {
+          "present": 1,
+          "caught": 1
+        },
+        "AGE": {
+          "present": 1,
+          "caught": 1
+        },
+        "ID_NUMBER": {
+          "present": 2,
+          "caught": 2
+        }
+      },
+      "leaks": [],
+      "falsePositives": [],
+      "preserveBroken": [],
+      "preserveBrokenCount": 0
+    },
+    {
+      "File": "scans/08-invoice-scan-clean.png",
+      "Group": "Scan: clean image",
+      "Model": "phi4",
+      "Present": 9,
+      "Caught": 9,
+      "Edits": 9,
+      "TruePositives": 9,
+      "TypeCorrect": 8,
+      "LostToExtraction": 0,
+      "DetectSeconds": 13.1986745,
+      "WriteSeconds": 0.4047347,
+      "PromptTokens": 811,
+      "OutputTokens": 568,
+      "Discarded": 0,
+      "OutputOk": true,
+      "byCategory": {
+        "COMPANY": {
+          "present": 2,
+          "caught": 2
+        },
+        "ADDRESS": {
+          "present": 2,
+          "caught": 2
+        },
+        "COMPANY_ID": {
+          "present": 1,
+          "caught": 1
+        },
+        "PERSON": {
+          "present": 1,
+          "caught": 1
+        },
+        "ID_NUMBER": {
+          "present": 1,
+          "caught": 1
+        },
+        "EMAIL": {
+          "present": 1,
+          "caught": 1
+        },
+        "PHONE": {
+          "present": 1,
+          "caught": 1
+        }
+      },
+      "leaks": [],
+      "falsePositives": [],
+      "preserveBroken": [],
+      "preserveBrokenCount": 0
+    },
+    {
+      "File": "scans/08-invoice-scan-degraded.jpg",
+      "Group": "Scan: degraded image",
+      "Model": "phi4",
+      "Present": 9,
+      "Caught": 9,
+      "Edits": 9,
+      "TruePositives": 9,
+      "TypeCorrect": 8,
+      "LostToExtraction": 0,
+      "DetectSeconds": 13.7548495,
+      "WriteSeconds": 0.1633635,
+      "PromptTokens": 815,
+      "OutputTokens": 585,
+      "Discarded": 0,
+      "OutputOk": true,
+      "byCategory": {
+        "COMPANY": {
+          "present": 2,
+          "caught": 2
+        },
+        "ADDRESS": {
+          "present": 2,
+          "caught": 2
+        },
+        "COMPANY_ID": {
+          "present": 1,
+          "caught": 1
+        },
+        "PERSON": {
+          "present": 1,
+          "caught": 1
+        },
+        "ID_NUMBER": {
+          "present": 1,
+          "caught": 1
+        },
+        "EMAIL": {
+          "present": 1,
+          "caught": 1
+        },
+        "PHONE": {
+          "present": 1,
+          "caught": 1
+        }
+      },
+      "leaks": [],
+      "falsePositives": [],
+      "preserveBroken": [],
+      "preserveBrokenCount": 0
+    },
+    {
+      "File": "scans/08-invoice-scan.pdf",
+      "Group": "Scan: image-only PDF",
+      "Model": "phi4",
+      "Present": 9,
+      "Caught": 9,
+      "Edits": 9,
+      "TruePositives": 9,
+      "TypeCorrect": 8,
+      "LostToExtraction": 0,
+      "DetectSeconds": 13.4428227,
+      "WriteSeconds": 0.5058013,
+      "PromptTokens": 809,
+      "OutputTokens": 568,
+      "Discarded": 0,
+      "OutputOk": true,
+      "byCategory": {
+        "COMPANY": {
+          "present": 2,
+          "caught": 2
+        },
+        "ADDRESS": {
+          "present": 2,
+          "caught": 2
+        },
+        "COMPANY_ID": {
+          "present": 1,
+          "caught": 1
+        },
+        "PERSON": {
+          "present": 1,
+          "caught": 1
+        },
+        "ID_NUMBER": {
+          "present": 1,
+          "caught": 1
+        },
+        "EMAIL": {
+          "present": 1,
+          "caught": 1
+        },
+        "PHONE": {
+          "present": 1,
+          "caught": 1
+        }
+      },
+      "leaks": [],
+      "falsePositives": [],
+      "preserveBroken": [],
+      "preserveBrokenCount": 0
+    },
+    {
+      "File": "scans/09-gp-referral-scan-clean.png",
+      "Group": "Scan: clean image",
+      "Model": "phi4",
+      "Present": 13,
+      "Caught": 12,
+      "Edits": 12,
+      "TruePositives": 12,
+      "TypeCorrect": 12,
+      "LostToExtraction": 0,
+      "DetectSeconds": 9.8366665,
+      "WriteSeconds": 0.4004864,
+      "PromptTokens": 763,
+      "OutputTokens": 425,
+      "Discarded": 0,
+      "OutputOk": true,
+      "byCategory": {
+        "PERSON": {
+          "present": 2,
+          "caught": 2
+        },
+        "GENDER": {
+          "present": 3,
+          "caught": 3
+        },
+        "AGE": {
+          "present": 2,
+          "caught": 2
+        },
+        "DATE_OF_BIRTH": {
+          "present": 1,
+          "caught": 1
+        },
+        "ID_NUMBER": {
+          "present": 1,
+          "caught": 1
+        },
+        "ADDRESS": {
+          "present": 1,
+          "caught": 1
+        },
+        "PHONE": {
+          "present": 1,
+          "caught": 1
+        },
+        "COMPANY": {
+          "present": 2,
+          "caught": 1
+        }
+      },
+      "leaks": [
+        {
+          "Type": "COMPANY",
+          "Count": 1,
+          "text": "Fernleigh Surgery"
+        }
+      ],
+      "falsePositives": [],
+      "preserveBroken": [],
+      "preserveBrokenCount": 0
+    },
+    {
+      "File": "scans/09-gp-referral-scan-degraded.jpg",
+      "Group": "Scan: degraded image",
+      "Model": "phi4",
+      "Present": 13,
+      "Caught": 12,
+      "Edits": 12,
+      "TruePositives": 12,
+      "TypeCorrect": 12,
+      "LostToExtraction": 0,
+      "DetectSeconds": 9.6262702,
+      "WriteSeconds": 0.1763904,
+      "PromptTokens": 763,
+      "OutputTokens": 425,
+      "Discarded": 0,
+      "OutputOk": true,
+      "byCategory": {
+        "PERSON": {
+          "present": 2,
+          "caught": 2
+        },
+        "GENDER": {
+          "present": 3,
+          "caught": 3
+        },
+        "AGE": {
+          "present": 2,
+          "caught": 2
+        },
+        "DATE_OF_BIRTH": {
+          "present": 1,
+          "caught": 1
+        },
+        "ID_NUMBER": {
+          "present": 1,
+          "caught": 1
+        },
+        "ADDRESS": {
+          "present": 1,
+          "caught": 1
+        },
+        "PHONE": {
+          "present": 1,
+          "caught": 1
+        },
+        "COMPANY": {
+          "present": 2,
+          "caught": 1
+        }
+      },
+      "leaks": [
+        {
+          "Type": "COMPANY",
+          "Count": 1,
+          "text": "Fernleigh Surgery"
+        }
+      ],
+      "falsePositives": [],
+      "preserveBroken": [],
+      "preserveBrokenCount": 0
+    },
+    {
+      "File": "text/01-hr-letter.txt",
+      "Group": "Plain text",
+      "Model": "phi4",
+      "Present": 17,
+      "Caught": 17,
+      "Edits": 16,
+      "TruePositives": 16,
+      "TypeCorrect": 16,
+      "LostToExtraction": 0,
+      "DetectSeconds": 14.7944759,
+      "WriteSeconds": 0.0009816,
+      "PromptTokens": 862,
+      "OutputTokens": 637,
+      "Discarded": 0,
+      "OutputOk": true,
+      "byCategory": {
+        "COMPANY": {
+          "present": 2,
+          "caught": 2
+        },
+        "ADDRESS": {
+          "present": 2,
+          "caught": 2
+        },
+        "PHONE": {
+          "present": 2,
+          "caught": 2
+        },
+        "EMAIL": {
+          "present": 2,
+          "caught": 2
+        },
+        "GENDER": {
+          "present": 2,
+          "caught": 2
+        },
+        "PERSON": {
+          "present": 3,
+          "caught": 3
+        },
+        "DATE_OF_BIRTH": {
+          "present": 1,
+          "caught": 1
+        },
+        "AGE": {
+          "present": 1,
+          "caught": 1
+        },
+        "ID_NUMBER": {
+          "present": 2,
+          "caught": 2
+        }
+      },
+      "leaks": [],
+      "falsePositives": [],
+      "preserveBroken": [],
+      "preserveBrokenCount": 0
+    },
+    {
+      "File": "text/03-customer-email.txt",
+      "Group": "Plain text",
+      "Model": "phi4",
+      "Present": 10,
+      "Caught": 10,
+      "Edits": 10,
+      "TruePositives": 9,
+      "TypeCorrect": 9,
+      "LostToExtraction": 0,
+      "DetectSeconds": 8.6005763,
+      "WriteSeconds": 0.0006325,
+      "PromptTokens": 799,
+      "OutputTokens": 372,
+      "Discarded": 0,
+      "OutputOk": true,
+      "byCategory": {
+        "PERSON": {
+          "present": 4,
+          "caught": 4
+        },
+        "EMAIL": {
+          "present": 1,
+          "caught": 1
+        },
+        "ADDRESS": {
+          "present": 1,
+          "caught": 1
+        },
+        "PHONE": {
+          "present": 1,
+          "caught": 1
+        },
+        "SECRET": {
+          "present": 1,
+          "caught": 1
+        },
+        "COMPANY": {
+          "present": 1,
+          "caught": 1
+        },
+        "GENDER": {
+          "present": 1,
+          "caught": 1
+        }
+      },
+      "leaks": [],
+      "falsePositives": [
+        {
+          "Type": "AGE",
+          "text": "61"
+        }
+      ],
+      "preserveBroken": [],
+      "preserveBrokenCount": 0
+    },
+    {
+      "File": "text/05-incident-report.txt",
+      "Group": "Plain text",
+      "Model": "phi4",
+      "Present": 9,
+      "Caught": 9,
+      "Edits": 9,
+      "TruePositives": 9,
+      "TypeCorrect": 9,
+      "LostToExtraction": 0,
+      "DetectSeconds": 9.7683741,
+      "WriteSeconds": 0.0006799,
+      "PromptTokens": 809,
+      "OutputTokens": 417,
+      "Discarded": 0,
+      "OutputOk": true,
+      "byCategory": {
+        "PERSON": {
+          "present": 2,
+          "caught": 2
+        },
+        "COMPANY": {
+          "present": 1,
+          "caught": 1
+        },
+        "SECRET": {
+          "present": 3,
+          "caught": 3
+        },
+        "ONLINE_ID": {
+          "present": 2,
+          "caught": 2
+        },
+        "PHONE": {
+          "present": 1,
+          "caught": 1
+        }
+      },
+      "leaks": [],
+      "falsePositives": [],
+      "preserveBroken": [],
+      "preserveBrokenCount": 0
+    },
+    {
+      "File": "text/10-contextual-profile.txt",
+      "Group": "Plain text",
+      "Model": "phi4",
+      "Present": 10,
+      "Caught": 8,
+      "Edits": 9,
+      "TruePositives": 8,
+      "TypeCorrect": 6,
+      "LostToExtraction": 0,
+      "DetectSeconds": 8.5998161,
+      "WriteSeconds": 0.0008123,
+      "PromptTokens": 723,
+      "OutputTokens": 368,
+      "Discarded": 0,
+      "OutputOk": true,
+      "byCategory": {
+        "GENDER": {
+          "present": 4,
+          "caught": 4
+        },
+        "COMPANY": {
+          "present": 1,
+          "caught": 1
+        },
+        "CONTEXTUAL": {
+          "present": 4,
+          "caught": 2
+        },
+        "PERSON": {
+          "present": 1,
+          "caught": 1
+        }
+      },
+      "leaks": [
+        {
+          "Type": "CONTEXTUAL",
+          "Count": 1,
+          "text": "2019 data breach at the Bristol depot"
+        },
+        {
+          "Type": "CONTEXTUAL",
+          "Count": 1,
+          "text": "GBP 92,000"
+        }
+      ],
+      "falsePositives": [
+        {
+          "Type": "PERSON",
+          "text": "regional director"
+        }
+      ],
+      "preserveBroken": [],
+      "preserveBrokenCount": 0
+    },
+    {
+      "File": "text/11-hard-negatives.txt",
+      "Group": "Plain text",
+      "Model": "phi4",
+      "Present": 0,
+      "Caught": 0,
+      "Edits": 1,
+      "TruePositives": 0,
+      "TypeCorrect": 0,
+      "LostToExtraction": 0,
+      "DetectSeconds": 1.883694,
+      "WriteSeconds": 0.0006678,
+      "PromptTokens": 732,
+      "OutputTokens": 76,
+      "Discarded": 0,
+      "OutputOk": true,
+      "byCategory": {},
+      "leaks": [],
+      "falsePositives": [
+        {
+          "Type": "AGE",
+          "text": "42"
+        }
+      ],
+      "preserveBroken": [
+        "42"
+      ],
+      "preserveBrokenCount": 1
+    },
+    {
+      "File": "text/context-text-01.txt",
+      "Group": "Plain text",
+      "Model": "phi4",
+      "Present": 7,
+      "Caught": 7,
+      "Edits": 7,
+      "TruePositives": 7,
+      "TypeCorrect": 7,
+      "LostToExtraction": 0,
+      "DetectSeconds": 3.5987908,
+      "WriteSeconds": 0.0007444,
+      "PromptTokens": 702,
+      "OutputTokens": 151,
+      "Discarded": 0,
+      "OutputOk": true,
+      "byCategory": {
+        "PERSON": {
+          "present": 6,
+          "caught": 6
+        },
+        "GENDER": {
+          "present": 1,
+          "caught": 1
+        }
+      },
+      "leaks": [],
+      "falsePositives": [],
+      "preserveBroken": [],
+      "preserveBrokenCount": 0
+    },
+    {
+      "File": "text/context-text-02.txt",
+      "Group": "Plain text",
+      "Model": "phi4",
+      "Present": 2,
+      "Caught": 2,
+      "Edits": 2,
+      "TruePositives": 2,
+      "TypeCorrect": 2,
+      "LostToExtraction": 0,
+      "DetectSeconds": 4.4887798,
+      "WriteSeconds": 0.0006939,
+      "PromptTokens": 714,
+      "OutputTokens": 189,
+      "Discarded": 0,
+      "OutputOk": true,
+      "byCategory": {
+        "PERSON": {
+          "present": 1,
+          "caught": 1
+        },
+        "GENDER": {
+          "present": 1,
+          "caught": 1
+        }
+      },
+      "leaks": [],
+      "falsePositives": [],
+      "preserveBroken": [],
+      "preserveBrokenCount": 0
+    },
+    {
+      "File": "text/context-text-03.txt",
+      "Group": "Plain text",
+      "Model": "phi4",
+      "Present": 6,
+      "Caught": 6,
+      "Edits": 6,
+      "TruePositives": 6,
+      "TypeCorrect": 6,
+      "LostToExtraction": 0,
+      "DetectSeconds": 4.6442706,
+      "WriteSeconds": 0.0006954,
+      "PromptTokens": 700,
+      "OutputTokens": 196,
+      "Discarded": 0,
+      "OutputOk": true,
+      "byCategory": {
+        "PERSON": {
+          "present": 5,
+          "caught": 5
+        },
+        "EMAIL": {
+          "present": 1,
+          "caught": 1
+        }
+      },
+      "leaks": [],
+      "falsePositives": [],
+      "preserveBroken": [],
+      "preserveBrokenCount": 0
+    },
+    {
+      "File": "text/context-text-04.txt",
+      "Group": "Plain text",
+      "Model": "phi4",
+      "Present": 2,
+      "Caught": 2,
+      "Edits": 2,
+      "TruePositives": 2,
+      "TypeCorrect": 2,
+      "LostToExtraction": 0,
+      "DetectSeconds": 4.4176445,
+      "WriteSeconds": 0.0008323,
+      "PromptTokens": 712,
+      "OutputTokens": 186,
+      "Discarded": 0,
+      "OutputOk": true,
+      "byCategory": {
+        "PERSON": {
+          "present": 1,
+          "caught": 1
+        },
+        "EMAIL": {
+          "present": 1,
+          "caught": 1
+        }
+      },
+      "leaks": [],
+      "falsePositives": [],
+      "preserveBroken": [],
+      "preserveBrokenCount": 0
+    },
+    {
+      "File": "text/context-text-05.txt",
+      "Group": "Plain text",
+      "Model": "phi4",
+      "Present": 8,
+      "Caught": 8,
+      "Edits": 8,
+      "TruePositives": 8,
+      "TypeCorrect": 8,
+      "LostToExtraction": 0,
+      "DetectSeconds": 6.2981566,
+      "WriteSeconds": 0.0007835,
+      "PromptTokens": 695,
+      "OutputTokens": 270,
+      "Discarded": 0,
+      "OutputOk": true,
+      "byCategory": {
+        "PERSON": {
+          "present": 8,
+          "caught": 8
+        }
+      },
+      "leaks": [],
+      "falsePositives": [],
+      "preserveBroken": [],
+      "preserveBrokenCount": 0
+    },
+    {
+      "File": "text/context-text-06.txt",
+      "Group": "Plain text",
+      "Model": "phi4",
+      "Present": 0,
+      "Caught": 0,
+      "Edits": 0,
+      "TruePositives": 0,
+      "TypeCorrect": 0,
+      "LostToExtraction": 0,
+      "DetectSeconds": 0.3626658,
+      "WriteSeconds": 0.0006476,
+      "PromptTokens": 707,
+      "OutputTokens": 8,
+      "Discarded": 0,
+      "OutputOk": true,
+      "byCategory": {},
+      "leaks": [],
+      "falsePositives": [],
+      "preserveBroken": [],
+      "preserveBrokenCount": 0
+    },
+    {
+      "File": "text/context-text-07.txt",
+      "Group": "Plain text",
+      "Model": "phi4",
+      "Present": 6,
+      "Caught": 6,
+      "Edits": 6,
+      "TruePositives": 6,
+      "TypeCorrect": 6,
+      "LostToExtraction": 0,
+      "DetectSeconds": 5.5048101,
+      "WriteSeconds": 0.0007086,
+      "PromptTokens": 699,
+      "OutputTokens": 238,
+      "Discarded": 0,
+      "OutputOk": true,
+      "byCategory": {
+        "COMPANY": {
+          "present": 6,
+          "caught": 6
+        }
+      },
+      "leaks": [],
+      "falsePositives": [],
+      "preserveBroken": [],
+      "preserveBrokenCount": 0
+    },
+    {
+      "File": "text/context-text-08.txt",
+      "Group": "Plain text",
+      "Model": "phi4",
+      "Present": 0,
+      "Caught": 0,
+      "Edits": 1,
+      "TruePositives": 0,
+      "TypeCorrect": 0,
+      "LostToExtraction": 0,
+      "DetectSeconds": 7.1104294,
+      "WriteSeconds": 0.0006363,
+      "PromptTokens": 705,
+      "OutputTokens": 303,
+      "Discarded": 2,
+      "OutputOk": true,
+      "byCategory": {},
+      "leaks": [],
+      "falsePositives": [
+        {
+          "Type": "CONTEXTUAL",
+          "text": "a school trip"
+        }
+      ],
+      "preserveBroken": [],
+      "preserveBrokenCount": 0
+    },
+    {
+      "File": "text/context-text-09.txt",
+      "Group": "Plain text",
+      "Model": "phi4",
+      "Present": 8,
+      "Caught": 8,
+      "Edits": 8,
+      "TruePositives": 8,
+      "TypeCorrect": 8,
+      "LostToExtraction": 0,
+      "DetectSeconds": 6.5420358,
+      "WriteSeconds": 0.0007847,
+      "PromptTokens": 686,
+      "OutputTokens": 280,
+      "Discarded": 0,
+      "OutputOk": true,
+      "byCategory": {
+        "PERSON": {
+          "present": 8,
+          "caught": 8
+        }
+      },
+      "leaks": [],
+      "falsePositives": [],
+      "preserveBroken": [],
+      "preserveBrokenCount": 0
+    },
+    {
+      "File": "text/context-text-10.txt",
+      "Group": "Plain text",
+      "Model": "phi4",
+      "Present": 0,
+      "Caught": 0,
+      "Edits": 0,
+      "TruePositives": 0,
+      "TypeCorrect": 0,
+      "LostToExtraction": 0,
+      "DetectSeconds": 7.0475796,
+      "WriteSeconds": 0.0006853,
+      "PromptTokens": 698,
+      "OutputTokens": 300,
+      "Discarded": 0,
+      "OutputOk": true,
+      "byCategory": {},
+      "leaks": [],
+      "falsePositives": [],
+      "preserveBroken": [],
+      "preserveBrokenCount": 0
+    },
+    {
+      "File": "text/context-text-11-mixed.txt",
+      "Group": "Plain text",
+      "Model": "phi4",
+      "Present": 5,
+      "Caught": 3,
+      "Edits": 3,
+      "TruePositives": 3,
+      "TypeCorrect": 3,
+      "LostToExtraction": 0,
+      "DetectSeconds": 6.2791875,
+      "WriteSeconds": 0.000637,
+      "PromptTokens": 719,
+      "OutputTokens": 266,
+      "Discarded": 0,
+      "OutputOk": true,
+      "byCategory": {
+        "PERSON": {
+          "present": 5,
+          "caught": 3
+        }
+      },
+      "leaks": [
+        {
+          "Type": "PERSON",
+          "Count": 1,
+          "text": "Paris"
+        },
+        {
+          "Type": "PERSON",
+          "Count": 1,
+          "text": "Jordan"
+        }
+      ],
+      "falsePositives": [],
+      "preserveBroken": [],
+      "preserveBrokenCount": 0
+    }
+  ]
+}

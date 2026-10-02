@@ -61,6 +61,12 @@
     },
     {
       "where": "body",
+      "type": "GENDER",
+      "text": "He",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
       "type": "COMPANY",
       "text": "Eastway Coaches Ltd",
       "occurrences": 1

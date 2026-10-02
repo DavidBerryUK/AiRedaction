@@ -82,6 +82,19 @@ public class OllamaDetector(HttpClient http, RedactorOptions options) : IEntityD
             ct.ThrowIfCancellationRequested();
             var chunk = chunks[i];
             var ask = await AskAsync(chunk.Text, ct);
+            if (ask.Items.Count == 0 && LooksSensitive(chunk.Text))
+            {
+                // An empty answer for text that plainly has names or identifiers in it is a silent failure, not a clean result:
+                // ask again with a reminder, then (if one is configured) ask the fallback model.
+                var retry = await AskAsync(chunk.Text, ct, nudge: true);
+                if (retry.Items.Count == 0 && !string.IsNullOrWhiteSpace(options.Llm.FallbackModel))
+                {
+                    retry = await AskAsync(chunk.Text, ct, model: options.Llm.FallbackModel, nudge: true);
+                }
+
+                EmptyRetries++;
+                ask = retry with { Attempts = ask.Attempts + retry.Attempts };
+            }
             var fresh = new List<DetectedEntity>();
             var outcomes = new List<CallItem>();
             foreach (var it in ask.Items)
@@ -97,7 +110,7 @@ public class OllamaDetector(HttpClient http, RedactorOptions options) : IEntityD
                     outcomes.Add(new(it.Type, it.Text, "ignored: on the allow-list", false));
                     continue;
                 }
-                if (!chunk.Text.Contains(t, StringComparison.Ordinal))   // hallucination guard
+                if (!TextMatch.Contains(chunk.Text, t))   // hallucination guard (spacing may differ: a PDF line break where the model wrote a space)
                 {
                     Discarded++;
                     outcomes.Add(new(it.Type, it.Text, "discarded: not found word-for-word in the text", false));
@@ -148,6 +161,11 @@ public class OllamaDetector(HttpClient http, RedactorOptions options) : IEntityD
         foreach (var (variant, type) in Variants(found, text, allow))   // shorter forms: a surname alone, a company without "Ltd"
         {
             spans.AddRange(LocateWord(text, variant, type, "llm-variant"));
+        }
+
+        if (options.Rules.Enabled)
+        {
+            spans.AddRange(RuleDetector.Find(text, options));
         }
 
         foreach (var term in options.CustomTerms.Redact.Where(x => x.Length > 1))
@@ -219,16 +237,22 @@ public class OllamaDetector(HttpClient http, RedactorOptions options) : IEntityD
     {
         var result = new List<DetectedEntity>();
         var c = context?.Trim();
-        if (string.IsNullOrEmpty(c) || !c.Contains(answer, StringComparison.Ordinal))
+        if (string.IsNullOrEmpty(c) || !TextMatch.Contains(c, answer))
         {
             return result;
         }
 
-        var inner = System.Text.RegularExpressions.Regex.Match(c, $@"(?<![\p{{L}}\p{{N}}]){System.Text.RegularExpressions.Regex.Escape(answer)}(?![\p{{L}}\p{{N}}])");
-        var at = inner.Success ? inner.Index : c.IndexOf(answer, StringComparison.Ordinal);
-        for (var i = chunkText.IndexOf(c, StringComparison.Ordinal); i >= 0; i = chunkText.IndexOf(c, i + c.Length, StringComparison.Ordinal))
+        var answerPattern = TextMatch.Pattern(answer, ignoreCase: false, wholeWord: true);
+        var loosePattern = TextMatch.Pattern(answer, ignoreCase: false, wholeWord: false);
+        foreach (var (start, length) in TextMatch.Find(chunkText, c))
         {
-            result.Add(new DetectedEntity(type, offset + i + at, answer.Length, 1.0, "llm"));
+            var region = chunkText.Substring(start, length);
+            var inner = answerPattern.Match(region);
+            inner = inner.Success ? inner : loosePattern.Match(region);
+            if (inner.Success)
+            {
+                result.Add(new DetectedEntity(type, offset + start + inner.Index, inner.Length, 1.0, "llm"));
+            }
         }
 
         return result;
@@ -239,15 +263,21 @@ public class OllamaDetector(HttpClient http, RedactorOptions options) : IEntityD
         System.Text.RegularExpressions.Regex.Matches(text, $@"(?<![\p{{L}}\p{{N}}]){System.Text.RegularExpressions.Regex.Escape(needle)}(?![\p{{L}}\p{{N}}])")
             .Select(m => new DetectedEntity(type, m.Index, m.Length, 0.7, source));
 
-    /// <summary>Finds every occurrence (ignoring case) of a string and returns it as spans.</summary>
-    public static IEnumerable<DetectedEntity> Locate(string text, string needle, string type, int offset, string source = "llm")
+    /// <summary>Finds every occurrence (ignoring case, and allowing different spacing or line breaks) of a string and returns it as spans.</summary>
+    public static IEnumerable<DetectedEntity> Locate(string text, string needle, string type, int offset, string source = "llm") =>
+        TextMatch.Find(text, needle, ignoreCase: true).Select(m => new DetectedEntity(type, offset + m.Start, m.Length, 1.0, source));
+
+    /// <summary>Chunks where the model came back empty and was asked again (a guard against silent failures).</summary>
+    public int EmptyRetries
     {
-        for (var i = text.IndexOf(needle, StringComparison.OrdinalIgnoreCase); i >= 0;
-             i = text.IndexOf(needle, i + needle.Length, StringComparison.OrdinalIgnoreCase))
-        {
-            yield return new DetectedEntity(type, offset + i, needle.Length, 1.0, source);
-        }
+        get; private set;
     }
+
+    static readonly System.Text.RegularExpressions.Regex NamePair = new(@"(?<![\p{L}])\p{Lu}\p{Ll}+\s+\p{Lu}\p{Ll}+(?![\p{L}])");
+
+    /// <summary>True if a piece of text plainly contains something a redactor should find: a pair of capitalised words (a likely name) or anything the fixed rules match.</summary>
+    bool LooksSensitive(string chunkText) =>
+        NamePair.Matches(chunkText).Count >= 2 || RuleDetector.Find(chunkText, options).Count > 0;
 
     /// <summary>What to send as the model's think setting. Most thinking models take true/false, but gpt-oss ignores false and only takes a level, so "off" becomes its lowest level, "low".</summary>
     static object? ThinkSetting(string model, bool? think) =>
@@ -260,16 +290,21 @@ public class OllamaDetector(HttpClient http, RedactorOptions options) : IEntityD
     record AskResult(List<Item> Items, string UserMessage, string RawReply, long PromptTokens, long OutputTokens, TimeSpan Elapsed, int Attempts);
 
     /// <summary>Sends one piece of text to the model and returns what it found; retries once if the reply is not valid JSON.</summary>
-    async Task<AskResult> AskAsync(string chunkText, CancellationToken ct)
+    async Task<AskResult> AskAsync(string chunkText, CancellationToken ct, string? model = null, bool nudge = false)
     {
         var types = PromptBuilder.EnabledTypes(options).ToList();
         var userMessage = PromptBuilder.UserMessage(chunkText);
+        if (nudge)
+        {
+            userMessage += "\n\nYour previous answer for this text was empty. Read it again carefully: list every person, company, address, contact detail, identifier and other item in the categories above. Return an empty list only if there is truly nothing.";
+        }
+        model ??= options.Llm.Model;
         var sendThink = options.Llm.Think is not null && !thinkRejected;
         var body = new {
-            model = options.Llm.Model,
+            model,
             stream = false,
             keep_alive = options.Llm.KeepAlive,
-            think = sendThink ? ThinkSetting(options.Llm.Model, options.Llm.Think) : null,
+            think = sendThink ? ThinkSetting(model, options.Llm.Think) : null,
             format = PromptBuilder.Schema(types),
             options = new {
                 temperature = options.Llm.Temperature,
@@ -292,7 +327,7 @@ public class OllamaDetector(HttpClient http, RedactorOptions options) : IEntityD
             {
                 // This model has no thinking mode, so it refuses the setting: remember that and ask again without it.
                 thinkRejected = true;
-                return await AskAsync(chunkText, ct);
+                return await AskAsync(chunkText, ct, model, nudge);
             }
             resp.EnsureSuccessStatusCode();
             var json = await resp.Content.ReadFromJsonAsync<JsonElement>(ct);

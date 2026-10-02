@@ -28,6 +28,8 @@ public class RedactorOptions
     public PdfOptions Pdf { get; set; } = new();
     /// <summary>Reading scanned PDFs and images with OCR.</summary>
     public OcrOptions Ocr { get; set; } = new();
+    /// <summary>Fixed rules for predictable items (emails, phone numbers, postcodes, ID numbers, gender words), run alongside the model.</summary>
+    public RulesOptions Rules { get; set; } = new();
     /// <summary>Which models the evaluation command (not the app) compares.</summary>
     public EvaluationOptions Evaluation { get; set; } = new();
 
@@ -134,6 +136,12 @@ public class OutputOptions
 }
 
 /// <summary>Settings for one sensitive-data category.</summary>
+public class RulesOptions
+{
+    /// <summary>Find predictable items with fixed rules as well as the model. Each rule runs only when its category is switched on.</summary>
+    public bool Enabled { get; set; } = true;
+}
+
 public class EntityOptions
 {
     public bool Enabled { get; set; } = true;
@@ -185,6 +193,11 @@ public class LlmOptions
     public int NumCtx { get; set; } = 8192;
     /// <summary>How long the model stays loaded in memory after use.</summary>
     public string KeepAlive { get; set; } = "60m";
+    /// <summary>A second model asked when the main one returns nothing for text that plainly has names or identifiers in it. Empty for none.</summary>
+    public string? FallbackModel
+    {
+        get; set;
+    }
     /// <summary>Switch a thinking model's reasoning on or off. false skips the long chain of thought (much faster, and the answer is not cut short); null leaves the model's own default.</summary>
     public bool? Think { get; set; }
     /// <summary>Approximate size of each piece of text sent to the model.</summary>

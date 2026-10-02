@@ -8,8 +8,20 @@
   "entities": [
     {
       "where": "body",
+      "type": "GENDER",
+      "text": "female",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
       "type": "COMPANY",
       "text": "Corvid Logistics PLC",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "GENDER",
+      "text": "She",
       "occurrences": 1
     },
     {
@@ -26,8 +38,20 @@
     },
     {
       "where": "body",
+      "type": "GENDER",
+      "text": "she",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
       "type": "CONTEXTUAL",
       "text": "head of compliance at Harbourside Credit Union",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "GENDER",
+      "text": "Her",
       "occurrences": 1
     },
     {

@@ -1,6 +1,7 @@
-# Evaluation findings and the road to production-grade redaction
+# Version 1 findings: evaluation results and the road to production-grade redaction
 
 **Based on:** evaluation run `eval/eval-20261002-1453.md` (2 October 2026)
+**Version:** 1 (findings before the phase 1 accuracy changes)  
 **Status:** prototype findings, for discussion
 **Author:** David Berry
 

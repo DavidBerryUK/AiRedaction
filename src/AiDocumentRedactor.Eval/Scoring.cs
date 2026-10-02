@@ -39,6 +39,7 @@ public static class Scoring
     {
         var parts = text.Split((char[]?)null, StringSplitOptions.RemoveEmptyEntries).Select(Regex.Escape);
         var body = string.Join(@"\s+", parts);
+        body = body.Replace("@", @"\s?@\s?");   // OCR often reads "name@site" as "name @site"
         var lead = text.Length > 0 && char.IsLetterOrDigit(text[0]) ? @"(?<![\p{L}\p{N}])" : "";
         var trail = text.Length > 0 && char.IsLetterOrDigit(text[^1]) ? @"(?![\p{L}\p{N}])" : "";
         return new Regex(lead + body + trail, RegexOptions.CultureInvariant);

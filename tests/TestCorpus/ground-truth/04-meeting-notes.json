@@ -51,6 +51,12 @@
     },
     {
       "where": "body",
+      "type": "GENDER",
+      "text": "woman",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
       "type": "AGE",
       "text": "in her forties",
       "occurrences": 1

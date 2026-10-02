@@ -24,7 +24,7 @@ public static class Corpus
             P("Dear [[GENDER|Ms]] [[PERSON|Whitcombe]],"),
             H("Confirmation of your promotion"),
             P("Further to our meeting last week, I am delighted to confirm your promotion to Senior Data Scientist with effect from 1 November. Our records show you were born on [[DATE_OF_BIRTH|12 March 1986]], so you are [[AGE|39]] years old, and your National Insurance number is [[ID_NUMBER|QQ 12 34 56 C]]."),
-            P("Your new salary will be paid into the account ending 4821. If any of these details are wrong, please call me on [[PHONE|07700 900123]] or write to [[EMAIL|marcus.delaney@brightwater-analytics.example]]."),
+            P("Your new salary will be paid into the account ending [[ID_NUMBER|4821]]. If any of these details are wrong, please call me on [[PHONE|07700 900123]] or write to [[EMAIL|marcus.delaney@brightwater-analytics.example]]."),
             P("Yours sincerely,"),
             P("[[PERSON|Marcus Delaney]]\nHead of People, [[COMPANY|Brightwater Analytics]]"),
         ]) { ScanKinds = ["clean", "degraded", "pdf"] },
@@ -45,14 +45,14 @@ public static class Corpus
         [
             P("From: [[PERSON|Tomasz Kowalczyk]] <[[EMAIL|tomasz.kowalczyk@example.org]]>\nTo: Support\nSubject: Order 55821 not delivered"),
             P("Hi, I'm [[PERSON|Tomasz Kowalczyk]]. My parcel was meant to arrive at [[ADDRESS|3 Orchard Close, Norwich NR2 3AB]] on Tuesday. I'm 61 and housebound, so I really can't collect it. You can reach me on [[PHONE|07700 900456]]. My account password is [[SECRET|Winter-Harbour-42!]] if that helps you find it."),
-            P("Reply from [[PERSON|Aisha Rahman]], [[COMPANY|Fernleigh Parcels Ltd]]: Mr [[PERSON|Kowalczyk]], sorry for the delay. We will redeliver tomorrow."),
+            P("Reply from [[PERSON|Aisha Rahman]], [[COMPANY|Fernleigh Parcels Ltd]]: [[GENDER|Mr]] [[PERSON|Kowalczyk]], sorry for the delay. We will redeliver tomorrow."),
         ]),
 
         new("04-meeting-notes", "Meeting notes", ["md", "docx"],
         [
             H("Project [[CONTEXTUAL|Kestrel]] - steering meeting"),
             P("Attendees: [[PERSON|Priya Natarajan]] ([[COMPANY|Corvid Logistics PLC]]), [[PERSON|Marcus Delaney]], [[PERSON|Jonas Eriksen]] ([[COMPANY|Nordlys Consulting AS]])."),
-            P("[[PERSON|Jonas]] said the new depot manager, a woman [[AGE|in her forties]], would start in January. Actions: [[PERSON|Priya]] to send the draft to [[EMAIL|jonas.eriksen@nordlys.example]]. Next meeting at the [[COMPANY|Nordlys]] office."),
+            P("[[PERSON|Jonas]] said the new depot manager, a [[GENDER|woman]] [[AGE|in her forties]], would start in January. Actions: [[PERSON|Priya]] to send the draft to [[EMAIL|jonas.eriksen@nordlys.example]]. Next meeting at the [[COMPANY|Nordlys]] office."),
         ]),
 
         new("05-incident-report", "Incident report with credentials", ["txt"],
@@ -92,13 +92,13 @@ public static class Corpus
         [
             H("Referral to Cardiology"),
             P("Patient: [[PERSON|Tomasz Kowalczyk]], [[GENDER|male]], [[AGE|61]], born [[DATE_OF_BIRTH|30 July 1964]]\nNHS number: [[ID_NUMBER|943 476 5919]]\n[[ADDRESS|3 Orchard Close, Norwich NR2 3AB]]  Tel [[PHONE|07700 900456]]"),
-            P("Dear Colleague, thank you for seeing this [[AGE|61]]-year-old [[GENDER|man]] who reports exertional chest tightness. He works as a bus driver for [[COMPANY|Eastway Coaches Ltd]]. Please contact [[PERSON|Dr Helen Okafor]] at [[COMPANY|Fernleigh Surgery]] with your findings."),
+            P("Dear Colleague, thank you for seeing this [[AGE|61]]-year-old [[GENDER|man]] who reports exertional chest tightness. [[GENDER|He]] works as a bus driver for [[COMPANY|Eastway Coaches Ltd]]. Please contact [[PERSON|Dr Helen Okafor]] at [[COMPANY|Fernleigh Surgery]] with your findings."),
         ]) { ScanKinds = ["clean", "degraded"] },
 
         new("10-contextual-profile", "Profile with indirect identifiers", ["txt"],
         [
-            P("Our regional director is the only female partner at the Bristol office of [[COMPANY|Corvid Logistics PLC]]. She joined after the [[CONTEXTUAL|2019 data breach at the Bristol depot]] and earns [[CONTEXTUAL|GBP 92,000]]. Before that she was [[CONTEXTUAL|head of compliance at Harbourside Credit Union]]."),
-            P("Her predecessor, [[PERSON|Gareth Lloyd]], now teaches at [[CONTEXTUAL|Merriweather Grammar School]]."),
+            P("Our regional director is the only [[GENDER|female]] partner at the Bristol office of [[COMPANY|Corvid Logistics PLC]]. [[GENDER|She]] joined after the [[CONTEXTUAL|2019 data breach at the Bristol depot]] and earns [[CONTEXTUAL|GBP 92,000]]. Before that [[GENDER|she]] was [[CONTEXTUAL|head of compliance at Harbourside Credit Union]]."),
+            P("[[GENDER|Her]] predecessor, [[PERSON|Gareth Lloyd]], now teaches at [[CONTEXTUAL|Merriweather Grammar School]]."),
         ]),
 
         new("11-hard-negatives", "Document with nothing to redact", ["txt", "docx"],
@@ -117,7 +117,7 @@ public static class Corpus
         {
             Header = "Strictly private - [[COMPANY|Corvid Logistics PLC]]",
             Footer = "Ref [[PERSON|Priya Natarajan]]",
-            Comment = "Check with [[PERSON|Dev Patel]] before sending - his number is [[PHONE|07700 900999]]",
+            Comment = "Check with [[PERSON|Dev Patel]] before sending - [[GENDER|his]] number is [[PHONE|07700 900999]]",
             TrackedDeletion = "[[SECRET|Tr1cky-Gl4cier!]] ",
             MetadataAuthor = "[[PERSON|Priya Natarajan]]",
             SplitRuns = true,
