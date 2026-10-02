@@ -91,6 +91,25 @@ The report is a Markdown file you can open in any viewer or paste into a documen
 
 By default the report contains **no document text**, only counts, categories and file names.
 
+### What else the report contains
+
+- **Detail per model:** documents scored and failed, total and median time, the slowest document, tokens used, whole items fully caught, label accuracy and items lost to OCR.
+- **Missed and over-redacted text:** `run-eval.sh` adds `--show-text` because the corpus is synthetic, so the report lists exactly what each model missed or over-redacted. Add `--no-text` to leave it out.
+- **What combining two models could achieve:** an estimate, from the missed lists, of the recall if two models were run together and everything either found were removed.
+- **Beyond one model:** a short discussion of combining models and of training a model of our own.
+- **Settings used:** includes the reasoning (think) setting, the Ollama version, the machine and the categories with their modes.
+- Each model is **unloaded when its turn ends**, so every model starts cold and the timings are comparable.
+
+### Combining runs
+
+Every report also writes a full `.scores.json` beside it. To rebuild one report from several runs, for example after re-running a single model:
+
+```bash
+dotnet src/AiDocumentRedactor.Eval/bin/Debug/net10.0/AiDocumentRedactor.Eval.dll --merge eval/first.scores.json,eval/second.scores.json --out eval/merged.md
+```
+
+A model in a later file replaces the same model from earlier files, including its failures. (Runs made before this feature have no `.scores.json` and cannot be merged this way.)
+
 ### What the Summary columns mean
 
 The report explains these itself, under the Summary table, in plain language:

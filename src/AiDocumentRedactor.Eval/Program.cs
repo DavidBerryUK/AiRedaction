@@ -3,6 +3,7 @@
 //        [--out eval/eval-<time>.md] [--only text] [--no-write] [--show-text]
 // It is a command, not part of the app: a full run takes a long time (every model over every document).
 using System.Diagnostics;
+using System.Net.Http.Json;
 using System.Runtime.InteropServices;
 using System.Text.Json;
 using AiDocumentRedactor.Core;
@@ -18,7 +19,19 @@ string? Arg(string name)
 }
 if (args.Contains("--help") || args.Contains("-h"))
 {
-    Console.WriteLine("Evaluates local models on the test corpus and writes a Markdown report.\n\n  --config <file>   settings (default redactor.config.json)\n  --corpus <dir>    test corpus (default tests/TestCorpus)\n  --models a,b      models to compare (default: those with include: true in the config's evaluation.models list)\n  --out <file>      report path (default eval/eval-<date-time>.md; a .json with the raw scores is written beside it)\n  --only <text>     only corpus files whose path contains this text\n  --no-write        score the text only; skip writing and verifying the redacted files (faster)\n  --show-text       list missed and over-redacted strings in the report (synthetic data only)");
+    Console.WriteLine("Evaluates local models on the test corpus and writes a Markdown report.\n\n  --config <file>   settings (default redactor.config.json)\n  --corpus <dir>    test corpus (default tests/TestCorpus)\n  --models a,b      models to compare (default: those with include: true in the config's evaluation.models list)\n  --out <file>      report path (default eval/eval-<date-time>.md; a .json with the raw scores is written beside it)\n  --only <text>     only corpus files whose path contains this text\n  --no-write        score the text only; skip writing and verifying the redacted files (faster)\n  --show-text       list missed and over-redacted strings in the report (synthetic data only)\n  --merge a,b       rebuild one report from saved runs (the .scores.json beside each report); a model in a later file replaces the same model in earlier ones. Use --out for the report path.");
+    return 0;
+}
+
+if (Arg("--merge") is { } toMerge)
+{
+    // Rebuild one report from several saved runs (the .scores.json beside each report); a model in a later file replaces the same model in earlier ones.
+    var merged = SavedRun.Merge(toMerge.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).Select(SavedRun.Load).ToList());
+    var mergedPath = Path.GetFullPath(Arg("--out") ?? Path.Combine("eval", $"eval-merged-{DateTime.Now:yyyyMMdd-HHmm}.md"));
+    Directory.CreateDirectory(Path.GetDirectoryName(mergedPath)!);
+    File.WriteAllText(mergedPath, MarkdownReport.Build(merged.ToRunInfo(), merged.Scores));
+    File.WriteAllText(Path.ChangeExtension(mergedPath, ".scores.json"), merged.ToJson());
+    Console.WriteLine($"Report: {mergedPath}");
     return 0;
 }
 
@@ -125,15 +138,17 @@ var clock = Stopwatch.StartNew();
 var machine = $"{RuntimeInformation.OSDescription}, {Environment.ProcessorCount} cores";
 var outPath = Path.GetFullPath(Arg("--out") ?? Path.Combine("eval", $"eval-{started:yyyyMMdd-HHmm}.md"));
 Directory.CreateDirectory(Path.GetDirectoryName(outPath)!);
+var ollamaVersion = await OllamaVersionAsync(options.Llm);
 var scores = new List<DocScore>();
 var modelInfos = new List<(string, ModelInfo?)>();
 
 /// <summary>Writes the report and the raw scores, so a long run leaves usable results after every model.</summary>
 void Save()
 {
-    var run = new RunInfo(started, clock.Elapsed, machine, corpus, docs.Count, docs.Select(d => d.Truth).DistinctBy(g => g.Id).Sum(g => g.Entities.Count), options, modelInfos, showText, write, skipped);
+    var run = new RunInfo(started, clock.Elapsed, machine, corpus, docs.Count, docs.Select(d => d.Truth).DistinctBy(g => g.Id).Sum(g => g.Entities.Count), options, modelInfos, showText, write, skipped, ollamaVersion);
     File.WriteAllText(outPath, MarkdownReport.Build(run, scores));
     File.WriteAllText(Path.ChangeExtension(outPath, ".json"), MarkdownReport.Json(run, scores));
+    File.WriteAllText(Path.ChangeExtension(outPath, ".scores.json"), SavedRun.From(run, scores).ToJson());
 }
 
 var modelNumber = 0;
@@ -198,7 +213,35 @@ foreach (var model in wanted)
         Console.WriteLine($"caught {score.Caught}/{score.Present}, {score.FalsePositives.Count} over, {score.DetectSeconds:0.0}s{(score.OutputOk is null ? "" : $" + {score.WriteSeconds:0.0}s writing")}{(score.OutputOk == false ? " (output refused)" : "")}");
     }
     Console.WriteLine($"  {model} finished in {modelClock.Elapsed:hh\\:mm\\:ss}");
+    await UnloadAsync(o.Llm, model);   // free the memory so the next model starts cold and the timings are comparable
     Save();
 }
 Console.WriteLine($"\nReport: {outPath}");
 return 0;
+
+/// <summary>The Ollama server version, for the report (null when it cannot be read).</summary>
+static async Task<string?> OllamaVersionAsync(LlmOptions llm)
+{
+    try
+    {
+        using var http = OllamaDetector.CreateClient(llm);
+        return (await http.GetFromJsonAsync<JsonElement>("/api/version")).GetProperty("version").GetString();
+    }
+    catch (Exception)
+    {
+        return null;
+    }
+}
+
+/// <summary>Asks Ollama to unload a model now (a zero keep-alive); a failure only means the model stays loaded a little longer.</summary>
+static async Task UnloadAsync(LlmOptions llm, string model)
+{
+    try
+    {
+        using var http = OllamaDetector.CreateClient(llm);
+        using var _ = await http.PostAsJsonAsync("/api/generate", new { model, keep_alive = 0 });
+    }
+    catch (Exception)
+    {
+    }
+}

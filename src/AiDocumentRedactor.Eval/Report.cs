@@ -6,7 +6,7 @@ namespace AiDocumentRedactor.Eval;
 
 /// <summary>What was run: the models, the settings and the corpus, for the top of the report.</summary>
 public record RunInfo(DateTime Started, TimeSpan Elapsed, string Machine, string CorpusDir, int Documents, int GroundTruthEntities,
-    RedactorOptions Options, List<(string Model, ModelInfo? Info)> Models, bool ShowText, bool WroteOutputs, List<string> Skipped);
+    RedactorOptions Options, List<(string Model, ModelInfo? Info)> Models, bool ShowText, bool WroteOutputs, List<string> Skipped, string? OllamaVersion = null);
 
 /// <summary>Totals for one model over a set of documents.</summary>
 public record Totals(int Present, int Caught, int Edits, int TruePositives, int TypeCorrect, int Leaked, int PreserveTotal, int PreserveBroken, int Lost, int Docs,
@@ -84,6 +84,21 @@ public static class MarkdownReport
         sb.AppendLine("- **Over-redactions** is the count behind precision (\"8 of 130\" means 8 of the 130 redactions covered text that did not need hiding).");
         sb.AppendLine("- **Must-keep items damaged** (also called *preserved*) checks the opposite risk. Each test document contains ordinary text that must survive, such as dates, job titles, amounts, product names and general places. This counts how many of those were wrongly removed. \"0 of 40\" is ideal, and each one damaged is information the reader needed that is now gone.");
         sb.AppendLine("- **Time per document** is the average wall-clock time to redact one document, and **Output tokens/s** is how fast the model writes its answer (a hardware and model-size measure).").AppendLine();
+
+        sb.AppendLine("## Detail per model").AppendLine();
+        sb.AppendLine("Where each model's time and effort went, and how many documents it could not process. *Items fully caught* counts whole items (a full name is one item) rather than every occurrence; *label accuracy* is the share of correct redactions given the right category; *lost to OCR* counts items the scan reader never produced, which no model could have found.").AppendLine();
+        Table(sb, ["Model", "Documents scored", "Documents failed", "Total model time", "Median document", "Slowest document", "Prompt tokens", "Output tokens", "Items fully caught", "Label accuracy", "Lost to OCR"],
+            models.Select(m =>
+            {
+                var d = by[m];
+                var sorted = d.Select(x => x.DetectSeconds).Order().ToList();
+                var slow = d.Count == 0 ? null : d.MaxBy(x => x.DetectSeconds);
+                var t = tot[m];
+                return new[] { m, d.Count.ToString(), run.Skipped.Count(x => x.Contains($"with {m}:")).ToString(), TimeSpan.FromSeconds(t.Seconds).ToString(@"h\:mm\:ss"),
+                    sorted.Count == 0 ? "–" : $"{sorted[sorted.Count / 2]:0.0} s", slow is null ? "–" : $"{slow.DetectSeconds:0.0} s ({slow.File})",
+                    t.Tokens.ToString("N0", CultureInfo.InvariantCulture), t.OutTokens.ToString("N0", CultureInfo.InvariantCulture),
+                    $"{d.Sum(x => x.EntitiesFullyCaught)} of {d.Sum(x => x.EntitiesPresent)}", P(t.TruePositives == 0 ? 1 : (double)t.TypeCorrect / t.TruePositives), t.Lost.ToString() };
+            }));
 
         Findings(sb, run, models, tot, by);
 
@@ -200,6 +215,9 @@ public static class MarkdownReport
         sb.AppendLine("## Settings used").AppendLine();
         var o = run.Options;
         sb.AppendLine($"- Temperature {o.Llm.Temperature}, seed {o.Llm.Seed}, context {o.Llm.NumCtx} tokens, chunks of about {o.Llm.ChunkChars} characters with {o.Llm.ChunkOverlapChars} overlap.");
+        sb.AppendLine("- Reasoning (think): " + (o.Llm.Think switch { false => "off (gpt-oss cannot switch it off, so it runs at its lowest level, low)", true => "on", _ => "each model's own default" }) + $". Model kept loaded for {o.Llm.KeepAlive}; each model is unloaded when its turn ends.");
+        sb.AppendLine($"- Run on {run.Machine}; Ollama {run.OllamaVersion ?? "version unknown"}; endpoint {o.Llm.Endpoint}; started {run.Started:yyyy-MM-dd HH:mm}.");
+        sb.AppendLine("- Categories and their modes: " + string.Join(", ", o.Entities.Where(kv => kv.Value.Enabled).Select(kv => $"{kv.Key} ({(kv.Value.Mode == "flag" ? "flag only" : "redact")})")) + ".");
         sb.AppendLine("- Categories on: " + string.Join(", ", PromptBuilder.EnabledTypes(o)) + (o.Entities.TryGetValue("GENDER", out var g) && g.RedactPronouns ? " (pronouns included)" : "") + ".");
         var flag = o.Entities.Where(kv => kv.Value.Mode == "flag").Select(kv => kv.Key).ToList();
         if (flag.Count > 0)
@@ -209,6 +227,14 @@ public static class MarkdownReport
 
         sb.AppendLine("- Models: " + string.Join("; ", run.Models.Select(m => m.Info is null ? m.Model : $"{m.Model} ({m.Info.Summary}, digest {m.Info.ShortDigest})")) + ".").AppendLine();
 
+        Combinations(sb, run, models, by);
+
+        sb.AppendLine("## Beyond one model: combining models, and a model of our own").AppendLine();
+        sb.AppendLine("A finished product would not have to rely on one model. The table above shows each model's strengths and gaps, and they are not the same gaps, so combining models is a real option. There are four common ways. **Union:** run two models and redact whatever either finds. Recall rises, because an item has to be missed by both to leak, but over-redaction and run time add up. This suits a tool where a leak costs far more than an extra black box. **Agreement:** with three or more models, redact only what at least two agree on, or send the disagreements to a person; this cuts over-redaction but gives up some recall, and the app's manual review screen is already the right place for the disagreements. **Cascade:** a small, fast model reads everything, and a larger one is used only on documents or passages where the small one is unsure or found something odd. **Specialists:** reliable patterns such as emails, phone numbers, postcodes and ID formats are better found by fixed rules, which are fast and never forget, leaving the model for names, companies and the contextual judgement calls where only a language model does well.").AppendLine();
+        sb.AppendLine("The price of any combination is time and memory. On one machine the models run one after another, so the time is roughly the sum of the models used, and each must be loaded in turn. The estimate above is a ceiling on what a union could gain, worked out from this run's own misses; the real gain also depends on how many extra over-redactions the second model adds, which this report can only bound. Before choosing a combination, rerun the evaluation with the combination itself, since this harness scores any detector the same way.").AppendLine();
+        sb.AppendLine("**Could we make our own model?** Yes, in three different senses, from least to most effort. *Tune what we have* (the instructions, category descriptions and examples in the configuration): cheap, already done once, and it moved results noticeably. *Fine-tune an existing open model* on examples of documents with the sensitive items marked: this is a well-trodden technique (a light-weight method called LoRA adjusts a small fraction of the weights) and a machine like this one can plausibly train a small or mid-sized model, which can then be loaded into Ollama like any other. The hard part is not the training but the **data**: it needs hundreds to thousands of carefully marked documents that look like the clients' real ones, and the synthetic corpus here, which is deliberately simple and invented, is a useful start but could teach a model the style of our test documents rather than real documents. *Train a dedicated, much smaller entity-recognition model* (the kind used for names and places in classic language-processing tools): fast, runs on an ordinary CPU, and very good at the plain categories, but weaker than a language model at the judgement calls such as contextual identifiers. Training a large language model from scratch is not realistic for this project.").AppendLine();
+        sb.AppendLine("Our recommendation is to treat this as a staged question rather than a yes or no. The first step is the one under way: measure the off-the-shelf models and the combinations of them. If a gap remains in a specific category (for example contextual identifiers or place names), the next step is a small fine-tune aimed at that gap, using synthetic data plus a modest set of real, client-approved, hand-marked documents, and scored with this same harness on documents the model never saw in training. Costs to plan for are the marking effort, keeping any real client data local and out of the repository, checking that each base model's licence allows this use, and repeating the exercise whenever the base model changes. None of this needs to block the prototype: the evaluation harness is the part that makes every one of these options measurable.").AppendLine();
+
         sb.AppendLine("## How to read this, and its limits").AppendLine();
         sb.AppendLine("- **Synthetic corpus.** The documents are invented and every sensitive item is known exactly. The scores compare models fairly with each other; they are not a promise about a client's real documents, which are messier.");
         sb.AppendLine("- **Strict recall.** An item counts as caught only when its text is gone from the redacted text. A partial redaction (for example only the surname of a full name) leaves the rest visible and counts as a miss.");
@@ -216,6 +242,52 @@ public static class MarkdownReport
         sb.AppendLine("- **Scans** are read by OCR first. Words OCR misreads can't be found by the model, so scan scores mix model and OCR quality.");
         sb.AppendLine("- Results with a local model can vary slightly between runs and machines; the temperature and seed are fixed to keep this small.");
         return sb.ToString();
+    }
+
+
+    /// <summary>Estimates what running two models together (a union of what they find) would do to recall, from the items each one missed. Needs the missed text, so only when the report shows text.</summary>
+    static void Combinations(StringBuilder sb, RunInfo run, List<string> models, Dictionary<string, List<DocScore>> by)
+    {
+        if (!run.ShowText || models.Count < 2)
+        {
+            return;
+        }
+
+        sb.AppendLine("## What combining two models could achieve (estimate)").AppendLine();
+        sb.AppendLine("If a document were redacted with *both* models of a pair and everything either found were removed, an item would leak only if both missed it. This estimate counts the items missed by both, from the missed lists in this run, so it is a ceiling on the recall of a union: it ignores that the second model's different wording may also redact the same text partly. The over-redaction figure is the most extra redactions that could add up (the two models' counts summed). Only documents scored by both models are counted. The top pairs by estimated recall are shown.").AppendLine();
+        var results = new List<(string A, string B, double Single, double Union, int Over)>();
+        for (var i = 0; i < models.Count; i++)
+        {
+            for (var j = i + 1; j < models.Count; j++)
+            {
+                var common = by[models[i]].Select(x => x.File).Intersect(by[models[j]].Select(x => x.File)).ToHashSet();
+                var a = by[models[i]].Where(x => common.Contains(x.File)).ToList();
+                var b = by[models[j]].Where(x => common.Contains(x.File)).ToList();
+                var present = a.Sum(x => x.Present);
+                if (present == 0)
+                {
+                    continue;
+                }
+
+                var bothMissed = 0;
+                foreach (var da in a)
+                {
+                    var db = b.First(x => x.File == da.File);
+                    foreach (var l in da.Leaks)
+                    {
+                        var other = db.Leaks.FirstOrDefault(x => x.Type == l.Type && x.Text == l.Text);
+                        bothMissed += other is null ? 0 : Math.Min(l.Count, other.Count);
+                    }
+                }
+
+                var best = Math.Max(a.Sum(x => x.Caught), b.Sum(x => x.Caught));
+                results.Add((models[i], models[j], (double)best / present, 1 - (double)bothMissed / present,
+                    a.Sum(x => x.Edits - x.TruePositives) + b.Sum(x => x.Edits - x.TruePositives)));
+            }
+        }
+
+        Table(sb, ["Pair", "Better model alone (recall)", "Both together (estimated recall)", "Most extra over-redactions"],
+            results.OrderByDescending(r => r.Union).ThenBy(r => r.Over).Take(8).Select(r => new[] { $"{r.A} + {r.B}", P(r.Single), P(r.Union), r.Over.ToString() }));
     }
 
     /// <summary>A few plain-English headline findings generated from the numbers.</summary>

@@ -1,12 +1,14 @@
 #!/usr/bin/env bash
 # Runs the evaluation over the test corpus with the models switched on in redactor.config.json,
 # then opens the Markdown report. It can take a long time.
-# Usage: ./run-eval.sh [--models a,b] [--only text/] [--no-write] [--show-text] [--out file.md] [--no-open]
+# The corpus is synthetic, so the report lists the missed and over-redacted text (--show-text); add --no-text to leave it out.
+# Usage: ./run-eval.sh [--models a,b] [--only text/] [--no-write] [--no-text] [--out file.md] [--no-open]
 set -euo pipefail
 cd "$(dirname "$0")"
 
-OPEN=1; ARGS=()
-for a in "$@"; do if [ "$a" = "--no-open" ]; then OPEN=0; else ARGS+=("$a"); fi; done
+OPEN=1; TEXT=1; ARGS=()
+for a in "$@"; do if [ "$a" = "--no-open" ]; then OPEN=0; elif [ "$a" = "--no-text" ]; then TEXT=0; else ARGS+=("$a"); fi; done
+[ "$TEXT" = 1 ] && ARGS+=("--show-text")
 
 say() { printf '\033[1m%s\033[0m\n' "$*"; }
 fail() { printf '\033[31m%s\033[0m\n' "$*" >&2; exit 1; }
