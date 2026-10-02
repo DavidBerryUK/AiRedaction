@@ -19,6 +19,7 @@ It reads text files, Word documents, PDFs and scans (with local OCR), and writes
 - [How to run the Evaluation App](documentation/HOW_TO_RUN_EVALUATION.md)
 - [Version 1 findings: evaluation results and the road to production](documentation/EVALUATION_FINDINGS_V1.md)
 - [Version 2 findings: effect of the phase 1 accuracy changes](documentation/EVALUATION_FINDINGS_V2.md)
+- [Phase 2 plan: layered detection with GLiNER, and benchmarking it](documentation/PHASE_2_PLAN.md)
 - [Specification](documentation/SPECIFICATION.md): requirements, approach, security, risks and the delivery plan
 - [Coding standards](CODING_STANDARDS.md)
 

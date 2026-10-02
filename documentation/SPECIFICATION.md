@@ -1,6 +1,6 @@
 # AI Document Redactor — Specification & Approach
 
-**Status:** Draft v0.39 (prototype)
+**Status:** Draft v0.40 (prototype)
 **Owner:** David Berry
 **Last updated:** 2026-10-03
 
@@ -220,6 +220,7 @@ Rules specific to secrets:
 | FR70 | **Fixed rules alongside the model (built, phase 1).** Predictable items are found by rule as well as by the model: emails (including OCR's "name @site"), UK phone numbers, postcodes (as ADDRESS), NHS numbers (check digit), National Insurance numbers, IBANs (check digit), sort codes and account numbers after those words, card numbers (Luhn check), IPv4 addresses, **organisation names** (one to five capitalised words ending in a suffix from `rules.organisationSuffixes`, such as Ltd, PLC, Surgery, School, Council or Credit Union, allowing a PDF line break inside the name; leading words like "The" or "Dear" are dropped and a suffix on its own is ignored), and gender words and titles (man, woman, male, female, Mr, Mrs, Ms, Miss), plus pronouns when GENDER has `redactPronouns`. A rule runs only when its category is on, and its finds respect the category's redact or flag mode. `rules.enabled` switches the layer off. |
 | FR71 | **Spacing-tolerant matching (built, phase 1).** The model's answers are checked against, placed in and propagated through the text treating any run of spaces or line breaks as equal, so a name or address that a PDF or scan wraps onto a new line is still found (this turned out to be a smaller cause of misses than first thought: see the version 2 findings). The hallucination guard is unchanged in spirit: the words must still be in the text, in order. |
 | FR72 | **Empty-reply guard (built, phase 1).** If the model returns nothing for a passage that plainly contains likely names (two or more capitalised word pairs) or anything the rules match, it is asked again with a reminder; if that is also empty and `llm.fallbackModel` is set, the fallback model is asked. This stops a silent whole-document failure being taken as a clean result. |
+| FR73 | **Layered detection with GLiNER (planned, accuracy roadmap phase 2).** A second kind of detector, a small span-marking model of the GLiNER family run locally, is added behind the same detector interface and benchmarked in the evaluation alongside the chat models (overall, by category and format, with a confidence-threshold sweep, speed and memory). Real combinations (rules plus chat model plus GLiNER: union, agreement, cascade) are measured in the evaluation, each redaction records which detectors found it and their confidence, items found by only one detector or with low confidence are flagged for review with the reason, and a second-pass model re-reads the redacted text and flags anything still identifying. It must run entirely locally. See [the phase 2 plan](PHASE_2_PLAN.md). |
 
 ## 6. Non-functional requirements
 
