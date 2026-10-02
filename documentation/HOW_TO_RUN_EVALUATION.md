@@ -52,7 +52,7 @@ dotnet build
 dotnet src/AiDocumentRedactor.Eval/bin/Debug/net10.0/AiDocumentRedactor.Eval.dll
 ```
 
-It prints each document and model as it goes, for example `text/01-hr-letter.txt: caught 16/16, 2 over, 10.9s`. When it finishes it prints the report path, by default `eval/eval-<date>-<time>.md`, with a `.json` file beside it. The report is rewritten after every model, so an interrupted run still leaves results for the models that finished.
+It shows where it is as it goes: a header per model (`=== Model 2 of 10: gemma4:e4b ===`) and a line per document that names the model and the document before it starts, then adds the result when it finishes, for example `[model 2/10 gemma4:e4b] document 3 of 34: text/context-text-03.txt ... caught 7/7, 1 over, 6.3s`. When it finishes it prints the report path, by default `eval/eval-<date>-<time>.md`, with a `.json` file beside it. The report is rewritten after every model, so an interrupted run still leaves results for the models that finished.
 
 ### Options
 
@@ -91,9 +91,20 @@ The report is a Markdown file you can open in any viewer or paste into a documen
 
 By default the report contains **no document text**, only counts, categories and file names.
 
+### What the Summary columns mean
+
+The report explains these itself, under the Summary table, in plain language:
+
+- **Recall:** of everything that should have been hidden, how much was hidden. The most important number, because a miss is a leak.
+- **Precision:** of everything hidden, how much really needed hiding. The rest is over-redaction.
+- **F1:** one score that blends the two; it is high only when both are high.
+- **Must-keep items damaged (preserved):** ordinary text that had to survive (dates, titles, amounts) but was wrongly removed. Zero is ideal.
+
 ### Things to keep in mind
 
 - The corpus is synthetic. Scores compare models fairly with each other, but a client's real documents will be messier.
+- **Thinking models** (the qwen3.x family) write a long chain of reasoning before answering, so they are much slower per document and can return an empty reply. Support for switching thinking off is not built yet, so their scores and timings are not a fair comparison with the others.
+- Ollama keeps each model in memory for a while after it is used, so the previous model may still show in `ollama ps`; it is idle and harmless (`ollama stop <model>` unloads it).
 - Recall is strict: a partial redaction (for example only a surname) counts as a miss.
 - Scans are read by OCR first, so scan scores mix model quality and OCR quality. Items OCR could not read at all are reported separately.
 - Some models may not produce valid structured output; those documents are listed under **Skipped** rather than scored.
