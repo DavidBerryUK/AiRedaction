@@ -34,6 +34,19 @@ Published results (on other test sets, to be checked on ours) are encouraging: a
 - For each: **licence** (must allow this use, including client work), size, languages, and whether an **ONNX** export exists or can be made.
 - Record the model's version or digest in the report, as is done for the Ollama models, so results can be reproduced.
 
+**Candidates checked so far** (from the model pages; not yet run on our documents):
+
+| Model | Size | Licence | ONNX | Notes |
+|---|---|---|---|---|
+| **knowledgator/gliner-pii-edge-v1.0** | about 200–330 MB files | Apache 2.0 | **Yes** (FP16 330 MB, quantised 197 MB) | 60+ PII labels, English first. Published F1 75.5% (precision 79%, recall 72%) on its own synthetic PII set. The best fit to test first: licence is clear and the ONNX files exist |
+| **fastino/gliner2-privacy-filter-PII-multi** | 205M parameters | Apache 2.0 | Not stated | 42 labels, 7 languages. Published F1 0.477 and recall about 0.72 on the SPY benchmark (precision about 0.36, so it over-marks). A conversion tool exists (`gliner2-onnx`, MIT, experimental) but lists only the base GLiNER2 models |
+| nvidia/gliner-PII | large-v2.1 based | **NVIDIA Open Model License** (not Apache; needs a legal check before client use) | Not stated | Broad PII and health labels |
+| urchade/gliner_multi_pii-v1 | multilingual | to confirm | Not stated | Six languages, an older fine-tune |
+
+Published figures come from different test sets and are **not comparable with ours**, and several are modest (F1 between 48% and 76%). That is exactly why the spike measures them on our own documents first: the question is whether GLiNER catches what the chat models miss, not whether it beats them overall.
+
+**.NET:** no ready-made GLiNER library for C# turned up in the search. ONNX Runtime and a tokeniser package exist for .NET, so option A (below) is possible but means writing the pre- and post-processing ourselves; this adds weight to trying option B (helper process) first if the spike is promising.
+
 ### 4.2 Run it inside the application (a few days; the main technical risk)
 
 GLiNER is not served by Ollama. Two ways to run it locally, to be decided by a short spike:
@@ -116,7 +129,7 @@ The work is a success when, on the held-out documents:
 
 ## 7. Suggested order
 
-1. **Spike (1–2 days):** run one GLiNER PII model offline over the corpus text, outside the application, and score the spans with the harness. This answers "is it worth it" cheaply.
+1. **Spike (1–2 days):** run one GLiNER PII model offline over the corpus text, outside the application, and score its spans against the answer key. A ready script is in `tools/gliner-spike/spike.py` (setup and run commands are in its header; first model to try: `knowledgator/gliner-pii-edge-v1.0`). It reports recall, precision and F1 at several confidence thresholds, recall by category, speed per document, and the items missed, so they can be compared directly with the chat models. This answers "is it worth it" cheaply.
 2. If promising, build the `GlinerDetector` (4.2) and the category mapping (4.3).
 3. Run the full benchmark and the threshold sweep (4.4), then the real combinations.
 4. Add agreement scoring and review routing (4.5), then the second-pass check (4.6).
