@@ -139,6 +139,13 @@ The model must answer in a fixed **JSON structure** (type, text, context), which
 - **Why:** a redaction that only covers text, but leaves it in the file, is not a redaction. This is the "proof" step, and it works the same however good the detector is.
 - **Evidence:** every redacted file produced in the evaluations passed these checks.
 
+### 3.15 Clean-up rules after the model
+
+- **What we do:** a small set of fixed checks, each a switch that is off by default, removes the model's predictable mistakes after it answers: template placeholders such as "[Company Name]", masked values, generic contract roles such as "Borrower", and dates with no birth wording near them read as dates of birth. One further rule adds IPv6 addresses. A rule only ever removes a model's (or GLiNER's) redaction, never one from the fixed rules, a custom list or a person, and whatever it leaves out is listed in the review screen with a "Redact anyway" button.
+- **Why they are code and not part of the prompt:** a prompt is a request that a model may follow differently each time, and the models already ignored the date-of-birth definition in the prompt hundreds of times. Code behaves the same every time, can be tested, and can be shown to a reviewer.
+- **Evidence:** measured on each model's saved answers with no model run ([cleanup-effect-final-20261003.md](evaluation-reports/cleanup-effect-final-20261003.md)). The first draft of two rules was too blunt (it would have removed real emails and names that sit in brackets, and a sort code of repeated digits) and was tightened after that measurement. With the tightened rules together, precision on the held-out documents rises for every model (phi4 74.3% to 89.8%, qwen3.6:27b 81.6% to 88.7%) at a recall cost of 0.2 to 0.6 points, and the rules take away 936 wrong redactions and 37 right ones across the five models.
+- **Limit:** the rules were chosen after looking at these same documents, so those gains are an upper estimate until they are tried on documents the rules were not based on. Some rules are policy (whether a title or a public body is sensitive), and belong in a client's configuration.
+
 ---
 
 ## 4. How we measure

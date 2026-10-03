@@ -66,6 +66,20 @@
                 }
             </div>
         </div>
+        <div class="cleanup">
+            <strong>Clean-up rules</strong>
+            <p>Fixed checks that run after the model and take away its predictable mistakes. Each can be switched on its own. They only remove redactions the model made (never the fixed rules, your lists or your own edits), and whatever they leave out is listed with the edits so you can check it and redact it after all.</p>
+            @foreach (var r in S.CleanUpRules)
+            {
+                <div class="cu-row">
+                    <label class="switch" title="@r.Description">
+                        <input type="checkbox" role="switch" aria-label="@r.Name" checked="@r.On" @onchange="e => S.SetCleanUp(r.Key, (bool)(e.Value ?? false))" />
+                        <span class="slider"></span>
+                    </label>
+                    <div><strong>@r.Name</strong><div class="sub">@r.Description</div></div>
+                </div>
+            }
+        </div>
         <div class="dialog-foot">
             <button class="btn" disabled="@(!S.CategoriesChanged)" title="Put every category and the second opinion back to the config file's settings" @onclick="S.ResetCategories">↺ Reset to config file</button>
             <button class="btn primary" @onclick="Close">Done</button>

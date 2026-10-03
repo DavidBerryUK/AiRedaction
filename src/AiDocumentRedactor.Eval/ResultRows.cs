@@ -67,7 +67,24 @@ public static class ResultRows
     }
 
     /// <summary>The settings that change results, as recorded with each source run.</summary>
-    public static Dictionary<string, object?> Settings(RedactorOptions o) => new()
+    public static Dictionary<string, object?> Settings(RedactorOptions o)
+    {
+        var settings = BaseSettings(o);
+        if (o.Rules.CleanUp.AnyOn)
+        {
+            // Recorded only when a rule is on, so datasets made before the clean-up rules existed keep their settings fingerprint.
+            var c = o.Rules.CleanUp;
+            settings["cleanUp"] = new Dictionary<string, object?>
+            {
+                ["bracketedPlaceholders"] = c.BracketedPlaceholders, ["maskedValues"] = c.MaskedValues, ["genericTerms"] = c.GenericTerms, ["genericTermList"] = c.GenericTerms ? c.GenericTermList : null,
+                ["birthDateContext"] = c.BirthDateContext, ["ipv6"] = c.Ipv6,
+            };
+        }
+
+        return settings;
+    }
+
+    static Dictionary<string, object?> BaseSettings(RedactorOptions o) => new()
     {
         ["llm"] = new Dictionary<string, object?>
         {

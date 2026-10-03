@@ -111,6 +111,13 @@
   },
   "rules": {
     "enabled": true,
+    "cleanUp": {
+      "bracketedPlaceholders": false,
+      "maskedValues": false,
+      "genericTerms": false,
+      "birthDateContext": false,
+      "ipv6": false
+    },
     "organisationSuffixes": [
       "Ltd", "Limited", "PLC", "LLP", "LLC", "Inc", "Corp", "Corporation", "Group", "Holdings", "Partners", "Associates",
       "Surgery", "Practice", "Clinic", "Hospital", "Trust", "School", "Academy", "College", "University",

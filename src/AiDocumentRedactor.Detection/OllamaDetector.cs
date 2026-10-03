@@ -6,11 +6,14 @@ namespace AiDocumentRedactor.Detection;
 
 /// <summary>LLM detection via a local Ollama server. The model returns quoted strings; this class
 /// locates them (never trusts offsets), discards non-verbatim answers, and propagates repeats.</summary>
-public class OllamaDetector(HttpClient http, RedactorOptions options, GlinerDetector? gliner = null) : IEntityDetector, IDetectorMetrics, IDetectorTrace
+public class OllamaDetector(HttpClient http, RedactorOptions options, GlinerDetector? gliner = null) : IEntityDetector, IDetectorMetrics, IDetectorTrace, IDetectorSuppression
 {
     /// <summary>The spans from the language model and the fixed rules alone, before GLiNER's agreement was applied (the same as the result when GLiNER is off).
     /// Kept for the last text detected, so an evaluation can score both with and without GLiNER from one run.</summary>
     public IReadOnlyList<DetectedEntity> LastPrimarySpans { get; private set; } = [];
+
+    /// <summary>What the clean-up rules left out of the last run (empty when none is switched on).</summary>
+    public IReadOnlyList<SuppressedItem> LastSuppressed { get; private set; } = [];
     /// <summary>Seconds GLiNER took on the last text (0 when it is off).</summary>
     public double LastGlinerSeconds { get; private set; }
 
@@ -178,10 +181,14 @@ public class OllamaDetector(HttpClient http, RedactorOptions options, GlinerDete
         {
             spans.AddRange(Locate(text, term, EntityTypes.Other, 0, "custom-list"));
         }
+        // Clean-up rules: take out the model's predictable mistakes, and remember what they took out so a reviewer can check it.
+        var (cleaned, suppressed) = CleanUpRules.Apply(text, spans, options.Rules.CleanUp);
+        spans = cleaned;
         // Categories set to "flag" are listed for review but left in the text.
         var flagTypes = PromptBuilder.DefaultDescriptions.Keys.Where(t => options.ModeOf(t) == "flag").ToHashSet();
         var primary = spans.Select(s => flagTypes.Contains(s.Type) ? s with { Flag = true } : s).DistinctBy(s => (s.Start, s.Length)).ToList();
         LastPrimarySpans = primary;
+        LastSuppressed = suppressed;
         if (gliner is null)
         {
             return primary;
@@ -189,7 +196,9 @@ public class OllamaDetector(HttpClient http, RedactorOptions options, GlinerDete
 
         progress?.Report(new(RedactionStage.Locating, "Second opinion (GLiNER)", 0, 0, liveCount, sw.Elapsed));
         var glinerClock = System.Diagnostics.Stopwatch.StartNew();
-        var second = gliner.Detect(text);
+        var (secondKept, secondSuppressed) = CleanUpRules.Apply(text, gliner.Detect(text), options.Rules.CleanUp);
+        var second = secondKept;
+        LastSuppressed = [.. suppressed, .. secondSuppressed.Where(x => !suppressed.Any(y => y.Start == x.Start && y.Length == x.Length))];
         LastGlinerSeconds = glinerClock.Elapsed.TotalSeconds;
         var combined = AgreementCombiner.Combine(primary, second, options);
         return combined.Select(s => flagTypes.Contains(s.Type) ? s with { Flag = true } : s).ToList();

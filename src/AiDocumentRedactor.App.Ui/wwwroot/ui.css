@@ -300,3 +300,13 @@ mark.m.t-LOCATION { background: color-mix(in srgb, var(--c-LOCATION) 38%, transp
 .second-opinion .so-text p { margin: 4px 0; color: var(--muted); font-size: 12.5px; line-height: 1.45; }
 .second-opinion .so-missing { color: var(--text); font-weight: 600; }
 .second-opinion .so-solo { display: inline-flex; gap: 8px; align-items: center; margin-top: 6px; font-size: 12.5px; }
+
+.cleanup { margin-top: 14px; padding: 12px 14px; border: 1px solid var(--border); border-radius: 8px; background: var(--panel); }
+.cleanup > p { margin: 4px 0 8px; color: var(--muted); font-size: 13px; }
+.cleanup .cu-row { display: flex; gap: 12px; align-items: flex-start; padding: 6px 0; border-top: 1px solid var(--border); }
+.cleanup .cu-row .switch { flex: none; margin-top: 2px; } .cleanup .cu-row .switch .slider { border: 1px solid var(--muted); }
+.cleanup .sub { color: var(--muted); font-size: 12.5px; }
+.suppressed { border-bottom: 1px solid var(--border); padding: 6px 12px; background: var(--panel-2); }
+.suppressed summary { cursor: pointer; font-weight: 600; font-size: 13px; }
+.suppressed ul { list-style: none; margin: 6px 0; padding: 0; } .suppressed li { padding: 6px 0; border-top: 1px solid var(--border); }
+.suppressed .sub { color: var(--muted); font-size: 12px; margin: 2px 0 4px; }

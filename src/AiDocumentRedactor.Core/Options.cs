@@ -162,8 +162,37 @@ public class GlinerOptions
     };
 }
 
+/// <summary>Clean-up rules: fixed checks that run after the model and tidy its predictable mistakes. Each is its own switch, and all are off unless switched on, so nothing
+/// changes until someone chooses. A rule never touches what the fixed rules, a custom list or a person added.</summary>
+public class CleanUpOptions
+{
+    /// <summary>Do not redact template placeholders: text in square, curly or angle brackets such as "[Company Name]", and date templates such as "MM/DD/YYYY".</summary>
+    public bool BracketedPlaceholders { get; set; }
+    /// <summary>Do not redact masked or blank values: "XXXX-XXXX", "********", "0000000000", a row of dashes.</summary>
+    public bool MaskedValues { get; set; }
+    /// <summary>Do not redact the roles a contract defines ("Borrower", "Buyer", "the Company") as a company or a person. The list is <see cref="GenericTermList"/>.</summary>
+    public bool GenericTerms { get; set; }
+    /// <summary>The generic terms for <see cref="GenericTerms"/>. A client can add or remove words.</summary>
+    public string[] GenericTermList { get; set; } =
+    [
+        "Borrower", "Lender", "Buyer", "Seller", "Purchaser", "Vendor", "Supplier", "Customer", "Client", "Company", "Corporation", "Firm",
+        "Shareholder", "Shareholders", "Party", "Parties", "Agent", "Trustee", "Guarantor", "Issuer", "Lessee", "Lessor", "Landlord", "Tenant",
+        "Employer", "Employee", "Contractor", "Licensor", "Licensee", "Consignee", "Consignor",
+    ];
+    /// <summary>Only keep a date of birth that has birth wording near it ("born", "birth", "DOB"), at the start of the document, or in a column named so. Other dates are not dates of birth.</summary>
+    public bool BirthDateContext { get; set; }
+    /// <summary>Also find IPv6 addresses (an addition, not a removal), next to the existing IPv4 rule.</summary>
+    public bool Ipv6 { get; set; }
+
+    /// <summary>True if any rule is switched on.</summary>
+    [System.Text.Json.Serialization.JsonIgnore]
+    public bool AnyOn => BracketedPlaceholders || MaskedValues || GenericTerms || BirthDateContext || Ipv6;
+}
+
 public class RulesOptions
 {
+    /// <summary>The clean-up rules that tidy the model's predictable mistakes (see <see cref="CleanUpOptions"/>).</summary>
+    public CleanUpOptions CleanUp { get; set; } = new();
     /// <summary>Find predictable items with fixed rules as well as the model. Each rule runs only when its category is switched on.</summary>
     public bool Enabled { get; set; } = true;
     /// <summary>Words that end an organisation's name. One to five capitalised words followed by one of these ("Fernleigh Surgery",

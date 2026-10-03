@@ -254,6 +254,23 @@
                 <option value="conf" selected="@sortByConfidence">Lowest confidence first</option>
             </select>
         </div>
+        @if (!Processing && S.SuppressedForActive() is { Count: > 0 } suppressedRows)
+        {
+            <details class="suppressed">
+                <summary title="Redactions the model made that a clean-up rule decided not to apply">Left out by clean-up rules (@suppressedRows.Count)</summary>
+                <ul>
+                    @foreach (var x in suppressedRows)
+                    {
+                        <li>
+                            <div class="bm-top"><span class="chip type t-@x.Type">@x.Type</span><span class="bm-line">line @x.Line</span></div>
+                            <div class="bm-snippet"><code>@x.Text</code></div>
+                            <div class="sub">Left in the text because it looks like @x.RuleLabel.</div>
+                            <button class="btn small" title="Redact this after all (it becomes your own redaction)" @onclick="() => S.AddManual(x.Start, x.Length, x.Type, false)">Redact anyway</button>
+                        </li>
+                    }
+                </ul>
+            </details>
+        }
         <ul class="bm-list">
             @foreach (var b in Visible)
             {

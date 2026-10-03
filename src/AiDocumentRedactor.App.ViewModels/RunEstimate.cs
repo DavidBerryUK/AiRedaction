@@ -11,3 +11,9 @@ public record RunEstimate(int Pages, int Chars, int Chunks, int Models, double S
 
 /// <summary>One category in the Categories dialog: its switch, mode, whether pronouns are redacted (GENDER only) and its definition.</summary>
 public record CategoryRow(string Type, bool Enabled, string Mode, bool RedactPronouns, string Description);
+
+/// <summary>A clean-up rule as the Categories dialog shows it: its key, a short name, what it does, and whether it is on.</summary>
+public record CleanUpRuleRow(string Key, string Name, string Description, bool On);
+
+/// <summary>Something a clean-up rule left out, with the text from the document, the rule that left it out in plain words, and its line, so a reviewer can redact it after all.</summary>
+public record SuppressedRow(string Rule, string RuleLabel, string Type, int Start, int Length, string Text, int Line);

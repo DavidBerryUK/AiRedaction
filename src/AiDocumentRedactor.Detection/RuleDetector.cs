@@ -25,6 +25,23 @@ public static class RuleDetector
     static readonly Regex GenderWords = new(@"(?<![\p{L}])(?:man|woman|men|women|male|female|Mr|Mrs|Ms|Miss)(?![\p{L}])", Opt);
     static readonly Regex Pronouns = new(@"(?<![\p{L}])(?:[Hh]e|[Ss]he|[Hh]im|[Hh]er|[Hh]is|[Hh]ers|[Hh]imself|[Hh]erself)(?![\p{L}])", Opt);
 
+    static readonly Regex Ipv6Candidate = new(@"(?<![\w:.])(?:[0-9A-Fa-f]{0,4}:){2,7}[0-9A-Fa-f]{0,4}(?![\w:])", RegexOptions.Compiled | RegexOptions.CultureInvariant);
+
+    /// <summary>IPv6 addresses in the text: candidates made of hex groups and colons that really parse as IPv6 (so a time such as 10:30:45 or a MAC address is not one).</summary>
+    public static List<DetectedEntity> FindIpv6(string text)
+    {
+        var found = new List<DetectedEntity>();
+        foreach (Match m in Ipv6Candidate.Matches(text))
+        {
+            if (m.Value.Count(c => c == ':') >= 2 && System.Net.IPAddress.TryParse(m.Value, out var ip) && ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetworkV6)
+            {
+                found.Add(new DetectedEntity(EntityTypes.OnlineId, m.Index, m.Length, 1.0, Source));
+            }
+        }
+
+        return found;
+    }
+
     /// <summary>Everything the rules find in the text, for the categories that are switched on.</summary>
     public static List<DetectedEntity> Find(string text, RedactorOptions options)
     {
@@ -41,6 +58,14 @@ public static class RuleDetector
         foreach (Match m in Email.Matches(text))
         {
             Add(EntityTypes.Email, m.Index, m.Length);
+        }
+
+        if (options.Rules.CleanUp.Ipv6)
+        {
+            foreach (var ip in FindIpv6(text))
+            {
+                Add(EntityTypes.OnlineId, ip.Start, ip.Length);
+            }
         }
 
         foreach (Match m in Phone.Matches(text))

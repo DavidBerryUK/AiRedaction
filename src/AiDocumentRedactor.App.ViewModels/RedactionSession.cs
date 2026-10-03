@@ -61,7 +61,7 @@ public class RedactionSession
         return new CategoryRow(t, e?.Enabled ?? true, options.ModeOf(t), e?.RedactPronouns ?? false, e?.Description ?? PromptBuilder.DefaultDescriptions[t]);
     }).ToList();
     /// <summary>True if the categories or the second-opinion settings differ from the config file.</summary>
-    public bool CategoriesChanged => SecondOpinionChanged || Categories.Any(c =>
+    public bool CategoriesChanged => SecondOpinionChanged || CleanUpChanged || Categories.Any(c =>
     {
         startingOptions.Entities.TryGetValue(c.Type, out var s);
         return (s?.Enabled ?? true, startingOptions.ModeOf(c.Type), s?.RedactPronouns ?? false) != (c.Enabled, c.Mode, c.RedactPronouns);
@@ -89,6 +89,52 @@ public class RedactionSession
         options.Gliner.SoloAction = action == "redact" ? "redact" : "flag";
         Notify();
     }
+    // ---- clean-up rules: also session-only, never written to the config file ----
+    /// <summary>The clean-up rules with their plain-English description and whether each is switched on for the next Redact.</summary>
+    public IReadOnlyList<CleanUpRuleRow> CleanUpRules
+    {
+        get
+        {
+            var c = options.Rules.CleanUp;
+            return
+            [
+                new("bracketedPlaceholders", "Template placeholders", "Do not redact text in brackets such as “[Company Name]” or “[Insert Link]”, or a date template such as MM/DD/YYYY. A real name or email that happens to be in brackets is still redacted.", c.BracketedPlaceholders),
+                new("maskedValues", "Masked values", "Do not redact values that are only mask characters (XXXX-XXXX, ********), a run of zeros, or a row of dashes.", c.MaskedValues),
+                new("genericTerms", "Generic contract terms", "Do not redact the roles a contract defines (Borrower, Buyer, “the Company”) as a company or a person.", c.GenericTerms),
+                new("birthDateContext", "Dates need birth wording", "Only treat a date as a date of birth if “born”, “birth” or “DOB” is near it or the document starts with it. Other dates are left in.", c.BirthDateContext),
+                new("ipv6", "IPv6 addresses", "Also find IPv6 addresses, next to the existing IPv4 rule. (This adds redactions; the others take wrong ones away.)", c.Ipv6),
+            ];
+        }
+    }
+    bool CleanUpChanged => CleanUpFlags(startingOptions) != CleanUpFlags(options);
+    static (bool, bool, bool, bool, bool) CleanUpFlags(RedactorOptions o) => (o.Rules.CleanUp.BracketedPlaceholders, o.Rules.CleanUp.MaskedValues, o.Rules.CleanUp.GenericTerms, o.Rules.CleanUp.BirthDateContext, o.Rules.CleanUp.Ipv6);
+    /// <summary>Switches one clean-up rule (by its key) on or off for the next Redact.</summary>
+    public void SetCleanUp(string key, bool on)
+    {
+        var c = options.Rules.CleanUp;
+        switch (key)
+        {
+            case "bracketedPlaceholders": c.BracketedPlaceholders = on; break;
+            case "maskedValues": c.MaskedValues = on; break;
+            case "genericTerms": c.GenericTerms = on; break;
+            case "birthDateContext": c.BirthDateContext = on; break;
+            case "ipv6": c.Ipv6 = on; break;
+        }
+
+        Notify();
+    }
+    /// <summary>What the clean-up rules left out of the active result, with the text from the document, so a reviewer can check it and redact it after all.</summary>
+    public IReadOnlyList<SuppressedRow> SuppressedForActive()
+    {
+        if (ActiveResult is not { } a || OriginalText is not { } text)
+        {
+            return [];
+        }
+
+        return a.Suppressed.Where(s => s.Start >= 0 && s.Length > 0 && s.Start + s.Length <= text.Length)
+            .Select(s => new SuppressedRow(s.Rule, CleanUpRuleNames.Label(s.Rule), s.Type, s.Start, s.Length, text.Substring(s.Start, s.Length), 1 + text.AsSpan(0, s.Start).Count('\n')))
+            .OrderBy(s => s.Start).ToList();
+    }
     /// <summary>The settings object for a category (created if the file did not mention it).</summary>
     EntityOptions EntityFor(string type) => options.Entities.TryGetValue(type, out var e) ? e : options.Entities[type] = new EntityOptions { Mode = options.ModeOf(type) };
     /// <summary>Switches a category on or off for the next Redact.</summary>
@@ -115,6 +161,7 @@ public class RedactionSession
         options.Entities = Copy(startingOptions).Entities;
         options.Gliner.Enabled = startingOptions.Gliner.Enabled;
         options.Gliner.SoloAction = startingOptions.Gliner.SoloAction;
+        options.Rules.CleanUp = Copy(startingOptions).Rules.CleanUp;
         Notify();
     }
 
@@ -625,7 +672,10 @@ public class RedactionSession
         sw.Stop();
 
         var od = detector as IDetectorMetrics;
-        var mr = new ModelResult(Guid.NewGuid(), model, InfoFor(model), r, sw.Elapsed, od?.PromptTokens ?? 0, od?.OutputTokens ?? 0, od?.Discarded ?? 0, DateTime.UtcNow) { Calls = (detector as IDetectorTrace)?.Calls ?? [], BaseResult = r };
+        var mr = new ModelResult(Guid.NewGuid(), model, InfoFor(model), r, sw.Elapsed, od?.PromptTokens ?? 0, od?.OutputTokens ?? 0, od?.Discarded ?? 0, DateTime.UtcNow)
+        {
+            Calls = (detector as IDetectorTrace)?.Calls ?? [], BaseResult = r, Suppressed = (detector as IDetectorSuppression)?.LastSuppressed ?? [],
+        };
         var rv = ReviewOf(doc.FullPath);
         if (!rv.Current.IsEmpty)
         {

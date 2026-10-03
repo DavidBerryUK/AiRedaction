@@ -198,3 +198,13 @@ The final evaluator runs every model switched on in `evaluation.models` over eve
 
 When it finishes it checks that every document has a result for every setup, that scores, timings, token counts and output checks are all saved, and that every redacted file passed its safety check. It then marks the dataset `final`, builds the database and writes `report.md`. Options: `--models a,b`, `--timeout 900` (seconds per document), `--input`, `--corpus-root`, `--no-write` (skip the redacted-file checks).
 
+## What the clean-up rules would do (no model needed)
+
+The clean-up rules (see FR74) act on the model's saved answers, so their effect can be measured on a dataset without running any model:
+
+```bash
+dotnet run --project src/AiDocumentRedactor.Eval -c Release -- --cleanup-effect datasets/final-20261003
+```
+
+It takes a few seconds and writes `cleanup-effect.md` in the dataset folder. For each model it shows the scores with no rules, with each rule alone and with all rules, the wrong redactions each rule removes, and the right redactions it would lose (listed, so they can be checked). The first row of each model is rescored and must match the saved results; the report says so. The rules were chosen after looking at the held-out documents, so the gains are an upper estimate until they are tried on documents the rules were not based on. The report for the final dataset is kept in `documentation/evaluation-reports/cleanup-effect-final-20261003.md`.
+

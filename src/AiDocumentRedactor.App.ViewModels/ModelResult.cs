@@ -8,6 +8,8 @@ public record ModelResult(Guid Id, string Model, ModelInfo? Info, RedactionResul
 {
     /// <summary>Every call made to the model for this result (empty if the detector does not record them).</summary>
     public IReadOnlyList<ModelCall> Calls { get; init; } = [];
+    /// <summary>What the clean-up rules left out of this run (positions only; the text is read from the document). Empty when no rule is switched on.</summary>
+    public IReadOnlyList<SuppressedItem> Suppressed { get; init; } = [];
     /// <summary>What the model itself produced, before any review changes. Result is this with the reviewer's changes applied.</summary>
     public RedactionResult? BaseResult
     {
