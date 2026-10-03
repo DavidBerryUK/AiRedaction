@@ -1,5 +1,6 @@
 @namespace AiDocumentRedactor.App.Ui
 @* One document: how every setup did on it, and its text with a chosen setup's work drawn on. *@
+<PageIntro Page="document" />
 @if (detail is null)
 {
     <p class="muted">@(loaded ? "No such document in this dataset." : "Loading…")</p>
@@ -60,6 +61,64 @@ else
         <SpanText Text="@detail.Text" Markers="@(view?.Markers ?? [])" />
     </section>
 
+    @if (live is not null)
+    {
+        <section class="xlive">
+            <h3>Try with another model <InfoButton Topic="live_run" /></h3>
+            @if (!liveOpen)
+            {
+                <button class="btn" @onclick="OpenLiveAsync">Choose a model…</button>
+            }
+            else
+            {
+                <div class="xfilter">
+                    <label><span class="lbl">Model</span>
+                        <select value="@liveModel" @onchange="e => liveModel = e.Value?.ToString()" disabled="@running">
+                            @foreach (var m in liveModels)
+                            {
+                                <option value="@m.Name" selected="@(m.Name == liveModel)">@m.Name · @m.Summary</option>
+                            }
+                        </select>
+                    </label>
+                    @if (live.GlinerAvailable)
+                    {
+                        <label class="inline"><input type="checkbox" checked="@liveGliner" disabled="@running" @onchange="e => liveGliner = e.Value is true" /> Also with GLiNER</label>
+                    }
+                    @if (running)
+                    {
+                        <button class="btn danger" @onclick="CancelLive">Cancel</button>
+                    }
+                    else
+                    {
+                        <button class="btn primary" disabled="@(liveModel is null)" @onclick="RunLiveAsync">Run on this document</button>
+                    }
+                </div>
+                @if (running)
+                {
+                    <p class="xhint">⏳ @liveProgress</p>
+                }
+
+                @if (liveError is not null)
+                {
+                    <p class="xerror">@liveError</p>
+                }
+
+                @if (liveResult is not null)
+                {
+                    <p class="xhint">Done in @liveResult.Seconds.ToString("0.0") s. Added: @string.Join(", ", liveResult.Configs). It is selected in the table above and drawn on the text.</p>
+                    <ul class="xwarnings">
+                        @foreach (var w in liveResult.Warnings)
+                        {
+                            <li>@w</li>
+                        }
+                    </ul>
+                }
+
+                <p class="xhint">Runs on this computer only, with a model installed in your local Ollama. The result is saved beside the dataset as a live result and is left out of the leaderboard unless “Include live runs” is ticked.</p>
+            }
+        </section>
+    }
+
     <details class="xkey">
         <summary>The answer key for this document (@detail.Key.Count(k => k.Role == "entity") items)</summary>
         <table class="xt">
@@ -75,9 +134,78 @@ else
 }
 
 @code {
+    [Inject] IServiceProvider Services { get; set; } = default!;
+
     [Parameter, EditorRequired] public ExplorerState State { get; set; } = default!;
     [Parameter, EditorRequired] public string DocId { get; set; } = string.Empty;
     [Parameter] public string? InitialSetup { get; set; }
+
+    ILiveRunner? live;
+    bool liveOpen, running, liveGliner;
+    string? liveModel, liveProgress, liveError;
+    IReadOnlyList<LiveModel> liveModels = [];
+    LiveRunResult? liveResult;
+    CancellationTokenSource? liveCts;
+
+    protected override void OnInitialized() => live = Services.GetService(typeof(ILiveRunner)) as ILiveRunner;
+
+    /// <summary>Lists the models installed in the local Ollama for the panel.</summary>
+    async Task OpenLiveAsync()
+    {
+        liveError = null;
+        try
+        {
+            liveModels = await live!.ModelsAsync(CancellationToken.None);
+            liveModel ??= liveModels.FirstOrDefault()?.Name;
+            liveOpen = true;
+        }
+        catch (LiveRunException ex)
+        {
+            liveError = ex.Message;
+            liveOpen = true;
+        }
+    }
+
+    void CancelLive() => liveCts?.Cancel();
+
+    /// <summary>Runs the chosen model on this document, then reloads the document so the new setup appears and is selected.</summary>
+    async Task RunLiveAsync()
+    {
+        running = true;
+        liveError = null;
+        liveResult = null;
+        liveProgress = "Starting…";
+        liveCts = new CancellationTokenSource();
+        var progress = new Progress<string>(m =>
+        {
+            liveProgress = m;
+            _ = InvokeAsync(StateHasChanged);
+        });
+        try
+        {
+            liveResult = await live!.RunAsync(State.DatasetId, DocId, liveModel!, liveGliner, progress, liveCts.Token);
+            State.Setups = await State.Service!.ValuesAsync("config");
+            State.Touch();
+            detail = await State.Service.DocumentAsync(DocId);
+            await SelectAsync(liveResult.Configs[0]);
+        }
+        catch (LiveRunException ex)
+        {
+            liveError = ex.Message;
+            detail = await State.Service!.DocumentAsync(DocId);
+            State.Touch();
+        }
+        catch (OperationCanceledException)
+        {
+            liveError = "Cancelled. Nothing was saved.";
+        }
+        finally
+        {
+            running = false;
+            liveCts?.Dispose();
+            liveCts = null;
+        }
+    }
 
     DocumentDetail? detail;
     DocumentSummary? summary;

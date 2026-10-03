@@ -1,0 +1,11 @@
+@namespace AiDocumentRedactor.App.Ui
+@* The paragraph at the top of each explorer page: what the page is for, what can be found on it, and how to use it. *@
+@if (ExplorerHelp.Intro(Page) is { } intro)
+{
+    <p class="xintro"><strong>What this page is for.</strong> @intro.Purpose <strong>What you'll find.</strong> @intro.Data <strong>How to use it.</strong> @intro.Use</p>
+}
+
+@code {
+    /// <summary>The page's key in <see cref="ExplorerHelp.Intros"/>.</summary>
+    [Parameter, EditorRequired] public string Page { get; set; } = string.Empty;
+}

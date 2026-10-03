@@ -104,3 +104,13 @@ public record RepeatedItem(string Type, string Text, int Setups, int Documents, 
 
 /// <summary>What the dataset says about itself: from run.json.</summary>
 public record DatasetInfo(string DatasetId, string Status, string CreatedAt, string? GitCommit, string? KeyVersions, string? OllamaVersion, string? Machine, string? Notes, int Documents, int Results);
+
+/// <summary>How one setup treated an item everywhere it occurs: <c>Found</c> is the occurrences it dealt with as the list's kind says (removed a sensitive item, or redacted a non-sensitive
+/// one), <c>NotFound</c> the occurrences it did not. For a missed item, <c>Found</c> means it was removed; for a wrongly redacted one, <c>Found</c> means it was redacted.</summary>
+public record SetupVerdict(string Config, string Model, string Variant, int Found, int NotFound)
+{
+    public int Total => Found + NotFound;
+}
+
+/// <summary>An item that models miss or wrongly redact, with each setup's record on it and some of the places it occurs.</summary>
+public record ItemDetail(string Kind, string Type, string Text, int Occurrences, int Documents, IReadOnlyList<SetupVerdict> Setups, IReadOnlyList<OutcomeItem> Places);

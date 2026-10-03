@@ -182,6 +182,10 @@ A validator, used in a test for both the interim and the final dataset, fails if
 
 **The input folder.** The text is read from the corpus files the run used, and `in/` is compared with them. Nine files in `in/` differ from the corpus copies: six Word files and three degraded scans (regenerated at some point). Their text in `in/` may therefore not match the stored text, which matters for live runs.
 
+## 11b. Live results
+
+Results made from the explorer's document page ("Try with another model") are written to a `live/` folder inside the dataset, as `results.csv`, `spans.csv` and `outcomes.csv` in the same format as the dataset's own. The batch files are never changed. Live rows have `source` = `live`, a `config` such as `llama3.1:8b (live 1)` (the number counts live runs of that model on that document) and `repeat` 1. The explorer's database import adds them to the same tables, skipping any row that names an unknown document or repeats an id, and the leaderboard, ratings and combinations leave them out unless "Include live runs" is ticked. A live run that times out or fails is recorded as a row with that status. A live run refuses to start if the input copy of the document reads differently from the stored text, and warns if the answer key or the settings differ from those the batch results were made with.
+
 ## 12. Sensitivity
 
 `document-text.jsonl` holds the full text of every document. For the synthetic corpus that is harmless. If real documents are ever evaluated, the dataset is as sensitive as the documents and must be stored and shared accordingly. The explorer reads it only behind the access token.

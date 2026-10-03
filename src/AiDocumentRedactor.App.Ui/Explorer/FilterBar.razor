@@ -54,6 +54,7 @@
             {
                 <label title="@tip"><input type="checkbox" checked="@State.Variants.Contains(key)" @onchange="e => ToggleVariant(key, e)" /> @label</label>
             }
+            <label title="Count results made live from the explorer too"><input type="checkbox" checked="@State.IncludeLive" @onchange="ToggleLive" /> Include live runs <InfoButton Topic="live" /></label>
             <label title="Rules only, GLiNER only, and rules + GLiNER: what the cheap layers do without a language model"><input type="checkbox" checked="@State.Baselines" @onchange="ToggleBaselines" /> No-model baselines <InfoButton Topic="baselines" /></label>
         </fieldset>
     }
@@ -93,6 +94,13 @@
             State.Variants.Remove(key);
         }
 
+        State.Touch();
+        await Changed.InvokeAsync();
+    }
+
+    async Task ToggleLive(ChangeEventArgs e)
+    {
+        State.IncludeLive = e.Value is true;
         State.Touch();
         await Changed.InvokeAsync();
     }

@@ -13,6 +13,9 @@ public class ExplorerState
     /// <summary>The kinds of setup shown: "plain" (a model on its own, or a baseline) and the three with GLiNER.</summary>
     public HashSet<string> Variants = ["plain"];
     public bool Baselines = true;
+
+    /// <summary>Whether results made live from the explorer are counted in summaries. Off by default, so the leaderboard stays the batch evaluation.</summary>
+    public bool IncludeLive;
     public List<string> Corpora = [], DocTypes = [], Formats = [], Setups = [], Types = [];
 
     /// <summary>The setup the document view shows, kept while moving between documents.</summary>
@@ -34,7 +37,7 @@ public class ExplorerState
     }
 
     /// <summary>The filter for queries. <paramref name="withSetup"/> adds the single setup picked in the grid.</summary>
-    public Filter ToFilter(bool withSetup = false) => new(Corpus, DocType, Format, Search, [.. Variants], withSetup && Setup is not null ? [Setup] : null, Status, null, Baselines);
+    public Filter ToFilter(bool withSetup = false) => new(Corpus, DocType, Format, Search, [.. Variants], withSetup && Setup is not null ? [Setup] : null, Status, IncludeLive ? null : "batch", Baselines);
 
     /// <summary>The link to a document's page. Each part of the path is escaped on its own so the slashes stay.</summary>
     public static string DocumentLink(string docId) => "/explorer/doc/" + string.Join('/', docId.Split('/').Select(Uri.EscapeDataString));

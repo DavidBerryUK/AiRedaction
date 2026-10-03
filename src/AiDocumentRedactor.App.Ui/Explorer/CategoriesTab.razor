@@ -1,5 +1,6 @@
 @namespace AiDocumentRedactor.App.Ui
 @* Categories by setup: where each kind of sensitive item is found or missed, a drill-down to the items, and the items that models miss or wrongly redact again and again. *@
+<PageIntro Page="categories" />
 <FilterBar State="State" Changed="LoadAsync" ShowVariants="true" />
 <div class="xfilter">
     <fieldset class="xvariants">
@@ -80,19 +81,75 @@ else
         <section>
             <h3>Missed again and again</h3>
             <p class="xhint">Items missed by the most models, over the models alone.</p>
-            @Repeated(missedMost)
+            @Repeated(missedMost, "missed")
         </section>
         <section>
             <h3>Wrongly redacted again and again</h3>
             <p class="xhint">Text redacted by the most models that is not sensitive on the answer key.</p>
-            @Repeated(overMost)
+            @Repeated(overMost, "over_redaction")
         </section>
+    </div>
+}
+
+@if (itemOpen)
+{
+    <div class="xmodal-backdrop" @onclick="CloseItem" @onkeydown="OnItemKey" tabindex="-1" @ref="itemHost">
+        <div class="xmodal wide" role="dialog" aria-modal="true" aria-labelledby="item-title" @onclick:stopPropagation="true">
+            @if (itemDetail is null)
+            {
+                <p class="muted">Loading…</p>
+            }
+            else
+            {
+                var d = itemDetail;
+                var missedKind = d.Kind == "missed";
+                <h3 id="item-title">@(missedKind ? "Who found it, and who missed it" : "Who redacted it, and who left it alone")</h3>
+                <p><span class="tag">@d.Type</span> <code class="item-text">@d.Text</code></p>
+                <p class="xhint">@(missedKind ? "A sensitive item on the answer key" : "Text that some setups redacted but the answer key says is not sensitive"), @d.Occurrences @(d.Occurrences == 1 ? "place" : "places") in @d.Documents @(d.Documents == 1 ? "document" : "documents").
+                    @(missedKind ? d.Setups.Count(s => s.Found == 0 && s.Total > 0) + " of " + d.Setups.Count + " setups missed it every time." : d.Setups.Count(s => s.Found > 0) + " of " + d.Setups.Count + " setups redacted it.")</p>
+                <table class="xt">
+                    <thead><tr><th>Setup</th><th>Result</th><th>@(missedKind ? "Found" : "Redacted")</th><th>@(missedKind ? "Missed" : "Left alone")</th></tr></thead>
+                    <tbody>
+                        @foreach (var v in d.Setups)
+                        {
+                            var (text, cls) = Verdict(d, v);
+                            <tr class="@(v.Model.Length == 0 ? "baseline" : null)">
+                                <td><strong>@v.Config</strong>@if (v.Model.Length == 0) {<span class="tag">no model</span>}</td>
+                                <td><span class="verdict @cls">@(cls == "good" ? "✔" : cls == "bad" ? "✖" : "◐") @text</span></td>
+                                <td class="num">@v.Found</td>
+                                <td class="num">@v.NotFound</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                @if (d.Places.Count > 0)
+                {
+                    <h4>Where it occurs@(d.Places.Count < d.Occurrences ? $" (first {d.Places.Count})" : "")</h4>
+                    <table class="xt">
+                        <tbody>
+                            @foreach (var p in d.Places)
+                            {
+                                <tr>
+                                    <td><a href="@ExplorerState.DocumentLink(p.DocId)">@p.DocId</a></td>
+                                    <td class="context">…@p.Before<mark class="@(missedKind ? "m-missed" : "m-over")">@p.Text</mark>@p.After…</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+            }
+            <button type="button" class="btn primary" @onclick="CloseItem">Close</button>
+        </div>
     </div>
 }
 
 @code {
     [Parameter, EditorRequired] public ExplorerState State { get; set; } = default!;
 
+    ItemDetail? itemDetail;
+    bool itemOpen;
+    bool itemFocused;
+    ElementReference itemHost;
     List<CategoryCell>? cells;
     Dictionary<(string Config, string Type), CategoryCell> lookup = [];
     List<string> configs = [], types = [];
@@ -159,13 +216,74 @@ else
         items = await State.Service!.OutcomeItemsAsync(State.ToFilter(), config, type, selectedKind, 100, 0);
     }
 
-    RenderFragment Repeated(List<RepeatedItem> list) => @<table class="xt">
+    RenderFragment Repeated(List<RepeatedItem> list, string kind) => @<table class="xt">
         <thead><tr><th>Category</th><th>Text</th><th>Models</th><th>Documents</th><th>Times</th></tr></thead>
         <tbody>
             @foreach (var r in list)
             {
-                <tr><td>@r.Type</td><td class="context">@r.Text</td><td class="num">@r.Setups</td><td class="num">@r.Documents</td><td class="num">@r.Occurrences</td></tr>
+                <tr class="pick" title="Click to see which setups found it and which missed it" @onclick="() => OpenItem(kind, r)">
+                    <td>@r.Type</td><td class="context">@r.Text</td><td class="num">@r.Setups</td><td class="num">@r.Documents</td><td class="num">@r.Occurrences</td>
+                </tr>
             }
         </tbody>
     </table>;
+
+    /// <summary>Opens the dialog for an item: every setup's record on it, and where it occurs.</summary>
+    async Task OpenItem(string kind, RepeatedItem item)
+    {
+        itemDetail = null;
+        itemOpen = true;
+        itemDetail = await State.Service!.ItemDetailAsync(State.ToFilter() with { Variants = null }, kind, item.Type, item.Text);
+    }
+
+    void CloseItem()
+    {
+        itemOpen = false;
+        itemDetail = null;
+    }
+
+    void OnItemKey(KeyboardEventArgs e)
+    {
+        if (e.Key == "Escape")
+        {
+            CloseItem();
+        }
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (itemOpen && !itemFocused)
+        {
+            itemFocused = true;
+            try
+            {
+                await itemHost.FocusAsync();
+            }
+            catch (InvalidOperationException)
+            {
+                // The dialog closed again before it could take focus.
+            }
+        }
+        else if (!itemOpen)
+        {
+            itemFocused = false;
+        }
+    }
+
+    /// <summary>How a setup's record on an item reads, and its colour: good when it did the right thing everywhere, bad when it did the wrong thing everywhere.</summary>
+    static (string Text, string Class) Verdict(ItemDetail d, SetupVerdict v)
+    {
+        var missed = d.Kind == "missed";
+        var right = missed ? v.Found : v.NotFound;   // removed a sensitive item / left a harmless one alone
+        var wrong = missed ? v.NotFound : v.Found;
+        if (v.Total == 0)
+        {
+            return ("no data", "mixed");
+        }
+
+        var all = v.Total > 1 ? "everywhere" : string.Empty;
+        return wrong == 0 ? (missed ? $"found it {all}".Trim() : $"left it alone {all}".Trim(), "good")
+            : right == 0 ? (missed ? $"missed it {all}".Trim() : $"redacted it {all}".Trim(), "bad")
+            : ($"mixed: {right} right, {wrong} wrong", "mixed");
+    }
 }

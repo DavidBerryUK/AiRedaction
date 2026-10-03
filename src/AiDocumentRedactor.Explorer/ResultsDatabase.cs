@@ -13,6 +13,11 @@ public static class ResultsDatabase
 {
     public const string DatabaseFile = "explorer.sqlite";
 
+    /// <summary>The folder inside a dataset that holds results made live from the explorer: results.csv, spans.csv and outcomes.csv, in the same format as the dataset's own.</summary>
+    public const string LiveFolder = "live";
+
+    static readonly string[] LiveFiles = [Schema.ResultsFile, Schema.SpansFile, Schema.OutcomesFile];
+
     /// <summary>The path of the database for a dataset folder, built (or rebuilt, when the dataset's files changed) if needed.</summary>
     public static async Task<string> EnsureAsync(string datasetDir)
     {
@@ -31,7 +36,7 @@ public static class ResultsDatabase
     static string Signature(string datasetDir)
     {
         var sb = new StringBuilder("v1;");
-        foreach (var name in new[] { Schema.RunFile, Schema.TextFile }.Concat(Schema.Files.Keys))
+        foreach (var name in new[] { Schema.RunFile, Schema.TextFile }.Concat(Schema.Files.Keys).Concat(LiveFiles.Select(f => Path.Combine(LiveFolder, f))))
         {
             var info = new FileInfo(Path.Combine(datasetDir, name));
             sb.Append(name).Append('|').Append(info.Exists ? info.Length : -1).Append('|').Append(info.Exists ? info.LastWriteTimeUtc.Ticks : 0).Append(';');
@@ -83,6 +88,47 @@ public static class ResultsDatabase
                 var parameters = columns.Select((_, i) => insert.Parameters.Add("@p" + i, SqliteType.Text)).ToList();
                 foreach (var row in rows)
                 {
+                    for (var i = 0; i < columns.Length; i++)
+                    {
+                        parameters[i].Value = Cell(columns[i], row.GetValueOrDefault(columns[i].Name, string.Empty));
+                    }
+
+                    await insert.ExecuteNonQueryAsync();
+                }
+            }
+
+            // Results made live from the explorer sit beside the dataset and are added to the same tables. A row that repeats an id or names an unknown document is skipped.
+            var documents = (await Csv.ReadAsync(Path.Combine(datasetDir, Schema.DocumentsFile))).Rows.Select(r => r["doc_id"]).ToHashSet();
+            var liveResults = new HashSet<string>();
+            foreach (var file in LiveFiles)
+            {
+                var livePath = Path.Combine(datasetDir, LiveFolder, file);
+                if (!File.Exists(livePath))
+                {
+                    continue;
+                }
+
+                var columns = Schema.Files[file];
+                var (_, liveRows) = await Csv.ReadAsync(livePath);
+                var table = Path.GetFileNameWithoutExtension(file);
+                await using var insert = c.CreateCommand();
+                insert.Transaction = tx;
+                insert.CommandText = $"INSERT INTO {table} VALUES ({string.Join(", ", columns.Select((_, i) => "@p" + i))})";
+                var parameters = columns.Select((_, i) => insert.Parameters.Add("@p" + i, SqliteType.Text)).ToList();
+                foreach (var row in liveRows)
+                {
+                    if (file == Schema.ResultsFile)
+                    {
+                        if (!documents.Contains(row["doc_id"]) || !liveResults.Add(row["result_id"]))
+                        {
+                            continue;
+                        }
+                    }
+                    else if (!liveResults.Contains(row["result_id"]))
+                    {
+                        continue;
+                    }
+
                     for (var i = 0; i < columns.Length; i++)
                     {
                         parameters[i].Value = Cell(columns[i], row.GetValueOrDefault(columns[i].Name, string.Empty));

@@ -1,5 +1,6 @@
 @namespace AiDocumentRedactor.App.Ui
 @* The leaderboard: every setup's recall, precision and F1 with ranges, over the documents that match the filters. Click a heading to sort. *@
+<PageIntro Page="overview" />
 <FilterBar State="State" Changed="LoadAsync" ShowVariants="true" />
 
 @if (rows is null)

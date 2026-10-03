@@ -118,3 +118,5 @@ Beside the redaction screen, the web app has a **results explorer** at `/explore
 
 Every control and column has an ⓘ button that explains it in technical and plain terms with examples.
 
+**Try with another model.** On a document's page in the explorer, "Choose a model…" lists the models installed in your local Ollama. "Run on this document" runs the real pipeline (rules, the model, and optionally GLiNER), scores it against the answer key the same way as the evaluation, and adds it to that document's results as a *live* result, saved in the dataset's `live` folder. Only local models can be chosen, and the run can be cancelled. Live results are left out of the leaderboard and ratings unless "Include live runs" is ticked. The answer keys are read from `tests` (use `--corpus-root <folder>` to change that), and the documents from the input folder.
+

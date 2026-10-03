@@ -97,10 +97,10 @@ public partial class ExplorerService(string databasePath)
     }
 
     /// <summary>The setups that count as "the language models" for ratings and repeated misses: those named in the filter, or else every model on its own (no GLiNER, no baselines).
-    /// Only results that succeeded count.</summary>
+    /// Only results that succeeded count, and results made live are left out.</summary>
     static string Scope(Filter f, SqliteCommand cmd) => f.Configs is { Count: > 0 }
-        ? $"r.status = 'ok' AND r.config IN ({ListParameters(cmd, "scope", f.Configs)})"
-        : "r.status = 'ok' AND r.model <> '' AND r.variant = 'plain'";
+        ? $"r.status = 'ok' AND r.source = 'batch' AND r.config IN ({ListParameters(cmd, "scope", f.Configs)})"
+        : "r.status = 'ok' AND r.source = 'batch' AND r.model <> '' AND r.variant = 'plain'";
 
     /// <summary>What the dataset says about itself.</summary>
     public async Task<DatasetInfo> InfoAsync()

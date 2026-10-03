@@ -1,6 +1,7 @@
 @namespace AiDocumentRedactor.App.Ui
 @inject ExplorerCatalog Catalog
 @* How we got here: the methodology document (documentation/METHODOLOGY.md) shown beside the results, so each design choice can be read with its evidence. *@
+<PageIntro Page="method" />
 @if (html is null)
 {
     <p class="muted">The methodology document was not found (documentation/METHODOLOGY.md).</p>

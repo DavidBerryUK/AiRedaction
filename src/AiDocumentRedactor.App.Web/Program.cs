@@ -5,6 +5,7 @@ using AiDocumentRedactor.App.Web.Components;
 using AiDocumentRedactor.Core;
 using AiDocumentRedactor.Detection;
 using AiDocumentRedactor.Documents;
+using AiDocumentRedactor.Eval;
 using AiDocumentRedactor.Explorer;
 using AiDocumentRedactor.Explorer.Dataset;
 using AiDocumentRedactor.Ocr;
@@ -69,7 +70,10 @@ builder.Services.AddSingleton(sp => new SessionRegistry(() =>
     };
 }));
 // The results explorer reads datasets (CSV files made by the evaluation) from this folder, and shows the methodology document beside them.
-builder.Services.AddSingleton(new ExplorerCatalog(Path.GetFullPath(Arg("--datasets") ?? "datasets"), Path.GetFullPath(Path.Combine("documentation", "METHODOLOGY.md"))));
+var explorerCatalog = new ExplorerCatalog(Path.GetFullPath(Arg("--datasets") ?? "datasets"), Path.GetFullPath(Path.Combine("documentation", "METHODOLOGY.md")));
+builder.Services.AddSingleton(explorerCatalog);
+// "Try with another model" on the explorer's document page: runs the real pipeline with a local Ollama model and adds the scored result to the dataset's live results.
+builder.Services.AddSingleton<ILiveRunner>(new LiveRunner(options, inputRoot, Path.GetFullPath(Arg("--corpus-root") ?? "tests"), explorerCatalog, new SharedOcr(ocr)));
 // Components get the session of their own browser: the root component sets the holder, everything below asks for the session.
 builder.Services.AddScoped<SessionHolder>();
 builder.Services.AddScoped(sp => sp.GetRequiredService<SessionHolder>().Current ?? throw new InvalidOperationException("No session for this browser."));
@@ -178,3 +182,10 @@ Console.WriteLine($"Redaction Demo — open http://127.0.0.1:{port}/?t={token}")
 Console.WriteLine($"Source: {inputRoot}   Output: {options.Output.Directory}   Model: {options.Llm.Model} at {options.Llm.Endpoint}");
 app.Run();
 return 0;
+
+/// <summary>Hands the web host's one OCR engine to the live runner, so a live run does not load a second copy of the models.</summary>
+sealed class SharedOcr(IOcrEngine? engine) : IOcrEngineFactory
+{
+    public IOcrEngine? Create() => engine;
+}
+

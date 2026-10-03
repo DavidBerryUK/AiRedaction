@@ -3,9 +3,47 @@ namespace AiDocumentRedactor.Explorer;
 /// <summary>One help entry: what a control or column is, the same in plain English for a non-expert, and examples.</summary>
 public record HelpTopic(string Title, string Explanation, string Plain, string[] Examples);
 
+/// <summary>The paragraph at the top of an explorer page: what the page is for, what can be found on it, and how to use it, in plain English.</summary>
+public record PageIntro(string Purpose, string Data, string Use);
+
 /// <summary>The text behind the explorer's ⓘ buttons. Each topic has an exact explanation, a plain-English one and, where useful, examples.</summary>
 public static class ExplorerHelp
 {
+    /// <summary>The introduction for a page (overview, results, documents, categories, combine, method or document).</summary>
+    public static PageIntro? Intro(string? page) => page is not null && Intros.TryGetValue(page, out var i) ? i : null;
+
+    public static readonly IReadOnlyDictionary<string, PageIntro> Intros = new Dictionary<string, PageIntro>
+    {
+        ["overview"] = new(
+            "This page ranks the different ways of finding private information in a document, so you can see which one works best. Each row is one “setup”, such as one AI model working alone.",
+            "For every setup you can see how much of the private information it removed, how often it was right when it blacked something out, how many things it missed, and how long it took.",
+            "Use the filters to look at one group of documents. Tick “Models alone” to compare the AI models fairly, click a column heading to sort, and press “Worst documents” to see where a setup struggled. Click any ⓘ to find out what a word means."),
+        ["results"] = new(
+            "This page is the full table behind all the others: one line for each setup on each document. Use it when you want to look up a particular result instead of a summary.",
+            "For every document and setup you can see how much was caught, how much was missed, how much was removed that didn't need to be, and how long it took.",
+            "Search for a document name, pick a setup, or sort by “Recall” to bring the worst results to the top. Click a document to read its text with the results marked on it. “Export CSV” downloads exactly the lines you are looking at, to open in Excel."),
+        ["documents"] = new(
+            "This page lists every test document and says how hard it was for the AI models. “Easy” means they all did well. “Problem” means there was something in it that every model got wrong.",
+            "For each document you can see its type and format, how much the models found on average, how many of the models missed something, and how many items all of them missed.",
+            "Sort or filter by rating to find the hard documents first, then open one to see exactly what was missed. A Problem document is worth reading: either it is genuinely tricky, or the answer key is wrong. You can untick a model to see how hard the documents are without it."),
+        ["categories"] = new(
+            "This page shows which kinds of private information are easy or hard to find: names, email addresses, ID numbers, company names, and so on. Green means a setup found nearly all of them; red means it missed many.",
+            "The grid compares every setup across every kind of information. Below it are the particular pieces of text that models keep missing, and the harmless text they keep blacking out by mistake.",
+            "Click a square in the grid to see the exact items behind it. Click a line in either list underneath to see which models found that item and which missed it, and where it appears in the documents. Switch the measure to look at misses or over-redactions instead of recall."),
+        ["combine"] = new(
+            "This page lets you try putting several models to work together and see how well the team would do. It uses the results already saved, so no model is run and the answer comes back straight away.",
+            "You get the score for each model on its own and for the combination: how much it caught, how often it was right, and, if you ask for it, how many items would be left for a person to check.",
+            "Pick two or more models, then choose how many of them must agree before something is removed. Requiring agreement cuts mistakes but lets more slip through; “flag the rest” sends the disagreements to a person instead. Try the preset buttons to see the common choices."),
+        ["method"] = new(
+            "This page explains how the tool works and why each design choice was made, for someone who is new to the project. Nothing here changes when you use the other pages.",
+            "You will find the principles behind the tool, the steps a document goes through, each decision with its reason and its limits, how the results are measured, what was tried and did not work, and what is still open.",
+            "Read it from the top for the whole story, or jump to a decision when you want to know why the tool behaves a certain way. The other pages hold the numbers; this one holds the reasoning."),
+        ["document"] = new(
+            "This page shows one test document and how every setup handled it. The text appears with colours: green for private information that was found, red for private information that was missed, and orange for things removed that did not need to be.",
+            "At the top is a table of every setup's score on this document, and below it the document's text. At the bottom you can open the answer key, which lists what should have been found.",
+            "Click a row in the table, or use the drop-down above the text, to see what a different setup did. Hover over any coloured text to see the detail. Look at the red marks to find out what was missed, and why that might be."),
+    };
+
     public static HelpTopic? Find(string? key) => key is not null && Topics.TryGetValue(key, out var t) ? t : null;
 
     public static readonly IReadOnlyDictionary<string, HelpTopic> Topics = new Dictionary<string, HelpTopic>
@@ -114,6 +152,14 @@ public static class ExplorerHelp
             "Found (green): a sensitive item that was removed. Missed (red outline): a sensitive item that was left in. Over-redacted (orange): removed but not sensitive per the key. Not judged (grey): removed, but the key cannot say whether it is sensitive. Should have been kept (purple): an item the key says must survive. Flags (blue): items only GLiNER found, left in the text; sensitive or not. Redacted (pale green): redacted and matching the key.",
             "Green is good, red is a leak, orange is over-eager. Hover over any coloured text for the detail.",
             []),
+        ["live"] = new("Include live runs",
+            "Results made from the document page with “Try with another model” are saved as live results. They are left out of the leaderboard, the document ratings and the combinations by default, so those stay a record of the batch evaluation. Tick this to count them.",
+            "Your own experiments are kept apart from the official results unless you ask to see them together.",
+            ["A live run of mistral-small3.2 on one document would otherwise change the leaderboard for a single document"]),
+        ["live_run"] = new("Try with another model",
+            "Runs this one document through the real redaction pipeline (the fixed rules, then the chosen model, and optionally GLiNER) using a model installed on this computer, scores the result against the answer key the same way as the batch evaluation, and adds it to the document's results as a live result. Nothing leaves the computer: only models in the local Ollama can be chosen. The result is saved beside the dataset (in its live folder) and survives restarts.",
+            "Pick a model and press Run to see how it would have handled this document. It can take from a few seconds to a few minutes, depending on the model. The result appears in the table and in the coloured text, labelled “live”.",
+            ["Try a smaller model on a document the big models found hard", "Run the same model twice to see whether the answer is repeatable (live 1, live 2)"]),
         ["dataset"] = new("Dataset",
             "The set of results being shown. An interim dataset was made from earlier saved runs and is not a final evaluation.",
             "Which batch of results you are looking at.",

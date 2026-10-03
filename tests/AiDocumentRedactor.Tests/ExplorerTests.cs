@@ -1,5 +1,6 @@
 using AiDocumentRedactor.Eval;
 using AiDocumentRedactor.Explorer;
+using AiDocumentRedactor.Explorer.Dataset;
 using Xunit;
 
 namespace AiDocumentRedactor.Tests;
@@ -125,6 +126,37 @@ public class ExplorerTests : IAsyncLifetime
         Assert.Equal("Alice Smith", item.Text);
         Assert.StartsWith("Paris. ", item.Before.Replace("  ", " ").TrimStart().Length > 0 ? "Paris. " : "Paris. ");
         Assert.Contains("left from", item.After);
+    }
+
+    /// <summary>For a missed item, each setup's found and missed occurrences are listed, with the places it was missed; baselines come last.</summary>
+    [Fact]
+    public async Task Missed_item_shows_who_found_it_and_who_missed_it()
+    {
+        var d = await service.ItemDetailAsync(new Filter(), "missed", "PERSON", "Alice Smith");
+        Assert.Equal(4, d.Occurrences);   // two places in each of two documents
+        Assert.Equal(2, d.Documents);
+        var m = d.Setups.Single(s => s.Config == "m");
+        Assert.Equal((1, 1), (m.Found, m.NotFound));   // the model only finished doc-a
+        var rules = d.Setups.Single(s => s.Config == "rules only");
+        Assert.Equal((0, 4), (rules.Found, rules.NotFound));
+        Assert.True(d.Setups.Select(s => s.Model.Length == 0).SkipWhile(b => !b).All(b => b), "baselines are listed last");
+        Assert.NotEmpty(d.Places);
+        Assert.Contains(d.Places, p => p.DocId == "text/doc-a.txt");
+        Assert.Empty((await service.ItemDetailAsync(new Filter(), "missed", "PERSON", "Nobody Here")).Setups);
+    }
+
+    /// <summary>For a wrongly redacted item, setups that redacted it and setups that left it alone are both listed, over the documents each finished.</summary>
+    [Fact]
+    public async Task Over_redacted_item_shows_who_redacted_it_and_who_left_it_alone()
+    {
+        var d = await service.ItemDetailAsync(new Filter(), "over_redaction", "PERSON", "Bob");
+        Assert.Equal(2, d.Occurrences);   // GLiNER found Bob in both documents
+        var gliner = d.Setups.Single(s => s.Config == "GLiNER only");
+        Assert.Equal((2, 0), (gliner.Found, gliner.NotFound));
+        var m = d.Setups.Single(s => s.Config == "m");
+        Assert.Equal((0, 1), (m.Found, m.NotFound));   // the model did not redact Bob
+        Assert.Contains(d.Setups, s => s.Config == "m + GLiNER (all flags accepted)" && s.Found == 1);
+        Assert.Empty((await service.ItemDetailAsync(new Filter(), "over_redaction", "PERSON", "Nobody Here")).Setups);
     }
 
     /// <summary>The words around an item are cut from the text, with line breaks turned to spaces, and are empty when the place is unknown.</summary>
@@ -254,5 +286,166 @@ public class ExplorerTests : IAsyncLifetime
             Assert.False(string.IsNullOrWhiteSpace(t.Value.Explanation), t.Key);
             Assert.False(string.IsNullOrWhiteSpace(t.Value.Plain), t.Key);
         });
+    }
+
+    /// <summary>Every page that shows an introduction has one with all three parts, and every explorer page has one.</summary>
+    [Fact]
+    public void Every_page_has_an_introduction()
+    {
+        var dir = AppContext.BaseDirectory;
+        while (dir is not null && !Directory.Exists(Path.Combine(dir, "src", "AiDocumentRedactor.App.Ui")))
+        {
+            dir = Path.GetDirectoryName(dir);
+        }
+
+        var used = Directory.GetFiles(Path.Combine(dir!, "src", "AiDocumentRedactor.App.Ui", "Explorer"), "*.razor")
+            .SelectMany(f => System.Text.RegularExpressions.Regex.Matches(File.ReadAllText(f), "<PageIntro Page=\"([a-z]+)\"").Select(m => m.Groups[1].Value)).Distinct().Order().ToList();
+        Assert.Equal(["categories", "combine", "document", "documents", "method", "overview", "results"], used);
+        Assert.All(used, k =>
+        {
+            var intro = ExplorerHelp.Intro(k);
+            Assert.NotNull(intro);
+            Assert.False(string.IsNullOrWhiteSpace(intro!.Purpose) || string.IsNullOrWhiteSpace(intro.Data) || string.IsNullOrWhiteSpace(intro.Use), k);
+        });
+        Assert.Null(ExplorerHelp.Intro("nope"));
+    }
+}
+
+/// <summary>Tests for the live run: a fake detector stands in for Ollama, so the whole path (read, score, save, rebuild, show) is checked without a model.</summary>
+public class LiveRunTests : IAsyncLifetime
+{
+    string root = string.Empty;
+    string sets = string.Empty;
+    ExplorerCatalog catalog = default!;
+
+    sealed class FakeDetector(Func<string, LiveDetection> detect, TaskCompletionSource? gate = null) : ILiveDetector
+    {
+        public async Task<LiveDetection> DetectAsync(string text, IProgress<AiDocumentRedactor.Core.RedactionProgress>? progress, CancellationToken ct)
+        {
+            if (gate is not null)
+            {
+                await gate.Task.WaitAsync(ct);
+            }
+
+            return detect(text);
+        }
+    }
+
+    public async Task InitializeAsync()
+    {
+        root = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString("N"));
+        var built = DatasetTests.MakeCorpus(root, out var saved);
+        sets = Path.Combine(root, "sets");
+        Assert.Equal(0, await InterimConverter.RunAsync([saved], Path.Combine(root, "in"), Path.Combine(root, "tests"), Path.Combine(sets, "one"), "one", null));
+        catalog = new ExplorerCatalog(sets);
+    }
+
+    public Task DisposeAsync()
+    {
+        Microsoft.Data.Sqlite.SqliteConnection.ClearAllPools();
+        Directory.Delete(root, true);
+        return Task.CompletedTask;
+    }
+
+    static LiveDetection Finds(string text, bool bob = false)
+    {
+        var alice = Enumerable.Range(0, text.Length).Where(i => string.CompareOrdinal(text, i, "Alice Smith", 0, 11) == 0)
+            .Select(i => new AiDocumentRedactor.Core.DetectedEntity("PERSON", i, 11, 1, "llm")).ToList();
+        var extra = bob ? [new AiDocumentRedactor.Core.DetectedEntity("PERSON", text.IndexOf("Bob", StringComparison.Ordinal), 3, 0.9, "gliner-only", true)] : new List<AiDocumentRedactor.Core.DetectedEntity>();
+        return new LiveDetection(alice, [.. alice, .. extra], 2.5, bob ? 0.1 : 0, 100, 20, 0);
+    }
+
+    LiveRunner Runner(Func<string, LiveDetection>? detect = null, TaskCompletionSource? gate = null, string? corpusRoot = null) =>
+        new(new AiDocumentRedactor.Core.RedactorOptions { Ocr = { Enabled = false } }, Path.Combine(root, "in"), corpusRoot ?? Path.Combine(root, "tests"), catalog, null,
+            _ => new FakeDetector(detect ?? (t => Finds(t)), gate), _ => Task.FromResult<IReadOnlyList<LiveModel>>([new LiveModel("fake-model", "test")]));
+
+    /// <summary>A live run scores a document, saves the result beside the dataset, and the explorer then shows it, apart from the batch results.</summary>
+    [Fact]
+    public async Task Live_run_adds_a_result_beside_the_dataset()
+    {
+        var runner = Runner();
+        Assert.Equal("fake-model", (await runner.ModelsAsync(CancellationToken.None)).Single().Name);
+        var messages = new List<string>();
+        var run = await runner.RunAsync("one", "text/doc-a.txt", "fake-model", false, new Progress<string>(messages.Add), CancellationToken.None);
+        Assert.Equal(["fake-model (live 1)"], run.Configs);
+        Assert.True(File.Exists(Path.Combine(sets, "one", "live", "results.csv")));
+        Assert.Empty(await DatasetValidator.ValidateAsync(Path.Combine(sets, "one")));   // the batch dataset itself is untouched
+
+        var service = (await catalog.OpenAsync("one"))!;
+        var live = (await service.GridAsync(new Filter(Source: "live"), "document", false, 0, 10)).Rows.Single();
+        Assert.Equal("fake-model (live 1)", live.Config);
+        Assert.Equal("live", live.Source);
+        Assert.Equal(1.0, live.Recall);   // both occurrences found
+        Assert.Equal(2.5, live.DetectSeconds);
+
+        // Batch summaries and ratings do not count it; asking for everything does.
+        Assert.DoesNotContain(await service.SummaryAsync(new Filter(Source: "batch")), s => s.Config.Contains("(live", StringComparison.Ordinal));
+        Assert.Contains(await service.SummaryAsync(new Filter()), s => s.Config == "fake-model (live 1)");
+        Assert.Equal(1, (await service.DocumentsAsync(new Filter())).Single(d => d.DocId == "text/doc-a.txt").Models);
+
+        // The coloured view works for it, and a second run gets the next number.
+        Assert.Contains((await service.ConfigViewAsync("text/doc-a.txt", "fake-model (live 1)")).Markers, m => m.Kind == "caught");
+        Assert.Equal(["fake-model (live 2)"], (await runner.RunAsync("one", "text/doc-a.txt", "fake-model", false, null, CancellationToken.None)).Configs);
+    }
+
+    /// <summary>With GLiNER, a second setup is added whose flags are counted, and a warning says the timings depend on the machine.</summary>
+    [Fact]
+    public async Task Live_run_with_gliner_adds_a_flagged_setup()
+    {
+        var run = await Runner(t => Finds(t, bob: true)).RunAsync("one", "text/doc-a.txt", "fake-model", true, null, CancellationToken.None);
+        Assert.Equal(["fake-model (live 1)", "fake-model + GLiNER (live 1)"], run.Configs);
+        Assert.Contains(run.Warnings, w => w.Contains("Timings", StringComparison.Ordinal));
+        var service = (await catalog.OpenAsync("one"))!;
+        var row = (await service.GridAsync(new Filter(Source: "live"), "setup", false, 0, 10)).Rows.Single(r => r.Variant == "with-gliner");
+        Assert.Equal(1, row.FlagsRaised);
+        Assert.Equal(0, row.FlagsCorrect);
+    }
+
+    /// <summary>A model that times out is recorded as a failed live result and reported, so the attempt is not lost.</summary>
+    [Fact]
+    public async Task A_failed_run_is_recorded()
+    {
+        var ex = await Assert.ThrowsAsync<LiveRunException>(() => Runner(_ => throw new TimeoutException("Timeout of 300 seconds")).RunAsync("one", "text/doc-a.txt", "fake-model", false, null, CancellationToken.None));
+        Assert.Contains("did not finish", ex.Message);
+        var service = (await catalog.OpenAsync("one"))!;
+        var row = (await service.GridAsync(new Filter(Source: "live"), "document", false, 0, 10)).Rows.Single();
+        Assert.Equal("timeout", row.Status);
+    }
+
+    /// <summary>Problems the user can act on come back as messages: an input copy that reads differently, a missing document, a missing answer key, a run already going.</summary>
+    [Fact]
+    public async Task Problems_are_reported_in_words()
+    {
+        File.WriteAllText(Path.Combine(root, "in", "text", "doc-b.txt"), "A different letter altogether.");
+        var different = await Assert.ThrowsAsync<LiveRunException>(() => Runner().RunAsync("one", "text/doc-b.txt", "fake-model", false, null, CancellationToken.None));
+        Assert.Contains("reads differently", different.Message);
+
+        File.Delete(Path.Combine(root, "in", "text", "doc-a.txt"));
+        Assert.Contains("not in the input folder", (await Assert.ThrowsAsync<LiveRunException>(() => Runner().RunAsync("one", "text/doc-a.txt", "fake-model", false, null, CancellationToken.None))).Message);
+        Assert.Contains("no document", (await Assert.ThrowsAsync<LiveRunException>(() => Runner().RunAsync("one", "text/none.txt", "fake-model", false, null, CancellationToken.None))).Message);
+        Assert.Contains("no dataset", (await Assert.ThrowsAsync<LiveRunException>(() => Runner().RunAsync("nope", "text/doc-a.txt", "fake-model", false, null, CancellationToken.None))).Message);
+        Assert.Contains("answer keys", (await Assert.ThrowsAsync<LiveRunException>(() => Runner(corpusRoot: Path.Combine(root, "empty")).RunAsync("one", "text/doc-a.txt", "fake-model", false, null, CancellationToken.None))).Message);
+    }
+
+    /// <summary>Only one live run goes at a time; a second is refused until the first finishes, and a cancelled run saves nothing.</summary>
+    [Fact]
+    public async Task One_run_at_a_time_and_cancel_saves_nothing()
+    {
+        var gate = new TaskCompletionSource();
+        var runner = Runner(gate: gate);
+        var first = runner.RunAsync("one", "text/doc-a.txt", "fake-model", false, null, CancellationToken.None);
+        await Task.Delay(200);
+        Assert.Contains("Another live run", (await Assert.ThrowsAsync<LiveRunException>(() => runner.RunAsync("one", "text/doc-a.txt", "fake-model", false, null, CancellationToken.None))).Message);
+        gate.SetResult();
+        await first;
+
+        using var cts = new CancellationTokenSource();
+        var slow = Runner(gate: new TaskCompletionSource());
+        var cancelled = slow.RunAsync("one", "text/doc-a.txt", "fake-model", false, null, cts.Token);
+        await Task.Delay(200);
+        cts.Cancel();
+        await Assert.ThrowsAnyAsync<OperationCanceledException>(() => cancelled);
+        var service = (await catalog.OpenAsync("one"))!;
+        Assert.Single((await service.GridAsync(new Filter(Source: "live"), "document", false, 0, 10)).Rows);   // only the first run was saved
     }
 }

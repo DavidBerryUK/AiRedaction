@@ -42,6 +42,28 @@ public static class Csv
         }
     }
 
+    /// <summary>Adds rows to the end of a CSV file, writing the header first if the file is new or empty.</summary>
+    public static async Task AppendAsync(string path, IReadOnlyList<Column> columns, IEnumerable<string?[]> rows)
+    {
+        Directory.CreateDirectory(Path.GetDirectoryName(Path.GetFullPath(path))!);
+        var isNew = !File.Exists(path) || new FileInfo(path).Length == 0;
+        await using var writer = new StreamWriter(path, true, new UTF8Encoding(false)) { NewLine = "\n" };
+        if (isNew)
+        {
+            await writer.WriteLineAsync(string.Join(',', columns.Select(c => c.Name)));
+        }
+
+        foreach (var row in rows)
+        {
+            if (row.Length != columns.Count)
+            {
+                throw new InvalidOperationException($"A row for {Path.GetFileName(path)} has {row.Length} cells but there are {columns.Count} columns.");
+            }
+
+            await writer.WriteLineAsync(string.Join(',', row.Select(Escape)));
+        }
+    }
+
     /// <summary>Reads a file written by <see cref="WriteAsync"/>: the column names, and each row as column name to cell.</summary>
     public static async Task<(List<string> Columns, List<Dictionary<string, string>> Rows)> ReadAsync(string path) => Parse(await File.ReadAllTextAsync(path, Encoding.UTF8));
 

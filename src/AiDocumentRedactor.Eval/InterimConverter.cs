@@ -82,8 +82,8 @@ public static class InterimConverter
             }
 
             var truth = GroundTruthStore.Load(corpusDir);
-            var settings = Settings(run.Options);
-            var settingsHash = Hash(System.Text.Json.JsonSerializer.Serialize(settings));
+            var settings = ResultRows.Settings(run.Options);
+            var settingsHash = ResultRows.SettingsHash(settings);
             glinerOptions ??= run.Options.Gliner;
             elapsed += run.ElapsedSeconds;
             machines.Add(run.Machine);
@@ -171,7 +171,8 @@ public static class InterimConverter
                         continue;
                     }
 
-                    var score = Scoring.Score(text, Redactor.Apply(text, spans, template), gt, GroundTruthStore.FormatGroup(docPath));
+                    var built = ResultRows.Build(docId, row.Model, model, variant, text, spans, gt, GroundTruthStore.FormatGroup(docPath), template, settingsHash);
+                    var score = built.Score;
                     if (variant != "with-gliner-correct-flags-accepted")
                     {
                         checkedRows++;
@@ -187,55 +188,19 @@ public static class InterimConverter
                         }
                     }
 
-                    var result = new ResultRow
-                    {
-                        ResultId = $"{docId}|{row.Model}|1", DocId = docId, Config = row.Model, Model = model, Variant = variant, SettingsHash = settingsHash,
-                        DetectSeconds = row.DetectSeconds, GlinerSeconds = row.GlinerSeconds > 0 ? row.GlinerSeconds : null,
-                        WriteSeconds = row.OutputOk is null ? null : row.WriteSeconds,
-                        PromptTokens = model.Length > 0 ? row.PromptTokens : null, OutputTokens = model.Length > 0 ? row.OutputTokens : null, Discarded = model.Length > 0 ? row.Discarded : null,
-                        Present = score.Present, Caught = score.Caught, EntitiesPresent = score.EntitiesPresent, EntitiesFullyCaught = score.EntitiesFullyCaught,
-                        LostToExtraction = score.LostToExtraction, Edits = score.Edits, TruePositives = score.TruePositives, TypeCorrect = score.TypeCorrect, Unjudged = score.Unjudged,
-                        PreserveTotal = score.MustPreserve, PreserveBroken = score.PreserveBroken.Count, OutputOk = row.OutputOk, OutputError = row.OutputError ?? string.Empty,
-                    };
-                    var soloSpans = variant == "plain" ? [] : spans.Where(s => s.Source == "gliner-only").ToList();
-                    if (variant != "plain")
-                    {
-                        result.FlagsRaised = soloSpans.Count;
-                        result.FlagsCorrect = soloSpans.Count(s => Scoring.OverlapsKey(keySpans, s.Start, s.Length));
-                    }
-
+                    // Timings, token counts and the output check are carried over from the saved run.
+                    var result = built.Result;
+                    result.DetectSeconds = row.DetectSeconds;
+                    result.GlinerSeconds = row.GlinerSeconds > 0 ? row.GlinerSeconds : null;
+                    result.WriteSeconds = row.OutputOk is null ? null : row.WriteSeconds;
+                    result.PromptTokens = model.Length > 0 ? row.PromptTokens : null;
+                    result.OutputTokens = model.Length > 0 ? row.OutputTokens : null;
+                    result.Discarded = model.Length > 0 ? row.Discarded : null;
+                    result.OutputOk = row.OutputOk;
+                    result.OutputError = row.OutputError ?? string.Empty;
                     data.Results.Add(result);
-                    var spanIds = new List<string>();
-                    for (var i = 0; i < spans.Count; i++)
-                    {
-                        var s = spans[i];
-                        var spanId = $"{result.ResultId}#{i + 1}";
-                        spanIds.Add(spanId);
-                        data.Spans.Add(new SpanRow(spanId, result.ResultId, s.Type, s.Start, s.Length, s.Confidence, s.Source, s.Flag));
-                    }
-
-                    var n = 0;
-                    string SpanFor(Fact f)
-                    {
-                        var i = spans.FindIndex(s => s.Start == f.Start && s.Length == f.Length && s.Type == f.Type);
-                        return i >= 0 ? spanIds[i] : string.Empty;
-                    }
-
-                    foreach (var f in score.Facts)
-                    {
-                        data.Outcomes.Add(new OutcomeRow($"{result.ResultId}#o{++n}", result.ResultId, docId, f.Kind, f.EntityIndex >= 0 ? $"{gt.Id}#{f.EntityIndex + 1}" : string.Empty,
-                            f.Kind is "over_redaction" or "unjudged" ? SpanFor(f) : string.Empty, f.Type, f.Text, f.Start >= 0 ? f.Start : null, f.Start >= 0 ? f.Length : null));
-                    }
-
-                    for (var i = 0; i < spans.Count; i++)
-                    {
-                        if (spans[i].Flag && spans[i].Source == "gliner-only")
-                        {
-                            var ok = Scoring.OverlapsKey(keySpans, spans[i].Start, spans[i].Length);
-                            data.Outcomes.Add(new OutcomeRow($"{result.ResultId}#o{++n}", result.ResultId, docId, ok ? "flag_correct" : "flag_wrong", string.Empty, spanIds[i], spans[i].Type,
-                                text.Substring(spans[i].Start, spans[i].Length), spans[i].Start, spans[i].Length));
-                        }
-                    }
+                    data.Spans.AddRange(built.Spans);
+                    data.Outcomes.AddRange(built.Outcomes);
                 }
             }
 
@@ -331,42 +296,16 @@ public static class InterimConverter
 
     static DetectedEntity ToSpan(SavedSpan s) => new(s.Type, s.Start, s.Length, s.Confidence, s.Source, s.Flag);
 
-    /// <summary>The settings that change results, as recorded with each source run.</summary>
-    static Dictionary<string, object?> Settings(RedactorOptions o) => new()
-    {
-        ["llm"] = new Dictionary<string, object?>
-        {
-            ["temperature"] = o.Llm.Temperature, ["seed"] = o.Llm.Seed, ["numCtx"] = o.Llm.NumCtx, ["chunkChars"] = o.Llm.ChunkChars, ["chunkOverlapChars"] = o.Llm.ChunkOverlapChars,
-            ["think"] = o.Llm.Think, ["keepAlive"] = o.Llm.KeepAlive, ["timeoutSeconds"] = o.Llm.TimeoutSeconds, ["fallbackModel"] = o.Llm.FallbackModel,
-        },
-        ["rules"] = new Dictionary<string, object?> { ["enabled"] = o.Rules.Enabled, ["organisationSuffixes"] = o.Rules.OrganisationSuffixes },
-        ["categories"] = o.Entities.OrderBy(e => e.Key, StringComparer.Ordinal).ToDictionary(e => e.Key, e => (object?)new Dictionary<string, object?> { ["enabled"] = e.Value.Enabled, ["mode"] = e.Value.Mode, ["redactPronouns"] = e.Value.RedactPronouns }),
-        ["placeholderTemplate"] = o.Redaction.PlaceholderTemplate,
-        ["gliner"] = new Dictionary<string, object?> { ["enabled"] = o.Gliner.Enabled, ["threshold"] = o.Gliner.Threshold, ["soloAction"] = o.Gliner.SoloAction },
-    };
-
-    static string Hash(string text) => Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(text))).ToLowerInvariant()[..12];
-
     /// <summary>Which answer key scored the corpus: its version, a checksum of the key files, and a note.</summary>
     static Dictionary<string, object?> KeyInfo(string corpus, string corpusDir, int documents)
     {
-        var sha = SHA256.Create();
-        var files = Directory.GetFiles(Path.Combine(corpusDir, "ground-truth"), "*.json").Order(StringComparer.Ordinal).ToList();
-        foreach (var f in files)
-        {
-            var name = Encoding.UTF8.GetBytes(Path.GetFileName(f));
-            sha.TransformBlock(name, 0, name.Length, null, 0);
-            var bytes = File.ReadAllBytes(f);
-            sha.TransformBlock(bytes, 0, bytes.Length, null, 0);
-        }
-
-        sha.TransformFinalBlock([], 0, 0);
+        var files = Directory.GetFiles(Path.Combine(corpusDir, "ground-truth"), "*.json");
         var audited = Directory.Exists(Path.Combine(corpusDir, "ground-truth-original"));
         return new Dictionary<string, object?>
         {
-            ["corpus"] = corpus, ["documentCount"] = documents, ["keyFiles"] = files.Count,
+            ["corpus"] = corpus, ["documentCount"] = documents, ["keyFiles"] = files.Length,
             ["keyVersion"] = audited ? "audited" : "hand-written",
-            ["keyChecksum"] = Convert.ToHexString(sha.Hash!).ToLowerInvariant(),
+            ["keyChecksum"] = ResultRows.KeyChecksum(corpusDir),
             ["keyNote"] = audited
                 ? "The generator's key corrected by a rule-based audit (items added and removed, judged categories, ignore list); the original is kept in ground-truth-original. See tests/HeldOutCorpus/AUDIT.md."
                 : "Written by hand with the test documents.",
