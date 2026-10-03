@@ -23,6 +23,10 @@ This is a proof-of-concept explorer for demonstrations and quality assurance. It
 
 ## Data model
 
+The dataset is a folder of CSV files, plus one JSON Lines file holding the extracted text of each document, so the coloured view needs neither the original file nor a repeat of the extraction. The exact files, columns and checks are in [RESULTS_DATASET_FORMAT.md](../RESULTS_DATASET_FORMAT.md). Documents are referenced by a path relative to the `in/` folder.
+
+Planned order of work: (1) agree the format, (2) make an interim dataset from the existing runs with a converter, (3) build the explorer against it, (4) change the evaluator to write the final dataset in the same format, with a validator that checks both.
+
 - **Source of truth:** the versioned run files in `documentation/evaluation-reports` (and `eval/`), which are never edited by the explorer.
 - **Import:** a step that reads the run files and the answer keys and builds a SQLite database (`eval/explorer.db`, git-ignored). It can be deleted and rebuilt at any time.
 - **CSV export:** long-format CSVs (one row per document × model × run, and one per entity outcome) so the data opens in Excel and can be diffed in git.
