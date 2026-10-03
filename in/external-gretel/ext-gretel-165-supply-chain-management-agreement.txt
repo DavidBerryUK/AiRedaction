@@ -1,0 +1,25 @@
+SUPPLY CHAIN RESILIENCE FRAMEWORK
+
+This Supply Chain Resilience Framework (the "Agreement") is entered into as of this 1st day of August, 2021, by and between Romeo R. Druso, residing at 406 Joshua Square, 08055, North Andrewberg ("Client") and LGWI52890450971869 ("Service Provider").
+
+WHEREAS, Client desires to engage Service Provider for the provision of supply chain management services, and Service Provider is willing to provide such services, subject to the terms and conditions set forth herein;
+
+NOW, THEREFORE, in consideration of the mutual covenants contained herein and for other good and valuable consideration, the receipt and sufficiency of which is hereby acknowledged, the parties agree as follows:
+
+1. Scope of Services. Service Provider agrees to provide supply chain management services to Client, including but not limited to risk diversification, contingency planning, and resilience metrics for maintaining operational continuity.
+
+2. Risk Diversification. Service Provider shall develop and implement a risk diversification strategy for Client's supply chain, which may include diversifying suppliers, transportation routes, and inventory sources.
+
+3. Contingency Planning. Service Provider shall create and maintain a contingency plan for Client's supply chain, which shall address potential disruptions, including natural disasters, political instability, and other unforeseen events.
+
+4. Resilience Metrics. Service Provider shall establish and track resilience metrics for Client's supply chain, which may include lead times, inventory levels, and service level agreements.
+
+5. Performance Standards. Service Provider shall use commercially reasonable efforts to meet the following performance standards:
+
+a. Response Time: Service Provider shall respond to Client inquiries within two (2) business hours.
+
+b. Resolution Time: Service Provider shall resolve Client issues within two (2) business days.
+
+c. Uptime: Service Provider's platform shall be available 99.9% of the time, excluding scheduled maintenance.
+
+6. Term and Termination. This Agreement shall commence on the date first set forth above and shall continue for a term of one

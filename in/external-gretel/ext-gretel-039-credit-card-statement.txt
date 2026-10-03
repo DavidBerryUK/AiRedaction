@@ -1,0 +1,24 @@
+----------------------------------------------------------------------
+Cardholder Name: John Doe
+Card Number: **** 1234 (Last 4 digits)
+Expiration Date: 05/2025
+
+Security Alerts Statement
+----------------------------------------------------------------------
+
+Date | Transaction Description | Amount ($) | Security Action
+
+03/12/2023 | Suspicious Login Attempt Blocked (IP: 192.168.0.10) | - | Account locked, password reset requested
+03/14/2023 | Unusual Transaction: Gas Station (CA) | -50.00 | Transaction flagged, cardholder alerted via SMS
+03/15/2023 | Cardholder Confirmation: Gas Station (CA) | 50.00 | Transaction confirmed, security flag cleared
+03/16/2023 | Potential Phishing Attempt: dodgy-bank.com | - | Account access denied, cardholder notified via email
+03/17/2023 | Online Purchase: Amazon.com | 125.49 | Transaction authorized, security systems updated
+03/18/2023 | Automatic Payment: Netflix | -12.99 | Recurring payment processed, no security action required
+
+----------------------------------------------------------------------
+For any inquiries or concerns regarding your credit card account, please contact us at:
+Phone: 1-888-123-4567 (24/7 Customer Support)
+Email: customerservice@securebank.com
+ securebank.com
+
+Note: This Security Alerts Statement is designed to inform you about potential security threats and actions taken to protect your account. For a detailed record of transactions, please refer to your monthly credit card statement.

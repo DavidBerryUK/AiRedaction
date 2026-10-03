@@ -1,0 +1,10 @@
+"CustomerID","FirstName","LastName","Email","Age","Occupation","AnnualIncome","City","Region","Country"
+1,"John","Smith","[john.smith@gmail.com](mailto:john.smith@gmail.com)","35","Software Engineer","85000","New York","NY","USA"
+2,"Jane","Doe","[jane.doe@yahoo.com](mailto:jane.doe@yahoo.com)","28","Marketing Specialist","60000","London","England","UK"
+3,"Mike","Brown","[mike.brown@hotmail.com](mailto:mike.brown@hotmail.com)","45","Product Manager","90000","Toronto","Ontario","Canada"
+4,"Sarah","Johnson","[sarah.johnson@outlook.com](mailto:sarah.johnson@outlook.com)","31","Data Analyst","70000","Los Angeles","CA","USA"
+5,"David","Williams","[david.williams@gmail.com](mailto:david.williams@gmail.com)","42","Finance Manager","110000","Manchester","England","UK"
+6,"Emily","Thomas","[emily.thomas@yahoo.com](mailto:emily.thomas@yahoo.com)","29","Graphic Designer","65000","Vancouver","British Columbia","Canada"
+7,"Daniel","Anderson","[daniel.anderson@hotmail.com](mailto:daniel.anderson@hotmail.com)","38","Sales Manager","80000","Chicago","IL","USA"
+8,"Olivia","Taylor","[olivia.taylor@outlook.com](mailto:olivia.taylor@outlook.com)","27","UX Designer","75000","Sydney","NSW","Australia"
+9,"James","Moore","[james.moore@

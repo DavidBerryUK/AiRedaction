@@ -1,0 +1,29 @@
+------------------------------------------------------------------------
+Barclays Bank PLC
+Statement History
+------------------------------------------------------------------------
+
+Account Name: Blanca C. Ariza
+Sort Code: 20-12-34
+Account Number: 12345678
+
+Date | Description | Deposit (GBP) | Withdrawal (GBP) | Balance (GBP)
+
+01/01/2023 | Starting Balance | - | - | 3,546.12
+04/13/2007 | Transfer from Savings | 1,250.00 | - | 4,896.12
+04/15/2007 | Direct Debit: Gas | - | 75.50 | 4,820.62
+04/22/2007 | Salary | 2,850.00 | - | 7,670.62
+04/25/2007 | Mortgage Payment | - | 950.00 | 6,720.62
+04/30/2007 | Purchase: Tesco | - | 125.45 | 6,595.17
+05/05/2007 | Internet Banking Payment: 156.154.24.191 | - | 100.00 | 6,495.17
+05/10/2007 | Cash Withdrawal (ATM) | - | 200.00 | 6,295.17
+05/15/2007 | Standing Order: Council Tax | - | 150.00 | 6,145.17
+05/31/2007 | Interest Payment | 12.34 | - | 6,157.51
+
+End of Statement History
+------------------------------------------------------------------------
+
+Account Address:
+46 avenue Étienne, Apt. 26
+London, UK
+N1 2ET

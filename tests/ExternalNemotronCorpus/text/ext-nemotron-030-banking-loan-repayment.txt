@@ -1,0 +1,34 @@
+### Loan Repayment Schedule
+
+**Loan ID**: 19SEP23-8462
+**Customer ID**: 3718264950
+
+**Borrower Information**:
+- **First Name**: Taylor
+- **Last Name**: Henderson
+- **Street Address**: 789 Maplewood Drive
+- **City**: Des Moines
+- **State**: Iowa
+- **Postcode**: 50317
+
+**Loan Details**:
+- **Loan Amount**: $50,000.00
+- **Interest Rate**: 4.5%
+
+**Repayment Schedule**:
+| Installment Number | Installment Amount | Due Date   |
+|--------------------|---------------------|------------|
+| 1                  | $450.00             | 10/01/2023 |
+| 2                  | $450.00             | 11/01/2023 |
+| 3                  | $450.00             | 12/01/2023 |
+| ...                | ...                 | ...        |
+
+**Payment History**:
+| Payment Date  | Payment Amount | Remaining Balance |
+|---------------|-----------------|-------------------|
+| 10/01/2023    | $450.00         | $49,550.00        |
+| 11/01/2023    | $450.00         | $49,100.00        |
+| 12/01/2023    | $450.00         | $48,650.00        |
+| ...           | ...             | ...               |
+
+**Total Amount Paid**: $1,350.00

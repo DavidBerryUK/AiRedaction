@@ -1,0 +1,31 @@
+**Heart Disease Management Plan**
+
+**Patient Demographics**
+- First Name: Ethan
+- Last Name: Meyer
+- Medical Record Number: CHI-00028574
+- Date of Birth: 1953-04-08
+- Gender: male
+- Health Plan Beneficiary Number: 123 456 7890
+
+**Medical History**
+- Blood Type: A+
+
+**Treatment Goals**
+- Reduce blood pressure
+- Lower cholesterol levels
+
+**Medication Regimen**
+- Lisinopril 10 mg once daily
+- Atorvastatin 20 mg once daily
+
+**Lifestyle Recommendations**
+- Maintain a balanced diet
+- Exercise regularly
+- Avoid smoking
+
+**Follow-Up Appointment Schedules**
+- Next appointment on 20230715 at 19:22
+
+**Provider Signatures**
+- Cardiology Department

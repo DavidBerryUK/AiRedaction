@@ -1,0 +1,34 @@
+{
+ "id": "ext-nemotron-090-fitness-fitness-assessment",
+ "title": "Fitness - Fitness Assessment (external synthetic document)",
+ "formats": [
+  "txt"
+ ],
+ "scanKinds": [],
+ "entities": [
+  {
+   "where": "body",
+   "type": "PERSON",
+   "text": "Mauro",
+   "occurrences": 4
+  },
+  {
+   "where": "body",
+   "type": "PHONE",
+   "text": "+55 92 3639-1287",
+   "occurrences": 1
+  }
+ ],
+ "mustPreserve": [],
+ "judgedCategories": [
+  "PERSON",
+  "COMPANY",
+  "ADDRESS",
+  "EMAIL",
+  "PHONE",
+  "DATE_OF_BIRTH",
+  "ID_NUMBER",
+  "ONLINE_ID",
+  "SECRET"
+ ]
+}

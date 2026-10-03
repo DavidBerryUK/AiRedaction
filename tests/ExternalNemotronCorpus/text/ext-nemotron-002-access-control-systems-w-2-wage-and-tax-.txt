@@ -1,0 +1,31 @@
+**W-2 Wage and Tax Statement**
+
+**Employer Identification Information**
+
+- Company Name: SentryGuard
+- Tax ID: 937-64-3189
+
+**Employee Identification Information**
+
+- Employee Name: Edward Morgan
+- Employee ID: P3782F
+- SSN: 568-91-1570
+- Email: edwardmorgan@icloud.com
+- Phone Number: 818-513-0490
+
+**Wages and Taxes**
+
+| Wage Type          | Amount    |
+|--------------------|-----------|
+| Wages, tips, other compensation | $65,000.00 |
+| Federal income tax withheld | $8,000.00 |
+| Social Security wages | $65,000.00 |
+| Social Security tax withheld | $4,030.00 |
+| Medicare wages and tips | $65,000.00 |
+| Medicare tax withheld | $942.50  |
+
+**Other Compensation**
+
+| Description            | Amount    |
+|------------------------|-----------|
+| Nonqualified plan | $5,000.00 |

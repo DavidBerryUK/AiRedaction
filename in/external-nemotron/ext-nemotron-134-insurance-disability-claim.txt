@@ -1,0 +1,28 @@
+### Disability Claim Form
+
+**Claimant Information**
+- Name: Carlos
+- Date of Birth: 1978-02-24
+- Address: 38 S Highland Ave
+
+**Employer Details**
+- Employer Name:
+- Employer Address:
+
+**Claim Description**
+- Date of Disability Onset:
+- Description of Disability:
+
+**Medical Evidence**
+- Medical Records:
+- Medical Provider:
+
+**Functional Limitations**
+- Limitations:
+
+**Treatment Plan**
+- Treatment Details:
+
+**Benefit Calculations**
+- Benefit Amount:
+- Payment Details:

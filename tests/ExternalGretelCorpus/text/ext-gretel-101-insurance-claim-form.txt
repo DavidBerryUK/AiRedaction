@@ -1,0 +1,44 @@
+---
+**FLOOD INSURANCE CLAIM FORM**
+
+**Policyholder Information**
+
+Name: John Doe
+Address: 123 Main Street, Anytown, USA
+Phone: (123) 456-7890
+Email: [johndoe@email.com](mailto:johndoe@email.com)
+Policy Number: 123456789
+
+**Incident Details**
+
+Date of Occurrence: June 1, 2023
+Time of Occurrence: 10:00 AM
+Description of Incident: Heavy rainfall caused flooding in the basement of my property, resulting in water damage to the walls, flooring, and personal belongings.
+
+**Property Damage Details**
+
+Room/Area Affected: Basement
+Estimated Repair Costs: $15,000
+Supporting Documentation: Attached water damage assessment report and repair estimate from ABC Construction.
+
+**Additional Information**
+
+Were emergency services required? Yes
+If yes, please provide details: Fire department was called to pump out the water from the basement.
+
+**Declaration**
+
+I, John Doe, hereby declare that the information provided in this claim form is true and accurate to the best of my knowledge. I understand that providing false or misleading information may result in the denial of this claim and/or future claims.
+
+Signature: John Doe
+Date: June 15, 2023
+
+---
+
+**Supporting Documentation**
+
+* Water damage assessment report from XYZ Restoration Services
+* Repair estimate from ABC Construction
+* Flood zone map from the local government office
+
+Please note: The above-mentioned documents are for illustrative purposes only and should be replaced with actual documents relevant to the claim.

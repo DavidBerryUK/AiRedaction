@@ -1,0 +1,40 @@
+### Product Release Notes
+
+**Release Version: 3.5.2**
+
+**Release Date: 09/15/2024**
+
+**Submitted by:** leif_mueller
+
+**Submitted to:** Vitalia Pro
+
+**Email:** leif.mueller@vitaliapro.de
+
+**Affected Components:**
+- User Interface
+- Data Processing Module
+
+**New Features:**
+- Enhanced user dashboard with improved navigation.
+- New reporting tools for data analytics.
+
+**Enhancements:**
+- Performance improvements in data processing module.
+- Updated user interface for better accessibility.
+
+**Bug Fixes:**
+- Fixed an issue where the system would crash at 1830.
+- Resolved a bug affecting data export functionality.
+
+**Known Issues:**
+- Issue with data synchronization when multiple users are logged in at the same time.
+- Link to further information: https://adobe.com
+
+**Support Information:**
+- For any issues or further assistance, please contact our support team at the email address provided.
+- Health plan beneficiary number: G17395278-02
+
+**Release Notes History:**
+- **Release Version: 3.5.1**
+  - **Release Date:** 2024-06-25T05:24:08
+  - **Notes:** Initial release with basic features and functionalities.

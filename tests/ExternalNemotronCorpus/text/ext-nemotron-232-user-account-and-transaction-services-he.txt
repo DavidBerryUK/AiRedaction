@@ -1,0 +1,20 @@
+**Ticket ID:** HTX-2023-0921
+
+**Date/Time:** 09/15/2023 14:30
+
+**Customer Information:**
+- **Name:** Marina
+- **Contact Details:**
+  - **Email:** marinaapipkin@icloud.com
+  - **Phone Number:** 636-631-2795
+- **Account Number:** 092-3216548705
+
+**Issue Description:** Customer reports difficulty accessing their account and needs assistance with transaction verification.
+
+**Priority Level:** Medium
+
+**Status:** In Progress
+
+**Resolution Notes:** The support team is currently investigating the issue. The customer's account number, 092-3216548705, has been flagged for review. Marina has been contacted via her email, marinaapipkin@icloud.com, and phone number, 636-631-2795, for further details.
+
+**Assigned Support Staff:** John Doe

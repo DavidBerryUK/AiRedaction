@@ -1,0 +1,3 @@
+| Athlete Name | Parent/Guardian Name | Phone Number | Emergency Contact Name | Relationship | Medical Notes |
+|--------------|----------------------|-------------|------------------------|--------------|--------------|
+| Zahra Khan | Zahra Khan | 0798 223 594 | Zahra Khan | Parent | Blood Type: A+, Medical Record Number: 230512-2568, Date of Birth: 1961-11-30, Gender: female, Email: zahra@afghansportsventures.com |

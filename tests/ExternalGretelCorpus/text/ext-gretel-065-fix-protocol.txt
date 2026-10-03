@@ -1,0 +1,19 @@
+35=A
+55= executingbroker.com
+44=123456
+56=executingbroker
+98=0
+108=30
+141=Y
+10=222
+
+Explanation of the fields:
+
+35=A - Message Type: A indicates that this is a RegistrationInstructions message.
+55= executingbroker.com - TargetComponentID: The name of the target component for registration.
+44=123456 - Password: The password associated with the target component.
+56=executingbroker - SenderCompID: The sender's identifier.
+98=0 - HeartBtInt: The heartbeat interval for the session.
+108=30 - RefTagID: The reference tag ID for the registration request.
+141=Y - RegistID: Indicates that this is a registration request.
+10=222 - CheckSum: A checksum for the message.

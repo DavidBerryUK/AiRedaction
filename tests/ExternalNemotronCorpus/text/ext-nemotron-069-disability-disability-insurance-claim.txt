@@ -1,0 +1,66 @@
+**Disability Insurance Claim**
+
+**Claimant Information**
+
+| Field                | Value                           |
+|----------------------|---------------------------------|
+| First Name           | William                         |
+| Last Name            | Hoffman                         |
+| Date of Birth        | 1970-07-06                      |
+| Medical Record Number| 230312-3218                     |
+| Health Plan Beneficiary Number | A1B5-4M9-PT83  |
+
+**Policy Details**
+
+| Field                | Value                           |
+|----------------------|---------------------------------|
+| Policy Number        |                             |
+| Effective Dates      |                             |
+
+**Employment History**
+
+| Field                | Value                           |
+|----------------------|---------------------------------|
+| Current Employer     |                             |
+| Position             |                             |
+| Start Date           |                             |
+| End Date             |                             |
+
+**Medical History and Records**
+
+| Field                | Value                           |
+|----------------------|---------------------------------|
+| Medical Record Number| 230312-3218                     |
+| Primary Care Physician|                             |
+| Specialists Consulted|                             |
+
+**Diagnosis and Prognosis**
+
+| Field                | Value                           |
+|----------------------|---------------------------------|
+| Diagnosis            |                             |
+| Prognosis            |                             |
+
+**Functional Capacity Evaluation**
+
+| Field                | Value                           |
+|----------------------|---------------------------------|
+| Evaluation Date      |                             |
+| Evaluator            |                             |
+| Results              |                             |
+
+**Treatment Plan**
+
+| Field                | Value                           |
+|----------------------|---------------------------------|
+| Treatment Details    |                             |
+| Treatment Provider   |                             |
+| Treatment Duration   |                             |
+
+**Claim Status Updates**
+
+| Field                | Value                           |
+|----------------------|---------------------------------|
+| Status               |                             |
+| Last Updated         |                             |
+| Notes                |                             |

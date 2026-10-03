@@ -1,0 +1,39 @@
+Financial Statement
+
+Regulatory Compliance Report
+
+For the period ending December 31, 2021
+
+Balance Sheet
+
+| Assets | Liabilities and Equity |
+| --- | --- |
+| Cash | Accounts Payable |
+| 5fbe:72f3:2e59:ecac:686b:d22d:4fc6:5b3c |  |
+| Accounts Receivable | Long-term Debt |
+| Inventory | Equity |
+| Property, Plant, and Equipment | |
+| Intangible Assets | |
+
+Income Statement
+
+| Revenue | Expenses |
+| --- | --- |
+| Sales | Cost of Goods Sold |
+| Interest Income | Operating Expenses |
+| Other Income | Tax Expense |
+
+Notes to Financial Statements:
+
+1. The company's cash balance is maintained in a virtual currency wallet and is represented as an IPv6 address.
+2. Olalla Marcelo Manzanares is the sole proprietor of the business and resides at 000 Brooks Fort Apt. 721.
+
+This financial statement has been prepared in accordance with generally accepted accounting principles (GAAP) and is intended to provide a clear and concise overview of the company's financial position and performance. The company has made every effort to ensure the accuracy and completeness of this report, but it does not constitute a guarantee or warranty of any kind.
+
+Signed:
+
+[Company Name]
+
+[Title]
+
+[Date]

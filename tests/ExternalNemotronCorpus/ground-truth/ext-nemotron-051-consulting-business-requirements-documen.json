@@ -1,0 +1,46 @@
+{
+ "id": "ext-nemotron-051-consulting-business-requirements-documen",
+ "title": "Consulting - Business Requirements Document (external synthetic document)",
+ "formats": [
+  "txt"
+ ],
+ "scanKinds": [],
+ "entities": [
+  {
+   "where": "body",
+   "type": "COMPANY",
+   "text": "Strategic Insight Group",
+   "occurrences": 4
+  },
+  {
+   "where": "body",
+   "type": "ONLINE_ID",
+   "text": "Anton.Feeley",
+   "occurrences": 3
+  },
+  {
+   "where": "body",
+   "type": "ONLINE_ID",
+   "text": "147.65.22.138",
+   "occurrences": 2
+  },
+  {
+   "where": "body",
+   "type": "ID_NUMBER",
+   "text": "237854961325",
+   "occurrences": 2
+  }
+ ],
+ "mustPreserve": [],
+ "judgedCategories": [
+  "PERSON",
+  "COMPANY",
+  "ADDRESS",
+  "EMAIL",
+  "PHONE",
+  "DATE_OF_BIRTH",
+  "ID_NUMBER",
+  "ONLINE_ID",
+  "SECRET"
+ ]
+}

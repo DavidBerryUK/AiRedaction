@@ -1,0 +1,25 @@
+**Elections and Voter Registration Form**
+
+**Personal Information**
+
+First Name: Iris
+
+Last Name: Cortes
+
+Date of Birth: 1981-06-24
+
+Street Address: 175 Elgin Woods Lane
+
+**Voter Preferences**
+
+Political Party Affiliation: [ ] Republican [ ] Democrat [ ] Independent [ ] Other (please specify)
+
+Preferred Voting Method: [ ] In-Person [ ] Mail-In
+
+**Signature**
+
+I, Iris Cortes, hereby certify that the information provided above is true and accurate to the best of my knowledge.
+
+Signature: ______________________________________
+
+Date: __________________________________________

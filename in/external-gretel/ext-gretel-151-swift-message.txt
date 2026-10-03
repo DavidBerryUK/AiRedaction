@@ -1,0 +1,14 @@
+MT700
+ :20:O1234567A
+ :25:USD100000,00
+ :28C:5234567
+ :50K:/CITY BANK NEW YORK/USA
+ :52A:26.26.5.252
+ :57A:LUIGI SCHIAVO
+ :59:7380 JEFF SPURS, EAST MELISSA/USA
+ :71A:ABC123 DEF456 GHI789
+ :72:/USD100000,00/USD100000,00
+ :77A:/CITY BANK NEW YORK/USA
+ :86:5234567,5234567,5234567
+
+This SWIFT message is a MT700, a format used by financial institutions to securely exchange information about financial transactions. It includes the following PII values: IPv4 address 26.26.5.252, name Luigi Schiavo, and street address 7380 Jeff Spurs, East Melissa. The message specifies a transaction amount of USD 100000.00 and includes other relevant transaction details.

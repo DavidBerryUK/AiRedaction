@@ -1,0 +1,41 @@
+**Bank Account Setup Form**
+
+**Personal Information**
+
+First Name: Golnaz
+
+Street Address: 1300 Vali Asr Street
+
+Occupation: medical health services manager
+
+Education Level: some college
+
+**Account Details**
+
+Account Number: 234-856-1207
+
+Biometric Identifier: M45682139783
+
+Account Type: (Please select one)
+
+- Checking
+- Savings
+- Joint
+
+Initial Deposit: $
+
+**Transaction Preferences**
+
+Debit Card: Yes   No
+
+Credit Card: Yes   No
+
+Online Banking Access: Yes   No
+
+**Authorization**
+
+I, Golnaz, hereby authorize the bank to open the above-mentioned account and agree to the terms and conditions outlined in the account agreement.
+
+Signature: ____________________________________
+
+Date: _____________________________________

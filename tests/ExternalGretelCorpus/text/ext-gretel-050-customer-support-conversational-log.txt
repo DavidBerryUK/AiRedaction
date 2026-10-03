@@ -1,0 +1,30 @@
+-----------------------------------------------------------------------------------------------------
+Customer Support Conversational Log
+-----------------------------------------------------------------------------------------------------
+
+Timestamp: 2023-03-21 14:35:19
+Customer: Hello, I'm Mirta Céspedes, and I'm interested in upgrading my service.
+Agent: Hello Mirta, thank you for reaching out! I'm happy to help you with your upgrade. Could you please provide me with your employee ID for verification purposes?
+
+Timestamp: 2023-03-21 14:36:01
+Customer: Sure, my employee ID is EMP940196.
+Agent: Thank you, Mirta. I see that you're currently using our basic plan. I'll guide you through the process of upgrading your service.
+
+Timestamp: 2023-03-21 14:37:25
+Agent: To begin the upgrade process, please visit our website and log in to your account. Once you're logged in, navigate to the "Account Settings" page.
+
+Timestamp: 2023-03-21 14:38:45
+Customer: I'm on the "Account Settings" page now.
+Agent: Great, Mirta. Now, click on the "Upgrade Your Plan" button located on the left-hand side of the page.
+
+Timestamp: 2023-03-21 14:40:01
+Customer: I see the different plans. Which one do you recommend for me?
+Agent: Based on your usage patterns, I recommend the Pro plan. It offers more features and resources that will better suit your needs.
+
+Timestamp: 2023-03-21 14:41:35
+Customer: Alright, I'll go with the Pro plan.
+Agent: Perfect, Mirta. To finalize the upgrade, click on the "Upgrade to Pro Plan" button. You'll then be prompted to enter your billing information.
+
+Timestamp: 2023-03-21 14:43:19
+Customer: I've entered my billing information. What's the next step?
+Agent

@@ -1,0 +1,24 @@
+{
+  "transactions": [
+    {
+      "transaction_id": "7e9c1d8f-8c9e-4b2f-bbf0-3a82a8b2d2e1",
+      "wallet_address": "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa",
+      "amount": 45.678,
+      "timestamp": "2022-03-15T14:32:16Z",
+      "transaction_type": "deposit",
+      "password": "%21XPDzP",
+      "name": "Charles Gosselin-Bertrand",
+      "street_address": "9675 Sutton Grove, Suite 088"
+    },
+    {
+      "transaction_id": "f6e3b3a5-8e3d-42f0-88f5-2b6c5c2f6f5a",
+      "wallet_address": "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa",
+      "amount": -32.456,
+      "timestamp": "2022-03-16T09:21:12Z",
+      "transaction_type": "withdrawal",
+      "password": "%21XPDzP",
+      "name": "Charles Gosselin-Bertrand",
+      "street_address": "9675 Sutton Grove, Suite 088"
+    }
+  ]
+}

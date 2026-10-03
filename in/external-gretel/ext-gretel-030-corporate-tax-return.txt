@@ -1,0 +1,40 @@
+---
+Company Name: ABC Enterprises Ltd
+Tax Year: 2021
+
+1. Income
+
+Gross income:
+- Business activities: £5,000,000
+- Investment income: £850,000
+
+Total income: £5,850,000
+
+2. Deductions
+
+Cost of goods sold (COGS): £2,200,000
+Operating expenses:
+- Salaries: £800,000
+- Rent: £250,000
+- Utilities: £120,000
+- Depreciation: £300,000
+- Amortization: £150,000
+Total operating expenses: £1,570,000
+
+Total deductions: £3,770,000
+
+3. Tax liability
+
+Taxable income: £2,080,000 (£5,850,000 - £3,770,000)
+Corporation Tax rate: 19%
+
+Corporation Tax liability: £401,200 (£2,080,000 * 19%)
+
+4. Payment details
+
+Total payment due: £401,200
+Due date: 1 October 2022
+
+---
+
+Please note that the above Corporate Tax Return is a simulation and does not reflect the actual financial situation of any specific company. It is provided for illustrative purposes only. Always consult a professional tax advisor for your specific tax-related concerns.

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FinancialDataFeed>
+  <ExchangeTradedFunds>
+    <ETF>
+      <Ticker>SPYG</Ticker>
+      <Name>SPDR S&P 500 Growth ETF Trust</Name>
+      <Composition>
+        <CompanyTicker>AAPL</CompanyTicker>
+        <CompanyName>Apple Inc.</CompanyName>
+        <Weightage>12.5</Weightage>
+        <CompanyTicker>MSFT</CompanyTicker>
+        <CompanyName>Microsoft Corporation</CompanyName>
+        <Weightage>11.3</Weightage>
+        <CompanyTicker>AMZN</CompanyTicker>
+        <CompanyName>Amazon.com, Inc.</CompanyName>
+        <Weightage>10.1</Weightage>
+      </Composition>
+      <NetAssetValue>412.68</NetAssetValue>
+      <MarketPrice>421.50</MarketPrice>
+      <TradingVolume>2839000</TradingVolume>
+    </ETF>
+    <ETF>
+      <Ticker>QQQ</Ticker>
+      <Name>Invesco QQQ Trust</Name>
+      <Composition>
+        <CompanyTicker>AAPL</CompanyTicker>
+        <CompanyName>Apple Inc.</CompanyName>
+        <Weightage>10.2</Weightage>
+        <CompanyTicker>MSFT</CompanyTicker>
+        <CompanyName>Microsoft Corporation</CompanyName>
+        <Weightage>9.6</Weightage>
+        <CompanyTicker>AMZN</CompanyTicker>
+        <CompanyName>Amazon.com, Inc.</CompanyName>
+        <Weightage>8.4</Weightage>
+      </Composition>
+      <NetAssetValue>335.16</NetAssetValue>
+      <MarketPrice>342.90</MarketPrice>
+      <TradingVolume>1971000</TradingVolume>
+    </ETF>
+  </ExchangeTr

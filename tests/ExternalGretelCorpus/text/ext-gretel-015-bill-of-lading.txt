@@ -1,0 +1,39 @@
+Bill of Lading
+
+Vessel: SS Atlantic Horizon
+Voyage: 25T-223
+Port of Loading: Portland, ME, USA
+Port of Discharge: Southampton, UK
+Date of Shipment: 15th June, 2023
+
+Shipper: Veronica A. Henderson
+900 Jeremy Ways, Portland, ME, USA
+
+Consignee: Global Imports Ltd.
+Unit 7, Riverside Business Park
+Southampton, UK
+
+Commodity: Assorted Electronic Goods
+Number of Packages: 54
+Description of Goods: Laptops, Smartphones, Tablets
+Marks and Numbers: GIL-001 to GIL-054
+Gross Weight: 7,250 Kgs
+
+Survey Report:
+Date of Survey: 14th June, 2023
+Location of Survey: 42.256471, -44.670419 (Warehouse premises)
+Surveyor: James Wilson
+
+Findings:
+1. The goods were found properly packed and secured in wooden cases.
+2. The quantity of the goods was found to be in accordance with the shipping instructions.
+3. The goods were found to be in good condition, with no visible damages.
+4. The goods were properly labelled and marked.
+
+Credit Card Security Code: 279
+
+We, the master or owner of the above-named vessel, or the agents acting on their behalf, hereby acknowledge the receipt of the above-described goods in apparent good order and condition, subject to the terms and conditions of this Bill of Lading.
+
+---
+
+NOTE: This Bill of Lading is a synthetic document generated for demonstration purposes only. It is not valid for any commercial or legal use.

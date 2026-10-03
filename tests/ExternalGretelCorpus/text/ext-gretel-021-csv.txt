@@ -1,0 +1,10 @@
+"Company Name", "Contact First Name", "Contact Last Name", "Address", "City", "State", "Zip", "Country", "Industry", "Revenue"
+"ABC Enterprises", "John", "Doe", "123 Main St", "Anytown", "NY", "12345", "USA", "Retail", "10000000"
+"XYZ Corporation", "Jane", "Smith", "456 Elm St", "Othertown", "CA", "54321", "USA", "Technology", "50000000"
+"Acme Inc", "Bob", "Johnson", "789 Oak St", "Somecity", "NY", "67890", "USA", "Manufacturing", "25000000"
+"Beta Co", "Alice", "Williams", "321 Maple St", "Anothertown", "CA", "98765", "USA", "Finance", "75000000"
+"Gamma Inc", "Charlie", "Brown", "654 Pine St", "Randomcity", "NY", "88890", "USA", "Healthcare", "100000000"
+"Delta LLC", "Sara", "Davis", "987 Cherry St", "Differenttown", "CA", "55555", "USA", "Education", "50000000"
+"Epsilon Corp", "David", "Miller", "135 Walnut St", "Samplecity", "NY", "77780", "USA", "Energy", "200000000"
+"Zeta Inc", "Michelle", "Clark", "456 Birch St", "Testtown", "CA", "88876", "USA", "Transportation", "150000000"
+"Eta Co", "Daniel", "Rodrigue", "789 Cedar St", "Citytown", "NY", "99980", "USA

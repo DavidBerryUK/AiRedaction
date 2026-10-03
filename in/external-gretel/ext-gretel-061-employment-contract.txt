@@ -1,0 +1,15 @@
+NON-COMPETE AGREEMENT
+
+This Non-Compete Agreement (the "Agreement") is entered into as of this 1st day of January, 2023 (the "Effective Date"), by and between XYZ Corporation, a Delaware corporation with its principal place of business at 123 Main Street, Anytown, USA ("Company"), and Brandon Ortiz, residing at 89165 Allison Mission, Apt. 3320, Anytown, USA ("Employee").
+
+WHEREAS, Company is engaged in the business of providing various services and products in the financial industry; and
+
+WHEREAS, Employee will have access to Company's proprietary information and trade secrets;
+
+NOW, THEREFORE, in consideration of the mutual promises and covenants contained herein, the parties agree as follows:
+
+1. Non-Compete. Employee agrees that, during the term of this Agreement and for a period of twelve (12) months thereafter, Employee shall not, directly or indirectly, engage in any business or activity that is competitive with the business of Company, including, but not limited to, providing financial services or products that are similar to those offered by Company.
+2. Non-Solicitation. Employee agrees that, during the term of this Agreement and for a period of twelve (12) months thereafter, Employee shall not solicit or attempt to solicit any customer, vendor, supplier, or independent contractor of Company for the purpose of diverting or taking away the business or patronage of such customer, vendor, supplier, or independent contractor from Company.
+3. Confidential Information. Employee acknowledges that Employee will have access to confidential information of Company, including, but not limited to, customer lists, pricing information, and trade secrets. Employee agrees to keep such confidential information confidential and not to disclose such information to any third party without the prior written consent of Company.
+4. Compensation. In consideration for Employee's agreement to the terms of this Agreement, Company agrees to pay Employee a signing bonus of Ten Thousand Dollars ($10,000.00) (the "Signing Bonus"), which shall be paid to Employee within thirty (30) days of the Effective Date.
+5. Term

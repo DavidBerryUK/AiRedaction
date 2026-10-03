@@ -1,0 +1,64 @@
+---
+
+Credit Application
+
+Loan Type: Startup Business Loan
+
+Date: March 15, 2023
+
+Applicant Information:
+
+Full Name: Jeffrey Bullock-Harmon
+
+Date of Birth: August 02, 1968
+
+Social Security Number: 754-44-6591
+
+Mailing Address: 369 Barnes Ridge
+
+Contact Information:
+
+Phone Number: (123) 456-7890
+
+Email Address: [jbullockharmon@email.com](mailto:jbullockharmon@email.com)
+
+Business Information:
+
+Business Name: Green Horizons Landscaping
+
+Business Address: 369 Barnes Ridge
+
+Business Phone Number: (123) 456-7890
+
+Business Email: [info@greenhorizonslandscaping.com](mailto:info@greenhorizonslandscaping.com)
+
+Personal Financial Information:
+
+Employment Status: Self-Employed
+
+Monthly Income: $8,000
+
+Assets:
+
+- Checking Account: $25,000
+- Savings Account: $50,000
+- Retirement Account: $100,000
+
+Liabilities:
+
+- Mortgage: $200,000
+- Car Loan: $15,000
+
+Business Plan and Financial Projections:
+
+Please find attached a comprehensive business plan and financial projections for Green Horizons Landscaping. The plan includes details on the services we will offer, target market, competition analysis, marketing strategy, and financial projections for the next five years.
+
+Declaration:
+
+I, Jeffrey Bullock-Harmon, hereby declare that all the information provided in this application is true and accurate to the best of my knowledge. I understand that providing false information is a criminal offense.
+
+Signature: Jeffrey Bullock-Harmon
+
+Date: March 15, 2023
+
+---

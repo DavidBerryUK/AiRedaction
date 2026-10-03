@@ -1,0 +1,13 @@
+### Credit Card Agreement
+
+**Account Details**
+- **Customer ID**: CUS298341
+- **Account Number**: 73598261
+- **Credit Card Number**: 4532 0158 7469 3852
+
+**Security Information**
+- **PIN**: 9378
+
+**Terms and Conditions**
+
+This Credit Card Agreement outlines the terms and conditions for the use of the credit card associated with account number 73598261. The customer ID CUS298341 is required for all transactions and communications related to this account. The credit card number 4532 0158 7469 3852 must be kept secure and should not be shared with anyone. The PIN 9378 is used for verification purposes and should be kept confidential.

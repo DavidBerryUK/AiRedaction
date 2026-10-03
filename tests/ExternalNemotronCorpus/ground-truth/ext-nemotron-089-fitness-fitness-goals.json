@@ -1,0 +1,40 @@
+{
+ "id": "ext-nemotron-089-fitness-fitness-goals",
+ "title": "Fitness - Fitness Goals (external synthetic document)",
+ "formats": [
+  "txt"
+ ],
+ "scanKinds": [],
+ "entities": [
+  {
+   "where": "body",
+   "type": "ONLINE_ID",
+   "text": "elopez",
+   "occurrences": 2
+  },
+  {
+   "where": "body",
+   "type": "EMAIL",
+   "text": "elena87@fuerzavital.es",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "ID_NUMBER",
+   "text": "5557",
+   "occurrences": 1
+  }
+ ],
+ "mustPreserve": [],
+ "judgedCategories": [
+  "PERSON",
+  "COMPANY",
+  "ADDRESS",
+  "EMAIL",
+  "PHONE",
+  "DATE_OF_BIRTH",
+  "ID_NUMBER",
+  "ONLINE_ID",
+  "SECRET"
+ ]
+}

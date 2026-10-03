@@ -1,0 +1,41 @@
+---
+Credit Application
+
+Home Improvement Loan
+
+Full Legal Name: Frédérique M. Barre
+Date: 05/06/1990
+
+Contact Information:
+Street Address: 673 Ray Way, Apt. 799
+City: 
+State: 
+Postal Code: 
+Email: [melissa99@cole-shepard.com](mailto:melissa99@cole-shepard.com)
+Phone: 
+
+Employment Information:
+Employer: 
+Job Title: 
+Years Employed: 
+Monthly Income: 
+
+Loan Information:
+Purpose of Loan: Home Improvement
+Estimated Cost: 
+Loan Amount Requested: 
+Loan Term (years): 
+
+Property Information:
+Property Type: 
+Property Value: 
+Years Owned: 
+Mortgage Balance: 
+
+Declaration:
+I, Frédérique M. Barre, hereby declare that all the information provided in this application is true and accurate to the best of my knowledge. I understand that any false or misleading statements may result in the denial of this loan application or the termination of an approved loan.
+
+Signature: Frédérique M. Barre
+Date: 
+
+---

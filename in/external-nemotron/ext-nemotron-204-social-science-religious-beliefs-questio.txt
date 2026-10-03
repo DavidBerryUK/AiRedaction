@@ -1,0 +1,50 @@
+### Religious Beliefs Questionnaire
+
+**Section 1: Personal Information**
+
+1. **Email Address**: lea87@sozioinsight.de
+2. **Preferred Language**: German
+
+**Section 2: Religious Affiliation**
+
+1. **Religious Belief**: German Protestantism
+
+**Section 3: Frequency of Religious Practices**
+
+1. How often do you attend religious services?
+   - Never
+   - Rarely
+   - Sometimes
+   - Often
+   - Always
+
+**Section 4: Beliefs About Deities**
+
+1. What is your belief about the nature of your deity?
+   - Monotheistic
+   - Polytheistic
+   - Pantheistic
+   - Atheistic
+   - Agnostic
+   - Other (please specify)
+
+**Section 5: Spiritual Experiences**
+
+1. Have you ever had a spiritual experience? Please describe. (Open-ended)
+
+**Section 6: Impact of Religion on Daily Life**
+
+1. How does your religious belief influence your daily decisions?
+   - Strongly influences
+   - Somewhat influences
+   - Neutral
+   - Somewhat does not influence
+   - Strongly does not influence
+
+**Section 7: Additional Information**
+
+1. Please provide any additional comments or insights regarding your religious beliefs and practices. (Open-ended)
+
+**End of Questionnaire**
+
+Thank you for completing the questionnaire. Please confirm the time of submission as 18:30

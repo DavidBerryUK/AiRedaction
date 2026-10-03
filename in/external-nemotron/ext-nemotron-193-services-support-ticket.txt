@@ -1,0 +1,13 @@
+### Support Ticket
+
+| Field                | Value                                                                 |
+|----------------------|-----------------------------------------------------------------------|
+| Ticket ID            | CL509283                                                                 |
+| Date/Time Opened     | 2025-06-04T11:37:14                                            |
+| Customer Information | Email: luc574@gestion-conseil-services.fr, Phone Number: 04 95 23 67 82 |
+| Description of Issue | Customer reported an issue at 10:35 AM on 15.08.2024. Issue details are available at https://zendesk.com/help-center/support-ticket |
+| Priority Level       | High                                                                   |
+| Assigned Technician  | John Doe                                                             |
+| Status               | Open                                                                   |
+| Resolution Notes     | N/A                                                                     |
+| Date/Time Closed     | N/A                                                                     |

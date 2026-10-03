@@ -1,0 +1,38 @@
+MASTER BILL OF LADING
+
+BILL OF LADING NO.: MBL 123456
+
+VESSEL:        S.S. Brave Horizon
+VOYAGE:        Voyage 77-02-A
+PORT OF LOADING:        Leemouth
+DATE OF ISSUE:        Thu, 24 Feb 1977 15:57:22 
+PORT OF DISCHARGE:        Port of New York
+DATE OF DISCHARGE:        Estimated Mar 10, 1977
+
+SHIPPER:        Wigbert Weimer-Schaaf
+8229 Price Land, Leemouth
+TELEPHONE:        (555) 123-4567
+
+CONSIGNEE:        Stoll
+C/O:            8229 Price Land, Leemouth
+TELEPHONE:        (555) 123-4567
+
+CARRIER:        Oceanus Shipping Lines, Inc.
+
+NOTIFY PARTY:        Stoll
+C/O:            8229 Price Land, Leemouth
+TELEPHONE:        (555) 123-4567
+
+GOODS DESCRIPTION:        1000 cartons of assorted electronics components
+MARKS AND NUMBERS:       SS-123456
+GROSS WEIGHT:        15,000 kgs
+MEASUREMENT:        200 cubic meters
+
+TERMS OF CARRIAGE:        FIO (Free In and Out)
+
+NOTE:
+- This is a straight consignment.
+- Delivery to the Consignee or Notify Party is subject to production of this Bill of Lading.
+- Any discrepancy in the description of the goods, quantity, weight, and measurements shall be noted on this Bill of Lading.
+- Any amendment or alteration of this Bill of Lading must be signed by the Carrier and the Shipper.
+- This Bill of Lading is governed by the Carriage of Goods by Sea Act of the United States (46 U.S.C. 1300-13

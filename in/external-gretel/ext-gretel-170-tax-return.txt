@@ -1,0 +1,45 @@
+---
+United States Small Farm Tax Return
+
+Tax Year 2021
+
+Name: Máximo S. Caparrós
+Account PIN: 7252
+Street Address: 18788 Holly Manor, Port Hannah
+
+Schedule F (Form 1040) - Profit or Loss from Farming
+
+1. Business name, address, and taxpayer identification number
+- Business name: Máximo S. Caparrós Farm
+- Address: 18788 Holly Manor, Port Hannah, [State] 12345
+- Taxpayer identification number: 7252
+
+2. Principal business or agricultural activity: Small-scale organic vegetable farming
+
+3. Gross sales or receipts: $82,500
+
+4. Deductions
+  a. Cost of goods sold
+  - Seeds and seedlings: $3,500
+  - Fertilizers and soil amendments: $2,200
+  - Irrigation equipment and maintenance: $1,800
+  - Animals and animal feed: $4,000
+  - Utilities: $1,200
+  - Wages paid to employees: $12,000
+  Total cost of goods sold: $25,700
+
+  b. Other deductible expenses
+  - Rent or lease of land or buildings: $5,000
+  - Depreciation of farm equipment: $3,000
+  - Conservation expenses: $1,000
+  - Agricultural tax credits: $1,500
+  Total other deductible expenses: $10,500
+
+5. Total deductions: $36,200
+
+6. Net profit or (loss) before special deductions or credits: $46,300
+
+7. Farm expenses in excess of gross income
+  - Enter the amount from line 6: $46,300
+  - Enter the amount from Schedule F, line 37 (Form 1040), line 9 (Form 1040NR): $0
+  - Subtract line 2 from line 

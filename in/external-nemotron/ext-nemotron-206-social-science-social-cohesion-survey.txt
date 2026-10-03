@@ -1,0 +1,45 @@
+### Social Cohesion Survey
+
+#### Title Page
+**Title:** Assessing Social Cohesion in Urban Communities
+
+**Date:** 10:30 AM EST
+
+#### Introduction
+This survey aims to evaluate the levels of social cohesion within urban communities, focusing on metrics such as trust, social support, and community engagement. The findings will provide insights into how different demographic factors, including education level, employment status, occupation, religious belief, and political view, influence social cohesion.
+
+#### Method
+**Sampling and Data Collection Procedures**
+Data was collected from a diverse sample of individuals, including those with a graduate level education. Participants were interviewed at various times throughout the day, including 10:30 AM EST. The survey included questions about their employment status, with some respondents identifying as unemployed. The occupation of industrial and refractory machinery mechanic was also represented in the sample. Religious belief was another factor considered, with some participants identifying as Catholic. Political views were also assessed, with some respondents identifying as Green New Deal advocate. The data collection process ensured that all participants felt comfortable sharing their perspectives.
+
+#### Results
+**Statistical Analyses of Social Cohesion Metrics**
+
+| Metric                | Mean Score | Standard Deviation |
+|-----------------------|------------|---------------------|
+| Trust                 | 7.5        | 1.2                 |
+| Social Support        | 8.0        | 1.5                 |
+| Community Engagement  | 6.8        | 1.3                 |
+
+**Figure 1:** Distribution of Social Cohesion Scores by Education Level
+
+![Distribution of Social Cohesion Scores by Education Level](figure1.png)
+
+#### Discussion
+The results indicate that individuals with a graduate level education generally reported higher levels of trust and social support compared to those with lower levels of education. Unemployed participants, particularly those who were industrial and refractory machinery mechanic, showed varied levels of community engagement. Religious belief, such as being Catholic, did not significantly impact trust levels but was correlated with higher social support. Political views, such as being a Green New Deal advocate, were associated with increased community engagement. These findings suggest that while education level and employment status play crucial roles, other factors like occupation, religious belief, and political view also contribute to the overall social cohesion within urban communities.
+
+#### References
+- Smith, J. (2020). The Role of Education in Social Cohesion. Journal of Social Sciences, 15(3), 45-60.
+- Johnson, L. (2019). Employment Status and Community Engagement. Urban Studies, 22(2), 34-48.
+
+#### Appendices
+**Survey Instruments**
+**Additional Data**
+
+**Appendix A:** Survey Questions
+
+1. What is your education level?
+2. What is your current employment status?
+3. What is your occupation?
+4. What is your religious belief?
+5. What are your political views?

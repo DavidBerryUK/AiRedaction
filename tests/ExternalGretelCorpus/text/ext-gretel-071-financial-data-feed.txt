@@ -1,0 +1,48 @@
+{
+  "derivativesAnalytics": [
+    {
+      "instrumentType": "Option",
+      "underlyingAsset": "AAPL",
+      "strikePrice": 150,
+      "maturityDate": "2023-01-01",
+      "optionType": "Call",
+      "bidPrice": 12.45,
+      "askPrice": 12.55,
+      "impliedVolatility": 0.25,
+      "blackScholesPrice": 12.31,
+      "greeks": {
+        "delta": 0.63,
+        "gamma": 0.04,
+        "theta": -0.06,
+        "vega": 0.45,
+        "rho": 0.11
+      }
+    },
+    {
+      "instrumentType": "Swaption",
+      "underlyingAsset": "GBPUSD",
+      "strikePrice": 1.35,
+      "maturityDate": "2024-06-30",
+      "optionType": "Call",
+      "bidPrice": 0.018,
+      "askPrice": 0.019,
+      "impliedVolatility": 0.12,
+      "blackScholesPrice": 0.017,
+      "greeks": {
+        "delta": 0.58,
+        "gamma": 0.03,
+        "theta": -0.04,
+        "vega": 0.31,
+        "rho": 0.08
+      }
+    },
+    {
+      "instrumentType": "FutureOption",
+      "underlyingAsset": "SPX",
+      "strikePrice": 4200,
+      "maturityDate": "2023-12-31",
+      "optionType": "Put",
+      "bidPrice": 45.12,
+      "askPrice": 45.23,
+      "impliedVolatility": 0.18,
+      "blackScholesPrice": 45

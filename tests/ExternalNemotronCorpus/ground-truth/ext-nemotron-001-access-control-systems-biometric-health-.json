@@ -1,0 +1,58 @@
+{
+ "id": "ext-nemotron-001-access-control-systems-biometric-health-",
+ "title": "Access Control Systems - Biometric Health Record Attachment (external synthetic document)",
+ "formats": [
+  "txt"
+ ],
+ "scanKinds": [],
+ "entities": [
+  {
+   "where": "body",
+   "type": "ID_NUMBER",
+   "text": "F48523671921",
+   "occurrences": 2
+  },
+  {
+   "where": "body",
+   "type": "ONLINE_ID",
+   "text": "layla_al-saud",
+   "occurrences": 2
+  },
+  {
+   "where": "body",
+   "type": "SECRET",
+   "text": "p@ssw0rdp@ssw0rd",
+   "occurrences": 2
+  },
+  {
+   "where": "body",
+   "type": "ID_NUMBER",
+   "text": "578234961",
+   "occurrences": 2
+  },
+  {
+   "where": "body",
+   "type": "ID_NUMBER",
+   "text": "002198",
+   "occurrences": 2
+  },
+  {
+   "where": "body",
+   "type": "EMAIL",
+   "text": "l.al-saud@aljazeerasecurity.com",
+   "occurrences": 2
+  }
+ ],
+ "mustPreserve": [],
+ "judgedCategories": [
+  "PERSON",
+  "COMPANY",
+  "ADDRESS",
+  "EMAIL",
+  "PHONE",
+  "DATE_OF_BIRTH",
+  "ID_NUMBER",
+  "ONLINE_ID",
+  "SECRET"
+ ]
+}

@@ -1,0 +1,23 @@
+MORTGAGE CONTRACT
+
+THIS MORTGAGE AGREEMENT ("Agreement") is made and entered into this 1st day of August, 2021, by and between Jeanne Antoine-Loiseau, the Borrower(s), and ABC Bank, the Lender(s).
+
+WHEREAS, Borrower is the owner of the property located at 36906 George Village, North Melissabury, 66240 (the "Property"); and
+
+WHEREAS, Borrower desires to borrow funds from Lender, and Lender is willing to lend funds to Borrower, on the terms and conditions set forth herein.
+
+NOW, THEREFORE, in consideration of the mutual covenants and promises contained herein and for other good and valuable consideration, the receipt and sufficiency of which is hereby acknowledged, the parties agree as follows:
+
+1. LOAN AMOUNT: Lender agrees to loan to Borrower the sum of $250,000.00 (the "Loan Amount") for the purpose of purchasing the Property.
+
+2. INTEREST RATE: The interest rate on the Loan Amount shall be 3.5% per annum.
+
+3. REPAYMENT TERMS: The Loan Amount shall be repaid in equal monthly installments over a term of 30 years, with the first payment due on the first day of the month next succeeding the month in which the loan is funded.
+
+4. COLLATERAL: The Property shall be used as collateral for the Loan Amount.
+
+5. VA LOAN: This loan is a VA loan, specifically available to eligible veterans, active-duty service members, and certain military spouses. As such, the Loan Amount shall be subject to the terms and conditions of the VA loan program, including no down payment requirements and reduced interest rates.
+
+6. IPV6 ADDRESS: The borrower's IPV6 address for communication purposes related to this loan is 6778:268:cd0:cd10:26f0:835a:120a:fc93.
+
+IN WITNESS WHEREOF, the parties have executed this Mortgage Contract

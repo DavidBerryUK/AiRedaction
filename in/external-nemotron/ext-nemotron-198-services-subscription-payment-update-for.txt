@@ -1,0 +1,23 @@
+**Subscription Payment Update Form**
+
+**Subscriber Information**
+- Email: muhabbat78@uzservices.uz
+- Customer ID: 7249530681
+
+**Current Plan Details**
+- Plan Name: Standard
+- Renewal Date: 15.07.2026
+
+**Payment Method Updates**
+- Current Payment Method: Credit/Debit Card
+- Card Number: 4921 3756 1289 0456
+- Expiration Date: MM/YYYY
+
+**Authorization**
+I, the subscriber, authorize the update of my payment details as specified above. I understand that any changes made will be effective from the date of submission, 15.07.2026.
+
+_________________________
+Subscriber Signature
+
+**Biometric Verification**
+- Biometric Identifier: L67583219456

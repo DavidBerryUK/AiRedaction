@@ -1,0 +1,36 @@
+Safety Data Sheet
+
+Section 1: Identification
+Product name: XYZ Pesticide
+Manufacturer: XYZ Chemicals Inc.
+Address: 1234 Main Street, Anytown, USA
+Phone: (123) 456-7890
+Email: [info@xyzchemicals.com](mailto:info@xyzchemicals.com)
+Emergency phone: (123) 456-7891
+
+Section 2: Hazard(s) identification
+Classification: Dangerous substance
+Hazard statement(s): H301 - May be fatal if swallowed and enters airways. H315 - Causes skin irritation. H332 - Harmful if inhaled. H400 - Very toxic to aquatic life.
+
+Section 3: Composition/information on ingredients
+Chemical name: XYZ-12345
+Chemical formula: C12H15ClNO2
+Purity: > 95%
+
+Section 4: First-aid measures
+In case of inhalation: Remove the person to fresh air and keep comfortable for breathing.
+In case of skin contact: Wash off with soap and plenty of water.
+In case of eye contact: Rinse thoroughly with plenty of water for at least 15 minutes and consult a physician.
+In case of ingestion: Rinse mouth with water and do not induce vomiting. Seek medical advice immediately and show the container or label.
+
+Section 5: Fire-fighting measures
+Extinguishing media: Dry chemical, carbon dioxide, foam, or water spray.
+Special hazards arising from the substance: None.
+Advice for firefighters: Wear self-contained breathing apparatus and protective clothing.
+
+Section 6: Accidental release measures
+Personal precautions: Wear protective clothing, gloves, and eye/face protection.
+Environmental precautions: Prevent release into the environment. Contain and absorb spillage using inert material.
+
+Section 7: Handling and storage
+Precautions for safe handling: Use personal protective equipment. Avoid contact with skin, eyes, and clothing. Do not breathe dust, vapor

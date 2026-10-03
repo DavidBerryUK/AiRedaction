@@ -1,0 +1,28 @@
+**Student Loan Agreement**
+
+**Borrower Information**
+- First Name: Aizhan
+- Last Name: Amanzholov
+- Email: aizhan429@kazfinance.kz
+- Date of Birth: 1962-09-20
+
+**Loan Details**
+- Loan Amount: $50,000
+- Interest Rate: 5.5%
+- Repayment Terms: 10 years
+- Education Level: Associate's Degree
+
+**Account Information**
+- Account Number: Z97231645
+- Bank Routing Number: 611927853
+
+**Disbursement Details**
+- Disbursement Date: 17/09/2026
+
+**Signature Section**
+
+_________________________     ________________
+Borrower's Signature            Date
+
+_________________________     ________________
+Witness Signature                Date

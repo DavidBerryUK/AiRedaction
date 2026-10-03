@@ -1,0 +1,35 @@
+**Discharge Summary**
+
+**Patient Identification:**
+- First Name: Courtney
+- Last Name: Holden
+- Date of Birth: 07/15/2004
+- SSN: 227-25-5295
+- Email: cholden90@icloud.com
+- Medical Record Number: 0005384667
+- Health Plan Beneficiary Number: 0005384667
+
+**Admission Information:**
+- Admitting Date: 01/10/2024
+- Discharge Date: 01/15/2024
+
+**Attending Physician:**
+- Certificate License Number: NJ-381425-972
+
+**Discharge Diagnosis:**
+- Diagnosis 1: Appendicitis
+- Diagnosis 2: Dehydration
+
+**Procedures Performed:**
+- Laparoscopic Appendectomy
+
+**Discharge Medications:**
+- Amoxicillin 500mg, 1 tablet 3 times a day for 7 days
+- Ibuprofen 400mg, 1 tablet 4 times a day as needed for pain
+
+**Follow-Up Instructions:**
+- Follow up with primary care physician in 2 weeks. Medical Record Number: 0005398762
+
+**Pertinent Test Results:**
+- Complete Blood Count (CBC): Within normal limits
+- Comprehensive Metabolic Panel (CMP): Within normal limits

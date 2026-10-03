@@ -1,0 +1,14 @@
+---
+Corporation Income Tax Return
+
+Tax Year: April 1, 2021 - March 31, 2022
+
+Corporation Name: XYZ Inc.
+Address: 123 Main Street, Anytown, CA, 90210
+Business Number: 12-3456789
+
+I. Identification
+
+1. Legal name of corporation: XYZ Inc.
+2. Business number: 12-3456789
+3. Tax year-end: March 31, 2

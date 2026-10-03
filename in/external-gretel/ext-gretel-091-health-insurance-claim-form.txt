@@ -1,0 +1,34 @@
+HEALTH INSURANCE CLAIM FORM
+
+Claimant Information:
+Name: Alfredo Domínguez
+Date of Birth: 03/13/1921
+Street Address: 35515 Colleen Trafficway
+
+Healthcare Provider Information:
+[Healthcare Provider Name]
+[Healthcare Provider Address]
+
+Treatment Information:
+Type of Treatment: Cancer Treatment
+Date of Treatment: [Date of Treatment]
+
+Treatment Details:
+The claimant, Mr. Alfredo Domínguez, received cancer treatment, specifically chemotherapy and radiation therapy, at the above-mentioned healthcare provider's facility. The treatment was administered in accordance with the established cancer care protocol for his condition.
+
+Medical Expenses:
+- Chemotherapy Sessions: 6 sessions
+- Radiation Therapy Sessions: 10 sessions
+- Oncology Consultations: 4 consultations
+- Medication and Medical Supplies: $5,000
+
+Total Amount Claimed: $12,000
+
+Bank Account Information for Reimbursement:
+Bank: MEYB
+BBAN: MEYB87061208566645
+
+By submitting this claim form, I, Alfredo Domínguez, certify that the information provided herein is true and accurate to the best of my knowledge.
+
+Signature: Alfredo Domínguez
+Date: [Date]

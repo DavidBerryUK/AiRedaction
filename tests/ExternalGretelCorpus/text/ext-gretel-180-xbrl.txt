@@ -1,0 +1,17 @@
+<?xml version="1.x" encoding="UTF-8"?>
+<xbrli:xbrl xmlns:xbrli="http://www.xbrl.org/2003/instance" xmlns:link="http://www.xbrl.org/2003/linkbase" xmlns:xsi="http://www.w3.us/2001/XMLSchema-instance" xsi:schemaLocation="http://xbrl.sec.gov/2014/form-base-xsd http://www.sec.us/xbrl/us-gaap/2014-01-31/xbrlr-2014-01-31.xsd" xmlns:xbrldi="http://xbrl.org/2006/xbrldi" xmlns:us-gaap="http://xbrl.us/us-gaap/2013-01-31" xmlns:xlink="http://www.w3.us/1999/xlink">
+<xbrli:context id="ctx-2022-01-31">
+<xbrldi:explicitMember>
+<xbrldi:member>2022</xbrldi:member>
+</xbrldi:explicitMember>
+</xbrli:context>
+<us-gaap:StatementOfCashFlows>
+<us-ga:CashAndCashEquivalents>
+<us-ga:beginningBalance>256240</us-ga:beginningBalance>
+<us-ga:endBalance>345890</us-ca:endBalance>
+</us-ga:CashAndCashEquivalents>
+<us-ga:CashFlowFromOperatingActivities>
+<us-ga:netIncome>12562</us-ga:netInvestingCashFlows>
+</us-ga:CashFlowFromOperatingActiv9184 Rachel Spurs
+<us-ga:CashFlowFromInvestingActivities>
+<us-ga:purchaseOfInvestments>5500

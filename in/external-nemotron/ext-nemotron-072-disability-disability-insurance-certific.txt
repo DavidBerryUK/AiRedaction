@@ -1,0 +1,23 @@
+**Disability Insurance Certificate**
+
+**Policy Number:** 2023-5678
+
+**Beneficiary Information:**
+- **First Name:** Ardiel
+- **Last Name:** Romero
+- **Date of Birth:** 1962-11-04
+- **Social Security Number:** 048-14-3446
+- **Health Plan Beneficiary Number:** H9758432-02
+
+**Disability Onset Date:** 2023-03-15
+
+**Medical Certification Details:**
+- **Medical Record Number:** 2022-8364-572
+
+**Benefit Payment Schedule:**
+- **Payment Method:** Direct Deposit
+- **Bank Routing Number:** 244500217
+- **Payment Frequency:** Monthly
+
+**Additional Information:**
+- **Beneficiary Contact Information:** The beneficiary will be contacted via the health plan beneficiary number H9758432-02 for any updates or changes regarding the disability status.

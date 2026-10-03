@@ -1,0 +1,30 @@
+Title: Network Outage - Main Office - Building A
+
+Description:
+We are experiencing a network outage at the main office, specifically in Building A. The issue began at approximately 10:30 AM this morning. All users in Building A are unable to connect to the internet or access any internal network resources. Users in other buildings are not affected.
+
+Priority:
+High - This issue is impacting the entire Building A workforce, causing significant disruptions to business operations.
+
+Investigation:
+- Network engineers have confirmed that there is no connectivity from the Building A switch to the core network.
+- The switch and related cabling have been ruled out as the source of the problem, as they are functioning properly.
+- The issue is suspected to be related to the fiber uplink from the Building A telecom room to the main distribution frame (MDF).
+
+Resolution Status:
+In Progress - Network engineers are currently investigating the fiber uplink and will provide updates as soon as they are available. A temporary solution involving a wireless connection to a nearby building is being considered in case the outage lasts for an extended period.
+
+Next Steps:
+- Network engineers to continue investigating the fiber uplink and troubleshoot the issue.
+- IT management to monitor the situation and provide updates to the affected users and management.
+- Consider deploying a temporary wireless solution if the outage persists.
+
+Additional Information:
+- Affected users have been notified of the outage and are aware of the ongoing investigation.
+- Network engineers are prioritizing this issue and working diligently to restore connectivity as soon as possible.
+
+---
+
+Ticket ID: NET-00345
+Submitted by: IT Support Team
+Date/Time: 2022-04-12 11:25 AM (UTC)

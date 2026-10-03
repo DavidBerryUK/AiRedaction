@@ -1,0 +1,19 @@
+Mortgage Amortization Schedule
+
+Borrower: Biagio Combi
+Property Address: 2079 Vasquez Crescent, Apt. 8314, [City, State]
+Loan Amount: $300,000
+Loan Type: Adjustable Rate Mortgage
+Initial Interest Rate: 3.5%
+IP Address: 164.187.158.188
+Bank Routing Number: 257084656
+
+
+| Payment # | Date       | Beginning Balance | Interest | Principal | Ending Balance |
+|------------|------------|-------------------|----------|-----------|-----------------|
+| 1          | 01/01/2023 | $300,000          | $1,041.67| $858.33   | $299,141.67     |
+| 2          | 02/01/2023 | $299,141.67       | $1,039.22| $860.78   | $298,280.89     |
+| 3          | 03/01/2023 | $298,280.89       | $1,036.75| $863.25   | $297,417.64     |
+| 4          | 04/01/2023 | $297,417.64       | $1,034.27| $865.73   | $296,551.91     |
+| 5          | 05/01/2023 | $296,551.91       | $1,031.78| $868.22   | $295,683.69     |
+| 6          | 06/01/2023 | $295,683.69       | $1,029.29|

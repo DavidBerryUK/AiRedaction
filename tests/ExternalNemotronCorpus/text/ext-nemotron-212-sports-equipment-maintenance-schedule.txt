@@ -1,0 +1,16 @@
+| Equipment Name          | Maintenance Task         | Frequency | Date of Last Maintenance | Next Maintenance Due Date | Responsible Party       |
+|-------------------------|--------------------------|-----------|---------------------------|----------------------------|--------------------------|
+| Soccer Goals            | Check for stability      | Weekly    | 07/15/2024                | 07/22/2024                 | ApexPlay Sports          |
+| Basketball Hoops         | Inspect net and rim      | Monthly   | 06/01/2024                | 07/01/2024                 | ApexPlay Sports          |
+| Tennis Nets             | Tighten and secure       | Monthly   | 05/15/2024                | 06/15/2024                 | ApexPlay Sports          |
+| Volleyball Courts       | Resurface and check lines| Quarterly | 04/01/2024                | 07/01/2024                 | ApexPlay Sports          |
+| Football Helmets        | Clean and inspect pads   | Monthly   | 06/15/2024                | 07/15/2024                 | ApexPlay Sports          |
+| Baseball Bats           | Inspect for cracks       | Monthly   | 05/30/2024                | 06/30/2024                 | ApexPlay Sports          |
+| Hockey Sticks           | Check for damage         | Weekly    | 07/15/2024                | 07/22/2024                 | ApexPlay Sports          |
+| Track and Field Equipment| Check for wear and tear | Monthly   | 06/05/2024                | 07/05/2024                 | ApexPlay Sports          |
+| Swimming Pool Equipment | Clean and maintain filters| Weekly    | 07/15/2024                | 07/22/2024                 | ApexPlay Sports          |
+| Gymnastics Mats         | Inspect for tears        | Monthly   | 06/10/2024                | 07/10/2024                 | ApexPlay Sports          |
+
+For more details, visit the maintenance schedule at https://sportspro.com/equipment/maintenance-schedule?team_id=123&season=2024&sort=date
+
+The maintenance tasks are scheduled to be completed at half past eleven on 2025-04-01T06:50:00.

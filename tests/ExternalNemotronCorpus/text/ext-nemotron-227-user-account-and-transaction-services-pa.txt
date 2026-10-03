@@ -1,0 +1,21 @@
+**Payment Confirmation Receipt**
+
+**Transaction Details**
+
+| Field              | Value                                  |
+|--------------------|----------------------------------------|
+| Transaction ID     | 231015-756481                          |
+| Date and Time      | 2023-04-22T23:33:50                   |
+| Customer ID        | CL0001238                              |
+| Amount             | $250.00                                |
+| Payment Method     | Credit Card                           |
+| Confirmation Status| Confirmed                             |
+| Confirmation URL   | http://paymentservices.com:8080/confirmation |
+
+**Customer Information**
+
+| Field              | Value                                  |
+|--------------------|----------------------------------------|
+| Biometric Identifier | M75839201456        |
+| Biometric Identifier | M75839201456        |
+| religious belief   | Roman Catholicism    |

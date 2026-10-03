@@ -1,0 +1,38 @@
+```
+Organ Donor Registration Authorization
+
+Donor's Personal Information:
+- First Name: Darya
+- Last Name: Kovalchuk
+- Date of Birth: 1993-11-27
+- Password: River2021!
+- Phone Number: +375 29 834-92-67
+- Email: daryak@belarusaccess.com
+
+Identification Numbers:
+- National ID: 113-456-789 12
+- Access Control System ID: 5217 3462 8910 2356
+
+Contact Details:
+- Preferred Contact Method: Email
+- Preferred Contact Time: 2023-05-23T17:55:58
+
+Designated Recipient:
+- Name: (To be designated by the healthcare provider)
+- Relationship: (To be designated by the healthcare provider)
+
+Signature:
+- Donor's Signature: ________________________________
+- Date: 07/15/2024
+
+Witness Information:
+- Witness Name: (To be designated by the healthcare provider)
+- Witness Signature: ________________________________
+- Witness Contact Information: (To be designated by the healthcare provider)
+
+Consent and Specific Instructions:
+I, Darya Kovalchuk, hereby authorize the donation of my organs upon my death, as outlined in this registration. I understand that my organs will be used to save lives through the access control systems in place. I have read and understood the terms and conditions of this registration.
+
+Http Cookie:
+- pref_notifications=disabled; Expires=Fri, 15 Dec 2028 18:30:00 GMT; Path=/settings
+```

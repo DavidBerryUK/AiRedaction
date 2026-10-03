@@ -1,0 +1,46 @@
+{
+ "id": "ext-nemotron-155-marketing-brand-guidelines",
+ "title": "Marketing - Brand Guidelines (external synthetic document)",
+ "formats": [
+  "txt"
+ ],
+ "scanKinds": [],
+ "entities": [
+  {
+   "where": "body",
+   "type": "COMPANY",
+   "text": "Lahore Marketing Solutions",
+   "occurrences": 4
+  },
+  {
+   "where": "body",
+   "type": "ONLINE_ID",
+   "text": "ayesha.rana",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "EMAIL",
+   "text": "rana@lahoremarketingsolutions.pk",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "PHONE",
+   "text": "+92 81 3456789",
+   "occurrences": 1
+  }
+ ],
+ "mustPreserve": [],
+ "judgedCategories": [
+  "PERSON",
+  "COMPANY",
+  "ADDRESS",
+  "EMAIL",
+  "PHONE",
+  "DATE_OF_BIRTH",
+  "ID_NUMBER",
+  "ONLINE_ID",
+  "SECRET"
+ ]
+}

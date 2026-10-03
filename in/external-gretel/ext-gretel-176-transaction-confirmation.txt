@@ -1,0 +1,15 @@
+LOAN AGREEMENT
+
+This Loan Agreement (the "Agreement") is made and entered into as of the 1st day of March, 2023 (the "Effective Date"), by and between ABC Capital Corp., a corporation organized and existing under the laws of the State of Delaware, with its head office located at 123 Main Street, New York, NY 10001, USA (the "Lender"), and John Doe, an individual with a mailing address at 456 Park Lane, London, UK NW1 4JA (the "Borrower").
+
+WHEREAS, the Lender has agreed to make a loan to the Borrower, and the Borrower has agreed to accept such loan, on the terms and conditions set forth herein.
+
+NOW, THEREFORE, in consideration of the mutual covenants and promises contained herein and for other good and valuable consideration, the receipt and sufficiency of which is hereby acknowledged, the parties hereto agree as follows:
+
+1. LOAN. The Lender agrees to make a loan to the Borrower in the amount of One Hundred Thousand Dollars ($100,000) (the "Loan Amount"). The Loan Amount shall be disbursed to the Borrower in one lump sum on the Effective Date.
+
+2. INTEREST. The Loan Amount shall bear interest at a rate of 5% per annum, calculated on a 360-day year basis.
+
+3. REPAYMENT. The Borrower shall repay the Loan Amount, together with all accrued and unpaid interest, in 36 equal monthly installments, commencing on the first day of the month next succeeding the Effective Date, and on the first day of each month thereafter until the Loan Amount and all accrued and unpaid interest shall have been paid in full. Each installment payment shall be in the amount of $3,244.62.
+
+4. COLLATERAL. As security for the payment and performance of the Borrower's obligations under this Agreement, the Borrower hereby grants to the Lender a security interest in all of the Borrower's right, title

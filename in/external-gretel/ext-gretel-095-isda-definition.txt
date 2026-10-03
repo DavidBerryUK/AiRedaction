@@ -1,0 +1,29 @@
+NETTING AGREEMENT
+
+This Netting Agreement (the "Agreement") is entered into as of [Effective Date], by and between [Counterparty Name], a [Counterparty Jurisdiction] corporation with its head office located at [Counterparty Address] (the "Counterparty"), and [Your Company Name], a [Your Company Jurisdiction] corporation with its head office located at [Your Company Address] (the "Company").
+
+RECITALS
+
+WHEREAS, the Company and the Counterparty desire to enter into over-the-counter derivatives transactions (the "Transactions") with each other;
+
+WHEREAS, the Company and the Counterparty desire to establish provisions for netting obligations and payments under multiple transactions, including close-out netting, multilateral netting, and netting set-off provisions;
+
+NOW, THEREFORE, in consideration of the mutual covenants and agreements contained herein and for other good and valuable consideration, the receipt and sufficiency of which is hereby acknowledged, the parties hereto agree as follows:
+
+1. DEFINITIONS
+
+(a) "Closing Date" means the date on which all Transactions under this Agreement terminate.
+
+(b) "Counterparty" means [Counterparty Name], a [Counterparty Jurisdiction] corporation with its head office located at [Counterparty Address].
+
+(c) "Counterparty Obligation" means any obligation of the Counterparty under this Agreement or any Transaction.
+
+(d) "Effective Date" means [Effective Date].
+
+(e) "Loss" means all losses, liabilities, costs, expenses, and damages (including legal fees and expenses) incurred by a party arising out of or in connection with any action, claim, or proceeding by a third party against such party alleging a breach of this Agreement or any Transaction by such party.
+
+(f) "Netting Set" means a set of Transactions that are subject to netting under this Agreement.
+
+(g) "Netting Set-off Provision" means the provisions of this Agreement that permit the Company and the Counterparty to set off amounts owed by one party to the other under this Agreement or any Transaction.
+
+(h) "OTC Derivative Transaction" means any swap, option, forward, fut

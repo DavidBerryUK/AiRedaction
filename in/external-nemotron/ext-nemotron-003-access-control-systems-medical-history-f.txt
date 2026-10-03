@@ -1,0 +1,43 @@
+**Access Control Systems Medical History Form**
+
+**Patient Information**
+
+- Patient Name: Juan
+- Date of Birth: 1967-01-22
+
+**Medical Conditions**
+
+- [ ] Diabetes
+- [ ] Hypertension
+- [ ] Asthma
+- [ ] Other (please specify): ___________________
+
+**Allergies**
+
+- [ ] Penicillin
+- [ ] Sulfa
+- [ ] Latex
+- [ ] Other (please specify): ___________________
+
+**Medications**
+
+- [ ] Insulin
+- [ ] Blood Pressure Medication
+- [ ] Inhaler
+- [ ] Other (please specify): ___________________
+
+**Emergency Contact Information**
+
+- Name:
+- Relationship:
+- Employment Status: full-time
+- Phone Number:
+- Email:
+
+**Authorization**
+
+I, Juan, hereby authorize the Access Control Systems to use and disclose my medical information as necessary for treatment, payment, and healthcare operations.
+
+Signature: ___________________
+
+Date: ___________________

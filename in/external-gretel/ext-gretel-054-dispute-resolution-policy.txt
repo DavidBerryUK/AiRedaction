@@ -1,0 +1,25 @@
+Dispute Resolution Policy
+
+Introduction
+
+At [Company Name], we are committed to resolving disputes in a fair and efficient manner. Our dispute resolution policy outlines the procedures and processes for resolving disputes between parties within the company or with external entities. This policy specifically utilizes a peer review process, where peers in the same field evaluate and resolve disputes based on professional standards and expertise.
+
+Dispute Resolution Process
+
+In the event of a dispute, the following steps will be taken:
+
+1. Initial Contact: The parties involved in the dispute will be encouraged to communicate directly with each other to attempt to resolve the issue.
+2. Peer Review Request: If the dispute cannot be resolved through direct communication, either party may request a peer review. The request should be submitted in writing to the Dispute Resolution Committee at [Company Name]. The request should include a detailed description of the dispute, as well as any relevant documentation.
+3. Peer Review Panel Selection: Upon receipt of a peer review request, the Dispute Resolution Committee will select a panel of peers to review the dispute. The panel will consist of individuals who are knowledgeable and experienced in the relevant field.
+4. Peer Review: The panel will review the dispute and any relevant documentation provided by the parties. The panel may also request additional information or clarification from the parties as needed.
+5. Decision: After reviewing the dispute, the panel will make a decision based on professional standards and expertise. The decision will be communicated in writing to both parties.
+
+Confidentiality
+
+All information related to the dispute, including the identities of the parties, will be kept confidential, except as required by law or as necessary to implement the decision of the panel.
+
+Examples of PII in Context:
+
+- During the peer review process, the panel may need to review documentation that includes personally identifiable information (PII), such as IP addresses (e.g. 153.37.200.219) or phone numbers (e.g. 962-451-1124x66804).
+- The panel may also need to review documentation that includes the names of individuals involved in the dispute, such as Giulia Baccio Carnera.
+- The panel may need to review documentation that includes the addresses of the parties involved in the dispute, such

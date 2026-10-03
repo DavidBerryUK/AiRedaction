@@ -1,0 +1,15 @@
+Property Tax Invoice
+
+Dear Property Owner,
+
+This invoice is issued to the property owner, Kai, at the tax id of 327 108 654. The property address for this tax assessment is 4/87 Collins Street. The tax assessment has been calculated based on the current valuation of the property.
+
+The total amount due for this period is $2,500. This amount is broken down as follows:
+
+- Municipal Levy: $1,000
+- County Levy: $800
+- School District Levy: $700
+
+Please ensure that the payment is made by the due date of 12/31/2023 to avoid any late fees. Payments can be made via check or online through our secure portal. For any inquiries, please contact the tax office using the tax id provided above.
+
+Thank you for your prompt attention to this matter.

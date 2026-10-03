@@ -1,0 +1,52 @@
+{
+ "id": "ext-nemotron-178-property-property-maintenance-contract",
+ "title": "Property - Property Maintenance Contract (external synthetic document)",
+ "formats": [
+  "txt"
+ ],
+ "scanKinds": [],
+ "entities": [
+  {
+   "where": "body",
+   "type": "COMPANY",
+   "text": "Damascus Property Solutions",
+   "occurrences": 3
+  },
+  {
+   "where": "body",
+   "type": "EMAIL",
+   "text": "laylaal@damascusproperty.com",
+   "occurrences": 2
+  },
+  {
+   "where": "body",
+   "type": "PHONE",
+   "text": "04-12345678",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "ADDRESS",
+   "text": "Shariah al-Farabi 74",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "SECRET",
+   "text": "_utm=GK7.1.98675243.1625846956; Domain=.example.com; Expires=Fri, 30 Mar 2024 12:00:00 GMT",
+   "occurrences": 1
+  }
+ ],
+ "mustPreserve": [],
+ "judgedCategories": [
+  "PERSON",
+  "COMPANY",
+  "ADDRESS",
+  "EMAIL",
+  "PHONE",
+  "DATE_OF_BIRTH",
+  "ID_NUMBER",
+  "ONLINE_ID",
+  "SECRET"
+ ]
+}

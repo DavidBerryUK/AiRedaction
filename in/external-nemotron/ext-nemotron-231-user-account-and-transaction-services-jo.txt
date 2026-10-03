@@ -1,0 +1,36 @@
+**Job Application Form**
+
+**Personal Information**
+
+| Field               | Value                                      |
+|---------------------|--------------------------------------------|
+| First Name          | Michael                                    |
+| Last Name           | Wells                                      |
+| Email               | michael_wells97@icloud.com                 |
+| Phone Number        | 706-705-1815                               |
+| Street Address      | 414 Ruth Circle                            |
+| Country             | USA                                        |
+
+**Employment History**
+
+| Previous Job         | Dates of Employment | Job Title     | Responsibilities                       |
+|----------------------|---------------------|---------------|----------------------------------------|
+| *To be filled out by applicant* | *To be filled out by applicant* | *To be filled out by applicant* | *To be filled out by applicant* |
+
+**Education Background**
+
+| Institution Attended | Degree Earned       | Graduation Date |
+|----------------------|---------------------|-----------------|
+| *To be filled out by applicant* | *To be filled out by applicant* | *To be filled out by applicant* |
+
+**Skills and Certifications**
+
+| Skill/Certification  | Certification Number | Date Earned    |
+|----------------------|---------------------|-----------------|
+| *To be filled out by applicant* | *To be filled out by applicant* | *To be filled out by applicant* |
+
+**References**
+
+| Reference Name       | Contact Information |
+|----------------------|---------------------|
+| *To be filled out by applicant* | *To be filled out by applicant* |

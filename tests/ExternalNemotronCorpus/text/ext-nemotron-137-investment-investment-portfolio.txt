@@ -1,0 +1,56 @@
+**Harveston Capital Partners Investment Portfolio**
+
+**Customer Information**
+- Customer ID: CL0001237
+- Email: c.henderson@harvestoncapitalpartners.com
+
+**Account Details**
+- Account Number: FR76-3000-6005-0123-4567-89
+- Bank Routing Number: 093112682
+- Credit/Debit Card: 5412 3456 7890 1234
+
+**Portfolio Access**
+- Portfolio URL: http://wealthmanager.com:8080/portfolio/12345
+
+**Security Information**
+- Password: SunsetBreeze$PineTree
+
+**Asset Allocation**
+
+| Asset Class   | Allocation (%) |
+|---------------|----------------|
+| Equities      | 60             |
+| Bonds         | 30             |
+| Cash          | 10             |
+
+**Performance Metrics**
+
+| Metric                | Value        |
+|-----------------------|--------------|
+| Total Return (YTD)    | 5.2%         |
+| Sharpe Ratio          | 1.2          |
+| Volatility (Annual)   | 10.5%        |
+
+**Risk Assessment**
+
+| Risk Category | Score (1-10) |
+|---------------|--------------|
+| Market Risk   | 6            |
+| Credit Risk   | 4            |
+| Liquidity Risk| 3            |
+
+**Transaction History**
+
+| Date       | Transaction Type | Amount ($) |
+|------------|------------------|------------|
+| 01/15/2023 | Buy              | 50,000     |
+| 02/20/2023 | Sell             | 30,000     |
+| 03/10/2023 | Dividend Received| 1,500      |
+
+**Individual Investment Details**
+
+| Investment Name | Ticker | Quantity | Purchase Price ($) | Current Value ($) |
+|-----------------|--------|----------|-------------------|-------------------|
+| Tech Innovators Fund | TIF | 1,000   | 45.00             | 50,000            |
+| Blue Chip Bonds   | BCB  | 500      | 95.00             | 47,500            |
+| Growth Equity ETF | GEE  | 200      | 225.00            | 45,000            |

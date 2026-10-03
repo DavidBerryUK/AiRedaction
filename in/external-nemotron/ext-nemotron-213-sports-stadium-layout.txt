@@ -1,0 +1,1 @@
+The stadium layout can be accessed through the URL https://stadiums.football.org/layout. The diagram of the stadium is centered at the coordinate (41.4993, -81.6954). This detailed layout includes seating sections, gates, concession stands, restrooms, and key landmarks. The stadium is managed by ApexSport, and the customer id for the project is SFO-3489215.

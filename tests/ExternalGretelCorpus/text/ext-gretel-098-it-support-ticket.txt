@@ -1,0 +1,36 @@
+Support Ticket #23456
+--------------------
+
+**Date:** 2022-03-15
+
+**Reported By:** Joanna T. Sutton
+
+**Email:** [eugenewilliams@sullivan.net](mailto:eugenewilliams@sullivan.net)
+
+**Affected Locations:**
+
+- 932 Rodney Roads, 79610, West Jon
+- 5695 Briarcliff Boulevard, 12345, Eastwood
+- 3411 Willowbrook Way, 98101, Seattle Heights
+
+**Issue Description:**
+
+We are experiencing a network outage across multiple office locations. The internet connectivity seems to have suddenly dropped at around 10:30 AM local time. This issue is affecting our ability to access critical systems, including email and file servers.
+
+**Priority:** High
+
+**Resolution Status:** Investigating
+
+**Notes:**
+- Network administrators have been alerted and are currently investigating the issue.
+- Temporarily, we have advised employees to use their mobile hotspots as a workaround.
+- We will provide updates as more information becomes available.
+
+**Additional Details:**
+- Network administrators have confirmed that the issue is not related to any recent changes in the network infrastructure.
+- A preliminary analysis suggests a potential widespread ISP (Internet Service Provider) outage.
+- The network team is working with the ISP to expedite resolution.
+
+**Ticket Assigned To:** Network Operations Center (NOC) Team
+
+**Next Update Due:** 2022-03-15, 1:00 PM local time

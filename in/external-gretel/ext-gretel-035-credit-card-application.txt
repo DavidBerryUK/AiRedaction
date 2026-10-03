@@ -1,0 +1,55 @@
+---------------------------------------------------------------------------------------------------
+Credit Card Application - Frequent Flyer Card
+---------------------------------------------------------------------------------------------------
+
+Thank you for considering our Frequent Flyer Card. To help us process your application, please provide the following information.
+
+Personal Information
+--------------------
+
+1. Full Name:
+2. Date of Birth:
+3. Address (Street, City, State/Province, Postal/Zip Code):
+4. Email Address:
+5. Primary Phone Number:
+
+Financial Information
+---------------------
+
+6. Employment Status:
+   - Employed
+   - Self-employed
+   - Unemployed/Student/Retired
+7. Annual Income:
+8. Other Sources of Income:
+9. Current Housing Status:
+   - Own
+   - Rent
+   - Live with parents/relatives
+10. Monthly Mortgage/Rent Payment:
+
+Credit History
+--------------
+
+11. Have you ever filed for bankruptcy? (Yes/No)
+12. Have you had a credit card or loan account closed by a lender in the past 2 years? (Yes/No)
+13. Have you missed any credit card or loan payments in the past 12 months? (Yes/No)
+
+Frequent Flyer Information
+--------------------------
+
+14. Preferred Airline(s):
+15. Average Annual Air Travel Spend:
+16. Average Annual Hotel Spend:
+17. Average Annual Car Rental Spend:
+
+Card Preferences
+----------------
+
+18. Would you like to add an additional cardholder? (Yes/No)
+19. Would you like to set up automatic payments? (Yes/No)
+
+By submitting this application, you certify that the information provided is true and complete to the best of your knowledge.
+
+---------------------------------------------------------------------------------------------------
+Thank you for choosing our Frequent Flyer Card. We look forward to serving your travel needs.

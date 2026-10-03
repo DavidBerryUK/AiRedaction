@@ -1,0 +1,19 @@
+### Insurance Policy Comparison
+
+**Customer Information:**
+- **Customer ID:** 23CUS23811
+- **Date of Birth:** 1960-04-16
+- **Country:** Venezuela
+- **Email:** maria87@segurovista.com.ve
+- **Phone Number:** 024-256-2312
+
+**Policy Comparison:**
+
+| Feature               | Provider 1 (SeguroVista) | Provider 2 | Provider 3 |
+|-----------------------|--------------------------|------------|------------|
+| **Coverage Limits**   | $500,000                 | $450,000    | $550,000    |
+| **Deductibles**       | $1,000                   | $1,500      | $500        |
+| **Premium Costs**     | $250/year                | $280/year   | $220/year   |
+| **Additional Benefits**| Roadside assistance      | Emergency medical | Rental car coverage |
+| **Policy URL**        | http://127.0.0.1:5000/insurance/policy/comparison | N/A | N/A |
+| **Effective Date**    | 2028-11-15               | 2028-11-15  | 2028-11-15  |

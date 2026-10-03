@@ -1,0 +1,25 @@
+Payment Confirmation
+
+Payment Details:
+Payment Type: Electronic Wallet
+Transaction ID: 78956142-EKL
+Date of Transaction: 03/12/2022
+
+Payer Information:
+Name: Daniel Michel-Benoit
+Customer ID: I304-D4923-Cy
+Street Address: 475 Lyons Ranch, Apt. 1509
+
+Payee Information:
+[Company Name]
+
+Amount: $150.00
+
+Note: N/A
+
+Thank you for your payment. If you have any questions or concerns, please contact us at [support@company.com](mailto:support@company.com) or 1-800-123-4567.
+
+Please keep this confirmation for your records.
+
+Sincerely,
+[Company Name] Customer Support Team

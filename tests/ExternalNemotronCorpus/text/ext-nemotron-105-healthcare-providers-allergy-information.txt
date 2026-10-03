@@ -1,0 +1,30 @@
+**Patient Allergy Information**
+
+**Patient Name:** Jermaine
+
+**Date of Birth:** 1959-02-05
+
+**Medical Record Number:** LAX-00038527
+
+**Allergens:**
+
+- **Food:**
+  - Peanuts
+  - Shellfish
+
+- **Medication:**
+  - Penicillin
+
+- **Environmental:**
+  - Pollen
+
+**Reaction Severity:**
+- Mild to Moderate
+
+**Healthcare Provider Contact Information:**
+
+- **Provider Name:** [Healthcare Provider's Name]
+
+- **Provider Phone Number:** [Healthcare Provider's Phone Number]
+
+- **Provider Email:** [Healthcare Provider's Email Address]

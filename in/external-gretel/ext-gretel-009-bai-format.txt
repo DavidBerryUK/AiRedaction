@@ -1,0 +1,48 @@
+BAI Format: Liquidity Management Metrics
+
+Report Date: 2023-02-28
+
+1. Liquidity Ratios:
+
+a. Current Ratio: 2.5
+b. Quick Ratio: 1.8
+c. Cash Ratio: 0.9
+d. Cash Reserve Ratio: 0.15
+
+2. Cash Conversion Cycle:
+
+a. Days Inventory Outstanding (DIO): 45 days
+b. Days Sales Outstanding (DSO): 28 days
+c. Days Payable Outstanding (DPO): 52 days
+d. Cash Conversion Cycle (CCC): 45 days
+
+3. Working Capital Analysis:
+
+a. Current Assets: £5,200,000
+- Cash and Cash Equivalents: £1,200,000
+- Accounts Receivable: £2,300,000
+- Inventory: £1,700,000
+
+b. Current Liabilities: £3,100,000
+- Accounts Payable: £1,500,000
+- Accrued Liabilities: £800,000
+- Short-term Debt: £800,000
+
+c. Working Capital: £2,100,000
+d. Working Capital Ratio: 1.65
+
+4. Short-term Obligations:
+
+a. Short-term Debt: £800,000 (maturing within 1 year)
+b. Long-term Debt: £3,000,000 (due within 1-5 years)
+c. Total Debt: £3,800,000
+d. Interest Coverage Ratio: 5.2
+
+5. Liquidity Management Metrics:
+
+a. Operating Cash Flow Ratio: 2.1
+b. Cash Flow Coverage Ratio: 1.9
+c. Net Liquidity Ratio: 1.3
+d. Operating Cycle: 65 days
+
+The liquidity management metrics provided above are based on synthetic data and are intended for

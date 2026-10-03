@@ -1,0 +1,47 @@
+---
+**Freelancer Tax Return**
+
+**Personal Information**
+
+Name: Scott Kenneth Jones
+
+Address: 813 Herrera Falls, Apt. 58774
+
+**Business Information**
+
+Business Name: Scott Jones Artistic Freelance
+
+BBAN: CVUI58252997426615
+
+**Income**
+
+Contracts and Invoices:
+
+1. Client A - Invoice #1001 - Date: 01/01/2021 - Amount: $5,000
+2. Client B - Invoice #1002 - Date: 03/15/2021 - Amount: $7,500
+3. Client C - Invoice #1003 - Date: 06/30/2021 - Amount: $6,000
+
+Total Income: $18,500
+
+**Expenses**
+
+Studio Rental Fees:
+
+1. Rent - Date: 01/01/2021 - Amount: $1,200
+2. Rent - Date: 04/01/2021 - Amount: $1,200
+3. Rent - Date: 07/01/2021 - Amount: $1,200
+
+Business Expenses:
+
+1. Supplies - Date: 02/15/2021 - Amount: $300
+2. Marketing - Date: 05/15/2021 - Amount: $500
+
+Total Expenses: $4,400
+
+**Estimated Tax Payments**
+
+Form 1040-ES:
+
+1. Estimated Tax Payment - Date: 04/15/2021 - Amount: $1,500
+2. Estimated Tax Payment - Date: 06/15/2021 - Amount: $1,500
+3. Estimated Tax Payment - Date: 09/15/2021 - Amount: $

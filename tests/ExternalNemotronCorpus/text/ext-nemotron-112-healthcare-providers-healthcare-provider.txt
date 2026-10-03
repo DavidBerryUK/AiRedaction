@@ -1,0 +1,29 @@
+---
+
+**Healthcare Provider Contract**
+
+**Effective Date:** 07/15/2026
+
+**Parties Involved:**
+- **Healthcare Provider:** MediCare Plus
+- **Payer:** MediCare Plus
+
+**Services Covered:**
+- All services rendered to the health plan beneficiary number AET-9875-3421-19 will be covered under this contract.
+
+**Payment Schedule:**
+- Reimbursement rates and payment schedules will be outlined in the attached appendices. Payments will be made to the email kostov@medicareplus.bg.
+
+**Compliance Requirements:**
+- The healthcare provider must comply with all regulatory requirements and standards set forth by MediCare Plus in the Bulgarian language.
+
+**Termination Clauses:**
+- Either party may terminate this contract with a 30-day written notice sent to the email kostov@medicareplus.bg.
+
+**Signatures:**
+- Healthcare Provider: _____________________________
+  Date: _______________________
+- Payer: _____________________________
+  Date: _______________________
+
+---

@@ -1,0 +1,3 @@
+Debit Authorization
+
+On R05/10/15, a debit transaction was authorized for the account number 231015-872364. The customer name is Omar Al-Hussein. The customer id is 7329516482. The authorization code for this transaction is 417.

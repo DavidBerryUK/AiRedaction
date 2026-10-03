@@ -1,0 +1,25 @@
+**Election Day Audit Report**
+
+**Audit Date:** 2024-07-15
+
+**Prepared By:** MariamAlajmi_Shadow
+
+**Contact Information:**
+Email: mariam2023@votekw.gov.kw
+
+**Audit Scope:**
+The audit was conducted to verify the accuracy of the vote count and ensure the integrity of the election process.
+
+**Sample Selection:**
+A random sample of 500 ballots was selected from the total vote count of 50,000. The sample selection process was overseen by MariamAlajmi_Shadow, who has a blood type of O+.
+
+**Vote Count Verification:**
+The audit team manually recounted the selected sample of ballots. The manual count matched the electronic count, confirming the accuracy of the vote tally.
+
+**Discrepancies Noted:**
+No significant discrepancies were noted during the audit. However, minor issues were observed in ballot handling procedures, which were promptly addressed.
+
+**Recommendations for Improvement:**
+1. Enhance training for poll workers to ensure proper ballot handling procedures.
+2. Implement additional verification steps to further ensure the accuracy of the vote count.
+3. Conduct regular audits to maintain the integrity of the election process.

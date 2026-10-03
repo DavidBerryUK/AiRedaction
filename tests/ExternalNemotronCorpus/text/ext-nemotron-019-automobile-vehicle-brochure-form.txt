@@ -1,0 +1,17 @@
+**Vehicle Brochure Form**
+
+**Vehicle Details:**
+- **Make:** Toyota
+- **Model:** Camry
+- **Year:** 2023
+- **Vehicle Identifier:** 3VWZH52J72L258676
+- **License Plate:** 8LJQ729
+- **Price:** $25,000
+- **Color Options:** Silver, Black, White
+- **Engine Specifications:** 2.5L 4-Cylinder
+- **Fuel Efficiency:** 29 MPG City / 41 MPG Highway
+- **Safety Features:** Advanced Airbag System, Lane Departure Alert, Pre-Collision System with Pedestrian Detection
+
+**Additional Information:**
+- **High-Resolution Images:** [Insert Images]
+- **Brochure URL:** https://toyota.com/us/en/vehicle-brochure-form

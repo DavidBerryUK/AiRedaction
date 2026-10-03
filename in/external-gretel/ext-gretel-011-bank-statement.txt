@@ -1,0 +1,32 @@
+[Bank Logo]
+Savings Summary
+
+Account Name: John Doe
+Account Number: 123456789
+
+Period: 01/01/2022 - 31/01/2022
+
+Deposits:
+Date | Description | Amount (GBP)
+05-Jan-22 | Salary | 2,500.00
+15-Jan-22 | Freelance Work | 800.00
+
+Total Deposits: 3,300.00 GBP
+
+Interest Earned:
+Date | Description | Amount (GBP)
+31-Jan-22 | Savings Interest | 5.23
+
+Total Interest Earned: 5.23 GBP
+
+Withdrawals:
+Date | Description | Amount (GBP)
+10-Jan-22 | Groceries | 250.00
+18-Jan-22 | Rent | 1,200.00
+25-Jan-22 | Utilities | 150.00
+
+Total Withdrawals: 1,600.00 GBP
+
+Closing Balance: 4,705.23 GBP
+
+Please note that this statement is a simulation and does not reflect any actual transactions or account balances.

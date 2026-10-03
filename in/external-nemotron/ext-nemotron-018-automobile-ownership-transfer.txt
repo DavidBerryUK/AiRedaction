@@ -1,0 +1,25 @@
+**Automobile Ownership Transfer**
+
+**Vehicle Information:**
+- **Vehicle Identification Number (VIN):** PE1KP4X392F000001
+- **License Plate:** FJX-1974
+
+**Odometer Reading:** 50,000 miles
+
+**Seller Information:**
+- **Biometric Identifier:** BIO-5728193462
+
+**Buyer Information:**
+- **Biometric Identifier:** BIO-5728193462
+
+**Date of Sale:** 01/01/2023
+
+**Purchase Price:** $20,000
+
+**Liens or Encumbrances:** None
+
+**Signatures:**
+
+Seller's Signature: __________________________
+
+Buyer's Signature: __________________________

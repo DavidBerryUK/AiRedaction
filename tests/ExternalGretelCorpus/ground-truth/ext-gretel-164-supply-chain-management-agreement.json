@@ -1,0 +1,46 @@
+{
+ "id": "ext-gretel-164-supply-chain-management-agreement",
+ "title": "Supply Chain Management Agreement (external finance document)",
+ "formats": [
+  "txt"
+ ],
+ "scanKinds": [],
+ "entities": [
+  {
+   "where": "body",
+   "type": "PERSON",
+   "text": "Fito",
+   "occurrences": 2
+  },
+  {
+   "where": "body",
+   "type": "ADDRESS",
+   "text": "633 Johnson Curve, Apt. 475",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "PERSON",
+   "text": "Marguerite Lévêque",
+   "occurrences": 6
+  },
+  {
+   "where": "body",
+   "type": "ADDRESS",
+   "text": "1234 Ontario Street, Toronto, Ontario",
+   "occurrences": 1
+  }
+ ],
+ "mustPreserve": [],
+ "judgedCategories": [
+  "PERSON",
+  "COMPANY",
+  "ADDRESS",
+  "EMAIL",
+  "PHONE",
+  "DATE_OF_BIRTH",
+  "ID_NUMBER",
+  "ONLINE_ID",
+  "SECRET"
+ ]
+}

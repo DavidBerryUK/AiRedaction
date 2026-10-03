@@ -1,0 +1,33 @@
+Trade Compliance Report
+
+Report Date: [Insert Date]
+
+Subject: Trade Compliance Audit for Q1 2022
+
+I. Executive Summary
+
+This report presents the findings of the Q1 2022 trade compliance audit for our organization. The audit focused on import/export regulations, trade sanctions, and customs compliance requirements. Overall, the organization demonstrated a strong commitment to regulatory compliance. However, a few areas requiring improvement were identified, and appropriate remedial actions have been recommended.
+
+II. Audit Findings
+
+1. Import/Export Regulations
+
+Our import and export processes were found to be largely compliant with relevant regulations. However, during the audit, it was noted that certain transactions involving restricted parties or items were not flagged for review. Specifically, a transaction involving Costanzo Marco Querini, with the email address [egarrett@edwards.com](mailto:egarrett@edwards.com), did not receive the appropriate scrutiny. This oversight is likely due to outdated internal watchlist screening procedures.
+
+2. Trade Sanctions
+
+No major issues were identified regarding trade sanctions. The organization has implemented robust processes for monitoring and screening transactions against applicable sanctions lists. However, it is recommended that the frequency of these screenings be increased to ensure continued compliance.
+
+3. Customs Compliance
+
+The customs compliance review revealed that the organization's documentation and reporting practices are generally adequate. However, there were instances where the proper Harmonized System (HS) codes were not used, leading to potential misclassification of goods. For example, a consignment sent to 7222 Moore Extensions, 73726, East Duane was misclassified, resulting in incorrect duty payments.
+
+III. Risk Assessment
+
+The identified issues present varying levels of risk to the organization. The failure to properly screen transactions involving restricted parties or items poses a moderate risk, as it could lead to regulatory penalties and reputational damage. The infrequent sanctions screenings and HS code misclassifications present a lower risk, although they could still result in financial losses and potential regulatory action.
+
+IV. Remediation Actions
+
+To address these findings, the following remedial actions have been proposed:
+
+1. Implement an automated watchlist screening solution to ensure thorough and timely

@@ -1,0 +1,39 @@
+| Policyholder Information |  |
+|---------------------------|--|
+| First Name                | Sunil |
+| Last Name                 | Usmani |
+| Policy Number             |  |
+| Date of Birth             | 1992-01-04 |
+| Phone Number              | 240-530-1424 |
+| Email                     | sunilsusmani4@gmail.com |
+| Country                   | USA |
+| State                     | VA |
+
+| Beneficiary Details |  |
+|---------------------|--|
+| Name                 |  |
+| Relationship         |  |
+| Date of Birth        |  |
+| SSN                  | 230-49-8535 |
+
+| Claimant Information |  |
+|----------------------|--|
+| Name                 |  |
+| Phone Number         |  |
+| Email                |  |
+
+| Cause and Date of Death |  |
+|-------------------------|--|
+| Cause of Death          |  |
+| Date of Death           |  |
+
+| Funeral Expenses |  |
+|------------------|--|
+| Total Expenses    |  |
+
+| Signature |  |
+|-----------|--|
+| Claimant  |  |
+| Date      |  |
+| Insurance Company Representative |  |
+| Date      |  |

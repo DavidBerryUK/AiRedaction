@@ -1,0 +1,20 @@
+**Service Level Agreement**
+
+**Service Description**
+
+Harper & Lane Marketing, hereinafter referred to as "Provider", agrees to provide marketing services to the Client. The services will be delivered via the IP address 155.23.187.72 and will be accessible through the URL https://legal.demandbase.com/service-level-agreement. The account number for this agreement is 57182936.
+
+**Performance Metrics**
+
+| Metric                      | Benchmark               | Response Time | Penalty for Non-Compliance |
+|-----------------------------|------------------------|---------------|----------------------------|
+| Email Response Time         | trionfos18@icloud.com within 24 hours | 24 hours      | 10% discount on next month's service fee |
+| Phone Support Response Time | 947-216-6464 within 1 hour  | 1 hour        | 15% discount on next month's service fee |
+
+**Responsibilities**
+
+The Provider is responsible for ensuring that all marketing campaigns are executed according to the agreed-upon strategies and timelines. The Client is responsible for providing timely feedback and necessary inputs for the campaigns.
+
+**Termination Clauses**
+
+Either party may terminate this agreement with a 30-day written notice. In case of termination due to breach of contract, the non-compliant party will be liable for all damages incurred by the other party. For any issues related to this agreement, please contact the Provider at the email address trionfos18@icloud.com or the phone number 947-216-6464.

@@ -1,0 +1,23 @@
+FINANCIAL DISCLOSURE STATEMENT
+Cryptocurrency Holdings Report
+
+As of March 31, 2022
+
+1. Introduction
+
+This Cryptocurrency Holdings Report provides a summary of the digital asset holdings of Alpha Capital Management ("Alpha Capital" or the "Firm"). The Firm is a registered investment manager based in London, United Kingdom, specializing in quantitative trading and digital asset management. This report aims to provide transparency regarding the Firm's cryptocurrency holdings, wallet addresses, and transaction history.
+
+2. Cryptocurrency Holdings
+
+As of March 31, 2022, Alpha Capital holds various cryptocurrencies as part of its investment strategies. The Firm's cryptocurrency holdings are as follows:
+
+1. Bitcoin (BTC) - 542.12345678 units (£23,456,789.12)
+    - Wallet Address: bc1qfr7r45j8ty3k9ue08jt6fj8yjz38v69yvn4jh5
+    - Transaction History: Available upon request
+2. Ethereum (ETH) - 12,547.89012345 units (£18,547,456.23)
+    - Wallet Address: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e33
+    - Transaction History: Available upon request
+3. Litecoin (LTC) - 250,000.00000000 units (£4,125,000.00)
+    - Wallet Address: MFKiKn355o3sR468nMWQ856jJ732153829KjJ2jJj2
+    - Transaction History: Available upon request
+4. Chainlink (LINK) - 1,500,000.00000000 units (£3,75

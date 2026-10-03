@@ -1,0 +1,35 @@
+Here is a sample of a synthetic fixed income data feed in XML format:
+
+<?xml version="1.0" encoding="UTF-8"?>
+<fixedIncomeDataFeed>
+  <bond id="1">
+    <ticker>GOVT10YR</ticker>
+    <description>US 10 Year Treasury Note</description>
+    <couponRate>1.625</couponRate>
+    <faceValue>100</faceValue>
+    <currentPrice>118.25</currentPrice>
+    <yieldToMaturity>1.456</yieldToMaturity>
+    <bidPrice>118.2</bidPrice>
+    <askPrice>118.3</askPrice>
+    <tradingVolume>5000000</tradingVolume>
+    <maturityDate>2032-03-15</maturityDate>
+  </bond>
+  <bond id="2">
+    <ticker>GBP5YR</ticker>
+    <description>UK 5 Year Gilt</description>
+    <couponRate>0.75</couponRate>
+    <faceValue>100</faceValue>
+    <currentPrice>102.125</currentPrice>
+    <yieldToMaturity>0.564</yieldToMaturity>
+    <bidPrice>102.1</bidPrice>
+    <askPrice>102.2</askPrice>
+    <tradingVolume>3000000</tradingVolume>
+    <maturityDate>2026-03-15</maturityDate>
+  </bond>
+  <bond id="3">
+    <ticker>CAD10YR</ticker>
+    <description>Canada 10 Year Bond</description>
+    <couponRate>1.25</couponRate>
+    <faceValue>100</faceValue>
+    <currentPrice>107.875</currentPrice>
+    <yieldToMaturity>1.036

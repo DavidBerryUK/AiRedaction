@@ -1,0 +1,39 @@
+Scholarship Application Form
+
+Full Name: Óscar G. Quirós
+
+Mailing Address:
+9516 Randy Divide, Suite 975
+
+Swift BIC Code: FNKHUSUA050
+
+Email Address: [oscar.g.quiros@email.com](mailto:oscar.g.quiros@email.com)
+
+Phone Number: (123) 456-7890
+
+Date of Birth: MM/DD/YYYY
+
+Educational Background:
+- High School Name: XYZ High School
+- Graduation Date: MM/YYYY
+- GPA: 3.8
+- SAT/ACT Scores: SAT - 1300, ACT - 29
+
+Academic Achievements:
+- Valedictorian of High School Class
+- National Honor Society Member
+- Recipient of the Science Department Award
+
+Extracurricular Activities:
+- Captain of the Debate Team
+- Member of the Robotics Club
+- Volunteer at Local Hospital
+
+Future Career Aspirations:
+I aspire to pursue a degree in Computer Science and become a Software Engineer. I am particularly interested in Artificial Intelligence and Machine Learning, and I hope to contribute to the development of innovative solutions that can make a positive impact on society.
+
+Personal Statement:
+I am a hardworking and dedicated student who is committed to achieving academic excellence. I have consistently demonstrated my ability to balance my academic responsibilities with extracurricular activities and volunteer work. I am confident that I possess the skills, knowledge, and motivation necessary to excel in a competitive academic environment. I am excited about the opportunity to pursue a degree in Computer Science, and I am grateful for the financial assistance that this scholarship would provide.
+
+Signature: Óscar G. Quirós
+Date: MM/DD/YYYY

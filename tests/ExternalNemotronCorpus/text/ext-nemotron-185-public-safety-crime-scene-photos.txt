@@ -1,0 +1,28 @@
+**Crime Scene Photos Report**
+
+**Case Number:** CS2023-1547
+
+**Date:** 2023-07-15
+
+**Location:**
+Latitude: 25.3012 N,
+Longitude: 51.4067 E
+
+**Photographer's Name:** Not provided
+
+**Crime Scene Photos:**
+
+| Photo ID | Description | Timestamp |
+|----------|-------------|-----------|
+| CS1      | Overview of the scene | 2023-07-15 08:30:00 |
+| CS2      | Close-up of evidence | 2023-07-15 08:35:00 |
+| CS3      | Victim's personal belongings | 2023-07-15 08:40:00 |
+| CS4      | Fax machine in the office | 2023-07-15 08:45:00 |
+| CS5      | 34-year-old victim | 2023-07-15 08:50:00 |
+| CS6      | Note with password 9f@G2t#Mp5k | 2023-07-15 08:55:00 |
+| CS7      | Additional evidence | 2023-07-15 09:00:00 |
+
+**Notes:**
+- The fax number +974 44 619 853 was found near the evidence.
+- Photos are timestamped and organized for clarity.
+- All evidence is tagged and documented.

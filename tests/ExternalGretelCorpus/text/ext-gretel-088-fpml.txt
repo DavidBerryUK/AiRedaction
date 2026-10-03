@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FpML version="4-7" xmlns="http://www.fpml.org/FpML-4-7" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.fpml.org/FpML-4-7 http://www.fpml.org/schema/fpml-main-4-7.xsd">
+ <header>
+ <applicationIdentification schemeName="http://www.fpml.org/coding-scheme/app-type">
+ <value>Trade</value>
+ </applicationIdentification>
+ <partyTradeIdentifier schemeName="http://www.fpml.org/coding-scheme/trade-identifier-type">
+ <value>1234567890</value>
+ </partyTradeIdentifier>
+ <creationTime>2022-03-01T12:34:56Z</creationTime>
+ </header>
+ <body>
+ <trade>
+ <tradeHeader>
+ <partyTradeIdentifier schemeName="http://www.fpml.org/coding-scheme/trade-identifier-type">
+ <value>1234567890</value>
+ </partyTradeIdentifier>
+ <tradeDate>2022-03-01</tradeDate>
+ </tradeHeader>
+ <product>
+ <security>
+ <securityIdentification schemeName="http://www.fpml.org/coding-scheme/security-identifier-type">
+ <value>IS000123456</value>
+ </securityIdentification>
+ <product>
+ <productType name="Swap">
+ <subProductType name="Inflation Swap">
+ <inflationSwap>
+ <index>
+ <indexName name="CPIE">
+ <currency>EUR</currency>
+ </indexName>
+ </index>
+ </index>
+ <notionalAmount currency="EUR">10000000</notionalAmount>
+ <paymentFrequency>Semiannual</paymentFrequency>

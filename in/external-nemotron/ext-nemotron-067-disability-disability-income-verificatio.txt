@@ -1,0 +1,20 @@
+**Disability Income Verification**
+
+**Claimant Information:**
+- First Name: Sharon
+- Last Name: Lane
+- Date of Birth: 1965-07-13
+- SSN: 307-76-1395
+- Phone Number: 765-277-6259
+- Email: sharon_lane65@icloud.com
+
+**Disability Details:**
+- Disability Onset Date:
+- Type of Disability:
+- Medical Provider Details:
+
+**Income Verification:**
+- Occupation: actor
+- Health Plan Beneficiary Number: AET-7891-3452-67
+- Benefit Amounts:
+- Duration of Disability:

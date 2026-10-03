@@ -1,0 +1,35 @@
+Gamer Card Application
+
+Thank you for choosing our Gamer Card! We're excited to help you take your gaming experience to the next level. To get started, please fill out the following application.
+
+Personal Information:
+---------------------
+
+Full Name: Hans-Eberhard R. Etzler
+
+Street Address: 060 Navarro Union, South Crystalshire, 17013
+
+Account PIN (4-digit number): 3801
+
+Financial Information:
+---------------------
+
+Monthly Income: \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+
+Credit History: \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+
+Gaming Information:
+------------------
+
+What is your preferred gaming platform? (e.g. PC, PlayStation, Xbox)
+
+How much do you spend on gaming subscriptions and merchandise per month? \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+
+Additional Information:
+---------------------
+
+Would you like to be notified of exclusive gaming events and promotions? (Yes/No)
+
+Do you consent to sharing your gaming data with our partners to receive personalized offers? (Yes/No)
+
+Thank you for your application! We will review it and get back to you as soon as possible. If you have any questions, please contact us at [support@gamercard.com](mailto:support@gamercard.com).

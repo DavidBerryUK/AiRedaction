@@ -1,0 +1,23 @@
+**Biometric Health Record Attachment**
+
+**Biometric Authentication Protocol**
+
+| Field                | Details                                                                 |
+|----------------------|-------------------------------------------------------------------------|
+| Biometric Type       | Fingerprint                                                                 |
+| Biometric Identifier| F48523671921                                                                 |
+| User Credentials     |                                                                             |
+| Username             | layla_al-saud                                                                 |
+| Password             | p@ssw0rdp@ssw0rd                                                              |
+| Access Permissions   | Read/Write access to medical records with medical record number 578234961 |
+| Employee ID          | 002198                                                                       |
+| Audit Trail           |                                                                             |
+| Date Time            | 2023-05-18T21:56:22                                                           |
+| Email                | l.al-saud@aljazeerasecurity.com                                               |
+| Compliance           | HIPAA compliant                                                               |
+
+**Procedural Guidelines**
+
+1. **User Authentication**: The user, identified by the user name layla_al-saud and employee id 002198, must present their biometric identifier, F48523671921, for fingerprint scanning. The password, p@ssw0rdp@ssw0rd, must be entered correctly to proceed.
+2. **Access Permissions**: Upon successful authentication, the user will have read/write access to the medical record identified by the medical record number 578234961. The user must ensure that all actions are logged and compliant with HIPAA regulations.
+3. **Audit Trail**: All access attempts and actions will be recorded with the date and time 2023-05-18T21:56:22. The user will be notified via the email l.al-saud@aljazeerasecurity.com in case of any unauthorized access attempts.

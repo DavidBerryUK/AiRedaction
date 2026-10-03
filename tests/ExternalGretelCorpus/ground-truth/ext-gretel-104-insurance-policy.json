@@ -1,0 +1,46 @@
+{
+ "id": "ext-gretel-104-insurance-policy",
+ "title": "Insurance Policy (external finance document)",
+ "formats": [
+  "txt"
+ ],
+ "scanKinds": [],
+ "entities": [
+  {
+   "where": "body",
+   "type": "COMPANY",
+   "text": "CyberGuard Insurance Company",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "ADDRESS",
+   "text": "123 Main Street, Anytown, USA",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "PERSON",
+   "text": "Igor Ullmann",
+   "occurrences": 3
+  },
+  {
+   "where": "body",
+   "type": "ADDRESS",
+   "text": "083 Sherry Key",
+   "occurrences": 2
+  }
+ ],
+ "mustPreserve": [],
+ "judgedCategories": [
+  "PERSON",
+  "COMPANY",
+  "ADDRESS",
+  "EMAIL",
+  "PHONE",
+  "DATE_OF_BIRTH",
+  "ID_NUMBER",
+  "ONLINE_ID",
+  "SECRET"
+ ]
+}

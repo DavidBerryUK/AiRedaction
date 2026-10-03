@@ -1,0 +1,9 @@
+To begin the installation process, ensure that you have access to the official installation guide available at https://docs.microsoft.com/en-us/installation-guide. This guide will walk you through each step, from prerequisites to final configuration.
+
+Before proceeding, verify that your device identifier is 420014567897652. This is crucial for network configuration and troubleshooting.
+
+Next, check your network settings. Ensure that your IPv4 address is 15.230.18.47 and your IPv6 address is 2a02:4d60:1031::85e1:092a:76f9:28d5:b70e. These settings are necessary for proper network connectivity.
+
+If you encounter any issues, you can reach out for support at gdros55@gmail.com. Please include the mac address, F1:0A:0C:1D:2E:3F, in your email for quicker resolution.
+
+The installation process will begin at 2023-12-08T02:48:23. Make sure your system is ready and all necessary components are connected. Follow the on-screen instructions carefully to complete the setup.

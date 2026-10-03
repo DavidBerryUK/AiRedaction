@@ -1,0 +1,25 @@
+Trade-Weighted Currency Exchange Rate Sheet
+
+| Base Currency | Target Currency | Buying Rate | Selling Rate |
+| --- | --- | --- | --- |
+| GBP | USD | 1.3865 | 1.2342 |
+| GBP | EUR | 1.1921 | 1.0898 |
+| GBP | JPY | 152.14 | 141.56 |
+| GBP | CAD | 1.7345 | 1.5982 |
+| GBP | CHF | 1.2463 | 1.1532 |
+
+Trade-Weighted Indices
+
+| Country | Index Value |
+| --- | --- |
+| United States | 98.23 |
+| European Union | 94.61 |
+| Japan | 112.34 |
+| Canada | 96.55 |
+| Switzerland | 102.78 |
+
+Additional Information
+
+Employee ID: Ii-24461
+Name: Pomponio Camanni-Zichichi
+Street Address: Studio 61, Mohammed station

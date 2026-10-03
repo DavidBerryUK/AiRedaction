@@ -1,0 +1,34 @@
+{
+ "id": "ext-nemotron-081-environmental-sustainability-report",
+ "title": "Environmental - Sustainability Report (external synthetic document)",
+ "formats": [
+  "txt"
+ ],
+ "scanKinds": [],
+ "entities": [
+  {
+   "where": "body",
+   "type": "COMPANY",
+   "text": "Verdant Path",
+   "occurrences": 5
+  },
+  {
+   "where": "body",
+   "type": "ID_NUMBER",
+   "text": "23-4861235",
+   "occurrences": 1
+  }
+ ],
+ "mustPreserve": [],
+ "judgedCategories": [
+  "PERSON",
+  "COMPANY",
+  "ADDRESS",
+  "EMAIL",
+  "PHONE",
+  "DATE_OF_BIRTH",
+  "ID_NUMBER",
+  "ONLINE_ID",
+  "SECRET"
+ ]
+}

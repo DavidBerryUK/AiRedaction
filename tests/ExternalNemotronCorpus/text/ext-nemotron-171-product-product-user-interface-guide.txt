@@ -1,0 +1,9 @@
+Welcome to the Adobe XD Product User Interface Guide. This document will walk you through the navigation and functionality of the Adobe XD interface, version 54.0. For more detailed information, visit https://adobe.com/support/documentation/product-ui-guide?product=XD&version=54.0&language=en.
+
+This guide was last updated on 15/07/2024. To access support or report any issues, please contact bencehorvath2002 at bence.horvath@vitatech.hu. He is a contractor at VitaTech and is a practitioner of Hungarian Calvinism. His sexuality is heteroflexible.
+
+To begin, open the Adobe XD application. The main menu is located at the top of the screen and includes options for File, Edit, View, Object, and Help. Each menu contains various commands and functions essential for designing and prototyping. For instance, under the File menu, you can find options to create new projects, open existing ones, and save your work.
+
+The toolbar on the left side of the screen provides quick access to commonly used tools such as the Selection Tool, Rectangle Tool, and Text Tool. Each tool has specific functions that can be explored further in the respective sections of this guide.
+
+For detailed instructions on using specific buttons and menus, refer to the relevant sections. If you encounter any issues or have questions, feel free to reach out to bencehorvath2002 at the provided email address.

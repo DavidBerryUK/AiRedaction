@@ -1,0 +1,40 @@
+**Insurance Customer Feedback Form**
+
+**Policy Number:** _______________________________________________________
+
+**Date of Service:** _______________________________________________________
+
+**Customer ID:** 7391582460
+
+**Customer Name:**
+First Name: Merikay
+Last Name: Bauman
+
+**Contact Information:**
+Email: merikaybauman84@icloud.com
+Phone Number: 269-421-5648
+
+**Rating and Open-Ended Questions:**
+
+1. **How would you rate your overall experience with our insurance services?**
+   - Excellent
+   - Good
+   - Neutral
+   - Poor
+   - Very Poor
+
+2. **Please provide any additional comments or feedback regarding your experience:**
+   _____________________________________________________________________
+
+3. **How would you rate the claims process?**
+   - Excellent
+   - Good
+   - Neutral
+   - Poor
+   - Very Poor
+
+4. **Please provide any additional comments or feedback regarding the claims process:**
+   _____________________________________________________________________
+
+5. **Any other comments or suggestions:**
+   _____________________________________________________________________

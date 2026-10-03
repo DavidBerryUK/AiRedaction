@@ -1,0 +1,70 @@
+{
+ "id": "ext-nemotron-220-travel-travel-health-insurance-policy",
+ "title": "Travel - Travel Health Insurance Policy (external synthetic document)",
+ "formats": [
+  "txt"
+ ],
+ "scanKinds": [],
+ "entities": [
+  {
+   "where": "body",
+   "type": "PERSON",
+   "text": "Elijah",
+   "occurrences": 6
+  },
+  {
+   "where": "body",
+   "type": "PERSON",
+   "text": "Reynolds",
+   "occurrences": 5
+  },
+  {
+   "where": "body",
+   "type": "PHONE",
+   "text": "(575) 328-6752",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "EMAIL",
+   "text": "elijah.r@grandhorizontravel.com",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "ID_NUMBER",
+   "text": "SUB0014298",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "ID_NUMBER",
+   "text": "4567 890 1234 LM",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "DATE_OF_BIRTH",
+   "text": "1954-11-05",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "ID_NUMBER",
+   "text": "2515",
+   "occurrences": 1
+  }
+ ],
+ "mustPreserve": [],
+ "judgedCategories": [
+  "PERSON",
+  "COMPANY",
+  "ADDRESS",
+  "EMAIL",
+  "PHONE",
+  "DATE_OF_BIRTH",
+  "ID_NUMBER",
+  "ONLINE_ID",
+  "SECRET"
+ ]
+}

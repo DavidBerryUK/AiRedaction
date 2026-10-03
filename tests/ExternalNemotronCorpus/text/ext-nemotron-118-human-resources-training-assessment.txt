@@ -1,0 +1,32 @@
+**HarmoniHR Training Assessment**
+
+**Employee Information**
+
+- **First Name:** Maria
+- **Last Name:** Del Rosario
+- **Employee ID:** 002318
+- **Email:** delrosario@harmonihr.com.ph
+- **Occupation:** heavy vehicle or mobile equipment service technician or mechanic
+- **Employment Status:** full-time
+- **Date of Birth:** 1970-11-25
+
+**Training Needs Analysis**
+
+- **Skills Gap:** Advanced diagnostic tools for heavy vehicle or mobile equipment service technician or mechanic.
+- **Competency Requirements:** Proficiency in new engine technologies and emission standards.
+
+**Training Methods**
+
+- **Workshops:** Attend a 3-day intensive workshop on advanced diagnostic tools.
+- **Online Courses:** Complete an online course on new engine technologies.
+- **Mentoring:** Pair with a senior technician for hands-on training.
+
+**Assessment Criteria**
+
+- **Pre and Post-Training Evaluation:** Conduct a knowledge assessment before and after the training.
+- **Performance Metrics:** Evaluate performance based on diagnostic accuracy and repair efficiency.
+
+**Action Plan**
+
+- **Training Schedule:** Workshops to be held from 09/01/2023 to 09/03/2023.
+- **Follow-up Activities:** Monthly progress reviews and a final competency assessment.

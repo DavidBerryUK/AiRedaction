@@ -1,0 +1,28 @@
+---
+Furniture Financing Application
+
+Full Name: Susan Ribeiro
+Street Address: 187 Ronda de Xiomara Ferrer, 18669, Santa Cruz de Tenerife
+Local Latitude-Longitude: (-48.386826, -115.520558)
+Credit Card Security Code: 493
+
+Furniture Information:
+- Vendor Name: Modern Furniture Depot
+- Furniture Type: Living Room Set
+- Itemized Cost Breakdown:
+  - Sofa: £1,200
+  - Coffee Table: £350
+  - Armchair: £800
+- Total Cost: £2,350
+
+Financing Request:
+- Request Amount: £2,350
+- Loan Term: 36 months
+- Interest Rate: 9.99% APR
+
+I, Susan Ribeiro, hereby authorize Modern Furniture Depot and its affiliates to perform a credit check and share my provided information with relevant financial institutions for the purpose of processing this financing application.
+
+---
+
+Signature: Susan Ribeiro
+Date: [Current Date]

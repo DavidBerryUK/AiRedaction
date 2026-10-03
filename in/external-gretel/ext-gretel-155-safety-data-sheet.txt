@@ -1,0 +1,51 @@
+Personal Protective Gear Safety Data Sheet
+
+1. **Introduction*
+
+This document provides critical information about the personal protective equipment (PPE) required when handling hazardical substances. It includes details on selecting, using, and maintaining the gear to minimize exposure. Regularly assess and update the gear based on evolving safety standards.
+
+- **Manufacturer*: Swift BIC Code: IWZMDESM809
+- **Date Issued*: 1989-11-03 23:18:33
+
+2. **Scope*
+
+This SDS applies to all personnel involved in the handling, storage, and disposal of hazardous substances.
+
+3. **Responsibilities*
+
+- **Employer*: Provide appropriate PPE, train employees on its use, and ensure compliance.
+- **Employees*: Correctly use, maintain, and store the PPE.
+
+4. **Selection*
+
+Select PPE based on the nature of the hazardous substances and the level of exposure.
+
+5. **Training*
+
+- **PPE Familiarization*: Familiarize employees with the types, limitations, and correct use of PPE.
+- **Hands-on Training*: Conduct practical training sessions to ensure correct usage.
+
+6. **Use*
+
+- **Donning*: Don PPE before entering the hazardous area.
+- **Doffing*: Doff PPE after leaving the hazardous area.
+- **Inspection*: Inspect PPE before and after each use.
+
+7. **Maintenance*
+
+- **Cleaning*: Clean PPE regularly.
+- **Repair*: Repair or replace damaged PPE.
+
+8. **Storage*
+
+- **Separation*: Store PPE separately from hazardous substances.
+- **Protection*: Protect PPE from environmental factors.
+
+9. **Additional Guidance*
+
+- **Marisa A. Lastra, Safety Officer, 03338 Miller Street Apt. 938*
+
+10. **Legal and Other*
+
+- **Legislation*: Comply with local, regional, and national safety regulations.
+- **Further Assistance*: Contact the manufacturer for additional guidance

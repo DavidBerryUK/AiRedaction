@@ -1,0 +1,31 @@
+### Travel Medical Insurance Claim
+
+**Policyholder Information**
+- **First Name**: Dayle
+- **Health Plan Beneficiary Number**: 3FJ9-OP2-LK45
+
+**Claim Details**
+- **Date of Incident**: 07/15/2024
+- **Type of Treatment**: Medical
+- **Provider Information**: N/A
+
+**Itemized Expenses**
+- **Medical Services**:
+  - Emergency Room Visit: $500.00
+  - Hospital Stay: $2,000.00
+  - Diagnostic Tests: $300.00
+- **Prescriptions**:
+  - Medication A: $150.00
+  - Medication B: $100.00
+- **Receipts**:
+  - Hospital Bill: $2,500.00
+  - Pharmacy Receipt: $250.00
+
+**Summary of Total Costs**
+- **Total Medical Expenses**: $3,700.00
+- **Total Prescription Costs**: $250.00
+- **Grand Total**: $3,950.00
+
+**Reimbursement Details**
+- **Amount Reimbursed**: $3,950.00
+- **Reimbursement Date**: N/A

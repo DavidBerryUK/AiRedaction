@@ -1,0 +1,46 @@
+{
+ "id": "ext-nemotron-017-automobile-safety-guide",
+ "title": "Automobile - Safety Guide (external synthetic document)",
+ "formats": [
+  "txt"
+ ],
+ "scanKinds": [],
+ "entities": [
+  {
+   "where": "body",
+   "type": "COMPANY",
+   "text": "Hudson Motor Company",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "ID_NUMBER",
+   "text": "73850246",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "ID_NUMBER",
+   "text": "5YJ4G12D3KF212345",
+   "occurrences": 5
+  },
+  {
+   "where": "body",
+   "type": "ID_NUMBER",
+   "text": "GZW-8159",
+   "occurrences": 5
+  }
+ ],
+ "mustPreserve": [],
+ "judgedCategories": [
+  "PERSON",
+  "COMPANY",
+  "ADDRESS",
+  "EMAIL",
+  "PHONE",
+  "DATE_OF_BIRTH",
+  "ID_NUMBER",
+  "ONLINE_ID",
+  "SECRET"
+ ]
+}

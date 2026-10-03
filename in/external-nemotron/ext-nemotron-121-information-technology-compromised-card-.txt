@@ -1,0 +1,20 @@
+**Compromised Card Report**
+
+**Incident ID:** INC20230806-001
+
+**Card Details:**
+- **Card Number:** 4917 3876 2541 9876
+- **Expiration Date:** 07/15/2026
+- **CVV:** 322
+
+**Breach Details:**
+- **Breach Date and Time:** 2023-08-06T03:46:55
+- **Source URL:** https://darkwebcarddata.com
+- **IP Addresses Involved:**
+  - **IPv4:** 203.134.215.180
+  - **IPv6:** 2a02:4d60:1031::85e1:59f2:9122:7ecd
+
+**Remediation Steps:**
+1. **Card Locking:** The card with number 4917 3876 2541 9876 was immediately locked to prevent further unauthorized transactions.
+2. **Fraud Monitoring:** Enhanced fraud monitoring was enabled for the cardholder's account.
+3. **Notification:** The cardholder was notified about the breach via the provided contact details.

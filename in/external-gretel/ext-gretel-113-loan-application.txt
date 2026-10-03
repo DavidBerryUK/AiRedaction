@@ -1,0 +1,49 @@
+---
+Loan Application
+
+Loan Type: Loan_Purpose
+
+Personal Details
+----------------
+
+Full Name: Olivia Thompson
+Date of Birth: 12/08/1985
+Address: 45, High Street, London, SE1 1ER
+Contact Number: 07985 123456
+Email Address: olivia.thompson@example.com
+
+Financial Details
+----------------
+
+Employment Status: Full-time Employee
+Occupation: Software Engineer
+Employer: SoftDev Ltd
+Monthly Income: £4,500
+Monthly Expenses: £2,000
+Current Debts: £8,000 (Car Loan)
+
+Loan Details
+-----------
+
+Loan Amount: £15,000
+Loan Purpose: Home Improvement (Installation of a new kitchen)
+Loan Term: 60 months
+
+Supporting Documents
+--------------------
+
+1. Last 3 months' payslips
+2. Last 6 months' bank statements
+3. Proof of address (Utility bill)
+4. Employment contract
+5. Proof of identity (Passport or Driving License)
+
+Applicant Declaration
+--------------------
+
+I confirm that all the information provided is true and accurate to the best of my knowledge. I understand that providing false or misleading information may lead to the rejection of my loan application or legal consequences.
+
+Signature: Olivia Thompson
+Date: 01/10/2022
+
+---

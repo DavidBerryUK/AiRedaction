@@ -44,14 +44,29 @@ public static class InterimConverter
     {
         "heldoutcorpus" => "heldout",
         "testcorpus" => "formats",
+        "externalgretelcorpus" => "external-gretel",
+        "externalnemotroncorpus" => "external-nemotron",
         var other => Regex.Replace(other, "[^a-z0-9]+", "-").Trim('-'),
     };
 
-    /// <summary>The path of a corpus file relative to the input folder. The held-out documents sit in <c>in/finance-sample</c>, the others in the same folders as in the corpus.</summary>
+    /// <summary>The path of a corpus file relative to the input folder. The held-out documents sit in <c>in/finance-sample</c>, each external corpus in the <c>in</c> folder named after it, the others in the same folders as in the corpus.</summary>
     public static string DocId(string corpus, string relativeToCorpus)
     {
         var rel = relativeToCorpus.Replace('\\', '/');
-        return corpus == "heldout" && rel.StartsWith("text/", StringComparison.Ordinal) ? "finance-sample/" + rel["text/".Length..] : rel;
+        if (rel.StartsWith("text/", StringComparison.Ordinal))
+        {
+            if (corpus == "heldout")
+            {
+                return "finance-sample/" + rel["text/".Length..];
+            }
+
+            if (corpus.StartsWith("external-", StringComparison.Ordinal))
+            {
+                return corpus + "/" + rel["text/".Length..];
+            }
+        }
+
+        return rel;
     }
 
     /// <summary>Converts the saved runs and writes the dataset. Returns the exit code.</summary>

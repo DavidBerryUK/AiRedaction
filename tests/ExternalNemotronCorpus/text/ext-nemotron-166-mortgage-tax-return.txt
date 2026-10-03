@@ -1,0 +1,30 @@
+**Tax Return Form 1040**
+
+**Personal Information**
+
+First Name: Matthew
+Last Name: Hairston
+Date of Birth: 1966-04-05
+SSN: 250-11-7090
+
+**Address Information**
+
+Street Address: 7 West 8th Street
+City: Simpsonville
+Tax ID: 32-1527368
+
+**Income**
+
+Gross Income: $120,000.00
+
+**Deductions**
+
+Standard Deduction: $12,950.00
+
+**Tax and Credits**
+
+Tax Liability: $18,500.00
+
+**Payment**
+
+Total Payment: $18,500.00

@@ -1,0 +1,36 @@
+**Salomé Leocadio España Data Anonymization Privacy Policy**
+
+At Salomé Leocadio España, we are committed to protecting the privacy and security of our customers' personal information. This Privacy Policy outlines how we collect, use, and manage customer data, including our data anonymization practices to prevent identification while maintaining utility for analysis and research purposes.
+
+**Information Collection**
+
+When you engage with our services, we may collect the following personally identifiable information (PII):
+
+- Passport number: K13198743
+- First name: Bertha
+- Name: Salomé Leocadio España
+- Street address: 57361 Tony Springs, Diazville
+
+We collect this information to provide and improve our services, process transactions, and communicate with you.
+
+**Data Anonymization**
+
+To protect your privacy, we utilize data anonymization techniques to prevent the identification of individuals while preserving the data's utility for analysis and research purposes. This process involves removing or encrypting directly identifiable information, such as names, addresses, and passport numbers, while retaining relevant data for statistical and research purposes.
+
+For instance, the PII values "K13198743", "Bertha", "Salomé Leocadio España", and "57361 Tony Springs, Diazville" would be anonymized using techniques such as pseudonymization or tokenization to protect your identity.
+
+**Your Rights**
+
+You have the right to access, modify, or delete your personal information. You can exercise these rights by contacting our data protection officer at [data-protection@salomeleocadioespana.com](mailto:data-protection@salomeleocadioespana.com).
+
+**Data Security**
+
+We employ industry-standard security measures to protect your personal information from unauthorized access, disclosure, alteration, or destruction. These measures include encryption, access controls, and regular security audits.
+
+**Changes to this Privacy Policy**
+
+We may update this Privacy Policy from time to time. We will notify you of any material changes by posting the new Privacy Policy on this page.
+
+**Contact Us**
+
+If you have any questions or concerns about this Privacy Policy, please contact us at [privacy@salomeleocadio

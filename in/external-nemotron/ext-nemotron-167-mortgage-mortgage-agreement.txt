@@ -1,0 +1,15 @@
+**Mortgage Agreement**
+
+**Borrower Information**
+- Customer ID: 9247506381
+
+**Loan Details**
+- Loan Amount: $300,000
+- Interest Rate: 4.5%
+- Repayment Schedule: 30 years
+- Account Number: 56723894
+
+**Terms and Conditions**
+- Effective Date: 15-09-2027
+- Default Clause: In the event of default, the lender has the right to initiate foreclosure proceedings.
+- Payment Method: Payments will be automatically deducted from the borrower's account number 56723894 on the 1st of each month using the credit debit card number 5123 4567 8901 2345.

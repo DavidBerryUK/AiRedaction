@@ -1,0 +1,28 @@
+Sure, here's an example of a synthetic EDI Bill of Materials document:
+
+```
+ISA*00*          *00*          *Zz*partner_id*ZZ*my_id*170609*1439*U*00401*000001234*0*T*:*
+BGM*123*456*98*20230315*CH*Bill of Materials for Product XYZ*ABC*
+DTM*220*20230315:1439*
+N1*ST*My Company*
+N3*123 Main St.*
+N4*City*State*Zip*
+PER*PI*Party Identification*
+ITD*12*1*EA*
+IT1*1*Item 1*EA*10*P12345*
+ITD*12*2*EA*
+IT1*2*Item 2*EA*5*P67890*
+ITD*12*3*EA*
+IT1*3*Item 3*EA*3*P23456*
+ITD*12*4*EA*
+IT1*4*Item 4*EA*2*P78901*
+SES*1E*222*12345*
+SE*13*123*1222*
+```
+
+In this example, the Bill of Materials is for a product called "Product XYZ" and it includes four items with unique part numbers (P12345, P67890, P23456, and P78901). Each item has a quantity associated with it, and the units of measure are in "EA" or each.
+
+The expanded_description for this Bill of Materials document would be:
+
+1. Item 1: This is the first item in the Bill of Materials for Product XYZ. The part number for this item is P12345 and the quantity required is 10 units.
+2. Item 2: This is the second item in the Bill

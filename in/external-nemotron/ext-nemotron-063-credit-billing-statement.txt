@@ -1,0 +1,24 @@
+**Billing Statement**
+
+**Customer ID:** 24USR01923
+
+**Account Number:** 3057-1284-9632
+
+**Statement Date:** September 15, 2024
+
+**Credit/Debit Card:** 5478 1234 5678 9012
+
+**Transaction History**
+
+| Date       | Description | Amount | Balance |
+|------------|-------------|--------|---------|
+| 09/01/2024 | Grocery Store | $120.50 | $500.00 |
+| 09/05/2024 | Gas Station  | $45.75  | $379.25 |
+| 09/10/2024 | Online Purchase | $80.00 | $299.25 |
+| 09/12/2024 | Payment Received | ($200.00) | $99.25 |
+
+**Summary**
+
+- **Total Charges:** $246.25
+- **Total Payments:** $200.00
+- **Outstanding Balance:** $99.25

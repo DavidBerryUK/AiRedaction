@@ -1,0 +1,9 @@
+Emerging Market Currency Exchange Rates
+
+| Base Currency | Target Currency | IBAN | Name | Buying Rate | Selling Rate | Street Address |
+| --- | --- | --- | --- | --- | --- | --- |
+| USD | INR | GB86CYTJ90694330007831 | Puccio Zeffirelli-Agazzi | 1 USD = 74.6725 INR | 1 INR = 0.0134 USD | 413 Mccarthy Harbor, Lake David |
+| USD | BRL | GB86CYTJ90694330007831 | Puccio Zeffirelli-Agazzi | 1 USD = 5.2345 BRL | 1 BRL = 0.1911 USD | 413 Mccarthy Harbor, Lake David |
+| USD | MXN | GB86CYTJ90694330007831 | Puccio Zeffirelli-Agazzi | 1 USD = 19.5621 MXN | 1 MXN = 0.0511 USD | 413 Mccarthy Harbor, Lake David |
+| USD | ZAR | GB86CYTJ90694330007831 | Puccio Zeffirelli-Agazzi | 1 USD = 14.5822 ZAR | 1 ZAR = 0.0685 USD | 413 Mccarthy Harbor, Lake David |
+| USD | TRY | GB86CYTJ90694330007831 | Puccio Zeffirelli-Agazzi | 1 USD = 8.3924 TRY | 1 TRY = 0.1191 USD | 413 Mccarthy Harbor, Lake David |

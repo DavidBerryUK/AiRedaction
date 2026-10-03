@@ -1,0 +1,15 @@
+**Vital Signs Report**
+
+**Patient Information**
+
+- Patient Name: Mei Sui
+- Date of Birth: 1960-10-31
+- Blood Type: O positive
+
+**Vital Signs**
+
+| Date       | Temperature (°F) | Heart Rate (bpm) | Blood Pressure (mmHg) | Respiratory Rate (breaths/min) | Oxygen Saturation (%) |
+|------------|-------------------|------------------|------------------------|---------------------------------|------------------------|
+| 2023-10-01 | 98.6              | 72               | 120/80                 | 16                            | 98                     |
+| 2023-10-02 | 98.4              | 70               | 122/78                 | 15                            | 97                     |
+| 2023-10-03 | 98.7              | 74               | 124/82                 | 14                            | 96                     |

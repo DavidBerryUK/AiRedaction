@@ -1,0 +1,12 @@
+```json
+{
+  "status": "success",
+  "data": {
+    "api_key": "KbP4Lz9TqWxRnV1mZt87",
+    "device_identifier": "F5B3K7P2L9MN",
+    "ipv4": "186.14.67.22"
+  },
+  "error": null,
+  "timestamp": "2023-10-05T14:48:00Z"
+}
+```

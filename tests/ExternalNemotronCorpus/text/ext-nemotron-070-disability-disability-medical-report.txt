@@ -1,0 +1,34 @@
+**Disability Medical Report**
+
+**Patient Demographics**
+
+- **First Name**: Robert
+- **Last Name**: Burch
+- **Date of Birth**: 1992-11-13
+- **Medical Record Number**: LAC-00098765
+- **Gender**: female
+- **Race/ Ethnicity**: white
+- **Health Plan Beneficiary Number**: 1KL7-JH5-MA94
+
+**Disability Diagnosis**
+
+- **Primary Diagnosis**: Spinal Cord Injury
+
+**Functional Limitations**
+
+- **Mobility**: Wheelchair-bound
+- **Self-Care**: Requires assistance with activities of daily living
+
+**Medical History**
+
+- **Date of Injury**: 2010-03-21
+- **Employment Status**: intern
+
+**Treatment Plans**
+
+- **Physical Therapy**: Ongoing
+- **Occupational Therapy**: Ongoing
+
+**Prognosis**
+
+- **Long-Term Outlook**: Stable but requires continuous medical support and assistance with daily activities.

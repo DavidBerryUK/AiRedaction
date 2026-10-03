@@ -1,0 +1,35 @@
+Credit Card Statement
+
+Statement Comparison
+
+Account Information:
+Card Number: 1234-5678-9012-3456
+Account Holder: Margaret J. Aguilar
+Address: 3286 Gabriella Orchard, Matthewshire
+Employee ID: Rb-23035
+
+Statement Period: 01/01/2023 - 01/31/2023
+Previous Statement Period: 12/01/2022 - 12/31/2022
+
+Summary of Changes:
+Recurring Charges:
+- Netflix: $15.99 (Previous: $15.99)
+- Spotify: $9.99 (Previous: $9.99)
+- Gym Membership: $45.00 (Previous: $45.00)
+
+Total Expenditure:
+This Statement Period: $2,567.45
+Previous Statement Period: $2,354.82
+
+Significant Transaction Trends:
+- Gas & Fuel: $350.45 (Previous: $298.67)
+- Groceries: $652.18 (Previous: $621.59)
+
+Recent Transactions:
+Date | Description | Amount | Running Balance
+01/15/2023 | Amazon Purchase | $125.45 | $1,342.00
+01/21/2023 | Starbucks | $5.65 | $1,347.65
+01/22/2023 | Gas & Fuel | $45.28 | $1,402.93
+01/25/2023 | Groceries | $123.58 | $1,526.51
+01/27/2023 | Restaurant | $75.00 | $1,601.51
+01/29/2023 | Payment | -$500.00 | $1,101.

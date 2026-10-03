@@ -1,0 +1,24 @@
+<xbrl:xbrl xmlns:xbrli="http://www.xbrl.org/2003/instance" xmlns:xbrll="http://www.xbrl.org/2003/linkbase" xmlns:xh="http://www.w3.org/1999/xhtml" xmlns:iso4217="http://www.xbrl.org/2003/iso4217" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.xbrl.org/2003/instance http://www.xbrl.org/2003/xbrl-instance-2003-12-31.xsd">
+ <xbrli:context id="time-2021-12-31">
+ <xbrli:explicitMember>
+ <xbrli:member>2021-12-31</xbrli:member>
+ </xbrli:explicitMember>
+ </xbrli:context>
+ <xbrli:context id="entity-ABC_Corp">
+ <xbrli:entity>
+ <xbrli:identifier scheme="http://www.sec.gov/CIK">0001234567</xbrli:identifier>
+ </xbrli:entity>
+ </xbrli:context>
+ <xbrli:scenario>
+ <xbrli:explicitMember>
+ <xbrli:member>entity-ABC_Corp</xbrli:member>
+ </xbrli:explicitMember>
+ <xbrli:explicitMember>
+ <xbrli:member>time-2021-12-31</xbrli:member>
+ </xbrli:explicitMember>
+ </xbrli:scenario>
+ <xbrli:unit id="usd-usd">
+ <iso4217:currency>USD</iso4217:currency>
+ </xbrli:unit>
+ <xbrli:unit id="shares-unit">
+ <

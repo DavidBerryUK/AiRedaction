@@ -1,0 +1,27 @@
+Payment Confirmation
+
+Date: 08/12/2022
+
+Transaction Type: Cryptocurrency Transfer
+
+Receiving Wallet Address: 1BvBMSEYstWetqTFn5Au4m4GFg7xJaNVN2
+
+Amount Received: 0.54234567 BTC
+
+Transaction Fee: 0.00054234 BTC
+
+Total Amount Paid: 0.54288801 BTC
+
+Confirmations: 6
+
+Transaction ID: 3e2f8a1d3d2a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a
+
+Transaction Link: <https://blockchain.info/tx/3e2f8a1d3d2a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a>
+
+Payment Details:
+
+This payment confirmation is to acknowledge the receipt of 0.54234567 BTC from the sender's wallet address to the above-mentioned receiving wallet address. The transaction was executed on 08/12/2022, and the total amount paid, including the transaction fee, was 0.54288801 BTC. The transaction has been confirmed 6 times on the blockchain and can be verified using the provided transaction ID and link.
+
+Thank you for your payment.
+
+Note: This payment confirmation is a simulation and should not be considered as a real payment.

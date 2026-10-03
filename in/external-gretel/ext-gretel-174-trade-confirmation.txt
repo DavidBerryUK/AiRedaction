@@ -1,0 +1,28 @@
+Gesture Recognition Trade Confirmation
+
+Trade Date: 06/15/2023
+
+Dear Emelina Ayuso-Martín,
+
+We are pleased to confirm the successful execution of your gesture-recognition technology trade. The details of the transaction are as follows:
+
+Security: Gesture Recognition System - Model GRS-3000
+Quantity: 500 units
+Trade Price: $31.25 per unit
+
+Total Value: $15,625.00
+
+The credit card **4414-1783-8131-1573** will be charged for the total value of the transaction.
+
+Settlement Instructions:
+Please ensure that the bank account **ORCN50362258353102** has sufficient funds to cover the transaction amount. The funds will be debited on the settlement date, which is 3 business days from the trade date.
+
+For any queries or concerns, please contact us at tradesupport@securities.com or call us at +1-888-123-4567. Our support team is available from 9:00 AM to 5:00 PM ET, Monday through Friday.
+
+Thank you for choosing Securities Inc. for your gesture recognition technology needs.
+
+Sincerely,
+
+[Your Name]
+[Your Title]
+Securities Inc.

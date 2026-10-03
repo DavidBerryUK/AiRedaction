@@ -1,0 +1,37 @@
+TERRORISM INSURANCE CLAIM FORM
+
+Claimant Information:
+
+Name: Bernardita Angulo-Bárcena
+BBAN: MAXI59701857668861
+Street Address: 51044 Nash Manors, Apt. 3197
+
+Incident Details:
+
+Date of Occurrence: [Insert Date]
+Type of Terrorist Act: [Insert Type]
+
+Property Damage Description:
+Please provide a detailed description of the property damage caused by the terrorist act.
+
+[Insert Description]
+
+Estimated Property Damage Amount: [Insert Estimated Amount]
+
+Business Interruption Description:
+Please provide a detailed description of the business interruption caused by the terrorist act, if applicable.
+
+[Insert Description]
+
+Estimated Business Income Loss Amount: [Insert Estimated Amount]
+
+Supporting Documents:
+
+1. Government Declaration of Terrorist Act
+2. Property Damage Assessment Report
+3. Business Income Statement
+
+I, Bernardita Angulo-Bárcena, hereby declare that the information provided in this claim form is true and accurate to the best of my knowledge. I understand that any false or misleading statements may result in the denial of this claim or future claims.
+
+Signature: [Bernardita Angulo-Bárcena]
+Date: [Insert Date]

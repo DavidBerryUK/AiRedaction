@@ -1,0 +1,20 @@
+Rental Agreement
+
+This Rental Agreement ("Agreement") is made and entered into this 1st day of August, 2023, by and between the landlord, Acme Properties Inc., with its principal place of business at 123 Main Street, Anytown, UK, and the tenant, Sebastiano T. Babbo, with a passport number of Z36794858, currently residing at 86642 Cabrera Summit Apt. 243, Anytown, CA.
+
+1. Premises. The landlord rents to the tenant and the tenant rents from the landlord, the premises located at 86642 Cabrera Summit Apt. 342, Anytown, CA.
+2. Term. The initial term of this Agreement shall commence on September 1, 2023 and shall end on August 31, 2024.
+3. Rent. The tenant shall pay the sum of $2,500.00 per month, due on the 1st day of each calendar month.
+4. Security Deposit. The tenant shall deposit with the landlord, at the time of the initial occupancy, the sum of $2,500.00 as security for any damage caused to the Premises during the term hereof.
+5. Terms of Tenancy. The tenant shall:
+a. Keep the Premises in clean, sanitary, and good condition;
+b. Not use the Premises for any illegal or improper use;
+c. Not assign or sublet the Premises without the prior written consent of the landlord.
+
+IN WITNESS WHEREOF, the parties have executed this Agreement on the date first above written.
+
+__________________________
+Sebastiano T. Babbo (Tenant)
+
+__________________________
+Acme Properties Inc. (Landlord)

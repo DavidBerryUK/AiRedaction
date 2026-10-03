@@ -1,0 +1,16 @@
+We are excited to announce the latest updates to our product, available as of 07/15/2024. For more details, please visit https://notes.product.releases.com. Here's what's new:
+
+**What's New**
+
+- Introducing the new user interface, designed to enhance user experience. Log in as alean.wallace to try it out at 20:45.
+
+- New feature: employee id MKT-3956 is now required for all user profiles.
+
+**Fixed Issues**
+
+- Resolved the login issue that occurred for users with special characters in their passwords.
+- Fixed the bug where the dashboard would not load properly on mobile devices.
+
+**Known Issues**
+
+- There is a temporary delay in processing payments. Please check back later.

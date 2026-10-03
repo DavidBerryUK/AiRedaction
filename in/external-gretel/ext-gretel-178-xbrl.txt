@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xbrl xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:link="http://www.xbrl.org/2003/linkbase" xmlns:xbrli="http://www.xbrl.org/2003/instance" xmlns:tt="http://www.xbrl.org/2003/table" xmlns="http://www.xbrl.org/2003/instance" xsi:schemaLocation="http://www.xbrl.org/2003/instance http://www.xbrl.org/2003/xbrl-instance-2003-12-31.xsd">
+ <xbrli:context id="ctx-2022-01-01">
+ <xbrli:exchange>
+ <xbrli:identifier scheme="http://www.sec.gov/aitf/xbbi-exchange-us">US</xbrli:identifier>
+ </xbrli:exchange>
+ <xbrli:entity>
+ <xbrli:identifier scheme="http://www.sec.gov/aitf/xbbi-entity-us">Grzegorz Kabus-Rohleder</xbrli:identifier>
+ </xbrli:entity>
+ <xbrli:segment>
+ <xbrli:explicitMember dimension="iso4217:currency">USD</xbrli:explicitMember>
+ </xbrli:segment>
+ <xbrli:period>
+ <xbrli:instant>2022-01-01</xbrli:instant>
+ </xbrli:period>
+ </xbrli:context>
+ <unit id="u-USD">
+ <measure>usd</measure>
+ </unit>
+ <xbrli:unit id="u-pct">
+ <measure>percent</measure>
+ </xbrli:unit>
+ <xbrli:fact use="xbrli:itemEntry" contextRef="ctx-2022-01-01

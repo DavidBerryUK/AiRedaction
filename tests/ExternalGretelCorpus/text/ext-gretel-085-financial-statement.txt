@@ -1,0 +1,49 @@
+FINANCIAL STATEMENT
+Regulatory Compliance
+
+For the period ended December 31, 2021
+
+XYZ Limited
+1234 Main Street
+Toronto, Ontario
+M5G 1M6
+Canada
+
+Balance Sheet
+
+Assets:
+Cash and cash equivalents $542,000
+Accounts receivable $821,000
+Inventory $1,200,000
+Property, plant, and equipment $3,500,000
+Intangible assets $1,250,000
+Total Assets $6,313,000
+
+Liabilities and Equity:
+Accounts payable $415,000
+Notes payable $620,000
+Long-term debt $2,000,000
+Total Liabilities $3,035,000
+Equity:
+Common stock $2,000,000
+Retained earnings $1,278,000
+Total Equity $3,278,000
+Total Liabilities and Equity $6,313,000
+
+Income Statement
+
+Revenue $5,500,000
+Cost of goods sold $3,200,000
+Gross profit $2,300,000
+Operating expenses $1,250,000
+Operating income $1,050,000
+Interest expense $100,000
+Income before taxes $950,000
+Income tax expense $237,500
+Net income $712,500
+
+This financial statement has been prepared in accordance with International Financial Reporting Standards (IFRS) and applicable laws and regulations. The financial statements have been prepared on a historical cost basis, except for the revaluation of certain financial instruments and property, plant, and equipment.
+
+The financial statements have been prepared on an accrual basis, and all significant accounting policies have been consistently applied.
+
+This financial statement is presented in Canadian dollars and all values are reported in thousands of dollars ($000

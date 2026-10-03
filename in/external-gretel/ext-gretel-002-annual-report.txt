@@ -1,0 +1,18 @@
+**ABC Corporation Risk Management Annual Report 2021**
+
+Executive Summary
+
+The year 2021 has been a challenging yet rewarding year for ABC Corporation. We have continued to navigate the complex and ever-changing risk landscape, while delivering on our strategic objectives and maintaining a strong financial position. This report provides an overview of the key risks and uncertainties that we faced in 2021 and our approach to managing these risks.
+
+Risk Management Framework
+
+At ABC Corporation, we have a robust risk management framework that is aligned with our business strategy and objectives. Our risk management framework is built on the three lines of defense model, which includes risk ownership at the business unit level, independent risk management functions, and internal audit.
+
+Key Risk Areas
+
+In 2021, we identified and managed a range of risks across our business. The following are the key risk areas that we focused on:
+
+1. Cybersecurity and Data Privacy: In today's digital age, cybersecurity and data privacy are critical risks for any organization. In 2021, we continued to invest in our cybersecurity capabilities, including advanced threat detection and response, to protect our information assets and customer data. We also implemented a comprehensive data privacy program to ensure compliance with relevant regulations, such as the General Data Protection Regulation (GDPR) and the California Consumer Privacy Act (CCPA).
+2. Regulatory and Compliance: As a regulated entity, we are subject to various laws and regulations. In 2021, we continued to enhance our compliance framework to ensure that we meet the requirements of regulators and avoid any potential reputational damage. We also invested in our regulatory affairs function to stay abreast of changes in the regulatory landscape and ensure that we are well-positioned to respond to any regulatory developments.
+3. Supply Chain Disruption: The COVID-19 pandemic has highlighted the importance of a resilient supply chain. In 2021, we continued to diversify our supplier base and invest in supply chain visibility and risk management tools to ensure that we can respond effectively to any supply chain disruptions.
+4. Climate Change: Climate change is a significant risk for any organization, and we recognize the importance of managing this risk. In 2021, we continued to invest in sustainable practices, including renewable energy and energy

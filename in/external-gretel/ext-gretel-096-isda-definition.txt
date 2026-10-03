@@ -1,0 +1,59 @@
+CONFIRMATION
+
+Date: [Date of Confirmation]
+
+Counterparty: Albino Rivero
+
+Address: 65778 Matthew Bypass, Apt. 139
+
+[Over-the-Counter Derivatives Transaction]
+
+This Confirmation sets out the terms and conditions of the over-the-counter derivatives transaction (the "Transaction") between the Counterparty and us.
+
+1. Identification of the Transaction
+
+The Transaction is a [Insert Type of Derivative] with the following details:
+
+(a) Notional Amount: USD 1,000,000
+
+(b) Term: 5 years
+
+(c) Payment Dates: Semi-annually, starting from [Insert Date]
+
+(d) Fixed Rate: 2.00%
+
+(e) Floating Rate: Libor 3-month
+
+(f) Credit Support: [Insert Credit Support]
+
+2. Credit Card Details
+
+For the purpose of processing any payments under this Transaction, the Counterparty has provided us with the following credit card details:
+
+Credit Card Number: 4959576640148690
+
+3. Password
+
+The Counterparty has further provided us with the following password for accessing the credit card details:
+
+Password: @^eg\_G^bnOAn6hOn4
+
+4. Governing Law
+
+This Confirmation shall be governed by and construed in accordance with the laws of England.
+
+5. Entire Agreement
+
+This Confirmation, together with any other documents referred to herein, constitutes the entire agreement and understanding between the parties with respect to its subject matter and supersedes all prior agreements, understandings and negotiations, both written and oral, relating to the Transaction.
+
+[Your Company Name]
+
+By: \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+
+Name: \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+
+Title: \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+
+[Counterparty Name]
+
+By: \_\_\_\_\_\_\_\

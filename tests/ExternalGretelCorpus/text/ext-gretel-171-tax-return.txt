@@ -1,0 +1,50 @@
+---
+**Foreign Earned Income Tax Return**
+
+**Taxpayer Information**
+
+Name: John Doe
+Address: 123 Maple Street, Anytown, USA
+Foreign Address: 456 Oak Lane, London, UK
+
+**Foreign Earned Income**
+
+Foreign Earned Income: $100,000
+Foreign Bank Account Statements:
+
+* HSBC, London: $50,000
+* Barclays, London: $50,000
+
+**Tax Treaties**
+
+The United States has a tax treaty with the United Kingdom, which allows for a foreign earned income exclusion of up to $108,700 for tax year 2020.
+
+**Foreign Tax Credits, Exclusions, and Deductions**
+
+Form 2555 is attached to report the foreign earned income exclusion of $108,700.
+
+Foreign Tax Paid: $20,000
+Form 1116 is attached to report the foreign tax credit of $20,000.
+
+Foreign Housing Exclusion: $25,000
+
+**Total Income, Deductions, and Tax Liability**
+
+Foreign Earned Income: $100,000
+Less: Foreign Earned Income Exclusion: -$108,700
+Less: Foreign Housing Exclusion: -$25,000
+====================================
+Total Income: -$33,700
+
+Tax Liability: $0
+
+**Certification**
+
+Under penalties of perjury, I declare that I have examined this return and accompanying schedules and statements, and to the best of my knowledge and belief, they are true, correct, and complete.
+
+________________________
+John Doe
+
+---
+
+Note: This is a simplified example of a Foreign Earned Income Tax Return and may not include all necessary forms and schedules. It is recommended to consult with a tax professional for specific tax situations.

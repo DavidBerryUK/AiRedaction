@@ -1,0 +1,29 @@
+Sure, here is a simplified example of a financial statement for a sustainable energy company called "GreenTech Energy Inc." Please note that this is a fictional company and the numbers are made up.
+
+**GreenTech Energy Inc. - Financial Statement**
+
+**Balance Sheet**
+
+| Assets | 2022 | 2021 |
+| --- | --- | --- |
+| Cash and cash equivalents | $5,000,000 | $3,500,000 |
+| Accounts receivable | $8,000,000 | $6,000,000 |
+| Property, plant, and equipment | $35,000,000 | $30,000,000 |
+| Total Assets | $51,000,000 | $42,500,000 |
+
+| Liabilities and Equity | 2022 | 2021 |
+| --- | --- | --- |
+| Accounts payable | $4,000,000 | $3,000,000 |
+| Long-term debt | $15,000,000 | $15,000,000 |
+| Total Liabilities | $19,000,000 | $18,000,000 |
+| Equity | $32,000,000 | $24,500,000 |
+| Total Liabilities and Equity | $51,000,000 | $42,500,000 |
+
+**Income Statement**
+
+| GreenTech Energy Inc. - Income Statement | 2022 | 2021 |
+| --- | --- | --- |
+| Revenue: |  |  |
+| Energy sales | $40,000,000 | $32,000,000 |
+| Other revenue | $5,000,000 | $4,000,000 |
+| Total Revenue | $45,000,

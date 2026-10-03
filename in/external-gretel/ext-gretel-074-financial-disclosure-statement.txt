@@ -1,0 +1,26 @@
+Government Grants and Subsidies Tracker
+
+Entity Name: Anita Correr
+Entity Address: 3694 Troy Mall, North Jason
+
+Fiscal Year 2021
+
+1. Research and Development Grant - Department of Science and Innovation
+   - Grant Amount: CAD 500,000
+   - Duration: January 1, 2021 - December 31, 2023
+   - Purpose: Funding for the development of an innovative AI chatbot for synthetic data generation.
+   - Compliance Evidence: Quarterly progress reports submitted to the Department of Science and Innovation.
+
+2. Small Business Subsidy - Canada Business Network
+   - Subsidy Amount: CAD 25,000
+   - Duration: April 1, 2021 - March 31, 2022
+   - Purpose: Financial assistance towards operational costs for the entity's first year of business.
+   - Compliance Evidence: Monthly financial statements submitted to the Canada Business Network.
+
+3. IPv6 Transition Grant - Innovation, Science and Economic Development Canada
+   - Grant Amount: CAD 100,000
+   - Duration: June 1, 2021 - May 31, 2022
+   - Purpose: Funding to support the transition of the entity's digital infrastructure to IPv6.
+   - Compliance Evidence: Receipts for IPv6 transition-related expenses and a final project report submitted to Innovation, Science and Economic Development Canada.
+
+IPv6 Address: 4c8a:7c34:69b6:89e8:a6df:72ce:264c:4943

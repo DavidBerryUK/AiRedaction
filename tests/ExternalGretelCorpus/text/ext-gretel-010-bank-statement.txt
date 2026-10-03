@@ -1,0 +1,30 @@
+-------------------------------------------------------------------------------------------------------------------
+
+BANK OF AMERICA, N.A.
+4201 TOWER SHOPPES DRIVE, MOORESVILLE, NC 28117
+www.bankofamerica.com
+
+ACCOUNT CLOSURE STATEMENT
+
+Account Holder: Francis Hazel Shaw
+Account Number: 123456789
+
+Closure Date: Sunday, October 20, 2002
+
+This is to inform you that your account with us has been closed as of the date mentioned above. The following is a summary of your account activity:
+
+| Date | Description | Type | Amount ($) | Running Balance ($) |
+| --- | --- | --- | --- | --- |
+| 01-Sep-02 | Opening Balance | Balance | 3,456.78 | 3,456.78 |
+| 05-Sep-02 | Deposit | Deposit | 1,200.00 | 4,656.78 |
+| 10-Sep-02 | Withdrawal | Withdrawal | 500.00 | 4,156.78 |
+| 15-Sep-02 | Interest Earned | Interest | 15.26 | 4,171.04 |
+| 20-Sep-02 | Withdrawal | Withdrawal | 2,000.00 | 2,171.04 |
+| 25-Sep-02 | Deposit | Deposit | 1,500.00 | 3,671.04 |
+| 30-Sep-02 | Closing Balance | Balance | 3,671.04 | 3,671.04 |
+
+Remaining Balance Distribution:
+
+The remaining balance of $3,671.04 has been distributed as per your instructions:
+
+- Check: $2,000.00 (Mailed to Francis Hazel Shaw, 4433 Julian Causeway, Apt.

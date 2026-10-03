@@ -1,0 +1,40 @@
+**Asthma Action Plan**
+
+**Personal Information**
+- **Name:** Eliza
+- **Date of Birth:** 1956-06-19
+- **Health Plan Beneficiary Number:** AET-5832-7129-64
+- **Blood Type:** O+
+
+**Contact Information**
+- **Doctor's Fax Number:** 01670 589 243
+
+**Asthma Triggers**
+- Dust
+- Pollen
+- Smoke
+
+**Medications**
+- **Albuterol**: 2 puffs every 4 hours as needed
+- **Fluticasone**: 2 puffs twice daily
+
+**Peak Flow Zone Ranges**
+- Green Zone: >80%
+- Yellow Zone: 50-80%
+- Red Zone: <50%
+
+**Action Steps**
+
+**Green Zone (80-100%)**
+- Continue your daily controller medication.
+- Avoid triggers.
+
+**Yellow Zone (50-80%)**
+- Take your rescue inhaler.
+- Follow your doctor's instructions.
+- Contact your doctor if symptoms do not improve.
+
+**Red Zone (<50%)**
+- Take your rescue inhaler immediately.
+- Seek emergency medical attention.
+- Call 01670 589 243 for immediate assistance.

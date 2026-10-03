@@ -1,0 +1,18 @@
+**ShadowStrike Access Control Systems**
+
+**Biometric Registration Certificate**
+
+This certificate verifies the biometric registration of Jong-chul Kim, born on 1974-11-17. The registration was completed on 09/15/2024. The unique registration ID assigned is b1e1c4d0e26b1b57527086c692e0964c2e5b0747c9a54e19776132d1b78b3a2e. The biometric identifier used for this registration is M98274163781.
+
+The user name for access control purposes is JongchulKim_ShadowStrike.
+
+This certificate is valid and serves as proof of biometric registration for access control within ShadowStrike systems.
+
+**Certifying Authority:**
+
+_________________________
+Signature
+
+**Stamp:**
+
+Date: 09/15/2024

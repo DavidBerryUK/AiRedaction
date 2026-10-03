@@ -1,0 +1,14 @@
+-------------------------------------------------------------------------------------------------------------------------------
+Customer Support Conversational Log
+-------------------------------------------------------------------------------------------------------------------------------
+
+[2022-08-22 14:35:12,989] [INFO] Agent: Hello, welcome to our customer support. How can I assist you today?
+[2022-08-22 14:35:45,163] [INFO] Customer: Hi, I need help setting up my account.
+[2022-08-22 14:35:58,611] [INFO] Agent: Of course, I'd be happy to help you with that! May I have your full name, please?
+[2022-08-22 14:36:13,827] [INFO] Customer: Annika Jörg Bonbach
+[2022-08-22 14:36:20,981] [INFO] Agent: Thank you, Ms. Bonbach. To proceed, could you please provide me with your BBAN?
+[2022-08-22 14:36:45,110] [INFO] Customer: JKHY36135603553095
+[2022-08-22 14:36:53,234] [INFO] Agent: Thank you. I see that you're all set for account setup. Now, could you please share your street address with me?
+[2022-08-22 14:37:10,125] [INFO] Customer: 7256 Martinez Summit, Suite 938
+[2022-08-22 14:37:22,315] [INFO] Agent: Thank you, Ms. Bonbach. I have all the necessary information for your account setup. Please allow me a few moments to complete the process.
+[2022-08-22 14:38:15,654] [INFO] Agent: Great news, Ms. Bonbach!

@@ -1,0 +1,56 @@
+**Customer Loyalty Program**
+
+**Program Overview**
+
+Welcome to our Customer Loyalty Program! This program is designed to reward our valued customers for their continued support. By participating, you can earn points, redeem rewards, and enjoy exclusive benefits.
+
+**Eligibility Criteria**
+
+To be eligible for this program, customers must:
+- Be of age 57 or older.
+- Have a valid email address, such as amal.eltaif@koragoods.sd.
+- Provide a valid date of birth, such as 1967-12-06.
+
+**Points System**
+
+**Earn Points**
+
+Customers earn points based on their purchases and interactions with our products. Points are awarded as follows:
+- 1 point for every dollar spent on products.
+- Additional points for special promotions and activities.
+
+**Redeem Points**
+
+Points can be redeemed for a variety of rewards, including discounts, exclusive products, and more. To redeem points, customers can visit the redemption portal at http://loyaltyrewards.com:8080/dashboard.
+
+**Expiry**
+
+Points are valid for 12 months from the date of accrual. After this period, any unused points will expire.
+
+**Reward Tiers**
+
+Customers are categorized into different tiers based on their points balance:
+- **Bronze**: 0-1,000 points
+- **Silver**: 1,001-5,000 points
+- **Gold**: 5,001+ points
+
+**Terms and Conditions**
+
+**Member ID**
+
+Each customer is assigned a unique Member ID, such as 134872965. This ID is used to track points, rewards, and membership level.
+
+**Membership Level**
+
+Membership level is determined by the points balance and is subject to change based on points accrual and redemption. Membership levels are as follows:
+- **Bronze**: Basic rewards and benefits.
+- **Silver**: Enhanced rewards and benefits.
+- **Gold**: Exclusive rewards and benefits.
+
+**Points Balance**
+
+Points balance is the total number of points a customer has earned and not yet redeemed. Points balance can be viewed on the customer's dashboard at http://loyaltyrewards.com:8080/dashboard.
+
+**Redemption History**
+
+Redemption history includes all rewards redeemed by the customer. This history can be viewed on the customer's dashboard at http://loyaltyrewards.com:8080/dashboard.

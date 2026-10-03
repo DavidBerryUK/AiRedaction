@@ -1,0 +1,32 @@
+---
+
+**Patient Identification**
+
+- Medical Record Number: MRN-345672
+- First Name: Irma
+- Last Name: Garcia
+- Date of Birth: 1994-06-28
+
+**Race Ethnicity**: Puerto Rican
+
+**Admitting Diagnosis**: Acute appendicitis
+
+**Discharging Diagnosis**: Post-operative recovery from appendectomy
+
+**Procedures Performed**: Appendectomy
+
+**Hospital Course**: Irma Garcia was admitted with complaints of severe abdominal pain and was diagnosed with acute appendicitis. She underwent an appendectomy on the day of admission. The procedure was uncomplicated, and the patient tolerated it well. Post-operative recovery was uneventful.
+
+**Discharge Medications**:
+
+- Acetaminophen 500mg every 6 hours as needed for pain
+- Amoxicillin/Clavulanate 875mg twice daily for 7 days
+
+**Follow-Up Instructions**: Follow up with primary care physician in 7 days. If fever or increased abdominal pain occurs, seek immediate medical attention.
+
+**Provider Signatures**:
+
+- Attending Physician: _____________________________
+- Date: _____________________________
+
+**Language**: Spanish

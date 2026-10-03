@@ -1,0 +1,27 @@
+COLLATERAL TRANSFER AGREEMENT
+
+This Collateral Transfer Agreement (the "Agreement") is entered into as of the date first set forth above by and between Alida Rädel-Ziegert, a resident of 16289 Megan Manors ("Transferor") and [Counterparty], a [Company] organized and existing under the laws of [Jurisdiction] with its head office located at [Address] ("Transferee").
+
+WHEREAS, Transferor and Transferee have entered into a Master Agreement (the "ISDA Master Agreement") dated as of [Date] pursuant to which Transferor has agreed, among other things, to provide collateral to Transferee in accordance with the terms and conditions set forth herein;
+
+NOW, THEREFORE, in consideration of the mutual covenants and promises contained herein and for other good and valuable consideration, the receipt and sufficiency of which is hereby acknowledged, the parties hereto agree as follows:
+
+1. Transfer of Collateral. Transferor hereby transfers, assigns, and delivers to Transferee, free and clear of any lien or encumbrance, the following collateral (the "Collateral"):
+
+a. Cash: [Insert Cash Amount]
+
+b. Securities: [Insert List of Securities]
+
+c. Other: [Insert Description of Other Collateral]
+
+2. Transferor's Representations and Warranties. Transferor hereby represents and warrants to Transferee that:
+
+a. Transferor is the legal and beneficial owner of the Collateral, free and clear of any lien or encumbrance, and has good and marketable title to the Collateral;
+
+b. The transfer of the Collateral by Transferor to Transferee is not subject to any consent, approval, or authorization of any governmental or regulatory body or other person;
+
+c. Transferor has not taken any action that would cause the Collateral to be subject to any lien or encumbrance;
+
+d. Transferor has not pledged, assigned, sold, or otherwise transferred any interest in the Collateral to any person other than Transferee;
+
+e. Transferor has not entered into any agreement or arrangement that would restrict Transferor's ability to

@@ -1,0 +1,41 @@
+### Investment Performance Report
+
+**Account Summary**
+- **Account Number**: 19JAN23-3752
+- **Report Date**: 07/15/2024
+
+**Investment Holdings**
+
+| Ticker Symbol | Quantity | Purchase Price | Current Market Value |
+|---------------|----------|----------------|----------------------|
+| AAPL          | 50       | $150.00        | $200.00              |
+| GOOGL         | 30       | $2,800.00      | $3,200.00            |
+| AMZN          | 20       | $3,500.00      | $3,800.00            |
+
+**Transaction History**
+
+| Date       | Type    | Amount  |
+|------------|---------|---------|
+| 07/15/2024 | Buy     | $500.00 |
+| 07/15/2024 | Sell    | $300.00 |
+| 07/15/2024 | Dividend| $20.00  |
+
+**Performance Metrics**
+
+- **Total Return**: 15%
+- **Annualized Return**: 12%
+- **Benchmark Comparison**: S&P 500
+
+**Gains and Losses**
+
+| Ticker Symbol | Gain/Loss | Percentage |
+|---------------|-----------|------------|
+| AAPL          | Gain      | 33.33%     |
+| GOOGL         | Gain      | 14.29%     |
+| AMZN          | Gain      | 8.57%      |
+
+**Graphical Representation**
+
+[Insert Graph Here]
+
+**Swift BIC:** ZYXWUS4G92C

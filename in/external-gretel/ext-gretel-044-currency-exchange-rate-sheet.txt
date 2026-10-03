@@ -1,0 +1,29 @@
+Currency Exchange Rate Sheet
+
+Date: 01/01/2023
+Prepared for: Angelica
+Address: Idrottsgränd 95
+
+Inflation-Adjusted Exchange Rates
+
+| Base Currency | Target Currency | Buying Rate | Selling Rate |
+| --- | --- | --- | --- |
+| GBP | USD | 1.2500 | 1.3000 |
+| GBP | EUR | 1.1500 | 1.2000 |
+| GBP | CHF | 1.4000 | 1.4500 |
+| GBP | JPY | 150.00 | 155.00 |
+| GBP | CAD | 1.6500 | 1.7000 |
+| GBP | AUD | 1.8500 | 1.9000 |
+| GBP | HKD | 10.5000 | 10.8000 |
+| GBP | SGD | 1.7500 | 1.8000 |
+| GBP | SEK | 12.0000 | 12.5000 |
+| GBP | NOK | 13.5000 | 14.0000 |
+| GBP | DKK | 9.0000 | 9.5000 |
+
+Notes:
+
+* Exchange rates are inflation-adjusted and reflect real, inflation-adjusted currency values.
+* The base currency is always GBP (British Pound Sterling).
+* Buying rates represent the cost of purchasing one unit of the target currency using one unit of the base currency.
+* Selling rates represent the amount of the base currency received when selling one unit of the target currency.
+* This sheet was prepared for Angelica and is intended for use at the provided address.

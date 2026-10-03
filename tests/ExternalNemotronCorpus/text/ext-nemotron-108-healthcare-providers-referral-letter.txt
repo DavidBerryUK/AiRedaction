@@ -1,0 +1,31 @@
+**Referral Letter**
+
+**Patient Demographics:**
+- **First Name:** Dean
+- **Last Name:** Worley
+- **Date of Birth:** 1970-08-13
+- **Medical Record Number:** M-23-000187
+- **Gender:** male
+- **Health Plan Beneficiary Number:** PLN123-7654321
+- **Age:** 54
+
+**Referring Physician Information:**
+- Name: Dr. Jane Doe
+- Specialty: General Practitioner
+- Contact Information: jane.doe@email.com
+
+**Reason for Referral:**
+- Dean Worley, born on 1970-08-13, is referred for further evaluation and management of chronic back pain. The patient, a 54 year old actor, has been experiencing persistent discomfort for the past six months.
+
+**Medical History:**
+- Hypertension
+- Occasional migraines
+
+**Current Medications:**
+- Lisinopril 10mg daily
+- Ibuprofen 400mg as needed
+
+**Specific Requests or Instructions for the Specialist:**
+- Please conduct a comprehensive evaluation, including imaging studies, to determine the cause of the back pain.
+- Provide recommendations for pain management and any necessary physical therapy.
+- Coordinate care with the patient's primary care physician, Dr. Jane Doe, and update the health plan beneficiary number PLN123-7654321 with any changes in treatment plan.

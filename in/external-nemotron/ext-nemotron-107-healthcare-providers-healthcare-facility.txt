@@ -1,0 +1,3 @@
+| **Provider Name** | **Specialty** | **Contact Information** | **Facility Address** | **Bed Count** | **Service Offerings** | **Accreditation Status** | **Certificate License Number** |
+|-------------------|--------------|-----------------------|---------------------|--------------|----------------------|-------------------------|-----------------------------|
+| VitalSign Health  | Healthcare   | 951-374-1956         | 1234 Elm St         | 200         | Emergency Services, Surgery, Pediatrics | Accredited           | 37625918                   |

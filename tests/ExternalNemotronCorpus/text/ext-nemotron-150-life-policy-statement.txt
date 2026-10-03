@@ -1,0 +1,27 @@
+### Vitae Living Solutions Policy Statement
+
+#### Mission
+At Vitae Living Solutions, our mission is to empower individuals to lead healthier, more fulfilling lives. We strive to provide comprehensive support and resources that cater to diverse needs and backgrounds, including those of the Ponca ethnicity. Our commitment to inclusivity and well-being guides every aspect of our operations.
+
+#### Vision
+Our vision is to be a leading provider of holistic health solutions, recognized for our innovative approaches and dedication to enhancing the quality of life for all. We aim to create a future where everyone has access to the tools and support they need to thrive, regardless of their circumstances.
+
+#### Core Values
+- **Integrity**: We uphold the highest standards of honesty and transparency in all our interactions.
+- **Compassion**: We approach every situation with empathy and understanding.
+- **Innovation**: We continuously seek new and effective ways to support our clients.
+- **Collaboration**: We work together with our clients, partners, and community to achieve our goals.
+
+#### Operational Policies
+
+1. **Communication Channels**
+   - For general inquiries, please contact us via email at emma.walsh@vitaeliving.com.
+   - For detailed policy documents, visit our FTP server at ftp://ftp.healthcare.gov/policies/healthcare-policy-statement.pdf.
+
+2. **Confidentiality and Security**
+   - We prioritize the security of our clients' information. All communications are protected with secure protocols, including the use of HTTP cookies such as jwt_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c; Path=/auth; HttpOnly; Secure; SameSite=Lax.
+
+3. **Accessibility**
+   - We ensure that our services are accessible to everyone. For fax communications, please use the number (402) 555-7890.
+
+By adhering to these policies, Vitae Living Solutions aims to create a supportive and inclusive environment where everyone can achieve their health and wellness goals.

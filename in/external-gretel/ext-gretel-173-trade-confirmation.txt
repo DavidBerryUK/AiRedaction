@@ -1,0 +1,22 @@
+Crypto Trade Confirmation
+
+Trade Date: 2023-01-10
+Securities Traded: 2 Bitcoin
+Price: $40,000 per Bitcoin
+Settlement Date: 2023-12-05
+
+Dear Deborah Arellano-Evans,
+
+This trade confirmation is to acknowledge the purchase of 2 Bitcoin on your behalf. The trade was executed at a price of $40,000 per Bitcoin. The total cost of the transaction is $80,000.
+
+The settlement of this trade will occur on 2023-12-05. The Bitcoin will be transferred to the digital wallet associated with the following driver's license number: EQ36802596.
+
+Please note that the settlement address for this transaction is:
+56890 Heather Radial, 67839, Andersonberg
+
+If you have any questions or concerns regarding this trade, please do not hesitate to contact us.
+
+Thank you for choosing our services.
+
+Sincerely,
+[Company Name]

@@ -1,0 +1,11 @@
+**Patient Biometric ID Record**
+
+| Field                  | Value                               |
+|------------------------|-------------------------------------|
+| Patient Name           | Deborah Kuhhirte                    |
+| Date of Birth          | 1962-06-07                         |
+| Gender                 | female                              |
+| Biometric Identifier   | J48392015762                        |
+| Unique ID              | c6f26e8c-89a9-4457-9c55-1a616f56e553 |
+| Health Plan Beneficiary Number | WA-0013274568                    |
+| Race Ethnicity         | white                               |

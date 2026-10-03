@@ -1,0 +1,40 @@
+{
+ "id": "ext-nemotron-156-marketing-privacy-policy",
+ "title": "Marketing - Privacy Policy (external synthetic document)",
+ "formats": [
+  "txt"
+ ],
+ "scanKinds": [],
+ "entities": [
+  {
+   "where": "body",
+   "type": "EMAIL",
+   "text": "v.c@andinamark.ec",
+   "occurrences": 5
+  },
+  {
+   "where": "body",
+   "type": "PHONE",
+   "text": "02-254-3987",
+   "occurrences": 4
+  },
+  {
+   "where": "body",
+   "type": "COMPANY",
+   "text": "AndinaMark",
+   "occurrences": 1
+  }
+ ],
+ "mustPreserve": [],
+ "judgedCategories": [
+  "PERSON",
+  "COMPANY",
+  "ADDRESS",
+  "EMAIL",
+  "PHONE",
+  "DATE_OF_BIRTH",
+  "ID_NUMBER",
+  "ONLINE_ID",
+  "SECRET"
+ ]
+}

@@ -1,0 +1,36 @@
+Sure, here is a sample credit card statement for an Interest Charges Analysis:
+
+---
+**Barclays Platinum Credit Card Statement**
+
+**Billing Cycle:** 01/03/2023 - 31/03/2023
+
+**Account Summary:**
+
+* Opening Balance: £2,500.00
+* Payments & Credits: £1,000.00
+* Purchases: £1,500.00
+* Cash Advances: £0.00
+* Total New Balance: £3,000.00
+
+**Interest Charges:**
+
+* Average Daily Balance: £2,750.00
+* Interest Rate: 18.9% p.a. (variable)
+* Interest Charged: £41.88
+
+**Minimum Payment:**
+
+* Minimum Payment: £60.00
+* Due Date: 20/04/2023
+
+**Recent Transactions:**
+
+* 05/03/2023 - Tesco - £100.00 - Purchase
+* 10/03/2023 - Amazon - £200.00 - Purchase
+* 15/03/2023 - Sainsbury's - £150.00 - Purchase
+* 20/03/2023 - John Lewis - £100.00 - Purchase
+
+---
+
+Note: This is a fictional statement and is for illustrative purposes only. It does not reflect any actual account or transaction data.

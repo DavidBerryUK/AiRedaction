@@ -1,0 +1,40 @@
+{
+ "id": "ext-nemotron-181-property-property-disclosure-statement",
+ "title": "Property - Property Disclosure Statement (external synthetic document)",
+ "formats": [
+  "txt"
+ ],
+ "scanKinds": [],
+ "entities": [
+  {
+   "where": "body",
+   "type": "PERSON",
+   "text": "Rita",
+   "occurrences": 3
+  },
+  {
+   "where": "body",
+   "type": "PERSON",
+   "text": "Costa",
+   "occurrences": 3
+  },
+  {
+   "where": "body",
+   "type": "ADDRESS",
+   "text": "Rua de Santa Catarina, 45",
+   "occurrences": 1
+  }
+ ],
+ "mustPreserve": [],
+ "judgedCategories": [
+  "PERSON",
+  "COMPANY",
+  "ADDRESS",
+  "EMAIL",
+  "PHONE",
+  "DATE_OF_BIRTH",
+  "ID_NUMBER",
+  "ONLINE_ID",
+  "SECRET"
+ ]
+}

@@ -1,0 +1,37 @@
+Home Healthcare Claim Form
+
+Patient Information:
+Name: Pauline Holmes-Jones
+Street Address: 442 Jennifer Ranch, Apt. 487
+Date of Service: Monday, January 18, 2010
+
+Healthcare Provider Details:
+Name: Serene Home Healthcare Services
+Address: 775 Maple Leaf Drive, Suite 215
+City: Toronto
+State/Province: ON
+Postal Code: M3J 2S9
+Phone: (416) 555-1212
+Fax: (416) 555-1213
+
+Services Provided:
+
+| Date | Service | Duration | Units |
+| --- | --- | --- | --- |
+| 01/18/2010 | Skilled Nursing Visit | 1.5 hours | 1.5 |
+| 01/18/2010 | Physical Therapy | 1 hour | 1 |
+| 01/18/2010 | Occupational Therapy | 1 hour | 1 |
+
+Caregiver Details:
+Name: Sarah Thompson
+License/Certification Number: ON-00123456
+License/Certification Type: Registered Nurse (RN)
+
+Payment Information:
+Bank Routing Number: 489763422
+Checking/Savings Account Number: 123456789
+
+Patient/Legal Representative Signature: __________________________
+Date: ___________________
+
+Note: The patient or legal representative must sign and date the form to authorize the release of medical information and the processing of the claim.
