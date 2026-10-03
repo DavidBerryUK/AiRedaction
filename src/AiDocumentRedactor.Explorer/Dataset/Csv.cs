@@ -1,7 +1,7 @@
 using System.Globalization;
 using System.Text;
 
-namespace AiDocumentRedactor.Eval.Dataset;
+namespace AiDocumentRedactor.Explorer.Dataset;
 
 /// <summary>Reads and writes the dataset's CSV files: RFC 4180, UTF-8 without a byte-order mark, LF line endings, an empty cell for "unknown".</summary>
 public static class Csv

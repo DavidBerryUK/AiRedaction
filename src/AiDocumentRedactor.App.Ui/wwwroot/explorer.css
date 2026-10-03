@@ -1,0 +1,92 @@
+/* The results explorer. Uses the tokens in ui.css; colours on marks are translucent so they read on a light or dark page. */
+.xapp { min-height: 100vh; display: flex; flex-direction: column; background: var(--bg); }
+.xapp .topbar { flex: 0 0 auto; }
+.xmain { padding: 16px 24px 48px; max-width: 1500px; width: 100%; margin: 0 auto; }
+.xtabs { display: flex; gap: 4px; padding: 0 24px; background: var(--panel); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 3; }
+.xtab { padding: 10px 16px; color: var(--text); text-decoration: none; border-bottom: 3px solid transparent; font-weight: 600; }
+.xtab:hover { background: var(--panel-2); }
+.xtab.active { border-bottom-color: var(--brand-yellow); }
+.xbanner details { display: inline; }
+.xbanner details summary { display: inline; cursor: pointer; text-decoration: underline; }
+.xbanner { background: color-mix(in srgb, var(--brand-yellow) 30%, var(--panel)); border-bottom: 1px solid var(--brand-yellow); padding: 8px 24px; font-size: 13px; }
+.xerror { color: var(--bad); font-weight: 600; }
+.xhint { color: var(--muted); font-size: 13px; margin: 8px 0; }
+.muted { color: var(--muted); } .small { font-size: 12px; }
+.xfilter { display: flex; flex-wrap: wrap; gap: 12px 16px; align-items: flex-end; margin: 10px 0; }
+.xfilter label { display: flex; flex-direction: column; gap: 3px; font-size: 12px; color: var(--muted); }
+.xvariants { display: flex; flex-wrap: wrap; gap: 4px 14px; border: 1px solid var(--border); border-radius: 6px; padding: 4px 10px 6px; margin: 0; }
+.xvariants legend { font-size: 12px; color: var(--muted); padding: 0 4px; }
+.xvariants label { flex-direction: row; align-items: center; gap: 5px; color: var(--text); font-size: 13px; }
+.xt { border-collapse: collapse; width: 100%; background: var(--panel); border: 1px solid var(--border); font-size: 13px; }
+.xt th, .xt td { padding: 6px 10px; border-bottom: 1px solid var(--border); text-align: left; vertical-align: middle; }
+.xt thead th { background: var(--panel-2); position: sticky; top: 43px; z-index: 2; font-weight: 600; }
+.xt th.sortable { cursor: pointer; user-select: none; white-space: nowrap; }
+.xt th.sortable:hover { background: color-mix(in srgb, var(--brand-yellow) 25%, var(--panel-2)); }
+.xt td.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.xt td.nowrap { white-space: nowrap; }
+.xt tr.baseline td { color: var(--muted); }
+.xt tr.failed td { opacity: .75; font-style: italic; }
+.xt tr.pick { cursor: pointer; } .xt tr.pick:hover td { background: var(--panel-2); }
+.xt tr.selected td { box-shadow: inset 0 0 0 9999px color-mix(in srgb, var(--brand-yellow) 20%, transparent); }
+.xt a { color: var(--text); text-decoration-color: var(--brand-grey-4); }
+.xt td.context { font-family: var(--mono); font-size: 12.5px; white-space: pre-wrap; word-break: break-word; }
+.tag { display: inline-block; margin-left: 8px; padding: 0 7px; border: 1px solid var(--border); border-radius: 999px; font-size: 11px; background: var(--panel-2); color: var(--muted); }
+.xbadges .tag { margin: 0 6px 0 0; }
+.bar { display: inline-block; width: 70px; height: 8px; background: var(--panel-2); border-radius: 4px; margin-right: 8px; vertical-align: middle; overflow: hidden; }
+.bar span { display: block; height: 100%; background: var(--brand-slate); }
+@media (prefers-color-scheme: dark) { .bar span { background: var(--brand-yellow); } }
+.xpager { display: flex; gap: 14px; align-items: center; justify-content: center; margin: 14px 0; }
+.rating { display: inline-block; padding: 1px 9px; border-radius: 999px; font-size: 12px; font-weight: 700; border: 1px solid transparent; }
+.r-easy { background: hsl(140 55% 45% / .25); border-color: hsl(140 55% 40%); }
+.r-moderate { background: hsl(48 90% 50% / .3); border-color: hsl(48 80% 40%); }
+.r-hard { background: hsl(25 90% 52% / .3); border-color: hsl(25 80% 45%); }
+.r-problem { background: hsl(0 75% 52% / .3); border-color: hsl(0 70% 45%); }
+.xcounts { display: flex; gap: 8px; margin: 6px 0 10px; }
+.xscroll { overflow-x: auto; }
+.heat thead th { position: static; }
+.heat th.vertical { writing-mode: vertical-rl; transform: rotate(180deg); height: 120px; white-space: nowrap; text-align: left; padding: 8px 4px; position: static; }
+.heat th.rowhead { white-space: nowrap; background: var(--panel-2); position: sticky; left: 0; }
+.heat td.cell { text-align: center; cursor: pointer; min-width: 38px; padding: 6px 4px; font-variant-numeric: tabular-nums; }
+.heat td.cell:hover { outline: 2px solid var(--brand-slate); outline-offset: -2px; }
+.heat td.cell.selected { outline: 3px solid var(--brand-yellow); outline-offset: -3px; }
+.xdrill { margin: 18px 0; padding: 10px 14px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--panel); }
+.xdrill h3 { display: flex; gap: 12px; align-items: center; margin: 0 0 6px; }
+.xtwo { display: grid; grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); gap: 24px; margin-top: 24px; }
+.xdoc-head h2 { margin: 6px 0; font-size: 20px; word-break: break-all; }
+.xdoc-head a { color: var(--muted); font-size: 13px; }
+.xapp section { margin-top: 18px; } .xapp section h3 { margin: 0 0 6px; }
+.xapp section h3 select { font-size: 14px; font-weight: 600; }
+.xlegend { display: flex; flex-wrap: wrap; gap: 8px; font-size: 12px; margin: 6px 0; }
+.doc-text { white-space: pre-wrap; word-break: break-word; font-family: var(--mono); font-size: 13px; line-height: 1.55; padding: 14px 16px; background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius); max-height: 70vh; overflow: auto; }
+.xapp mark { color: inherit; border-radius: 3px; padding: 0 1px; }
+mark.m-caught { background: hsl(140 60% 45% / .35); }
+mark.m-missed { background: hsl(0 80% 55% / .35); outline: 2px solid hsl(0 75% 45%); }
+mark.m-over { background: hsl(30 95% 52% / .38); }
+mark.m-unjudged { background: hsl(0 0% 55% / .25); border-bottom: 2px dotted var(--brand-grey-3); }
+mark.m-preserve { background: hsl(270 60% 60% / .35); outline: 2px solid hsl(270 55% 50%); }
+mark.m-flagok { background: hsl(210 85% 55% / .35); outline: 2px dashed hsl(210 80% 45%); }
+mark.m-flagbad { background: hsl(210 85% 55% / .15); outline: 2px dashed hsl(210 60% 55%); }
+mark.m-flagged { background: hsl(210 85% 55% / .2); border-bottom: 2px dashed hsl(210 80% 45%); }
+mark.m-redacted { background: hsl(140 40% 45% / .2); }
+.xkey { margin-top: 18px; }
+@media (max-width: 800px) { .xmain { padding: 12px; } .xtabs { overflow-x: auto; } }
+.xcombine { margin: 6px 0 14px; }
+.xfilter label.inline { flex-direction: row; align-items: center; gap: 5px; color: var(--text); font-size: 13px; }
+.xprose { max-width: 920px; line-height: 1.6; }
+.xprose h1 { font-size: 26px; } .xprose h2 { margin-top: 32px; border-bottom: 1px solid var(--border); padding-bottom: 4px; } .xprose h3 { margin-top: 24px; }
+.xprose table { border-collapse: collapse; margin: 12px 0; font-size: 13px; width: 100%; }
+.xprose th, .xprose td { border: 1px solid var(--border); padding: 5px 9px; text-align: left; vertical-align: top; }
+.xprose th { background: var(--panel-2); }
+.xprose code { font-family: var(--mono); font-size: 12.5px; background: var(--panel-2); padding: 0 4px; border-radius: 3px; }
+.xprose pre { background: var(--panel); border: 1px solid var(--border); padding: 10px 14px; border-radius: var(--radius); overflow: auto; }
+.xprose .doclink { text-decoration: underline dotted; }
+.xfilter label .lbl, .xt th .info { white-space: nowrap; }
+button.info { font: inherit; font-size: 13px; line-height: 1; padding: 0 3px; margin-left: 3px; border: none; background: none; color: var(--brand-grey-3); cursor: pointer; border-radius: 50%; vertical-align: baseline; }
+button.info:hover, button.info:focus-visible { color: var(--text); outline: 2px solid var(--brand-yellow); outline-offset: 1px; }
+.xmodal-backdrop { position: fixed; inset: 0; background: rgba(20, 27, 35, .55); display: flex; align-items: center; justify-content: center; z-index: 50; padding: 16px; }
+.xmodal-backdrop:focus { outline: none; }
+.xmodal { background: var(--panel); color: var(--text); border-radius: 12px; border-top: 4px solid var(--brand-yellow); max-width: 560px; width: 100%; max-height: 85vh; overflow: auto; padding: 18px 24px 22px; box-shadow: 0 12px 40px rgba(0, 0, 0, .35); }
+.xmodal h3 { margin: 0 0 6px; font-size: 18px; }
+.xmodal h4 { margin: 14px 0 3px; font-size: 12px; text-transform: uppercase; letter-spacing: .5px; color: var(--muted); }
+.xmodal p { margin: 0; line-height: 1.55; } .xmodal ul { margin: 0; padding-left: 20px; } .xmodal li { margin: 3px 0; }
+.xmodal .btn { margin-top: 18px; }

@@ -1,0 +1,171 @@
+@namespace AiDocumentRedactor.App.Ui
+@* Categories by setup: where each kind of sensitive item is found or missed, a drill-down to the items, and the items that models miss or wrongly redact again and again. *@
+<FilterBar State="State" Changed="LoadAsync" ShowVariants="true" />
+<div class="xfilter">
+    <fieldset class="xvariants">
+        <legend>Measure <InfoButton Topic="metric" /></legend>
+        <label><input type="radio" name="metric" checked="@(metric == "recall")" @onchange='() => SetMetric("recall")' /> Recall</label>
+        <label><input type="radio" name="metric" checked="@(metric == "missed")" @onchange='() => SetMetric("missed")' /> Missed items</label>
+        <label><input type="radio" name="metric" checked="@(metric == "over")" @onchange='() => SetMetric("over")' /> Over-redactions</label>
+    </fieldset>
+</div>
+
+@if (cells is null)
+{
+    <p class="muted">Loading…</p>
+}
+else if (cells.Count == 0)
+{
+    <p class="muted">No results match these filters.</p>
+}
+else
+{
+    <p class="xhint">Each row is a setup and each column a category. Click a cell to see the items behind it. Over-redactions are counted under the category the setup gave them.</p>
+    <div class="xscroll">
+        <table class="xt heat">
+            <thead>
+                <tr>
+                    <th>Setup</th>
+                    @foreach (var t in types)
+                    {
+                        <th class="vertical" title="@t">@t</th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var c in configs)
+                {
+                    <tr>
+                        <th class="rowhead">@c</th>
+                        @foreach (var t in types)
+                        {
+                            var cell = lookup.GetValueOrDefault((c, t));
+                            <td class="cell @(IsSelected(c, t) ? "selected" : null)" style="background:@Colour(cell)" title="@Tip(cell)" @onclick="() => Open(c, t)">@Text(cell)</td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    @if (selected is not null)
+    {
+        <section class="xdrill">
+            <h3>@(selectedKind == "missed" ? "Missed" : "Over-redacted") @selected.Value.Type items: @selected.Value.Config
+                <button class="btn small" @onclick="() => selected = null">Close</button></h3>
+            @if (items is null)
+            {
+                <p class="muted">Loading…</p>
+            }
+            else
+            {
+                <p class="xhint">@items.Total items@(items.Total > items.Rows.Count ? $", the first {items.Rows.Count} shown" : "").</p>
+                <table class="xt">
+                    <thead><tr><th>Document</th><th>In context</th></tr></thead>
+                    <tbody>
+                        @foreach (var i in items.Rows)
+                        {
+                            <tr>
+                                <td><a href="@ExplorerState.DocumentLink(i.DocId)?setup=@Uri.EscapeDataString(i.Config)">@i.DocId</a></td>
+                                <td class="context">…@i.Before<mark class="@(selectedKind == "missed" ? "m-missed" : "m-over")">@i.Text</mark>@i.After…</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+        </section>
+    }
+
+    <div class="xtwo">
+        <section>
+            <h3>Missed again and again</h3>
+            <p class="xhint">Items missed by the most models, over the models alone.</p>
+            @Repeated(missedMost)
+        </section>
+        <section>
+            <h3>Wrongly redacted again and again</h3>
+            <p class="xhint">Text redacted by the most models that is not sensitive on the answer key.</p>
+            @Repeated(overMost)
+        </section>
+    </div>
+}
+
+@code {
+    [Parameter, EditorRequired] public ExplorerState State { get; set; } = default!;
+
+    List<CategoryCell>? cells;
+    Dictionary<(string Config, string Type), CategoryCell> lookup = [];
+    List<string> configs = [], types = [];
+    List<RepeatedItem> missedMost = [], overMost = [];
+    int loadedVersion = -1;
+    string metric = "recall";
+    (string Config, string Type)? selected;
+    string selectedKind = "missed";
+    Page<OutcomeItem>? items;
+    int max;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (loadedVersion != State.Version)
+        {
+            await LoadAsync();
+        }
+    }
+
+    async Task LoadAsync()
+    {
+        loadedVersion = State.Version;
+        var filter = State.ToFilter();
+        cells = await State.Service!.CategoriesAsync(filter);
+        lookup = cells.ToDictionary(c => (c.Config, c.Type));
+        var order = State.Setups.ToList();
+        configs = cells.Select(c => c.Config).Distinct().OrderBy(c => order.IndexOf(c)).ToList();
+        types = cells.GroupBy(c => c.Type).OrderByDescending(g => g.Sum(c => c.Present + c.OverRedactions)).Select(g => g.Key).ToList();
+        max = cells.Count == 0 ? 0 : cells.Max(c => metric == "over" ? c.OverRedactions : c.Missed);
+        missedMost = await State.Service.RepeatedAsync(filter with { Variants = null }, "missed", 25);
+        overMost = await State.Service.RepeatedAsync(filter with { Variants = null }, "over_redaction", 25);
+        selected = null;
+    }
+
+    void SetMetric(string m)
+    {
+        metric = m;
+        max = cells is null || cells.Count == 0 ? 0 : cells.Max(c => m == "over" ? c.OverRedactions : c.Missed);
+    }
+
+    bool IsSelected(string c, string t) => selected is { } s && s.Config == c && s.Type == t;
+
+    string Colour(CategoryCell? c) => c is null ? "transparent" : metric switch
+    {
+        "recall" => Fmt.Heat(c.Recall),
+        "missed" => Fmt.Scale(c.Missed, max, 0),
+        _ => Fmt.Scale(c.OverRedactions, max, 30),
+    };
+
+    string Text(CategoryCell? c) => c is null ? string.Empty : metric switch
+    {
+        "recall" => c.Recall is null ? "–" : Math.Round(c.Recall.Value * 100).ToString("0"),
+        "missed" => c.Missed.ToString(),
+        _ => c.OverRedactions.ToString(),
+    };
+
+    static string Tip(CategoryCell? c) => c is null ? string.Empty : $"{c.Type}: {c.Caught} of {c.Present} found ({Fmt.Pct(c.Recall)}), {c.Missed} missed, {c.OverRedactions} over-redactions";
+
+    async Task Open(string config, string type)
+    {
+        selected = (config, type);
+        selectedKind = metric == "over" ? "over_redaction" : "missed";
+        items = null;
+        items = await State.Service!.OutcomeItemsAsync(State.ToFilter(), config, type, selectedKind, 100, 0);
+    }
+
+    RenderFragment Repeated(List<RepeatedItem> list) => @<table class="xt">
+        <thead><tr><th>Category</th><th>Text</th><th>Models</th><th>Documents</th><th>Times</th></tr></thead>
+        <tbody>
+            @foreach (var r in list)
+            {
+                <tr><td>@r.Type</td><td class="context">@r.Text</td><td class="num">@r.Setups</td><td class="num">@r.Documents</td><td class="num">@r.Occurrences</td></tr>
+            }
+        </tbody>
+    </table>;
+}

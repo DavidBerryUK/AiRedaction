@@ -1,7 +1,7 @@
 using System.Globalization;
 using System.Text.Json;
 
-namespace AiDocumentRedactor.Eval.Dataset;
+namespace AiDocumentRedactor.Explorer.Dataset;
 
 /// <summary>Checks a dataset folder against the format: files and columns present, values of the right type, every id pointing at something, spans inside the text,
 /// text hashes matching, and a result for every document under every detector setup of its corpus. Returns the problems found (none means valid).</summary>

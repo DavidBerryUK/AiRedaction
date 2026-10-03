@@ -1,0 +1,219 @@
+@namespace AiDocumentRedactor.App.Ui
+@* The results explorer: tabs over one dataset. A document opens from any list into its own view. All reading is from the dataset's database; nothing here changes the data. *@
+@inject ExplorerCatalog Catalog
+
+<PageTitle>Results Explorer</PageTitle>
+<div class="xapp">
+    <header class="topbar">
+        <div class="brand"><span>Results Explorer</span></div>
+        <div class="model-banner">
+            @if (State?.Info is { } info)
+            {
+                <span class="chip @(info.Status == "final" ? "ok" : null)">@info.Status dataset</span>
+                <span class="mb-detail">@info.DatasetId · @info.Documents documents · @info.Results results@(info.GitCommit is { Length: > 0 } ? $" · code {info.GitCommit}" : "") · key: @info.KeyVersions</span>
+            }
+        </div>
+        <div class="run-controls">
+            @if (datasets.Count > 1)
+            {
+                <label class="picker">Dataset
+                    <select @onchange="OnDataset">
+                        @foreach (var d in datasets)
+                        {
+                            <option value="@d.Id" selected="@(d.Id == State?.DatasetId)">@d.Id (@d.Status)</option>
+                        }
+                    </select>
+                </label>
+            }
+            <a class="btn icon models-btn" href="/">← Redaction Demo</a>
+        </div>
+    </header>
+
+    @if (error is not null)
+    {
+        <main class="xmain"><p class="xerror">@error</p></main>
+    }
+    else if (State?.Service is null)
+    {
+        <main class="xmain"><p class="muted">Opening the dataset…</p></main>
+    }
+    else
+    {
+        <CascadingValue Value="State">
+        @if (State.Info is { Status: not "final" } interim)
+        {
+            <div class="xbanner">This is an <strong>interim</strong> dataset, made from saved runs, not a final evaluation: not for quoting as results. <details><summary>How it was made</summary>@interim.Notes</details></div>
+        }
+
+        <nav class="xtabs" aria-label="Explorer sections">
+            @foreach (var (key, label) in Tabs)
+            {
+                <a class="xtab @(ActiveTab == key ? "active" : null)" href="/explorer/@key">@label</a>
+            }
+        </nav>
+
+        <main class="xmain">
+            @switch (ActiveTab)
+            {
+                case "document":
+                    <DocumentView State="State" DocId="@(DocId ?? string.Empty)" InitialSetup="@Setup" />
+                    break;
+                case "results":
+                    <ResultsTab State="State" InitialSort="@Sort" InitialDescending="@Descending" />
+                    break;
+                case "documents":
+                    <DocumentsTab State="State" />
+                    break;
+                case "categories":
+                    <CategoriesTab State="State" />
+                    break;
+                case "combine":
+                    <CombineTab State="State" />
+                    break;
+                case "method":
+                    <MethodologyTab />
+                    break;
+                default:
+                    <LeaderboardTab State="State" />
+                    break;
+            }
+        </main>
+        </CascadingValue>
+        @if (ExplorerHelp.Find(State.HelpTopic) is { } help)
+        {
+            <div class="xmodal-backdrop" @onclick="() => State.ShowHelp(null)" @onkeydown="OnKey" tabindex="-1" @ref="dialogHost">
+                <div class="xmodal" role="dialog" aria-modal="true" aria-labelledby="xmodal-title" @onclick:stopPropagation="true">
+                    <h3 id="xmodal-title">@help.Title</h3>
+                    <h4>What it is</h4>
+                    <p>@help.Explanation</p>
+                    <h4>In plain English</h4>
+                    <p>@help.Plain</p>
+                    @if (help.Examples.Length > 0)
+                    {
+                        <h4>Examples</h4>
+                        <ul>
+                            @foreach (var e in help.Examples)
+                            {
+                                <li>@e</li>
+                            }
+                        </ul>
+                    }
+                    <button type="button" class="btn primary" @onclick="() => State.ShowHelp(null)">Close</button>
+                </div>
+            </div>
+        }
+    }
+</div>
+
+@code {
+    /// <summary>The tab from the address (overview, results, documents, categories), or null for the first.</summary>
+    [Parameter] public string? Tab { get; set; }
+
+    /// <summary>The document to show, when the address is a document's.</summary>
+    [Parameter] public string? DocId { get; set; }
+
+    /// <summary>A setup to pre-select: the grid's setup filter, or the setup the document view starts on.</summary>
+    [Parameter] public string? Setup { get; set; }
+    [Parameter] public string? Sort { get; set; }
+    [Parameter] public bool? Descending { get; set; }
+    [Parameter] public string? Dataset { get; set; }
+
+    static readonly (string Key, string Label)[] Tabs =
+    [
+        ("overview", "Leaderboard"), ("results", "Results"), ("documents", "Documents"), ("categories", "Categories"), ("combine", "Combine models"), ("method", "How we got here"),
+    ];
+
+    ExplorerState? State;
+    ElementReference dialogHost;
+    string? focusedTopic;
+    List<DatasetListing> datasets = [];
+    string? error;
+    string? appliedSetup;
+
+    string ActiveTab => DocId is not null ? "document" : Tab ?? "overview";
+
+    protected override async Task OnParametersSetAsync()
+    {
+        try
+        {
+            if (State is null || Dataset is not null && Dataset != State.DatasetId)
+            {
+                await OpenAsync(Dataset);
+            }
+
+            if (State is not null && ActiveTab == "results" && Setup != appliedSetup)
+            {
+                appliedSetup = Setup;
+                State.Setup = Setup;
+                State.Touch();
+            }
+        }
+        catch (Exception ex) when (ex is InvalidDataException or IOException or Microsoft.Data.Sqlite.SqliteException)
+        {
+            error = ex.Message;
+        }
+    }
+
+    /// <summary>Moves keyboard focus into the help dialog when it opens, so Escape closes it.</summary>
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (State?.HelpTopic is { } topic && topic != focusedTopic)
+        {
+            focusedTopic = topic;
+            try
+            {
+                await dialogHost.FocusAsync();
+            }
+            catch (InvalidOperationException)
+            {
+                // The dialog was closed again before it could take focus.
+            }
+        }
+        else if (State?.HelpTopic is null)
+        {
+            focusedTopic = null;
+        }
+    }
+
+    void OnKey(KeyboardEventArgs e)
+    {
+        if (e.Key == "Escape")
+        {
+            State?.ShowHelp(null);
+        }
+    }
+
+    async Task OpenAsync(string? id)
+    {
+        datasets = await Catalog.ListAsync();
+        id ??= datasets.FirstOrDefault()?.Id;
+        if (id is null)
+        {
+            error = $"No dataset found in {Catalog.DatasetsDirectory}. Make one with: dotnet run --project src/AiDocumentRedactor.Eval -- --export-dataset <runs> (see documentation/HOW_TO_RUN_EVALUATION.md).";
+            return;
+        }
+
+        var service = await Catalog.OpenAsync(id);
+        if (service is null)
+        {
+            error = $"There is no dataset called '{id}'.";
+            return;
+        }
+
+        var s = new ExplorerState { Service = service, DatasetId = id, Info = await service.InfoAsync() };
+        s.HelpChanged = () => _ = InvokeAsync(StateHasChanged);
+        s.Corpora = await service.ValuesAsync("corpus");
+        s.DocTypes = await service.ValuesAsync("doc_type");
+        s.Formats = await service.ValuesAsync("format_group");
+        s.Setups = await service.ValuesAsync("config");
+        s.Types = await service.ValuesAsync("type");
+        State = s;
+        error = null;
+    }
+
+    async Task OnDataset(ChangeEventArgs e)
+    {
+        State = null;
+        await OpenAsync(e.Value?.ToString());
+    }
+}

@@ -140,7 +140,7 @@ One row for each judged fact, so category and per-item questions need no re-scor
 |---|---|
 | `outcome_id`* | `<result_id>#o<n>` |
 | `result_id`*, `doc_id`* | |
-| `kind`* | `caught`, `missed`, `lost_to_extraction`, `over_redaction`, `unjudged`, `preserve_broken`, `flag_correct` or `flag_wrong` (the last two for items GLiNER found alone that were left in the text for review) |
+| `kind`* | `caught`, `missed`, `lost_to_extraction`, `over_redaction`, `unjudged`, `preserve_broken`, `flag_correct`, `flag_wrong` (items GLiNER found alone that were left in the text for review) or `key_extra` (a further occurrence of a key text beyond the count the key gives: not scored for recall, but a redaction of it still matches the key) |
 | `entity_id` | The key item involved, if any |
 | `span_id` | The span involved, if any |
 | `type` | Category |

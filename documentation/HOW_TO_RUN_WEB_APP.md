@@ -102,3 +102,19 @@ The app can run a small second detector (GLiNER) next to the language model. Whe
 2. **For the demo, use the switch:** open **☰ Categories** and turn on **Second opinion (GLiNER)**. It lasts for that browser session only and is never written to the config (the *Reset to config file* button turns it back off). If the model files are missing the switch is greyed out and says where to put them. A second choice sets what happens to something only GLiNER finds: *Flag for review* (the default) or *Redact*. To have it on from the start, add `"gliner": { "enabled": true }` in `redactor.config.json` instead (other settings, such as the threshold, what happens to GLiNER-only finds, and the label wording per category, are described in the specification, requirement FR73).
 3. Start the app as usual. If GLiNER is on and the model files are missing, a run stops with a message saying so.
 4. In the edit list, each edit shows where it came from (Rule, AI, AI + GLiNER, GLiNER only, and so on). Use the filter *Flagged for review only* to see the GLiNER flags.
+
+## The results explorer
+
+Beside the redaction screen, the web app has a **results explorer** at `/explorer` (the **📊 Results** button in the top bar). It reads a dataset from the `datasets` folder (see [HOW_TO_RUN_EVALUATION.md](HOW_TO_RUN_EVALUATION.md) for making one; use `--datasets <folder>` to read another folder) and uses the same access token as the rest of the app. The first time a dataset is opened a SQLite database is built beside it (a few seconds); it is rebuilt automatically if the dataset changes and can be deleted at any time.
+
+| Tab | What it shows |
+|---|---|
+| Leaderboard | Every setup's recall, precision and F1 with 95% ranges, over the documents that match the filters |
+| Results | One row per setup per document, sortable, filterable, with CSV export of the rows shown |
+| Documents | Every document rated Easy, Moderate, Hard or Problem by how the models did; open one to see its text with each setup's work drawn on it |
+| Categories | A heat-map of recall, misses and over-redactions by category and setup, a drill-down to the items, and the items models miss or wrongly redact again and again |
+| Combine models | Scores any combination of the saved detectors (union, agreement, flags, an ideal reviewer) without running a model |
+| How we got here | The methodology document |
+
+Every control and column has an ⓘ button that explains it in technical and plain terms with examples.
+

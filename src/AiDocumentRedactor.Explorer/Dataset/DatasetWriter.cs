@@ -3,7 +3,7 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 
-namespace AiDocumentRedactor.Eval.Dataset;
+namespace AiDocumentRedactor.Explorer.Dataset;
 
 /// <summary>Writes a dataset folder: run.json, the five CSV files and document-text.jsonl (see documentation/RESULTS_DATASET_FORMAT.md).</summary>
 public static class DatasetWriter

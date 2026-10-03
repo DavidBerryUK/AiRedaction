@@ -1,0 +1,161 @@
+@namespace AiDocumentRedactor.App.Ui
+@* The results grid: one row per setup per document, with filters, sorting, paging and an export to CSV. *@
+<FilterBar State="State" Changed="ChangedAsync" ShowSearch="true" ShowSetup="true" ShowVariants="true" />
+<div class="xfilter">
+    <label><span class="lbl">Status <InfoButton Topic="status" /></span>
+        <select @onchange="OnStatus">
+            <option value="">All</option>
+            <option value="ok" selected="@(State.Status == "ok")">Succeeded</option>
+            <option value="timeout" selected="@(State.Status == "timeout")">Timed out</option>
+            <option value="error" selected="@(State.Status == "error")">Failed</option>
+        </select>
+    </label>
+    <a class="btn small" href="@ExportLink()" download="results.csv" title="Download the rows that match these filters, in this order, as a CSV file">⇩ Export CSV</a>
+</div>
+
+@if (data is null)
+{
+    <p class="muted">Loading…</p>
+}
+else if (data.Total == 0)
+{
+    <p class="muted">No results match these filters.</p>
+}
+else
+{
+    <p class="xhint">@data.Total results. Click a heading to sort; click a document to see how every model did on it.</p>
+    <table class="xt">
+        <thead>
+            <tr>
+                @Head("document", "Document")
+                @Head("corpus", "Corpus", "corpus")
+                @Head("format", "Format", "format")
+                @Head("setup", "Setup", "setup")
+                @Head("status", "Status", "status")
+                @Head("recall", "Recall", "recall")
+                @Head("precision", "Precision", "precision")
+                @Head("missed", "Missed", "missed")
+                @Head("over", "Over", "over")
+                @Head("flags", "Flags (right)", "flags")
+                @Head("time", "Time", "time")
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var r in data.Rows)
+            {
+                <tr class="@(r.Status != "ok" ? "failed" : null)">
+                    <td><a href="@ExplorerState.DocumentLink(r.DocId)?setup=@Uri.EscapeDataString(r.Config)">@r.DocId</a></td>
+                    <td>@r.Corpus</td>
+                    <td>@r.FormatGroup</td>
+                    <td>@r.Config</td>
+                    <td>@(r.Status == "ok" ? "ok" : r.Status)@if (r.Error is { Length: > 0 }) {<span class="muted small" title="@r.Error"> ⓘ</span>}</td>
+                    <td class="num" style="background:@Fmt.Heat(r.Recall)">@Fmt.Pct(r.Recall)</td>
+                    <td class="num">@Fmt.Pct(r.Precision)</td>
+                    <td class="num">@Fmt.N(r.Missed)</td>
+                    <td class="num">@Fmt.N(r.OverRedactions)</td>
+                    <td class="num">@(r.FlagsRaised is > 0 ? $"{r.FlagsRaised} ({r.FlagsCorrect})" : "–")</td>
+                    <td class="num">@Fmt.Secs(r.DetectSeconds)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div class="xpager">
+        <button class="btn small" disabled="@(pageNumber == 0)" @onclick="() => GoTo(pageNumber - 1)">‹ Previous</button>
+        <span>Page @(pageNumber + 1) of @PageCount</span>
+        <button class="btn small" disabled="@(pageNumber + 1 >= PageCount)" @onclick="() => GoTo(pageNumber + 1)">Next ›</button>
+    </div>
+}
+
+@code {
+    const int PageSize = 50;
+
+    [Parameter, EditorRequired] public ExplorerState State { get; set; } = default!;
+    [Parameter] public string? InitialSort { get; set; }
+    [Parameter] public bool? InitialDescending { get; set; }
+
+    Page<GridRow>? data;
+    int loadedVersion = -1;
+    int pageNumber;
+    string sort = "document";
+    bool descending;
+    string? appliedInitial;
+
+    int PageCount => data is null ? 1 : Math.Max(1, (data.Total + PageSize - 1) / PageSize);
+
+    protected override async Task OnParametersSetAsync()
+    {
+        var initial = $"{InitialSort}|{InitialDescending}";
+        if (InitialSort is not null && appliedInitial != initial)
+        {
+            appliedInitial = initial;
+            sort = InitialSort;
+            descending = InitialDescending ?? false;
+            loadedVersion = -1;
+        }
+
+        if (loadedVersion != State.Version)
+        {
+            pageNumber = 0;
+            await LoadAsync();
+        }
+    }
+
+    async Task ChangedAsync()
+    {
+        pageNumber = 0;
+        await LoadAsync();
+    }
+
+    async Task LoadAsync()
+    {
+        loadedVersion = State.Version;
+        data = await State.Service!.GridAsync(State.ToFilter(withSetup: true), sort, descending, pageNumber, PageSize);
+    }
+
+    async Task GoTo(int n)
+    {
+        pageNumber = Math.Clamp(n, 0, PageCount - 1);
+        await LoadAsync();
+    }
+
+    async Task OnStatus(ChangeEventArgs e)
+    {
+        State.Status = string.IsNullOrEmpty(e.Value?.ToString()) ? null : e.Value!.ToString();
+        State.Touch();
+        await ChangedAsync();
+    }
+
+    RenderFragment Head(string key, string label, string? topic = null) => @<th class="sortable" @onclick="() => SortBy(key)">@label@(sort == key ? (descending ? " ▼" : " ▲") : "")@if (topic is not null) {<InfoButton Topic="@topic" />}</th>;
+
+    async Task SortBy(string key)
+    {
+        descending = sort == key ? !descending : key is not ("document" or "corpus" or "format" or "setup" or "status");
+        sort = key;
+        pageNumber = 0;
+        await LoadAsync();
+    }
+
+    /// <summary>The link that downloads every row matching the filters, in the current order.</summary>
+    string ExportLink()
+    {
+        var f = State.ToFilter(withSetup: true);
+        var q = new List<string> { "dataset=" + Uri.EscapeDataString(State.DatasetId), "sort=" + sort, "desc=" + (descending ? "true" : "false") };
+        void Add(string name, string? v)
+        {
+            if (!string.IsNullOrEmpty(v))
+            {
+                q.Add($"{name}={Uri.EscapeDataString(v)}");
+            }
+        }
+
+        Add("corpus", f.Corpus);
+        Add("doctype", f.DocType);
+        Add("format", f.FormatGroup);
+        Add("search", f.Search);
+        Add("variants", f.Variants is { Count: > 0 } ? string.Join(',', f.Variants) : null);
+        Add("configs", f.Configs is { Count: > 0 } ? string.Join(',', f.Configs) : null);
+        Add("status", f.Status);
+        Add("baselines", f.IncludeBaselines ? null : "false");
+        return "/explorer/export.csv?" + string.Join('&', q);
+    }
+}

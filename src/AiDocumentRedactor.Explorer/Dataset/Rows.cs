@@ -1,4 +1,4 @@
-namespace AiDocumentRedactor.Eval.Dataset;
+namespace AiDocumentRedactor.Explorer.Dataset;
 
 /// <summary>A row of documents.csv. <c>DocId</c> is the file's path relative to the input folder; <c>KeyId</c> says which answer key applies (several files can share one).</summary>
 public record DocumentRow(string DocId, string KeyId, string Corpus, string FormatGroup, string DocType, int Chars, string TextHash, int EntityCount, int OccurrenceCount)

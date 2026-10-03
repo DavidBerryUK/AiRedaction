@@ -1,4 +1,4 @@
-namespace AiDocumentRedactor.Eval.Dataset;
+namespace AiDocumentRedactor.Explorer.Dataset;
 
 /// <summary>What a cell holds: text, a whole number, a number with decimals, or true/false.</summary>
 public enum ColumnKind
@@ -19,7 +19,7 @@ public static class Schema
     public static readonly string[] Variants = ["plain", "with-gliner", "with-gliner-all-flags-accepted", "with-gliner-correct-flags-accepted"];
     public static readonly string[] Statuses = ["ok", "timeout", "error", "skipped"];
     public static readonly string[] Roles = ["entity", "must_preserve", "ignore"];
-    public static readonly string[] OutcomeKinds = ["caught", "missed", "lost_to_extraction", "over_redaction", "unjudged", "preserve_broken", "flag_correct", "flag_wrong"];
+    public static readonly string[] OutcomeKinds = ["caught", "missed", "lost_to_extraction", "over_redaction", "unjudged", "preserve_broken", "flag_correct", "flag_wrong", "key_extra"];
 
     public static readonly Column[] Documents =
     [

@@ -11,7 +11,8 @@ public record FalsePositive(string Type, string Text);
 public record SavedSpan(string Type, int Start, int Length, double Confidence, string Source, bool Flag);
 
 /// <summary>One judged fact about a redaction, kept so a result can be examined item by item and not only as totals. <c>Kind</c> is caught, missed, lost_to_extraction,
-/// over_redaction, unjudged or preserve_broken. <c>EntityIndex</c> is the answer-key item (0-based, -1 when none) and <c>Start</c> is -1 when there is no position.</summary>
+/// over_redaction, unjudged, preserve_broken or key_extra (a further occurrence of a key text beyond the count the key gives: not scored for recall, but a redaction of it
+/// still matches the key). <c>EntityIndex</c> is the answer-key item (0-based, -1 when none) and <c>Start</c> is -1 when there is no position.</summary>
 public record Fact(string Kind, int EntityIndex, string Type, string Text, int Start, int Length);
 
 /// <summary>The scores of one model on one document.</summary>
@@ -112,6 +113,11 @@ public static class Scoring
             for (var n = 0; n < ranked.Count; n++)
             {
                 s.Facts.Add(new Fact(n < caught ? "caught" : "missed", index, e.Type, e.Text, ranked[n].Start, ranked[n].Length));
+            }
+
+            foreach (var extra in places.Skip(present))
+            {
+                s.Facts.Add(new Fact("key_extra", index, e.Type, e.Text, extra.Start, extra.Length));
             }
 
             s.Present += present;

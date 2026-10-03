@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AiDocumentRedactor.Core\AiDocumentRedactor.Core.csproj" />
+    <ProjectReference Include="..\AiDocumentRedactor.Explorer\AiDocumentRedactor.Explorer.csproj" />
     <ProjectReference Include="..\AiDocumentRedactor.Detection\AiDocumentRedactor.Detection.csproj" />
     <ProjectReference Include="..\AiDocumentRedactor.Documents\AiDocumentRedactor.Documents.csproj" />
     <ProjectReference Include="..\AiDocumentRedactor.Ocr\AiDocumentRedactor.Ocr.csproj" />

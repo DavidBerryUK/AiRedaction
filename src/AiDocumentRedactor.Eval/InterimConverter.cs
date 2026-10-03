@@ -4,9 +4,10 @@ using System.Text.RegularExpressions;
 using AiDocumentRedactor.Core;
 using AiDocumentRedactor.Detection;
 using AiDocumentRedactor.Documents;
+using AiDocumentRedactor.Explorer.Dataset;
 using AiDocumentRedactor.Ocr;
 
-namespace AiDocumentRedactor.Eval.Dataset;
+namespace AiDocumentRedactor.Eval;
 
 /// <summary>Makes an interim dataset from saved runs (the .scores.json or .scores.json.gz files). No model is run: every detector's spans are taken from the saved run
 /// (the combinations with GLiNER are rebuilt from them), the documents are read again so the text matches, and everything is scored against the answer keys as they are now.

@@ -1,6 +1,6 @@
 # Story-001: Results Explorer
 
-**Status:** Draft (proof of concept)
+**Status:** In progress (proof of concept). Built so far: the dataset format, the interim dataset and validator, the SQLite import, and the explorer page with leaderboard, results grid, documents and difficulty ratings, document view, categories, combinations, methodology, CSV export and help dialogs. Still to build: the live "try with another model" run.
 **Related:** [Story-002: Ultimate Evaluator](Story-002-Ultimate-Evaluator.md) (produces the data this story reads), [HOW_TO_RUN_EVALUATION.md](../HOW_TO_RUN_EVALUATION.md), [EVALUATION_FINDINGS_V5.md](../EVALUATION_FINDINGS_V5.md)
 
 ## Summary

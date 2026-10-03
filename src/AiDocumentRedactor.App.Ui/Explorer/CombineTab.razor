@@ -1,0 +1,163 @@
+@namespace AiDocumentRedactor.App.Ui
+@* Combining detectors: choose models, how many must agree and what happens to the rest, and see what the combination would score, worked out from the saved results.
+   No model is run. *@
+<FilterBar State="State" Changed="LoadAsync" ShowVariants="false" />
+
+<section class="xcombine">
+    <fieldset class="xvariants">
+        <legend>Detectors <InfoButton Topic="detectors" /></legend>
+        @foreach (var m in Models)
+        {
+            <label><input type="checkbox" checked="@chosen.Contains(m)" @onchange="e => ToggleModel(m, e)" /> @m</label>
+        }
+        @if (State.Setups.Contains("GLiNER only"))
+        {
+            <label title="GLiNER, the small token-marking model, counts as one more detector"><input type="checkbox" checked="@gliner" @onchange="ToggleGliner" /> GLiNER <InfoButton Topic="gliner_voter" /></label>
+        }
+    </fieldset>
+
+    <div class="xfilter">
+        <label><span class="lbl">Redact what is found by at least <InfoButton Topic="needed" /></span>
+            <input type="number" min="1" max="@Voters" value="@needed" @onchange="OnNeeded" style="width:5em" /> of @Voters detectors
+        </label>
+        <label class="inline" title="Items found by fewer detectors are left in the text and flagged for a person, instead of being dropped"><input type="checkbox" checked="@flagRest" disabled="@(needed <= 1)" @onchange="OnFlagRest" /> Flag the rest for review <InfoButton Topic="flag_rest" /></label>
+        <label class="inline" title="Assumes the reviewer accepts exactly the flags that really were sensitive and no others. A real person will sometimes get this wrong, so treat the figures as a best case."><input type="checkbox" checked="@ideal" disabled="@(!flagRest || needed <= 1)" @onchange="OnIdeal" /> Assume an ideal reviewer <InfoButton Topic="ideal_reviewer" /></label>
+    </div>
+    <div class="xfilter">
+        <span class="muted small">Presets:</span>
+        <button class="btn small" @onclick="() => Preset(1, false, false)">Union (any one)</button>
+        <button class="btn small" @onclick="() => Preset(Voters, false, false)">All must agree</button>
+        <button class="btn small" @onclick="() => Preset(Math.Max(1, Voters / 2 + 1), false, false)">Majority</button>
+        <button class="btn small" @onclick="() => Preset(Math.Min(2, Voters), true, true)">Agree, singles flagged, ideal reviewer</button>
+    </div>
+</section>
+
+@if (rows is null)
+{
+    <p class="muted">Working it out…</p>
+}
+else if (rows.Count == 0)
+{
+    <p class="muted">Choose at least one detector. Only documents every chosen detector succeeded on are used.</p>
+}
+else
+{
+    <p class="xhint">@rows[0].Documents documents. Worked out from the saved spans against the answer key, so it matches the evaluation's own scoring; ranges are 95% ranges.</p>
+    <table class="xt">
+        <thead><tr><th>Setup</th><th>Recall (95% range) <InfoButton Topic="recall" /></th><th>Precision (95% range) <InfoButton Topic="precision" /></th><th>F1 <InfoButton Topic="f1" /></th><th>Missed <InfoButton Topic="missed" /></th><th>Over-redactions <InfoButton Topic="over" /></th><th>Flags raised (right) <InfoButton Topic="flags" /></th></tr></thead>
+        <tbody>
+            @for (var i = 0; i < rows.Count; i++)
+            {
+                var r = rows[i];
+                <tr class="@(i == rows.Count - 1 && rows.Count > 1 ? "selected" : null)">
+                    <td><strong>@r.Name</strong></td>
+                    <td class="nowrap"><div class="bar"><span style="width:@(Math.Round(r.Recall * 100, 1))%"></span></div><span class="num">@Fmt.Pct(r.Recall)</span> <span class="muted small">(@Fmt.Range(r.RecallRange))</span></td>
+                    <td class="nowrap"><div class="bar"><span style="width:@(Math.Round(r.Precision * 100, 1))%"></span></div><span class="num">@Fmt.Pct(r.Precision)</span> <span class="muted small">(@Fmt.Range(r.PrecisionRange))</span></td>
+                    <td class="num">@Fmt.Pct(r.F1)</td>
+                    <td class="num">@r.Missed of @r.Present</td>
+                    <td class="num">@r.OverRedactions of @r.Edits</td>
+                    <td class="num">@(r.FlagsRaised == 0 ? "–" : $"{r.FlagsRaised} ({r.FlagsCorrect})")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    @if (flagRest && needed > 1)
+    {
+        <p class="xhint">Flagged items stay in the text until a person decides. @(ideal ? "This row assumes every right flag is accepted and every wrong one dismissed: the best case." : "This row leaves every flag in the text, so flagged items count as missed. Tick “ideal reviewer” to see them accepted.")</p>
+    }
+}
+
+@code {
+    [Parameter, EditorRequired] public ExplorerState State { get; set; } = default!;
+
+    List<CombineRow>? rows;
+    int loadedVersion = -1;
+    readonly HashSet<string> chosen = [];
+    bool gliner;
+    int needed = 2;
+    bool flagRest = true;
+    bool ideal = true;
+    bool started;
+
+    IEnumerable<string> Models => State.Setups.Where(s => !s.Contains("GLiNER", StringComparison.Ordinal) && s is not "rules only");
+    int Voters => Math.Max(1, chosen.Count + (gliner ? 1 : 0));
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (!started)
+        {
+            started = true;
+            var models = Models.ToList();
+            foreach (var m in new[] { "gemma4:31b", "gpt-oss" }.Where(models.Contains))
+            {
+                chosen.Add(m);
+            }
+
+            if (chosen.Count == 0 && models.Count > 0)
+            {
+                chosen.Add(models[0]);
+            }
+
+            needed = Math.Min(needed, Voters);
+        }
+
+        if (loadedVersion != State.Version)
+        {
+            await LoadAsync();
+        }
+    }
+
+    async Task LoadAsync()
+    {
+        loadedVersion = State.Version;
+        rows = null;
+        needed = Math.Clamp(needed, 1, Voters);
+        rows = await State.Service!.CombineAsync(State.ToFilter(), new CombineChoice([.. chosen], gliner, needed, flagRest && needed > 1, ideal && flagRest && needed > 1));
+    }
+
+    async Task ToggleModel(string m, ChangeEventArgs e)
+    {
+        if (e.Value is true)
+        {
+            chosen.Add(m);
+        }
+        else
+        {
+            chosen.Remove(m);
+        }
+
+        await LoadAsync();
+    }
+
+    async Task ToggleGliner(ChangeEventArgs e)
+    {
+        gliner = e.Value is true;
+        await LoadAsync();
+    }
+
+    async Task OnNeeded(ChangeEventArgs e)
+    {
+        needed = int.TryParse(e.Value?.ToString(), out var n) ? n : needed;
+        await LoadAsync();
+    }
+
+    async Task OnFlagRest(ChangeEventArgs e)
+    {
+        flagRest = e.Value is true;
+        await LoadAsync();
+    }
+
+    async Task OnIdeal(ChangeEventArgs e)
+    {
+        ideal = e.Value is true;
+        await LoadAsync();
+    }
+
+    async Task Preset(int n, bool flag, bool reviewer)
+    {
+        needed = n;
+        flagRest = flag;
+        ideal = reviewer;
+        await LoadAsync();
+    }
+}

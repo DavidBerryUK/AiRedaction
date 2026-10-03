@@ -1,0 +1,132 @@
+@namespace AiDocumentRedactor.App.Ui
+@* One document: how every setup did on it, and its text with a chosen setup's work drawn on. *@
+@if (detail is null)
+{
+    <p class="muted">@(loaded ? "No such document in this dataset." : "Loading…")</p>
+}
+else
+{
+    <div class="xdoc-head">
+        <a href="/explorer/documents">← All documents</a>
+        <h2>@detail.DocId</h2>
+        <div class="xbadges">
+            <span class="tag">@detail.Corpus</span>
+            <span class="tag">@detail.FormatGroup</span>
+            @if (detail.DocType.Length > 0) {<span class="tag">@detail.DocType</span>}
+            @if (summary is not null) {<span class="rating r-@summary.Rating.ToString().ToLowerInvariant()" title="@DocumentSummary.RatingRule">@summary.Rating</span>}
+        </div>
+    </div>
+
+    <section>
+        <h3>How each setup did</h3>
+        <p class="xhint">Click a row to draw that setup's work on the text below.</p>
+        <table class="xt">
+            <thead><tr><th>Setup <InfoButton Topic="setup" /></th><th>Status <InfoButton Topic="status" /></th><th>Recall <InfoButton Topic="recall" /></th><th>Precision <InfoButton Topic="precision" /></th><th>Missed <InfoButton Topic="missed" /></th><th>Over <InfoButton Topic="over" /></th><th>Flags (right) <InfoButton Topic="flags" /></th><th>Time <InfoButton Topic="time" /></th></tr></thead>
+            <tbody>
+                @foreach (var r in detail.Results)
+                {
+                    <tr class="@(r.Config == config ? "selected" : null) @(r.Status != "ok" ? "failed" : null) pick" @onclick="() => SelectAsync(r.Config)">
+                        <td><strong>@r.Config</strong></td>
+                        <td>@r.Status@if (r.Error is { Length: > 0 }) {<span class="muted small" title="@r.Error"> ⓘ</span>}</td>
+                        <td class="num" style="background:@Fmt.Heat(r.Recall)">@Fmt.Pct(r.Recall)</td>
+                        <td class="num">@Fmt.Pct(r.Precision)</td>
+                        <td class="num">@Fmt.N(r.Missed)</td>
+                        <td class="num">@Fmt.N(r.OverRedactions)</td>
+                        <td class="num">@(r.FlagsRaised is > 0 ? $"{r.FlagsRaised} ({r.FlagsCorrect})" : "–")</td>
+                        <td class="num">@Fmt.Secs(r.DetectSeconds)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </section>
+
+    <section>
+        <h3>The text, as <select value="@config" @onchange="OnPick">
+                @foreach (var r in detail.Results)
+                {
+                    <option value="@r.Config" selected="@(r.Config == config)">@r.Config</option>
+                }
+            </select> handled it</h3>
+        <p class="xlegend"><InfoButton Topic="legend" />
+            <mark class="m-caught">found</mark>
+            <mark class="m-missed">missed</mark>
+            <mark class="m-over">over-redacted</mark>
+            <mark class="m-unjudged">not judged</mark>
+            <mark class="m-preserve">should have been kept</mark>
+            <mark class="m-flagok">flag: sensitive</mark>
+            <mark class="m-flagbad">flag: not sensitive</mark>
+            <mark class="m-redacted">redacted (matches the key)</mark>
+        </p>
+        <SpanText Text="@detail.Text" Markers="@(view?.Markers ?? [])" />
+    </section>
+
+    <details class="xkey">
+        <summary>The answer key for this document (@detail.Key.Count(k => k.Role == "entity") items)</summary>
+        <table class="xt">
+            <thead><tr><th>Role</th><th>Category</th><th>Text</th><th>Times</th><th>Origin</th></tr></thead>
+            <tbody>
+                @foreach (var k in detail.Key)
+                {
+                    <tr><td>@RoleLabel(k.Role)</td><td>@k.Type</td><td class="context">@k.Text</td><td class="num">@Fmt.N(k.Occurrences)</td><td>@k.Origin</td></tr>
+                }
+            </tbody>
+        </table>
+    </details>
+}
+
+@code {
+    [Parameter, EditorRequired] public ExplorerState State { get; set; } = default!;
+    [Parameter, EditorRequired] public string DocId { get; set; } = string.Empty;
+    [Parameter] public string? InitialSetup { get; set; }
+
+    DocumentDetail? detail;
+    DocumentSummary? summary;
+    ConfigView? view;
+    string? config;
+    bool loaded;
+    string? loadedDoc;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (loadedDoc == DocId)
+        {
+            if (InitialSetup is not null && InitialSetup != config && detail?.Results.Any(r => r.Config == InitialSetup) == true)
+            {
+                await SelectAsync(InitialSetup);
+            }
+
+            return;
+        }
+
+        loadedDoc = DocId;
+        loaded = false;
+        detail = await State.Service!.DocumentAsync(DocId);
+        loaded = true;
+        if (detail is null)
+        {
+            return;
+        }
+
+        summary = (await State.Service.DocumentsAsync(new Filter(Search: DocId))).FirstOrDefault(d => d.DocId == DocId);
+        var preferred = new[] { InitialSetup, State.SelectedConfig }.FirstOrDefault(c => c is not null && detail.Results.Any(r => r.Config == c && r.Status == "ok"));
+        preferred ??= detail.Results.FirstOrDefault(r => r.Status == "ok" && r.Variant == "plain" && r.Model.Length > 0)?.Config ?? detail.Results.FirstOrDefault(r => r.Status == "ok")?.Config;
+        await SelectAsync(preferred);
+    }
+
+    async Task SelectAsync(string? c)
+    {
+        config = c;
+        State.SelectedConfig = c;
+        view = c is null ? null : await State.Service!.ConfigViewAsync(DocId, c);
+    }
+
+    Task OnPick(ChangeEventArgs e) => SelectAsync(e.Value?.ToString());
+
+    static string RoleLabel(string role) => role switch
+    {
+        "entity" => "must be removed",
+        "must_preserve" => "must be kept",
+        "ignore" => "cannot be judged",
+        _ => role,
+    };
+}

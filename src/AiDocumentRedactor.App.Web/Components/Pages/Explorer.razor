@@ -1,0 +1,15 @@
+@page "/explorer"
+@page "/explorer/{Tab}"
+@page "/explorer/doc/{*DocId}"
+@* The results explorer, a page of its own beside the redaction screen. The tab, document and starting filters come from the address. *@
+
+<AiDocumentRedactor.App.Ui.ExplorerPage Tab="@Tab" DocId="@DocId" Setup="@Setup" Sort="@Sort" Descending="@Desc" Dataset="@Dataset" />
+
+@code {
+    [Parameter] public string? Tab { get; set; }
+    [Parameter] public string? DocId { get; set; }
+    [SupplyParameterFromQuery(Name = "setup")] public string? Setup { get; set; }
+    [SupplyParameterFromQuery(Name = "sort")] public string? Sort { get; set; }
+    [SupplyParameterFromQuery(Name = "desc")] public bool? Desc { get; set; }
+    [SupplyParameterFromQuery(Name = "dataset")] public string? Dataset { get; set; }
+}

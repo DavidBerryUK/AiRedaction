@@ -1,7 +1,7 @@
 using System.Text.Json;
 using AiDocumentRedactor.Core;
 using AiDocumentRedactor.Eval;
-using AiDocumentRedactor.Eval.Dataset;
+using AiDocumentRedactor.Explorer.Dataset;
 using Xunit;
 
 namespace AiDocumentRedactor.Tests;
@@ -104,7 +104,7 @@ public class DatasetTests
         Assert.Equal(-1, lost.Start);
     }
 
-    static string MakeCorpus(string root, out string savedPath)
+    internal static string MakeCorpus(string root, out string savedPath)
     {
         Directory.CreateDirectory(Path.Combine(root, "tests", "TestCorpus", "ground-truth"));
         Directory.CreateDirectory(Path.Combine(root, "tests", "TestCorpus", "text"));

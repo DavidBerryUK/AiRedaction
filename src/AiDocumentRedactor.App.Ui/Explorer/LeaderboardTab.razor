@@ -1,0 +1,106 @@
+@namespace AiDocumentRedactor.App.Ui
+@* The leaderboard: every setup's recall, precision and F1 with ranges, over the documents that match the filters. Click a heading to sort. *@
+<FilterBar State="State" Changed="LoadAsync" ShowVariants="true" />
+
+@if (rows is null)
+{
+    <p class="muted">Loading…</p>
+}
+else if (rows.Count == 0)
+{
+    <p class="muted">No results match these filters.</p>
+}
+else
+{
+    <p class="xhint">@rows.Count setups over @Documents documents. Recall is how much of what should be removed was removed; precision is how much of what was removed should have been. The ranges are 95% ranges: setups whose ranges overlap are not clearly different.</p>
+    <table class="xt">
+        <thead>
+            <tr>
+                @Head("setup", "Setup", "setup")
+                @Head("docs", "Documents", "documents")
+                @Head("recall", "Recall (95% range)", "recall")
+                @Head("precision", "Precision (95% range)", "precision")
+                @Head("f1", "F1", "f1")
+                @Head("missed", "Missed", "missed")
+                @Head("over", "Over-redactions", "over")
+                @Head("preserve", "Must-keep damaged", "preserve")
+                @Head("flags", "GLiNER flags (right)", "flags")
+                @Head("time", "Time per document", "time")
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var r in Sorted())
+            {
+                <tr class="@(r.IsBaseline ? "baseline" : null)">
+                    <td><strong>@r.Config</strong>@if (r.IsBaseline) {<span class="tag">no model</span>}</td>
+                    <td class="num">@r.Documents@(r.Failed > 0 ? $" ({r.Failed} failed)" : "")</td>
+                    <td class="nowrap"><div class="bar"><span style="width:@(Pc(r.Recall))%"></span></div><span class="num">@Fmt.Pct(r.Recall)</span> <span class="muted small">(@Fmt.Range(r.RecallRange))</span></td>
+                    <td class="nowrap"><div class="bar"><span style="width:@(Pc(r.Precision))%"></span></div><span class="num">@Fmt.Pct(r.Precision)</span> <span class="muted small">(@Fmt.Range(r.PrecisionRange))</span></td>
+                    <td class="num">@Fmt.Pct(r.F1)</td>
+                    <td class="num">@r.Missed</td>
+                    <td class="num">@r.OverRedactions</td>
+                    <td class="num">@r.PreserveBroken of @r.PreserveTotal</td>
+                    <td class="num">@(r.FlagsRaised > 0 ? $"{r.FlagsRaised} ({r.FlagsCorrect})" : "–")</td>
+                    <td class="num">@Fmt.Secs(r.AvgDetectSeconds)</td>
+                    <td class="nowrap"><a class="btn small" href="@WorstLink(r)" title="Open the results grid for this setup, worst recall first">Worst documents</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    [Parameter, EditorRequired] public ExplorerState State { get; set; } = default!;
+
+    List<ConfigSummary>? rows;
+    int loadedVersion = -1;
+    string sort = "f1";
+    bool descending = true;
+
+    int Documents => rows?.Max(r => r.Documents) ?? 0;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (loadedVersion != State.Version)
+        {
+            await LoadAsync();
+        }
+    }
+
+    async Task LoadAsync()
+    {
+        loadedVersion = State.Version;
+        rows = await State.Service!.SummaryAsync(State.ToFilter());
+    }
+
+    static double Pc(double v) => Math.Round(v * 100, 1);
+
+    string WorstLink(ConfigSummary r) => $"/explorer/results?setup={Uri.EscapeDataString(r.Config)}&sort=recall&desc=false";
+
+    RenderFragment Head(string key, string label, string? topic = null) => @<th class="sortable" @onclick="() => SortBy(key)">@label@(sort == key ? (descending ? " ▼" : " ▲") : "")@if (topic is not null) {<InfoButton Topic="@topic" />}</th>;
+
+    void SortBy(string key)
+    {
+        descending = sort == key ? !descending : key != "setup";
+        sort = key;
+    }
+
+    IEnumerable<ConfigSummary> Sorted()
+    {
+        IOrderedEnumerable<ConfigSummary> ordered = sort switch
+        {
+            "docs" => rows!.OrderBy(r => r.Documents),
+            "recall" => rows!.OrderBy(r => r.Recall),
+            "precision" => rows!.OrderBy(r => r.Precision),
+            "missed" => rows!.OrderBy(r => r.Missed),
+            "over" => rows!.OrderBy(r => r.OverRedactions),
+            "preserve" => rows!.OrderBy(r => r.PreserveBroken),
+            "flags" => rows!.OrderBy(r => r.FlagsRaised),
+            "time" => rows!.OrderBy(r => r.AvgDetectSeconds ?? double.MaxValue),
+            "setup" => rows!.OrderBy(r => r.Config, StringComparer.OrdinalIgnoreCase),
+            _ => rows!.OrderBy(r => r.F1),
+        };
+        return descending ? ordered.Reverse() : ordered;
+    }
+}

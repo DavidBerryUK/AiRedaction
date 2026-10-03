@@ -5,6 +5,8 @@ using AiDocumentRedactor.App.Web.Components;
 using AiDocumentRedactor.Core;
 using AiDocumentRedactor.Detection;
 using AiDocumentRedactor.Documents;
+using AiDocumentRedactor.Explorer;
+using AiDocumentRedactor.Explorer.Dataset;
 using AiDocumentRedactor.Ocr;
 
 // ---- configuration (single JSON file, FR12) ----
@@ -66,6 +68,8 @@ builder.Services.AddSingleton(sp => new SessionRegistry(() =>
         OcrEngineName = ocr?.Name
     };
 }));
+// The results explorer reads datasets (CSV files made by the evaluation) from this folder, and shows the methodology document beside them.
+builder.Services.AddSingleton(new ExplorerCatalog(Path.GetFullPath(Arg("--datasets") ?? "datasets"), Path.GetFullPath(Path.Combine("documentation", "METHODOLOGY.md"))));
 // Components get the session of their own browser: the root component sets the holder, everything below asks for the session.
 builder.Services.AddScoped<SessionHolder>();
 builder.Services.AddScoped(sp => sp.GetRequiredService<SessionHolder>().Current ?? throw new InvalidOperationException("No session for this browser."));
@@ -136,6 +140,33 @@ app.MapGet("/results/{id:guid}/page/{page:int}", async (Guid id, int page, HttpC
 // Renders a redacted PDF or image result in memory for the viewer (never written to disk). Same token protection as everything else.
 app.MapGet("/results/{id:guid}/redacted", async (Guid id, HttpContext ctx, SessionRegistry sessions) =>
     await sessions.Get((string)ctx.Items["rd_session"]!).RenderRedactedAsync(id) is { } r ? Results.File(r.Bytes, r.ContentType) : Results.NotFound());
+
+// Downloads the rows of the explorer's results grid that match the filters in the address, in the grid's order, as a CSV file.
+app.MapGet("/explorer/export.csv", async (HttpContext ctx, ExplorerCatalog catalog) =>
+{
+    var q = ctx.Request.Query;
+    string? One(string name) => q[name].FirstOrDefault() is { Length: > 0 } v ? v : null;
+    List<string>? Many(string name) => One(name)?.Split(',', StringSplitOptions.RemoveEmptyEntries).ToList();
+    var service = await catalog.OpenAsync(One("dataset") ?? (await catalog.ListAsync()).FirstOrDefault()?.Id ?? string.Empty);
+    if (service is null)
+    {
+        return Results.NotFound();
+    }
+
+    var filter = new Filter(One("corpus"), One("doctype"), One("format"), One("search"), Many("variants"), Many("configs"), One("status"), null, One("baselines") != "false");
+    var rows = await service.GridAllAsync(filter, One("sort") ?? "document", One("desc") == "true");
+    var sb = new System.Text.StringBuilder("document,corpus,format,doc_type,setup,variant,status,recall,precision,present,caught,missed,edits,true_positives,over_redactions,flags_raised,flags_correct,preserve_broken,detect_seconds\n");
+    foreach (var r in rows)
+    {
+        sb.Append(string.Join(',', new[]
+        {
+            r.DocId, r.Corpus, r.FormatGroup, r.DocType, r.Config, r.Variant, r.Status, Csv.Num(r.Recall), Csv.Num(r.Precision), Csv.Num(r.Present), Csv.Num(r.Caught), Csv.Num(r.Missed),
+            Csv.Num(r.Edits), Csv.Num(r.TruePositives), Csv.Num(r.OverRedactions), Csv.Num(r.FlagsRaised), Csv.Num(r.FlagsCorrect), Csv.Num(r.PreserveBroken), Csv.Num(r.DetectSeconds),
+        }.Select(Csv.Escape))).Append('\n');
+    }
+
+    return Results.Text(sb.ToString(), "text/csv; charset=utf-8");
+});
 
 app.UseStatusCodePagesWithReExecute("/not-found", createScopeForStatusCodePages: true);
 app.UseAntiforgery();

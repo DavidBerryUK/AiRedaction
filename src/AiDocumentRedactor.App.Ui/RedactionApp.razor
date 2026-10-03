@@ -38,6 +38,7 @@
             {
                 <button class="btn icon models-btn" title="See the prompt sent to the model and what came back" @onclick='() => OpenPrompt("prompt", null)'>🔍 Prompt</button>
             }
+            <a class="btn icon models-btn" href="/explorer" title="Explore the evaluation results: models, documents and categories">📊 Results</a>
             <button class="btn icon models-btn" title="Choose what kinds of sensitive data are looked for, for this session" @onclick="() => showCategories = true">☰ Categories@(S.CategoriesChanged ? " ●" : "")</button>
             <button class="btn icon models-btn" title="Choose which models run for confidence, and see which are downloaded" @onclick="() => showModels = true">⚙ Models</button>
             <label class="picker">Next run

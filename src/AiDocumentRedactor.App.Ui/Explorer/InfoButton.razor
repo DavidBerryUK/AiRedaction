@@ -1,0 +1,14 @@
+@namespace AiDocumentRedactor.App.Ui
+@* A small ⓘ next to a control or heading. It asks the page to show the help dialog for its topic. *@
+<button type="button" class="info" aria-label="@Label" title="@Label" @onclick="Open" @onclick:stopPropagation="true">ⓘ</button>
+
+@code {
+    [CascadingParameter] ExplorerState? State { get; set; }
+
+    /// <summary>The key of the help topic (see <see cref="ExplorerHelp"/>).</summary>
+    [Parameter, EditorRequired] public string Topic { get; set; } = string.Empty;
+
+    string Label => $"About {(ExplorerHelp.Find(Topic)?.Title ?? Topic)}";
+
+    void Open() => State?.ShowHelp(Topic);
+}

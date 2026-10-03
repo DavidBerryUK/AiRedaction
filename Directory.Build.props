@@ -1,0 +1,10 @@
+<Project>
+
+  <ItemGroup>
+    <!-- The known SQLite advisory (memory corruption through a crafted query) needs attacker-written SQL. The results explorer runs only its own fixed, parameterised queries
+         on a local file, and no SQLitePCLRaw package with a patched SQLite exists yet, so this one advisory is suppressed for every project that gets it through the explorer.
+         Remove this when a patched SQLitePCLRaw is released. -->
+    <NuGetAuditSuppress Include="https://github.com/advisories/GHSA-2m69-gcr7-jv3q" />
+  </ItemGroup>
+
+</Project>

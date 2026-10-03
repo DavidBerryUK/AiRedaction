@@ -1,0 +1,141 @@
+@namespace AiDocumentRedactor.App.Ui
+@* The documents, rated by how hard the language models found them. Problem documents are the ones with an item every model missed. *@
+<FilterBar State="State" Changed="LoadAsync" ShowSearch="true" ShowVariants="false" />
+<div class="xfilter">
+    <label><span class="lbl">Rating <InfoButton Topic="rating" /></span>
+        <select @onchange="OnRating">
+            <option value="">All</option>
+            @foreach (var d in Enum.GetValues<Difficulty>())
+            {
+                <option value="@d" selected="@(rating == d)">@d</option>
+            }
+        </select>
+    </label>
+    <fieldset class="xvariants">
+        <legend>Models counted <InfoButton Topic="models_counted" /></legend>
+        @foreach (var m in Models)
+        {
+            <label><input type="checkbox" checked="@(!excluded.Contains(m))" @onchange="e => ToggleModel(m, e)" /> @m</label>
+        }
+    </fieldset>
+</div>
+
+@if (docs is null)
+{
+    <p class="muted">Loading…</p>
+}
+else
+{
+    var shown = Shown().ToList();
+    <p class="xhint">@shown.Count of @docs.Count documents. How is this rated? <InfoButton Topic="rating" /></p>
+    <p class="xcounts">
+        @foreach (var d in Enum.GetValues<Difficulty>())
+        {
+            <span class="rating r-@d.ToString().ToLowerInvariant()">@d: @docs.Count(x => x.Rating == d)</span>
+        }
+    </p>
+    <table class="xt">
+        <thead>
+            <tr>
+                @Head("document", "Document")
+                @Head("rating", "Rating", "rating")
+                @Head("type", "Type", "doc_type")
+                @Head("format", "Format", "format")
+                @Head("recall", "Average recall", "recall")
+                @Head("withmisses", "Models that missed something")
+                @Head("all", "Items every model missed")
+                @Head("over", "Average over-redactions")
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var d in shown)
+            {
+                <tr>
+                    <td><a href="@ExplorerState.DocumentLink(d.DocId)">@d.DocId</a></td>
+                    <td>@if (d.Models == 0) {<span class="tag" title="No language model finished this document">no results</span>} else {<span class="rating r-@d.Rating.ToString().ToLowerInvariant()">@d.Rating</span>}</td>
+                    <td>@d.DocType</td>
+                    <td>@d.FormatGroup</td>
+                    <td class="num" style="background:@Fmt.Heat(d.AvgRecall)">@Fmt.Pct(d.AvgRecall)</td>
+                    <td class="num">@d.ModelsWithMisses of @d.Models</td>
+                    <td class="num">@d.MissedByAll</td>
+                    <td class="num">@d.AvgOverRedactions.ToString("0.0")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    [Parameter, EditorRequired] public ExplorerState State { get; set; } = default!;
+
+    List<DocumentSummary>? docs;
+    int loadedVersion = -1;
+    Difficulty? rating;
+    string sort = "rating";
+    bool descending = true;
+    readonly HashSet<string> excluded = [];
+
+    IEnumerable<string> Models => State.Setups.Where(s => !s.Contains("GLiNER", StringComparison.Ordinal) && s is not "rules only");
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (loadedVersion != State.Version)
+        {
+            await LoadAsync();
+        }
+    }
+
+    async Task LoadAsync()
+    {
+        loadedVersion = State.Version;
+        var counted = Models.Where(m => !excluded.Contains(m)).ToList();
+        docs = await State.Service!.DocumentsAsync(State.ToFilter() with { Configs = excluded.Count == 0 ? null : counted });
+    }
+
+    async Task ToggleModel(string model, ChangeEventArgs e)
+    {
+        if (e.Value is true)
+        {
+            excluded.Remove(model);
+        }
+        else
+        {
+            excluded.Add(model);
+        }
+
+        await LoadAsync();
+    }
+
+    void OnRating(ChangeEventArgs e) => rating = Enum.TryParse<Difficulty>(e.Value?.ToString(), out var d) ? d : null;
+
+    RenderFragment Head(string key, string label, string? topic = null) => @<th class="sortable" @onclick="() => SortBy(key)">@label@(sort == key ? (descending ? " ▼" : " ▲") : "")@if (topic is not null) {<InfoButton Topic="@topic" />}</th>;
+
+    void SortBy(string key)
+    {
+        descending = sort == key ? !descending : key is not ("document" or "type" or "format");
+        sort = key;
+    }
+
+    IEnumerable<DocumentSummary> Shown()
+    {
+        var list = docs!.Where(d => rating is null || d.Rating == rating);
+        if (sort == "rating")
+        {
+            // Hardest first: a Problem before a Hard, then the most items every model missed, then the lowest recall.
+            var hardest = list.OrderByDescending(d => (int)d.Rating).ThenByDescending(d => d.MissedByAll).ThenBy(d => d.AvgRecall ?? 2).ThenBy(d => d.DocId, StringComparer.Ordinal);
+            return descending ? hardest : hardest.Reverse();
+        }
+
+        IOrderedEnumerable<DocumentSummary> ordered = sort switch
+        {
+            "document" => list.OrderBy(d => d.DocId, StringComparer.Ordinal),
+            "type" => list.OrderBy(d => d.DocType, StringComparer.OrdinalIgnoreCase),
+            "format" => list.OrderBy(d => d.FormatGroup, StringComparer.OrdinalIgnoreCase),
+            "recall" => list.OrderBy(d => d.AvgRecall ?? 2),
+            "withmisses" => list.OrderBy(d => d.ModelsWithMisses),
+            "all" => list.OrderBy(d => d.MissedByAll),
+            _ => list.OrderBy(d => d.AvgOverRedactions),
+        };
+        return descending ? ordered.Reverse() : ordered;
+    }
+}

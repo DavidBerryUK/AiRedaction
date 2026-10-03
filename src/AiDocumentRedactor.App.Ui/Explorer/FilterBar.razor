@@ -1,0 +1,106 @@
+@namespace AiDocumentRedactor.App.Ui
+@* The filters every explorer tab shares: corpus, document type, format, a text search, and which kinds of setup to show. *@
+<div class="xfilter">
+    <label><span class="lbl">Corpus <InfoButton Topic="corpus" /></span>
+        <select @onchange="e => Set(v => State.Corpus = v, e)">
+            <option value="">All</option>
+            @foreach (var c in State.Corpora)
+            {
+                <option value="@c" selected="@(State.Corpus == c)">@c</option>
+            }
+        </select>
+    </label>
+    <label><span class="lbl">Document type <InfoButton Topic="doc_type" /></span>
+        <select @onchange="e => Set(v => State.DocType = v, e)">
+            <option value="">All</option>
+            @foreach (var c in State.DocTypes)
+            {
+                <option value="@c" selected="@(State.DocType == c)">@c</option>
+            }
+        </select>
+    </label>
+    <label><span class="lbl">Format <InfoButton Topic="format" /></span>
+        <select @onchange="e => Set(v => State.Format = v, e)">
+            <option value="">All</option>
+            @foreach (var c in State.Formats)
+            {
+                <option value="@c" selected="@(State.Format == c)">@c</option>
+            }
+        </select>
+    </label>
+    @if (ShowSearch)
+    {
+        <label><span class="lbl">Document <InfoButton Topic="search" /></span>
+            <input type="search" placeholder="part of a file name" value="@State.Search" @onchange="e => Set(v => State.Search = v, e)" />
+        </label>
+    }
+    @if (ShowSetup)
+    {
+        <label><span class="lbl">Setup <InfoButton Topic="setup" /></span>
+            <select @onchange="e => Set(v => State.Setup = v, e)">
+                <option value="">All setups</option>
+                @foreach (var c in State.Setups)
+                {
+                    <option value="@c" selected="@(State.Setup == c)">@c</option>
+                }
+            </select>
+        </label>
+    }
+    @if (ShowVariants)
+    {
+        <fieldset class="xvariants">
+            <legend>Show <InfoButton Topic="variants" /></legend>
+            @foreach (var (key, label, tip) in VariantChoices)
+            {
+                <label title="@tip"><input type="checkbox" checked="@State.Variants.Contains(key)" @onchange="e => ToggleVariant(key, e)" /> @label</label>
+            }
+            <label title="Rules only, GLiNER only, and rules + GLiNER: what the cheap layers do without a language model"><input type="checkbox" checked="@State.Baselines" @onchange="ToggleBaselines" /> No-model baselines <InfoButton Topic="baselines" /></label>
+        </fieldset>
+    }
+</div>
+
+@code {
+    [Parameter, EditorRequired] public ExplorerState State { get; set; } = default!;
+    [Parameter] public EventCallback Changed { get; set; }
+    [Parameter] public bool ShowSearch { get; set; }
+    [Parameter] public bool ShowSetup { get; set; }
+    [Parameter] public bool ShowVariants { get; set; } = true;
+
+    static readonly (string Key, string Label, string Tip)[] VariantChoices =
+    [
+        ("plain", "Models alone", "Each language model on its own"),
+        ("with-gliner", "+ GLiNER (flags left)", "A model with GLiNER as a second opinion: GLiNER's solo finds are flagged and left in the text"),
+        ("with-gliner-all-flags-accepted", "+ GLiNER (all flags accepted)", "As above, if a reviewer accepted every flag"),
+        ("with-gliner-correct-flags-accepted", "+ GLiNER (correct flags accepted)", "As above, if a reviewer accepted exactly the right flags"),
+    ];
+
+    async Task Set(Action<string?> assign, ChangeEventArgs e)
+    {
+        var v = e.Value?.ToString();
+        assign(string.IsNullOrWhiteSpace(v) ? null : v);
+        State.Touch();
+        await Changed.InvokeAsync();
+    }
+
+    async Task ToggleVariant(string key, ChangeEventArgs e)
+    {
+        if (e.Value is true)
+        {
+            State.Variants.Add(key);
+        }
+        else
+        {
+            State.Variants.Remove(key);
+        }
+
+        State.Touch();
+        await Changed.InvokeAsync();
+    }
+
+    async Task ToggleBaselines(ChangeEventArgs e)
+    {
+        State.Baselines = e.Value is true;
+        State.Touch();
+        await Changed.InvokeAsync();
+    }
+}

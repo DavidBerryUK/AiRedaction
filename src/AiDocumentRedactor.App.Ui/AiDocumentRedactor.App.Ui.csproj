@@ -18,6 +18,7 @@
   <ItemGroup>
     <ProjectReference Include="..\AiDocumentRedactor.App.ViewModels\AiDocumentRedactor.App.ViewModels.csproj" />
     <ProjectReference Include="..\AiDocumentRedactor.Core\AiDocumentRedactor.Core.csproj" />
+    <ProjectReference Include="..\AiDocumentRedactor.Explorer\AiDocumentRedactor.Explorer.csproj" />
   </ItemGroup>
 
 </Project>

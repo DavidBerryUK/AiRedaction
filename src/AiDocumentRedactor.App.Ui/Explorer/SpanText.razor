@@ -1,0 +1,105 @@
+@namespace AiDocumentRedactor.App.Ui
+@* A document's text with what a setup did to it drawn on: found items green, missed red, wrong redactions orange, flags blue. Hover for the details. *@
+<div class="doc-text">
+    @foreach (var s in segments)
+    {
+        @if (s.Class is null)
+        {
+            @s.Text
+        }
+        else
+        {
+            <mark class="@s.Class" title="@s.Tip">@s.Text</mark>
+        }
+    }
+</div>
+
+@code {
+    [Parameter, EditorRequired] public string Text { get; set; } = string.Empty;
+    [Parameter, EditorRequired] public IReadOnlyList<Marker> Markers { get; set; } = [];
+
+    record Segment(string Text, string? Class, string? Tip);
+
+    List<Segment> segments = [];
+
+    /// <summary>The order the classes win in where several overlap: a miss must never be hidden under a green mark.</summary>
+    static readonly string[] Priority = ["missed", "preserve_broken", "over_redaction", "unjudged", "flag_wrong", "flag_correct", "caught", "flagged", "redacted"];
+
+    static string ClassOf(string kind) => kind switch
+    {
+        "missed" => "m-missed",
+        "preserve_broken" => "m-preserve",
+        "over_redaction" => "m-over",
+        "unjudged" => "m-unjudged",
+        "flag_wrong" => "m-flagbad",
+        "flag_correct" => "m-flagok",
+        "caught" => "m-caught",
+        "flagged" => "m-flagged",
+        _ => "m-redacted",
+    };
+
+    static string Describe(Marker m) => m.Kind switch
+    {
+        "missed" => $"Missed: {m.Type} should have been removed",
+        "caught" => $"Found: {m.Type}",
+        "over_redaction" => $"Over-redacted as {m.Type}: not sensitive on the answer key",
+        "unjudged" => $"Redacted as {m.Type}: the answer key cannot judge this",
+        "preserve_broken" => "Should have been kept, but was redacted",
+        "flag_correct" => $"Flagged for review ({m.Type}): really sensitive",
+        "flag_wrong" => $"Flagged for review ({m.Type}): not sensitive",
+        "flagged" => $"Flagged for review: {m.Type} ({m.SpanSource}{(m.Confidence is { } c ? $", {c:0.00}" : "")})",
+        "redacted" => $"Redacted as {m.Type} ({m.SpanSource}{(m.Confidence is { } c2 ? $", {c2:0.00}" : "")})",
+        _ => m.Kind,
+    };
+
+    protected override void OnParametersSet()
+    {
+        var marks = Markers.Where(m => m.Start >= 0 && m.Length > 0 && m.Start + m.Length <= Text.Length).ToList();
+        var cuts = new SortedSet<int> { 0, Text.Length };
+        foreach (var m in marks)
+        {
+            cuts.Add(m.Start);
+            cuts.Add(m.Start + m.Length);
+        }
+
+        segments = [];
+        var edges = cuts.ToList();
+        string? lastClass = null;
+        string? lastTip = null;
+        var run = new System.Text.StringBuilder();
+        void Flush()
+        {
+            if (run.Length > 0)
+            {
+                segments.Add(new Segment(run.ToString(), lastClass, lastTip));
+                run.Clear();
+            }
+        }
+
+        for (var i = 0; i + 1 < edges.Count; i++)
+        {
+            var (from, to) = (edges[i], edges[i + 1]);
+            var covering = marks.Where(m => m.Start <= from && m.Start + m.Length >= to).ToList();
+            string? cls = null;
+            string? tip = null;
+            if (covering.Count > 0)
+            {
+                var kinds = covering.Select(m => m.Kind).Distinct().ToList();
+                var top = Priority.FirstOrDefault(kinds.Contains) ?? kinds[0];
+                cls = ClassOf(top);
+                tip = string.Join(" · ", covering.OrderBy(m => Array.IndexOf(Priority, m.Kind)).Select(Describe).Distinct());
+            }
+
+            if (cls != lastClass || tip != lastTip)
+            {
+                Flush();
+                lastClass = cls;
+                lastTip = tip;
+            }
+
+            run.Append(Text, from, to - from);
+        }
+
+        Flush();
+    }
+}
