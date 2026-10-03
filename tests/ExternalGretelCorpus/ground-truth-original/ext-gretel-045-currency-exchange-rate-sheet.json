@@ -1,0 +1,34 @@
+{
+ "id": "ext-gretel-045-currency-exchange-rate-sheet",
+ "title": "Currency Exchange Rate Sheet (external finance document)",
+ "formats": [
+  "txt"
+ ],
+ "scanKinds": [],
+ "entities": [
+  {
+   "where": "body",
+   "type": "ID_NUMBER",
+   "text": "Ii-24461",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "PERSON",
+   "text": "Pomponio Camanni-Zichichi",
+   "occurrences": 1
+  }
+ ],
+ "mustPreserve": [],
+ "judgedCategories": [
+  "PERSON",
+  "COMPANY",
+  "ADDRESS",
+  "EMAIL",
+  "PHONE",
+  "DATE_OF_BIRTH",
+  "ID_NUMBER",
+  "ONLINE_ID",
+  "SECRET"
+ ]
+}

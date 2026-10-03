@@ -1,0 +1,40 @@
+{
+ "id": "ext-gretel-073-financial-disclosure-statement",
+ "title": "Financial Disclosure Statement (external finance document)",
+ "formats": [
+  "txt"
+ ],
+ "scanKinds": [],
+ "entities": [
+  {
+   "where": "body",
+   "type": "COMPANY",
+   "text": "Alpha Capital",
+   "occurrences": 3
+  },
+  {
+   "where": "body",
+   "type": "COMPANY",
+   "text": "Alpha Capital Management",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "ADDRESS",
+   "text": "London, United Kingdom",
+   "occurrences": 1
+  }
+ ],
+ "mustPreserve": [],
+ "judgedCategories": [
+  "PERSON",
+  "COMPANY",
+  "ADDRESS",
+  "EMAIL",
+  "PHONE",
+  "DATE_OF_BIRTH",
+  "ID_NUMBER",
+  "ONLINE_ID",
+  "SECRET"
+ ]
+}

@@ -1,0 +1,46 @@
+{
+ "id": "ext-nemotron-127-information-technology-user-feedback",
+ "title": "Information Technology - User Feedback (external synthetic document)",
+ "formats": [
+  "txt"
+ ],
+ "scanKinds": [],
+ "entities": [
+  {
+   "where": "body",
+   "type": "ONLINE_ID",
+   "text": "jgonzalezvazquez",
+   "occurrences": 2
+  },
+  {
+   "where": "body",
+   "type": "EMAIL",
+   "text": "jgonzalezvazquez1988@icloud.com",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "SECRET",
+   "text": "api_dev_4k8Lx2ZpMwR1z6Q9vK7EeTgVjX5YhY2",
+   "occurrences": 2
+  },
+  {
+   "where": "body",
+   "type": "ID_NUMBER",
+   "text": "d3f0f57c-1f20-4034-854a-06c842f5a75b",
+   "occurrences": 1
+  }
+ ],
+ "mustPreserve": [],
+ "judgedCategories": [
+  "PERSON",
+  "COMPANY",
+  "ADDRESS",
+  "EMAIL",
+  "PHONE",
+  "DATE_OF_BIRTH",
+  "ID_NUMBER",
+  "ONLINE_ID",
+  "SECRET"
+ ]
+}

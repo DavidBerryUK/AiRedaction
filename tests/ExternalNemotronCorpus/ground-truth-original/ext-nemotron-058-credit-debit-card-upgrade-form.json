@@ -1,0 +1,58 @@
+{
+ "id": "ext-nemotron-058-credit-debit-card-upgrade-form",
+ "title": "Credit - Debit Card Upgrade Form (external synthetic document)",
+ "formats": [
+  "txt"
+ ],
+ "scanKinds": [],
+ "entities": [
+  {
+   "where": "body",
+   "type": "PERSON",
+   "text": "Goli",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "PERSON",
+   "text": "Jafari",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "ID_NUMBER",
+   "text": "5234 1256 7890 4567",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "ADDRESS",
+   "text": "Kargar Street, 45",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "PHONE",
+   "text": "+98 83 3425 3918",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "EMAIL",
+   "text": "jafari@parsiancredit.com",
+   "occurrences": 1
+  }
+ ],
+ "mustPreserve": [],
+ "judgedCategories": [
+  "PERSON",
+  "COMPANY",
+  "ADDRESS",
+  "EMAIL",
+  "PHONE",
+  "DATE_OF_BIRTH",
+  "ID_NUMBER",
+  "ONLINE_ID",
+  "SECRET"
+ ]
+}

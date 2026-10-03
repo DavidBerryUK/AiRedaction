@@ -1,0 +1,46 @@
+{
+ "id": "ext-gretel-176-transaction-confirmation",
+ "title": "Transaction Confirmation (external finance document)",
+ "formats": [
+  "txt"
+ ],
+ "scanKinds": [],
+ "entities": [
+  {
+   "where": "body",
+   "type": "COMPANY",
+   "text": "ABC Capital Corp.",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "ADDRESS",
+   "text": "123 Main Street, New York, NY 10001, USA",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "PERSON",
+   "text": "John Doe",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "ADDRESS",
+   "text": "456 Park Lane, London, UK NW1 4JA",
+   "occurrences": 1
+  }
+ ],
+ "mustPreserve": [],
+ "judgedCategories": [
+  "PERSON",
+  "COMPANY",
+  "ADDRESS",
+  "EMAIL",
+  "PHONE",
+  "DATE_OF_BIRTH",
+  "ID_NUMBER",
+  "ONLINE_ID",
+  "SECRET"
+ ]
+}

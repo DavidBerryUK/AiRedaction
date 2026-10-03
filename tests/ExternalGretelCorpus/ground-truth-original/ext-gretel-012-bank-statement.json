@@ -1,0 +1,46 @@
+{
+ "id": "ext-gretel-012-bank-statement",
+ "title": "Bank Statement (external finance document)",
+ "formats": [
+  "txt"
+ ],
+ "scanKinds": [],
+ "entities": [
+  {
+   "where": "body",
+   "type": "COMPANY",
+   "text": "Barclays Bank PLC",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "PERSON",
+   "text": "Blanca C. Ariza",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "ONLINE_ID",
+   "text": "156.154.24.191",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "ADDRESS",
+   "text": "46 avenue Étienne, Apt. 26",
+   "occurrences": 1
+  }
+ ],
+ "mustPreserve": [],
+ "judgedCategories": [
+  "PERSON",
+  "COMPANY",
+  "ADDRESS",
+  "EMAIL",
+  "PHONE",
+  "DATE_OF_BIRTH",
+  "ID_NUMBER",
+  "ONLINE_ID",
+  "SECRET"
+ ]
+}

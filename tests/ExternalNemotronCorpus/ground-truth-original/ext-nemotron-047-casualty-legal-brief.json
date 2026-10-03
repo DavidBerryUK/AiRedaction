@@ -1,0 +1,46 @@
+{
+ "id": "ext-nemotron-047-casualty-legal-brief",
+ "title": "Casualty - Legal Brief (external synthetic document)",
+ "formats": [
+  "txt"
+ ],
+ "scanKinds": [],
+ "entities": [
+  {
+   "where": "body",
+   "type": "PERSON",
+   "text": "Aisyah",
+   "occurrences": 2
+  },
+  {
+   "where": "body",
+   "type": "PERSON",
+   "text": "Lim",
+   "occurrences": 2
+  },
+  {
+   "where": "body",
+   "type": "PHONE",
+   "text": "03-5678-1234",
+   "occurrences": 3
+  },
+  {
+   "where": "body",
+   "type": "ID_NUMBER",
+   "text": "MRN-543721",
+   "occurrences": 1
+  }
+ ],
+ "mustPreserve": [],
+ "judgedCategories": [
+  "PERSON",
+  "COMPANY",
+  "ADDRESS",
+  "EMAIL",
+  "PHONE",
+  "DATE_OF_BIRTH",
+  "ID_NUMBER",
+  "ONLINE_ID",
+  "SECRET"
+ ]
+}

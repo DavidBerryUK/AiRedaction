@@ -1,0 +1,40 @@
+{
+ "id": "ext-gretel-072-financial-data-feed",
+ "title": "Financial Data Feed (external finance document)",
+ "formats": [
+  "txt"
+ ],
+ "scanKinds": [],
+ "entities": [
+  {
+   "where": "body",
+   "type": "COMPANY",
+   "text": "Apple Inc.",
+   "occurrences": 2
+  },
+  {
+   "where": "body",
+   "type": "COMPANY",
+   "text": "Microsoft Corporation",
+   "occurrences": 2
+  },
+  {
+   "where": "body",
+   "type": "COMPANY",
+   "text": "Amazon.com, Inc.",
+   "occurrences": 2
+  }
+ ],
+ "mustPreserve": [],
+ "judgedCategories": [
+  "PERSON",
+  "COMPANY",
+  "ADDRESS",
+  "EMAIL",
+  "PHONE",
+  "DATE_OF_BIRTH",
+  "ID_NUMBER",
+  "ONLINE_ID",
+  "SECRET"
+ ]
+}

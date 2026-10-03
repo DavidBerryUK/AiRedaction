@@ -1,0 +1,46 @@
+{
+ "id": "ext-nemotron-103-health-health-history-form",
+ "title": "Health - Health History Form (external synthetic document)",
+ "formats": [
+  "txt"
+ ],
+ "scanKinds": [],
+ "entities": [
+  {
+   "where": "body",
+   "type": "PERSON",
+   "text": "Elena",
+   "occurrences": 2
+  },
+  {
+   "where": "body",
+   "type": "ID_NUMBER",
+   "text": "0004923718",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "DATE_OF_BIRTH",
+   "text": "2003-06-27",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "ID_NUMBER",
+   "text": "3KL8-ZX9-NP45",
+   "occurrences": 1
+  }
+ ],
+ "mustPreserve": [],
+ "judgedCategories": [
+  "PERSON",
+  "COMPANY",
+  "ADDRESS",
+  "EMAIL",
+  "PHONE",
+  "DATE_OF_BIRTH",
+  "ID_NUMBER",
+  "ONLINE_ID",
+  "SECRET"
+ ]
+}

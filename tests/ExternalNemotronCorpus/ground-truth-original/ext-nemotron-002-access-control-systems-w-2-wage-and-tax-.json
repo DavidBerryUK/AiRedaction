@@ -1,0 +1,70 @@
+{
+ "id": "ext-nemotron-002-access-control-systems-w-2-wage-and-tax-",
+ "title": "Access Control Systems - W-2 Wage and Tax Statement (external synthetic document)",
+ "formats": [
+  "txt"
+ ],
+ "scanKinds": [],
+ "entities": [
+  {
+   "where": "body",
+   "type": "COMPANY",
+   "text": "SentryGuard",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "ID_NUMBER",
+   "text": "937-64-3189",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "PERSON",
+   "text": "Edward",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "PERSON",
+   "text": "Morgan",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "ID_NUMBER",
+   "text": "P3782F",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "ID_NUMBER",
+   "text": "568-91-1570",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "EMAIL",
+   "text": "edwardmorgan@icloud.com",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "PHONE",
+   "text": "818-513-0490",
+   "occurrences": 1
+  }
+ ],
+ "mustPreserve": [],
+ "judgedCategories": [
+  "PERSON",
+  "COMPANY",
+  "ADDRESS",
+  "EMAIL",
+  "PHONE",
+  "DATE_OF_BIRTH",
+  "ID_NUMBER",
+  "ONLINE_ID",
+  "SECRET"
+ ]
+}

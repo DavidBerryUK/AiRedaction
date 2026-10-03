@@ -1,0 +1,70 @@
+{
+ "id": "ext-nemotron-108-healthcare-providers-referral-letter",
+ "title": "Healthcare Providers - Referral Letter (external synthetic document)",
+ "formats": [
+  "txt"
+ ],
+ "scanKinds": [],
+ "entities": [
+  {
+   "where": "body",
+   "type": "PERSON",
+   "text": "Dean",
+   "occurrences": 2
+  },
+  {
+   "where": "body",
+   "type": "PERSON",
+   "text": "Worley",
+   "occurrences": 2
+  },
+  {
+   "where": "body",
+   "type": "DATE_OF_BIRTH",
+   "text": "1970-08-13",
+   "occurrences": 2
+  },
+  {
+   "where": "body",
+   "type": "ID_NUMBER",
+   "text": "M-23-000187",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "ID_NUMBER",
+   "text": "PLN123-7654321",
+   "occurrences": 2
+  },
+  {
+   "where": "body",
+   "type": "PERSON",
+   "text": "Jane",
+   "occurrences": 2
+  },
+  {
+   "where": "body",
+   "type": "PERSON",
+   "text": "Doe",
+   "occurrences": 2
+  },
+  {
+   "where": "body",
+   "type": "EMAIL",
+   "text": "jane.doe@email.com",
+   "occurrences": 1
+  }
+ ],
+ "mustPreserve": [],
+ "judgedCategories": [
+  "PERSON",
+  "COMPANY",
+  "ADDRESS",
+  "EMAIL",
+  "PHONE",
+  "DATE_OF_BIRTH",
+  "ID_NUMBER",
+  "ONLINE_ID",
+  "SECRET"
+ ]
+}

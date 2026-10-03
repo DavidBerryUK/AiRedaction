@@ -1,0 +1,40 @@
+{
+ "id": "ext-nemotron-177-property-property-tax-invoice",
+ "title": "Property - Property Tax Invoice (external synthetic document)",
+ "formats": [
+  "txt"
+ ],
+ "scanKinds": [],
+ "entities": [
+  {
+   "where": "body",
+   "type": "PERSON",
+   "text": "Kai",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "ID_NUMBER",
+   "text": "327 108 654",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "ADDRESS",
+   "text": "4/87 Collins Street",
+   "occurrences": 1
+  }
+ ],
+ "mustPreserve": [],
+ "judgedCategories": [
+  "PERSON",
+  "COMPANY",
+  "ADDRESS",
+  "EMAIL",
+  "PHONE",
+  "DATE_OF_BIRTH",
+  "ID_NUMBER",
+  "ONLINE_ID",
+  "SECRET"
+ ]
+}

@@ -17,6 +17,12 @@
    "type": "ID_NUMBER",
    "text": "5145 7892 6532 4817",
    "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "ID_NUMBER",
+   "text": "416-87-0418",
+   "occurrences": 1
   }
  ],
  "mustPreserve": [],

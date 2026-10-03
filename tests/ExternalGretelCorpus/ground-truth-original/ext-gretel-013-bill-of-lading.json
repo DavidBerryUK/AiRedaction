@@ -1,0 +1,58 @@
+{
+ "id": "ext-gretel-013-bill-of-lading",
+ "title": "Bill of Lading (external finance document)",
+ "formats": [
+  "txt"
+ ],
+ "scanKinds": [],
+ "entities": [
+  {
+   "where": "body",
+   "type": "PERSON",
+   "text": "Gaby Atzler",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "ADDRESS",
+   "text": "9538 Lewis Port, Apt. 9129",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "ID_NUMBER",
+   "text": "Y45904187",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "COMPANY",
+   "text": "ABC Shipping Lines",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "ADDRESS",
+   "text": "123 Ocean Way\nSan Francisco, CA 94111\nUSA",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "PHONE",
+   "text": "+1-555-555-1212",
+   "occurrences": 1
+  }
+ ],
+ "mustPreserve": [],
+ "judgedCategories": [
+  "PERSON",
+  "COMPANY",
+  "ADDRESS",
+  "EMAIL",
+  "PHONE",
+  "DATE_OF_BIRTH",
+  "ID_NUMBER",
+  "ONLINE_ID",
+  "SECRET"
+ ]
+}

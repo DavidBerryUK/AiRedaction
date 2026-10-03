@@ -1,0 +1,52 @@
+{
+ "id": "ext-nemotron-173-product-product-release-notes",
+ "title": "Product - Product Release Notes (external synthetic document)",
+ "formats": [
+  "txt"
+ ],
+ "scanKinds": [],
+ "entities": [
+  {
+   "where": "body",
+   "type": "ONLINE_ID",
+   "text": "leif_mueller",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "COMPANY",
+   "text": "Vitalia Pro",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "EMAIL",
+   "text": "leif.mueller@vitaliapro.de",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "EMAIL",
+   "text": "the email address provided",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "ID_NUMBER",
+   "text": "G17395278-02",
+   "occurrences": 1
+  }
+ ],
+ "mustPreserve": [],
+ "judgedCategories": [
+  "PERSON",
+  "COMPANY",
+  "ADDRESS",
+  "EMAIL",
+  "PHONE",
+  "DATE_OF_BIRTH",
+  "ID_NUMBER",
+  "ONLINE_ID",
+  "SECRET"
+ ]
+}

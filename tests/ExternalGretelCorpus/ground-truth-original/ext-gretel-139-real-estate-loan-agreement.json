@@ -1,0 +1,52 @@
+{
+ "id": "ext-gretel-139-real-estate-loan-agreement",
+ "title": "Real Estate Loan Agreement (external finance document)",
+ "formats": [
+  "txt"
+ ],
+ "scanKinds": [],
+ "entities": [
+  {
+   "where": "body",
+   "type": "COMPANY",
+   "text": "ABC Limited",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "ADDRESS",
+   "text": "1234 Main Street, Toronto, Ontario",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "COMPANY",
+   "text": "XYZ Holdings Ltd",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "ADDRESS",
+   "text": "5678 Park Lane, London",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "ADDRESS",
+   "text": "999 Elm Street, Vancouver, British Columbia",
+   "occurrences": 1
+  }
+ ],
+ "mustPreserve": [],
+ "judgedCategories": [
+  "PERSON",
+  "COMPANY",
+  "ADDRESS",
+  "EMAIL",
+  "PHONE",
+  "DATE_OF_BIRTH",
+  "ID_NUMBER",
+  "ONLINE_ID",
+  "SECRET"
+ ]
+}

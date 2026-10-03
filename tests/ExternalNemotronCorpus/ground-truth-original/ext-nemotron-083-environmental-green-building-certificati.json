@@ -1,0 +1,28 @@
+{
+ "id": "ext-nemotron-083-environmental-green-building-certificati",
+ "title": "Environmental - Green Building Certification (external synthetic document)",
+ "formats": [
+  "txt"
+ ],
+ "scanKinds": [],
+ "entities": [
+  {
+   "where": "body",
+   "type": "ID_NUMBER",
+   "text": "RN8432975",
+   "occurrences": 2
+  }
+ ],
+ "mustPreserve": [],
+ "judgedCategories": [
+  "PERSON",
+  "COMPANY",
+  "ADDRESS",
+  "EMAIL",
+  "PHONE",
+  "DATE_OF_BIRTH",
+  "ID_NUMBER",
+  "ONLINE_ID",
+  "SECRET"
+ ]
+}

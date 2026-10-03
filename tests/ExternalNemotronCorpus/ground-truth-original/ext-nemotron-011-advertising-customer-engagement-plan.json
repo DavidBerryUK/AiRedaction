@@ -1,0 +1,46 @@
+{
+ "id": "ext-nemotron-011-advertising-customer-engagement-plan",
+ "title": "Advertising - Customer Engagement Plan (external synthetic document)",
+ "formats": [
+  "txt"
+ ],
+ "scanKinds": [],
+ "entities": [
+  {
+   "where": "body",
+   "type": "COMPANY",
+   "text": "Apex Media Group",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "EMAIL",
+   "text": "nikolay@apexmedia.ru",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "ID_NUMBER",
+   "text": "CUS482935",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "PHONE",
+   "text": "+7 861 258-7431",
+   "occurrences": 1
+  }
+ ],
+ "mustPreserve": [],
+ "judgedCategories": [
+  "PERSON",
+  "COMPANY",
+  "ADDRESS",
+  "EMAIL",
+  "PHONE",
+  "DATE_OF_BIRTH",
+  "ID_NUMBER",
+  "ONLINE_ID",
+  "SECRET"
+ ]
+}

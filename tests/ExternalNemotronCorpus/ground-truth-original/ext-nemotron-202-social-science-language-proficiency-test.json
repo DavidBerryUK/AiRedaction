@@ -1,0 +1,46 @@
+{
+ "id": "ext-nemotron-202-social-science-language-proficiency-test",
+ "title": "Social Science - Language Proficiency Test (external synthetic document)",
+ "formats": [
+  "txt"
+ ],
+ "scanKinds": [],
+ "entities": [
+  {
+   "where": "body",
+   "type": "PERSON",
+   "text": "Jinho",
+   "occurrences": 3
+  },
+  {
+   "where": "body",
+   "type": "PERSON",
+   "text": "Kim",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "DATE_OF_BIRTH",
+   "text": "1970-08-07",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "EMAIL",
+   "text": "jinho1990@sociinsight.ac.kr",
+   "occurrences": 1
+  }
+ ],
+ "mustPreserve": [],
+ "judgedCategories": [
+  "PERSON",
+  "COMPANY",
+  "ADDRESS",
+  "EMAIL",
+  "PHONE",
+  "DATE_OF_BIRTH",
+  "ID_NUMBER",
+  "ONLINE_ID",
+  "SECRET"
+ ]
+}

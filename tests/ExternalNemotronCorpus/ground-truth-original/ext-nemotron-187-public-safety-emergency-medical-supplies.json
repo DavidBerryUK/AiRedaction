@@ -1,0 +1,28 @@
+{
+ "id": "ext-nemotron-187-public-safety-emergency-medical-supplies",
+ "title": "Public Safety - Emergency Medical Supplies Maintenance (external synthetic document)",
+ "formats": [
+  "txt"
+ ],
+ "scanKinds": [],
+ "entities": [
+  {
+   "where": "body",
+   "type": "ID_NUMBER",
+   "text": "82b1f05c820f25f4f6a8e4e63f602d585f7a700e1514b0b59c594d3b997f0c1e",
+   "occurrences": 1
+  }
+ ],
+ "mustPreserve": [],
+ "judgedCategories": [
+  "PERSON",
+  "COMPANY",
+  "ADDRESS",
+  "EMAIL",
+  "PHONE",
+  "DATE_OF_BIRTH",
+  "ID_NUMBER",
+  "ONLINE_ID",
+  "SECRET"
+ ]
+}

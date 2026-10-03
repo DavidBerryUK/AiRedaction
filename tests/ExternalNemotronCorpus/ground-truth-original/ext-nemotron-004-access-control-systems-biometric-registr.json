@@ -1,0 +1,58 @@
+{
+ "id": "ext-nemotron-004-access-control-systems-biometric-registr",
+ "title": "Access Control Systems - Biometric Registration Certificate (external synthetic document)",
+ "formats": [
+  "txt"
+ ],
+ "scanKinds": [],
+ "entities": [
+  {
+   "where": "body",
+   "type": "PERSON",
+   "text": "Jong-chul",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "PERSON",
+   "text": "Kim",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "DATE_OF_BIRTH",
+   "text": "1974-11-17",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "ID_NUMBER",
+   "text": "b1e1c4d0e26b1b57527086c692e0964c2e5b0747c9a54e19776132d1b78b3a2e",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "ID_NUMBER",
+   "text": "M98274163781",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "ONLINE_ID",
+   "text": "JongchulKim_ShadowStrike",
+   "occurrences": 1
+  }
+ ],
+ "mustPreserve": [],
+ "judgedCategories": [
+  "PERSON",
+  "COMPANY",
+  "ADDRESS",
+  "EMAIL",
+  "PHONE",
+  "DATE_OF_BIRTH",
+  "ID_NUMBER",
+  "ONLINE_ID",
+  "SECRET"
+ ]
+}

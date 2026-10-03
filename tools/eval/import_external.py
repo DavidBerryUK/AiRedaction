@@ -62,8 +62,19 @@ def entities(text, spans, mapping):
     return [{"where": "body", "type": t, "text": v, "occurrences": n} for (t, v), n in counts.items()]
 
 
+SSN = re.compile(r"(?<![\d-])\d{3}-\d{2}-\d{4}(?![\d-])")
+
+
+def with_unlabelled_ssns(text, items):
+    """Adds any social-security-shaped number the dataset left unlabelled. A hand check of the Nemotron key found these (3 of 26 missing); the
+    dataset's own labels are kept in ground-truth-original."""
+    have = {e["text"] for e in items}
+    extra = [{"where": "body", "type": "ID_NUMBER", "text": m, "occurrences": text.count(m)} for m in dict.fromkeys(SSN.findall(text)) if m not in have]
+    return items + extra
+
+
 def write_corpus(root, input_dir, name, title, readme, docs):
-    for sub in ("text", "ground-truth"):
+    for sub in ("text", "ground-truth", "ground-truth-original"):
         (root / sub).mkdir(parents=True, exist_ok=True)
     input_dir.mkdir(parents=True, exist_ok=True)
     manifest = []
@@ -73,10 +84,13 @@ def write_corpus(root, input_dir, name, title, readme, docs):
         for target in (root / "text" / f"{doc_id}.txt", input_dir / f"{doc_id}.txt"):
             with open(target, "w", encoding="utf-8", newline="") as f:
                 f.write(d["text"])
-        key = {"id": doc_id, "title": f"{d['kind']} ({title})", "formats": ["txt"], "scanKinds": [], "entities": d["entities"],
-               "mustPreserve": [], "judgedCategories": JUDGED}
-        with open(root / "ground-truth" / f"{doc_id}.json", "w", encoding="utf-8", newline="") as f:
-            f.write(json.dumps(key, indent=1, ensure_ascii=False) + "\n")
+        entities_checked = with_unlabelled_ssns(d["text"], d["entities"])
+        for folder, items in (("ground-truth-original", d["entities"]), ("ground-truth", entities_checked)):
+            key = {"id": doc_id, "title": f"{d['kind']} ({title})", "formats": ["txt"], "scanKinds": [], "entities": items,
+                   "mustPreserve": [], "judgedCategories": JUDGED}
+            with open(root / folder / f"{doc_id}.json", "w", encoding="utf-8", newline="") as f:
+                f.write(json.dumps(key, indent=1, ensure_ascii=False) + "\n")
+        d["entities"] = entities_checked
         manifest.append([doc_id, d["source_id"], d["kind"], d["group"], len(d["text"]), len(d["entities"])])
         total += len(d["entities"])
     with open(root / "manifest.csv", "w", encoding="utf-8", newline="") as f:
@@ -96,7 +110,7 @@ GRETEL_README = """# External corpus: Gretel (finance documents)
 `tests/HeldOutCorpus`. No quality filter was applied. The documents come from the same generator as the held-out corpus, so they test new documents
 but not a new generator; see the Nemotron corpus for that.
 
-**Answer key.** The generator's own labels, mapped to this project's categories (the same mapping as the held-out corpus). They have **not** been audited,
+**Answer key.** The generator's own labels, mapped to this project's categories (the same mapping as the held-out corpus), plus any social-security-shaped number in the text that the generator left unlabelled (the dataset's own labels are kept in `ground-truth-original`). They have **not** been otherwise audited,
 and the held-out audit found that this generator leaves many real items unlabelled, so a redaction of a genuine but unlabelled item counts as
 over-redaction here and precision is understated. Generic dates and times, coordinates and bank identifier codes are not on the key.
 Only the categories in `judgedCategories` are judged. Do not tune rules or prompts against this corpus.
@@ -114,7 +128,14 @@ healthcare, public safety, elections, ...), length 150 to 5,000 characters. No q
 the held-out corpus, so this is the more independent test.
 
 **Answer key.** The dataset's labels, mapped to this project's categories (`tools/eval/import_external.py`). The spans' stated offsets do not always
-match the text, so each item is taken from the span's own text and kept only if that text occurs in the document. Not audited by a person.
+match the text, so each item is taken from the span's own text and kept only if that text occurs in the document.
+
+**Key check (3 October 2026).** 30 random documents (about 90 key items) were read against their keys by hand, and every document was scanned for emails,
+phone numbers, card numbers, IP addresses and social-security-shaped numbers missing from the key. All 102 emails, 27 card numbers and 52 phone numbers
+found were labelled. 4 of the 26 social-security-shaped numbers were not (one was in the hand-read sample, the other three were found by the scan), so a rule
+now adds any such number to the key; `ground-truth-original` holds the dataset's own labels. Internal addresses such as 192.168.1.100 are left off the key on
+purpose. Apart from that one kind of gap, no missed sensitive item was found in the hand-read documents. Names, addresses and company names cannot be
+scanned for automatically, so the check on those is the 30-document reading only. This is a small sample, not an audit.
 Generic dates and times, cities, countries, URLs and coordinates are not on the key. Gender, age, job title, race, religion and similar are not
 judged either way. Do not tune rules or prompts against this corpus.
 
@@ -162,7 +183,7 @@ def main():
         ("ext-gretel", Path("tests/ExternalGretelCorpus"), Path("in/external-gretel"), "external finance document", GRETEL_README, gdocs),
         ("ext-nemotron", Path("tests/ExternalNemotronCorpus"), Path("in/external-nemotron"), "external synthetic document", NEMOTRON_README, ndocs),
     ):
-        for old in list(root.glob("text/*")) + list(root.glob("ground-truth/*")) + (list(inp.glob("*.txt")) if inp.exists() else []):
+        for old in list(root.glob("text/*")) + list(root.glob("ground-truth/*")) + list(root.glob("ground-truth-original/*")) + (list(inp.glob("*.txt")) if inp.exists() else []):
             old.unlink()
         items = write_corpus(root, inp, name, title, readme.replace("{seed}", str(SEED)), docs)
         print(f"{name}: {len(docs)} documents, {items} key items -> {root} and {inp}")

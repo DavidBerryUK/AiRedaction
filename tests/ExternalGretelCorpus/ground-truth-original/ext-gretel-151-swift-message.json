@@ -1,0 +1,52 @@
+{
+ "id": "ext-gretel-151-swift-message",
+ "title": "SWIFT Message (external finance document)",
+ "formats": [
+  "txt"
+ ],
+ "scanKinds": [],
+ "entities": [
+  {
+   "where": "body",
+   "type": "ONLINE_ID",
+   "text": "26.26.5.252",
+   "occurrences": 2
+  },
+  {
+   "where": "body",
+   "type": "PERSON",
+   "text": "LUIGI SCHIAVO",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "ADDRESS",
+   "text": "7380 JEFF SPURS, EAST MELISSA/USA",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "PERSON",
+   "text": "Luigi Schiavo",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "ADDRESS",
+   "text": "7380 Jeff Spurs, East Melissa",
+   "occurrences": 1
+  }
+ ],
+ "mustPreserve": [],
+ "judgedCategories": [
+  "PERSON",
+  "COMPANY",
+  "ADDRESS",
+  "EMAIL",
+  "PHONE",
+  "DATE_OF_BIRTH",
+  "ID_NUMBER",
+  "ONLINE_ID",
+  "SECRET"
+ ]
+}

@@ -1,0 +1,46 @@
+{
+ "id": "ext-nemotron-100-health-discharge-summary",
+ "title": "Health - Discharge Summary (external synthetic document)",
+ "formats": [
+  "txt"
+ ],
+ "scanKinds": [],
+ "entities": [
+  {
+   "where": "body",
+   "type": "ID_NUMBER",
+   "text": "MRN-345672",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "PERSON",
+   "text": "Irma",
+   "occurrences": 2
+  },
+  {
+   "where": "body",
+   "type": "PERSON",
+   "text": "Garcia",
+   "occurrences": 2
+  },
+  {
+   "where": "body",
+   "type": "DATE_OF_BIRTH",
+   "text": "1994-06-28",
+   "occurrences": 1
+  }
+ ],
+ "mustPreserve": [],
+ "judgedCategories": [
+  "PERSON",
+  "COMPANY",
+  "ADDRESS",
+  "EMAIL",
+  "PHONE",
+  "DATE_OF_BIRTH",
+  "ID_NUMBER",
+  "ONLINE_ID",
+  "SECRET"
+ ]
+}

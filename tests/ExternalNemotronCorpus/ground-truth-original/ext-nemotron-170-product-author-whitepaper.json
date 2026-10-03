@@ -1,0 +1,52 @@
+{
+ "id": "ext-nemotron-170-product-author-whitepaper",
+ "title": "Product - Author Whitepaper (external synthetic document)",
+ "formats": [
+  "txt"
+ ],
+ "scanKinds": [],
+ "entities": [
+  {
+   "where": "body",
+   "type": "PERSON",
+   "text": "Wilfredo",
+   "occurrences": 3
+  },
+  {
+   "where": "body",
+   "type": "PERSON",
+   "text": "Arrieta",
+   "occurrences": 2
+  },
+  {
+   "where": "body",
+   "type": "COMPANY",
+   "text": "Verve Products",
+   "occurrences": 4
+  },
+  {
+   "where": "body",
+   "type": "EMAIL",
+   "text": "wilfredoarrieta@protonmail.com",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "ONLINE_ID",
+   "text": "wilfredo95",
+   "occurrences": 1
+  }
+ ],
+ "mustPreserve": [],
+ "judgedCategories": [
+  "PERSON",
+  "COMPANY",
+  "ADDRESS",
+  "EMAIL",
+  "PHONE",
+  "DATE_OF_BIRTH",
+  "ID_NUMBER",
+  "ONLINE_ID",
+  "SECRET"
+ ]
+}

@@ -1,0 +1,40 @@
+{
+ "id": "ext-gretel-153-swift-message",
+ "title": "SWIFT Message (external finance document)",
+ "formats": [
+  "txt"
+ ],
+ "scanKinds": [],
+ "entities": [
+  {
+   "where": "body",
+   "type": "PERSON",
+   "text": "Alejandro Amalia Cabezas",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "ADDRESS",
+   "text": "504 Edwards Parks, Apt. 078",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "ONLINE_ID",
+   "text": "106.100.147.247",
+   "occurrences": 1
+  }
+ ],
+ "mustPreserve": [],
+ "judgedCategories": [
+  "PERSON",
+  "COMPANY",
+  "ADDRESS",
+  "EMAIL",
+  "PHONE",
+  "DATE_OF_BIRTH",
+  "ID_NUMBER",
+  "ONLINE_ID",
+  "SECRET"
+ ]
+}

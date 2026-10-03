@@ -1,0 +1,34 @@
+{
+ "id": "ext-gretel-018-business-plan",
+ "title": "Business Plan (external finance document)",
+ "formats": [
+  "txt"
+ ],
+ "scanKinds": [],
+ "entities": [
+  {
+   "where": "body",
+   "type": "PERSON",
+   "text": "Hans-Wolfgang M. Schmidtke",
+   "occurrences": 3
+  },
+  {
+   "where": "body",
+   "type": "ADDRESS",
+   "text": "2747 William Terrace, 13841, West Davidborough",
+   "occurrences": 1
+  }
+ ],
+ "mustPreserve": [],
+ "judgedCategories": [
+  "PERSON",
+  "COMPANY",
+  "ADDRESS",
+  "EMAIL",
+  "PHONE",
+  "DATE_OF_BIRTH",
+  "ID_NUMBER",
+  "ONLINE_ID",
+  "SECRET"
+ ]
+}

@@ -1,0 +1,40 @@
+{
+ "id": "ext-nemotron-179-property-property-maintenance-request",
+ "title": "Property - Property Maintenance Request (external synthetic document)",
+ "formats": [
+  "txt"
+ ],
+ "scanKinds": [],
+ "entities": [
+  {
+   "where": "body",
+   "type": "ADDRESS",
+   "text": "386 Northeast 18th Avenue",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "DATE_OF_BIRTH",
+   "text": "1986-05-21",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "PHONE",
+   "text": "826-714-2292",
+   "occurrences": 1
+  }
+ ],
+ "mustPreserve": [],
+ "judgedCategories": [
+  "PERSON",
+  "COMPANY",
+  "ADDRESS",
+  "EMAIL",
+  "PHONE",
+  "DATE_OF_BIRTH",
+  "ID_NUMBER",
+  "ONLINE_ID",
+  "SECRET"
+ ]
+}

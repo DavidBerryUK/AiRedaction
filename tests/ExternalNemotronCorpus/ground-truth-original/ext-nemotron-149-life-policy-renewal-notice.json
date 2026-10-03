@@ -1,0 +1,40 @@
+{
+ "id": "ext-nemotron-149-life-policy-renewal-notice",
+ "title": "Life - Policy Renewal Notice (external synthetic document)",
+ "formats": [
+  "txt"
+ ],
+ "scanKinds": [],
+ "entities": [
+  {
+   "where": "body",
+   "type": "COMPANY",
+   "text": "VitaLink Life",
+   "occurrences": 2
+  },
+  {
+   "where": "body",
+   "type": "ID_NUMBER",
+   "text": "CL0056724",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "ID_NUMBER",
+   "text": "075123478",
+   "occurrences": 1
+  }
+ ],
+ "mustPreserve": [],
+ "judgedCategories": [
+  "PERSON",
+  "COMPANY",
+  "ADDRESS",
+  "EMAIL",
+  "PHONE",
+  "DATE_OF_BIRTH",
+  "ID_NUMBER",
+  "ONLINE_ID",
+  "SECRET"
+ ]
+}

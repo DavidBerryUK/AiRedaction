@@ -1,0 +1,52 @@
+{
+ "id": "ext-gretel-141-real-estate-loan-agreement",
+ "title": "Real Estate Loan Agreement (external finance document)",
+ "formats": [
+  "txt"
+ ],
+ "scanKinds": [],
+ "entities": [
+  {
+   "where": "body",
+   "type": "COMPANY",
+   "text": "EcoDev LLC",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "ADDRESS",
+   "text": "123 Main Street, Wilmington, DE 19801",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "COMPANY",
+   "text": "GreenBank",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "ADDRESS",
+   "text": "456 Wall Street, New York, NY 10005",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "ADDRESS",
+   "text": "789 Oak Avenue, San Francisco, CA 94102",
+   "occurrences": 1
+  }
+ ],
+ "mustPreserve": [],
+ "judgedCategories": [
+  "PERSON",
+  "COMPANY",
+  "ADDRESS",
+  "EMAIL",
+  "PHONE",
+  "DATE_OF_BIRTH",
+  "ID_NUMBER",
+  "ONLINE_ID",
+  "SECRET"
+ ]
+}

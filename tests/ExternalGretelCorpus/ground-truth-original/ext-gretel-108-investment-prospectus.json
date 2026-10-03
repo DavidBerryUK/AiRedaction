@@ -1,0 +1,34 @@
+{
+ "id": "ext-gretel-108-investment-prospectus",
+ "title": "Investment Prospectus (external finance document)",
+ "formats": [
+  "txt"
+ ],
+ "scanKinds": [],
+ "entities": [
+  {
+   "where": "body",
+   "type": "COMPANY",
+   "text": "BIONIC INVESTMENT FUND, LLC",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "COMPANY",
+   "text": "Bionic Investment Fund, LLC",
+   "occurrences": 1
+  }
+ ],
+ "mustPreserve": [],
+ "judgedCategories": [
+  "PERSON",
+  "COMPANY",
+  "ADDRESS",
+  "EMAIL",
+  "PHONE",
+  "DATE_OF_BIRTH",
+  "ID_NUMBER",
+  "ONLINE_ID",
+  "SECRET"
+ ]
+}

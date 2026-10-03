@@ -1,0 +1,40 @@
+{
+ "id": "ext-nemotron-217-travel-travel-safety-training",
+ "title": "Travel - Travel Safety Training (external synthetic document)",
+ "formats": [
+  "txt"
+ ],
+ "scanKinds": [],
+ "entities": [
+  {
+   "where": "body",
+   "type": "PHONE",
+   "text": "838-741-9687",
+   "occurrences": 3
+  },
+  {
+   "where": "body",
+   "type": "EMAIL",
+   "text": "michaelnorristhomas22@yahoo.com",
+   "occurrences": 3
+  },
+  {
+   "where": "body",
+   "type": "ID_NUMBER",
+   "text": "4G82-PR7-MK21",
+   "occurrences": 3
+  }
+ ],
+ "mustPreserve": [],
+ "judgedCategories": [
+  "PERSON",
+  "COMPANY",
+  "ADDRESS",
+  "EMAIL",
+  "PHONE",
+  "DATE_OF_BIRTH",
+  "ID_NUMBER",
+  "ONLINE_ID",
+  "SECRET"
+ ]
+}

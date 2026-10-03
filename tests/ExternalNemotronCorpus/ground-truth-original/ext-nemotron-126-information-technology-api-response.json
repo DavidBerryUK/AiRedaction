@@ -1,0 +1,40 @@
+{
+ "id": "ext-nemotron-126-information-technology-api-response",
+ "title": "Information Technology - API Response (external synthetic document)",
+ "formats": [
+  "txt"
+ ],
+ "scanKinds": [],
+ "entities": [
+  {
+   "where": "body",
+   "type": "SECRET",
+   "text": "KbP4Lz9TqWxRnV1mZt87",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "ID_NUMBER",
+   "text": "F5B3K7P2L9MN",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "ONLINE_ID",
+   "text": "186.14.67.22",
+   "occurrences": 1
+  }
+ ],
+ "mustPreserve": [],
+ "judgedCategories": [
+  "PERSON",
+  "COMPANY",
+  "ADDRESS",
+  "EMAIL",
+  "PHONE",
+  "DATE_OF_BIRTH",
+  "ID_NUMBER",
+  "ONLINE_ID",
+  "SECRET"
+ ]
+}

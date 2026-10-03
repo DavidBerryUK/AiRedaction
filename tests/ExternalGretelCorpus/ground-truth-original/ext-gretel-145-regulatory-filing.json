@@ -1,0 +1,52 @@
+{
+ "id": "ext-gretel-145-regulatory-filing",
+ "title": "Regulatory Filing (external finance document)",
+ "formats": [
+  "txt"
+ ],
+ "scanKinds": [],
+ "entities": [
+  {
+   "where": "body",
+   "type": "PERSON",
+   "text": "Declan R. Jackson",
+   "occurrences": 3
+  },
+  {
+   "where": "body",
+   "type": "ID_NUMBER",
+   "text": "J4727911",
+   "occurrences": 2
+  },
+  {
+   "where": "body",
+   "type": "COMPANY",
+   "text": "Regulatory Authority",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "PERSON",
+   "text": "Mr. Jackson",
+   "occurrences": 5
+  },
+  {
+   "where": "body",
+   "type": "ADDRESS",
+   "text": "338 Lorraine road",
+   "occurrences": 1
+  }
+ ],
+ "mustPreserve": [],
+ "judgedCategories": [
+  "PERSON",
+  "COMPANY",
+  "ADDRESS",
+  "EMAIL",
+  "PHONE",
+  "DATE_OF_BIRTH",
+  "ID_NUMBER",
+  "ONLINE_ID",
+  "SECRET"
+ ]
+}

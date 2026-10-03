@@ -1,0 +1,58 @@
+{
+ "id": "ext-gretel-175-transaction-confirmation",
+ "title": "Transaction Confirmation (external finance document)",
+ "formats": [
+  "txt"
+ ],
+ "scanKinds": [],
+ "entities": [
+  {
+   "where": "body",
+   "type": "COMPANY",
+   "text": "Acme Properties Inc.",
+   "occurrences": 2
+  },
+  {
+   "where": "body",
+   "type": "ADDRESS",
+   "text": "123 Main Street, Anytown, UK",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "PERSON",
+   "text": "Sebastiano T. Babbo",
+   "occurrences": 2
+  },
+  {
+   "where": "body",
+   "type": "ID_NUMBER",
+   "text": "Z36794858",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "ADDRESS",
+   "text": "86642 Cabrera Summit Apt. 243, Anytown, CA",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "ADDRESS",
+   "text": "86642 Cabrera Summit Apt. 342",
+   "occurrences": 1
+  }
+ ],
+ "mustPreserve": [],
+ "judgedCategories": [
+  "PERSON",
+  "COMPANY",
+  "ADDRESS",
+  "EMAIL",
+  "PHONE",
+  "DATE_OF_BIRTH",
+  "ID_NUMBER",
+  "ONLINE_ID",
+  "SECRET"
+ ]
+}

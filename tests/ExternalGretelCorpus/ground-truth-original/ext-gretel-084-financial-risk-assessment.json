@@ -1,0 +1,34 @@
+{
+ "id": "ext-gretel-084-financial-risk-assessment",
+ "title": "Financial Risk Assessment (external finance document)",
+ "formats": [
+  "txt"
+ ],
+ "scanKinds": [],
+ "entities": [
+  {
+   "where": "body",
+   "type": "PERSON",
+   "text": "Hansjürgen O. Ebert",
+   "occurrences": 7
+  },
+  {
+   "where": "body",
+   "type": "COMPANY",
+   "text": "Cyber Insurance",
+   "occurrences": 1
+  }
+ ],
+ "mustPreserve": [],
+ "judgedCategories": [
+  "PERSON",
+  "COMPANY",
+  "ADDRESS",
+  "EMAIL",
+  "PHONE",
+  "DATE_OF_BIRTH",
+  "ID_NUMBER",
+  "ONLINE_ID",
+  "SECRET"
+ ]
+}

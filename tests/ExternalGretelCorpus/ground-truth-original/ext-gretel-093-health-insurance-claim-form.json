@@ -1,0 +1,64 @@
+{
+ "id": "ext-gretel-093-health-insurance-claim-form",
+ "title": "Health Insurance Claim Form (external finance document)",
+ "formats": [
+  "txt"
+ ],
+ "scanKinds": [],
+ "entities": [
+  {
+   "where": "body",
+   "type": "PERSON",
+   "text": "Diana Taylor",
+   "occurrences": 2
+  },
+  {
+   "where": "body",
+   "type": "ID_NUMBER",
+   "text": "9652",
+   "occurrences": 2
+  },
+  {
+   "where": "body",
+   "type": "ID_NUMBER",
+   "text": "600427-7817",
+   "occurrences": 2
+  },
+  {
+   "where": "body",
+   "type": "ADDRESS",
+   "text": "0 Meesbaan, 8911RK, Zevenhuizen",
+   "occurrences": 2
+  },
+  {
+   "where": "body",
+   "type": "COMPANY",
+   "text": "Serenity Hospice Care",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "ADDRESS",
+   "text": "123 Serenity Lane, London, SE1 2SD",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "PERSON",
+   "text": "Dr. Jane Smith",
+   "occurrences": 1
+  }
+ ],
+ "mustPreserve": [],
+ "judgedCategories": [
+  "PERSON",
+  "COMPANY",
+  "ADDRESS",
+  "EMAIL",
+  "PHONE",
+  "DATE_OF_BIRTH",
+  "ID_NUMBER",
+  "ONLINE_ID",
+  "SECRET"
+ ]
+}

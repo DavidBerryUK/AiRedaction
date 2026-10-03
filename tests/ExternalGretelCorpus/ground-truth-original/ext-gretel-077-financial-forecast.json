@@ -1,0 +1,34 @@
+{
+ "id": "ext-gretel-077-financial-forecast",
+ "title": "Financial Forecast (external finance document)",
+ "formats": [
+  "txt"
+ ],
+ "scanKinds": [],
+ "entities": [
+  {
+   "where": "body",
+   "type": "PERSON",
+   "text": "Francisca A. Cabeza",
+   "occurrences": 2
+  },
+  {
+   "where": "body",
+   "type": "ADDRESS",
+   "text": "18358 Denise Cliffs",
+   "occurrences": 2
+  }
+ ],
+ "mustPreserve": [],
+ "judgedCategories": [
+  "PERSON",
+  "COMPANY",
+  "ADDRESS",
+  "EMAIL",
+  "PHONE",
+  "DATE_OF_BIRTH",
+  "ID_NUMBER",
+  "ONLINE_ID",
+  "SECRET"
+ ]
+}

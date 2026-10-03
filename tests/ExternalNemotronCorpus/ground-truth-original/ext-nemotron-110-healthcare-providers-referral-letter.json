@@ -1,0 +1,76 @@
+{
+ "id": "ext-nemotron-110-healthcare-providers-referral-letter",
+ "title": "Healthcare Providers - Referral Letter (external synthetic document)",
+ "formats": [
+  "txt"
+ ],
+ "scanKinds": [],
+ "entities": [
+  {
+   "where": "body",
+   "type": "PERSON",
+   "text": "Jane",
+   "occurrences": 2
+  },
+  {
+   "where": "body",
+   "type": "PERSON",
+   "text": "Doe",
+   "occurrences": 2
+  },
+  {
+   "where": "body",
+   "type": "ADDRESS",
+   "text": "123 Main Street",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "PERSON",
+   "text": "John",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "PERSON",
+   "text": "Smith",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "PERSON",
+   "text": "Kimberly",
+   "occurrences": 3
+  },
+  {
+   "where": "body",
+   "type": "ID_NUMBER",
+   "text": "0008751692",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "DATE_OF_BIRTH",
+   "text": "1974-10-24",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "ID_NUMBER",
+   "text": "573-27-9990",
+   "occurrences": 1
+  }
+ ],
+ "mustPreserve": [],
+ "judgedCategories": [
+  "PERSON",
+  "COMPANY",
+  "ADDRESS",
+  "EMAIL",
+  "PHONE",
+  "DATE_OF_BIRTH",
+  "ID_NUMBER",
+  "ONLINE_ID",
+  "SECRET"
+ ]
+}

@@ -1,0 +1,52 @@
+{
+ "id": "ext-nemotron-165-mortgage-divorce-decree",
+ "title": "Mortgage - Divorce Decree (external synthetic document)",
+ "formats": [
+  "txt"
+ ],
+ "scanKinds": [],
+ "entities": [
+  {
+   "where": "body",
+   "type": "PERSON",
+   "text": "Antonio",
+   "occurrences": 5
+  },
+  {
+   "where": "body",
+   "type": "PERSON",
+   "text": "Hercules",
+   "occurrences": 5
+  },
+  {
+   "where": "body",
+   "type": "PERSON",
+   "text": "Jane",
+   "occurrences": 4
+  },
+  {
+   "where": "body",
+   "type": "PERSON",
+   "text": "Doe",
+   "occurrences": 3
+  },
+  {
+   "where": "body",
+   "type": "PERSON",
+   "text": "Smith",
+   "occurrences": 1
+  }
+ ],
+ "mustPreserve": [],
+ "judgedCategories": [
+  "PERSON",
+  "COMPANY",
+  "ADDRESS",
+  "EMAIL",
+  "PHONE",
+  "DATE_OF_BIRTH",
+  "ID_NUMBER",
+  "ONLINE_ID",
+  "SECRET"
+ ]
+}

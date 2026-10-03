@@ -1,0 +1,52 @@
+{
+ "id": "ext-nemotron-014-advertising-landing-page-script",
+ "title": "Advertising - Landing Page Script (external synthetic document)",
+ "formats": [
+  "txt"
+ ],
+ "scanKinds": [],
+ "entities": [
+  {
+   "where": "body",
+   "type": "COMPANY",
+   "text": "Athena Advertising Group",
+   "occurrences": 2
+  },
+  {
+   "where": "body",
+   "type": "PHONE",
+   "text": "6945 28 95 89",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "ID_NUMBER",
+   "text": "SFO-8371256",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "EMAIL",
+   "text": "a.papadopoulos@athenaadvertising.gr",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "SECRET",
+   "text": "gdpr_consent=zx92y7w5q8k3",
+   "occurrences": 1
+  }
+ ],
+ "mustPreserve": [],
+ "judgedCategories": [
+  "PERSON",
+  "COMPANY",
+  "ADDRESS",
+  "EMAIL",
+  "PHONE",
+  "DATE_OF_BIRTH",
+  "ID_NUMBER",
+  "ONLINE_ID",
+  "SECRET"
+ ]
+}

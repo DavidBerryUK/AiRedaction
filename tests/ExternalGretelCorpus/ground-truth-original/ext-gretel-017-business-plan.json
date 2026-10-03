@@ -1,0 +1,34 @@
+{
+ "id": "ext-gretel-017-business-plan",
+ "title": "Business Plan (external finance document)",
+ "formats": [
+  "txt"
+ ],
+ "scanKinds": [],
+ "entities": [
+  {
+   "where": "body",
+   "type": "COMPANY",
+   "text": "Johnson Enterprises",
+   "occurrences": 5
+  },
+  {
+   "where": "body",
+   "type": "ADDRESS",
+   "text": "2025 Gabriela Roads, Melissaport",
+   "occurrences": 1
+  }
+ ],
+ "mustPreserve": [],
+ "judgedCategories": [
+  "PERSON",
+  "COMPANY",
+  "ADDRESS",
+  "EMAIL",
+  "PHONE",
+  "DATE_OF_BIRTH",
+  "ID_NUMBER",
+  "ONLINE_ID",
+  "SECRET"
+ ]
+}

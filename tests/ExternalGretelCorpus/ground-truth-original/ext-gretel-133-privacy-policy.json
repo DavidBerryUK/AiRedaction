@@ -1,0 +1,46 @@
+{
+ "id": "ext-gretel-133-privacy-policy",
+ "title": "Privacy Policy (external finance document)",
+ "formats": [
+  "txt"
+ ],
+ "scanKinds": [],
+ "entities": [
+  {
+   "where": "body",
+   "type": "PERSON",
+   "text": "Salomé Leocadio España",
+   "occurrences": 4
+  },
+  {
+   "where": "body",
+   "type": "ID_NUMBER",
+   "text": "K13198743",
+   "occurrences": 2
+  },
+  {
+   "where": "body",
+   "type": "PERSON",
+   "text": "Bertha",
+   "occurrences": 2
+  },
+  {
+   "where": "body",
+   "type": "ADDRESS",
+   "text": "57361 Tony Springs, Diazville",
+   "occurrences": 2
+  }
+ ],
+ "mustPreserve": [],
+ "judgedCategories": [
+  "PERSON",
+  "COMPANY",
+  "ADDRESS",
+  "EMAIL",
+  "PHONE",
+  "DATE_OF_BIRTH",
+  "ID_NUMBER",
+  "ONLINE_ID",
+  "SECRET"
+ ]
+}

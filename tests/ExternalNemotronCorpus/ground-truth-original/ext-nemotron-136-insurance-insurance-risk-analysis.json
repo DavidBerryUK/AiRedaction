@@ -1,0 +1,34 @@
+{
+ "id": "ext-nemotron-136-insurance-insurance-risk-analysis",
+ "title": "Insurance - Insurance Risk Analysis (external synthetic document)",
+ "formats": [
+  "txt"
+ ],
+ "scanKinds": [],
+ "entities": [
+  {
+   "where": "body",
+   "type": "COMPANY",
+   "text": "Hartford Integrity Insurance",
+   "occurrences": 3
+  },
+  {
+   "where": "body",
+   "type": "SECRET",
+   "text": "F8s@9ZmK1pQ3",
+   "occurrences": 1
+  }
+ ],
+ "mustPreserve": [],
+ "judgedCategories": [
+  "PERSON",
+  "COMPANY",
+  "ADDRESS",
+  "EMAIL",
+  "PHONE",
+  "DATE_OF_BIRTH",
+  "ID_NUMBER",
+  "ONLINE_ID",
+  "SECRET"
+ ]
+}

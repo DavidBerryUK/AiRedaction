@@ -1,0 +1,40 @@
+{
+ "id": "ext-nemotron-084-environmental-environmental-compliance-p",
+ "title": "Environmental - Environmental Compliance Program (external synthetic document)",
+ "formats": [
+  "txt"
+ ],
+ "scanKinds": [],
+ "entities": [
+  {
+   "where": "body",
+   "type": "COMPANY",
+   "text": "EcoSpark",
+   "occurrences": 2
+  },
+  {
+   "where": "body",
+   "type": "SECRET",
+   "text": "b7K@p9m#Qr$5x3",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "ID_NUMBER",
+   "text": "5082",
+   "occurrences": 1
+  }
+ ],
+ "mustPreserve": [],
+ "judgedCategories": [
+  "PERSON",
+  "COMPANY",
+  "ADDRESS",
+  "EMAIL",
+  "PHONE",
+  "DATE_OF_BIRTH",
+  "ID_NUMBER",
+  "ONLINE_ID",
+  "SECRET"
+ ]
+}

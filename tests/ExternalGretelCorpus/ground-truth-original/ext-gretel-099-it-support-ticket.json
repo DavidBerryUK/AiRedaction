@@ -1,0 +1,40 @@
+{
+ "id": "ext-gretel-099-it-support-ticket",
+ "title": "IT support ticket (external finance document)",
+ "formats": [
+  "txt"
+ ],
+ "scanKinds": [],
+ "entities": [
+  {
+   "where": "body",
+   "type": "PERSON",
+   "text": "Timothy",
+   "occurrences": 3
+  },
+  {
+   "where": "body",
+   "type": "PERSON",
+   "text": "Adamo Rosario Giannelli",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "ADDRESS",
+   "text": "5877 Taylor Row, Michaelmouth",
+   "occurrences": 1
+  }
+ ],
+ "mustPreserve": [],
+ "judgedCategories": [
+  "PERSON",
+  "COMPANY",
+  "ADDRESS",
+  "EMAIL",
+  "PHONE",
+  "DATE_OF_BIRTH",
+  "ID_NUMBER",
+  "ONLINE_ID",
+  "SECRET"
+ ]
+}

@@ -1,0 +1,64 @@
+{
+ "id": "ext-nemotron-226-user-account-and-transaction-services-ap",
+ "title": "User Account and Transaction Services - Application Setup Guide (external synthetic document)",
+ "formats": [
+  "txt"
+ ],
+ "scanKinds": [],
+ "entities": [
+  {
+   "where": "body",
+   "type": "EMAIL",
+   "text": "nikolaiivanov@rostrans.com",
+   "occurrences": 2
+  },
+  {
+   "where": "body",
+   "type": "ONLINE_ID",
+   "text": "nikolai_iv24",
+   "occurrences": 2
+  },
+  {
+   "where": "body",
+   "type": "SECRET",
+   "text": "Riverflow@2025",
+   "occurrences": 2
+  },
+  {
+   "where": "body",
+   "type": "ID_NUMBER",
+   "text": "J74382915621",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "ID_NUMBER",
+   "text": "5210 3456 7890 1234",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "SECRET",
+   "text": "d6f7b3e8-5d9c-4e2f-9a1b-5c3d4e6a7f8b",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "ID_NUMBER",
+   "text": "23USR03914",
+   "occurrences": 1
+  }
+ ],
+ "mustPreserve": [],
+ "judgedCategories": [
+  "PERSON",
+  "COMPANY",
+  "ADDRESS",
+  "EMAIL",
+  "PHONE",
+  "DATE_OF_BIRTH",
+  "ID_NUMBER",
+  "ONLINE_ID",
+  "SECRET"
+ ]
+}

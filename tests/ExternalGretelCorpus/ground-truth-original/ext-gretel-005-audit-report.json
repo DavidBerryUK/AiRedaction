@@ -1,0 +1,34 @@
+{
+ "id": "ext-gretel-005-audit-report",
+ "title": "Audit Report (external finance document)",
+ "formats": [
+  "txt"
+ ],
+ "scanKinds": [],
+ "entities": [
+  {
+   "where": "body",
+   "type": "PERSON",
+   "text": "Édith Christelle Schneider",
+   "occurrences": 10
+  },
+  {
+   "where": "body",
+   "type": "ADDRESS",
+   "text": "4/3 Reichmannring, 76871, Delitzsch",
+   "occurrences": 1
+  }
+ ],
+ "mustPreserve": [],
+ "judgedCategories": [
+  "PERSON",
+  "COMPANY",
+  "ADDRESS",
+  "EMAIL",
+  "PHONE",
+  "DATE_OF_BIRTH",
+  "ID_NUMBER",
+  "ONLINE_ID",
+  "SECRET"
+ ]
+}

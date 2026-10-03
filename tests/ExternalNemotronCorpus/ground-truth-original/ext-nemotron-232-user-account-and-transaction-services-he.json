@@ -1,0 +1,58 @@
+{
+ "id": "ext-nemotron-232-user-account-and-transaction-services-he",
+ "title": "User Account and Transaction Services - Helpdesk Support Ticket (external synthetic document)",
+ "formats": [
+  "txt"
+ ],
+ "scanKinds": [],
+ "entities": [
+  {
+   "where": "body",
+   "type": "PERSON",
+   "text": "Marina",
+   "occurrences": 2
+  },
+  {
+   "where": "body",
+   "type": "EMAIL",
+   "text": "marinaapipkin@icloud.com",
+   "occurrences": 2
+  },
+  {
+   "where": "body",
+   "type": "PHONE",
+   "text": "636-631-2795",
+   "occurrences": 2
+  },
+  {
+   "where": "body",
+   "type": "ID_NUMBER",
+   "text": "092-3216548705",
+   "occurrences": 2
+  },
+  {
+   "where": "body",
+   "type": "PERSON",
+   "text": "John",
+   "occurrences": 1
+  },
+  {
+   "where": "body",
+   "type": "PERSON",
+   "text": "Doe",
+   "occurrences": 1
+  }
+ ],
+ "mustPreserve": [],
+ "judgedCategories": [
+  "PERSON",
+  "COMPANY",
+  "ADDRESS",
+  "EMAIL",
+  "PHONE",
+  "DATE_OF_BIRTH",
+  "ID_NUMBER",
+  "ONLINE_ID",
+  "SECRET"
+ ]
+}
