@@ -1,6 +1,6 @@
 # How we got here: methodology and design decisions
 
-**Status:** Draft for review. Figures are deliberately left out of this document. They come from the single final evaluation dataset (Story-002) and are shown in the Results Explorer (Story-001). This document explains **what the tool does, why each choice was made, and how the results are measured**.
+**Status:** Draft for review. Figures are deliberately left out of this document. They are in [FINAL_FINDINGS.md](FINAL_FINDINGS.md), from the single final evaluation dataset, and shown in the Results Explorer. This document explains **what the tool does, why each choice was made, and how the results are measured**.
 
 Each decision has the same four parts: **what we do**, **why**, **the evidence**, and **the limit** (what the decision does not give you).
 
@@ -211,4 +211,6 @@ Recording these matters as much as the successes.
 | Held-out test, audited key, combinations | [EVALUATION_FINDINGS_V5.md](EVALUATION_FINDINGS_V5.md) |
 | Requirements | [SPECIFICATION.md](SPECIFICATION.md) |
 | How to run the evaluation | [HOW_TO_RUN_EVALUATION.md](HOW_TO_RUN_EVALUATION.md) |
-| The final dataset | The Results Explorer (Story-001), produced by the evaluator (Story-002) |
+| **The final results, with every figure** | [FINAL_FINDINGS.md](FINAL_FINDINGS.md) |
+| The final dataset | The Results Explorer (Story-001), produced by the final evaluator (Story-002) |
+| Dataset format | [RESULTS_DATASET_FORMAT.md](RESULTS_DATASET_FORMAT.md) |
