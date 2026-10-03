@@ -212,4 +212,23 @@ public class DatasetTests
             Directory.Delete(root, true);
         }
     }
+
+    /// <summary>The setups the final evaluator writes for a model are the four the explorer and converter expect, and each parses back to its model and variant.</summary>
+    [Fact]
+    public void Final_evaluator_setup_names_round_trip()
+    {
+        var configs = FinalEvaluator.ConfigsFor("gemma4:31b");
+        Assert.Equal(["gemma4:31b", "gemma4:31b + GLiNER", "gemma4:31b + GLiNER (all flags accepted)", "gemma4:31b + GLiNER (correct flags accepted)"], configs);
+        Assert.Equal(["plain", "with-gliner", "with-gliner-all-flags-accepted", "with-gliner-correct-flags-accepted"], configs.Select(c => InterimConverter.ParseConfig(c).Variant));
+        Assert.All(configs, c => Assert.Equal("gemma4:31b", InterimConverter.ParseConfig(c).Model));
+    }
+
+    /// <summary>The git state can be read here (the evaluator needs it to tie a dataset to its code).</summary>
+    [Fact]
+    public async Task Git_state_is_readable()
+    {
+        var git = await FinalEvaluator.GitStateAsync();
+        Assert.NotNull(git);
+        Assert.True(git!.Value.Commit.Length >= 7);
+    }
 }

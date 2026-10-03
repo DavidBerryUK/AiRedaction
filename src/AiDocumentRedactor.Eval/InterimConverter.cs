@@ -14,7 +14,7 @@ namespace AiDocumentRedactor.Eval;
 /// The result is labelled interim: it is test data for the explorer, and the final dataset comes from the evaluator.</summary>
 public static class InterimConverter
 {
-    static readonly string[] Baselines = ["rules only", "GLiNER only", "rules + GLiNER"];
+    public static readonly string[] Baselines = ["rules only", "GLiNER only", "rules + GLiNER"];
     const string WithGliner = " + GLiNER", AllAccepted = " (all flags accepted)", CorrectAccepted = " (correct flags accepted)";
     static readonly Regex Skip = new(@"^`(?<file>.+?)` with (?<model>.+?): (?<message>.*)$", RegexOptions.Singleline | RegexOptions.CultureInvariant);
 
@@ -297,7 +297,7 @@ public static class InterimConverter
     static DetectedEntity ToSpan(SavedSpan s) => new(s.Type, s.Start, s.Length, s.Confidence, s.Source, s.Flag);
 
     /// <summary>Which answer key scored the corpus: its version, a checksum of the key files, and a note.</summary>
-    static Dictionary<string, object?> KeyInfo(string corpus, string corpusDir, int documents)
+    public static Dictionary<string, object?> KeyInfo(string corpus, string corpusDir, int documents)
     {
         var files = Directory.GetFiles(Path.Combine(corpusDir, "ground-truth"), "*.json");
         var audited = Directory.Exists(Path.Combine(corpusDir, "ground-truth-original"));
@@ -312,7 +312,8 @@ public static class InterimConverter
         };
     }
 
-    static void AddKey(DatasetData data, GroundTruth gt)
+    /// <summary>Adds an answer key's items, must-keep texts and undecidable texts to a dataset's entity rows.</summary>
+    public static void AddKey(DatasetData data, GroundTruth gt)
     {
         for (var i = 0; i < gt.Entities.Count; i++)
         {
