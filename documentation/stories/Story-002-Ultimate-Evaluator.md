@@ -1,6 +1,6 @@
 # Story-002: Ultimate Evaluator
 
-**Status:** Idea (to be refined)
+**Status:** Built and run once (3 October 2026): dataset `final-20261003`, 338 documents, 7,774 results, 4 h 18 min, machine idle, code commit `6062ee0` (finished on `19bfc11` with no scoring code changed). One pass, no repeats, by decision. Six model-and-document failures are recorded in the dataset.
 **Related:** [Story-001: Results Explorer](Story-001-Results-Explorer.md) (reads the data this story produces)
 
 ## Summary

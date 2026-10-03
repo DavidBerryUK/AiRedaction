@@ -179,3 +179,22 @@ dotnet run --project src/AiDocumentRedactor.Eval -c Release -- --export-dataset 
 
 It is written to `datasets/<id>` (ignored by git, about 50 MB) and checked by the validator when it finishes; it takes seconds. To check any dataset folder again: `--validate-dataset datasets/<id>`. Options: `--out`, `--input` (the input folder, default `in`) and `--corpus-root` (where the answer keys are, default `tests`).
 
+## The final evaluation (one dataset, every document)
+
+The final evaluator runs every model switched on in `evaluation.models` over every document of every corpus (the held-out and formats sets, read from the input folder), with the fixed rules and GLiNER, and writes a dataset the results explorer reads. It takes about 4 hours 20 minutes for five models. Close other work first: timings are only reliable on an idle machine.
+
+1. **Commit your changes.** It refuses to run on uncommitted code, because the dataset records the code version.
+2. **Check it first (about 2 minutes):**
+   ```bash
+   dotnet run --project src/AiDocumentRedactor.Eval -c Release -- --preflight
+   ```
+   This runs the whole path on eight documents (one of each file type and held-out ones) with the fastest model: saving, the redacted-file checks, the explorer opening it, a repeat run changing nothing, a simulated crash and resume, and agreement with the earlier saved run.
+3. **Run it:**
+   ```bash
+   caffeinate -i dotnet run --project src/AiDocumentRedactor.Eval -c Release --no-build -- --final --id final-YYYYMMDD
+   ```
+4. **Stop and resume safely.** Each document's results are saved as soon as they are scored. Press Ctrl-C to stop, and run the same command to carry on. A resume tidies half-written rows and retries failed documents. It will not resume if the code that decides results (detection, pipeline, readers, scoring, config) or the answer keys have changed.
+5. **Failures.** A timeout or model error is recorded as a result with that status for the model's four setups, and the run continues. `--keep-timeouts` stops a resume re-running documents that timed out, and `--accept-failures` lets the dataset be marked final with its failures recorded (they are listed in `run.json`).
+
+When it finishes it checks that every document has a result for every setup, that scores, timings, token counts and output checks are all saved, and that every redacted file passed its safety check. It then marks the dataset `final`, builds the database and writes `report.md`. Options: `--models a,b`, `--timeout 900` (seconds per document), `--input`, `--corpus-root`, `--no-write` (skip the redacted-file checks).
+
