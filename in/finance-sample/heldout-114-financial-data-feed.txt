@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FuturesMarketData>
+  <FuturesContract>
+    <ContractName>Rémy Cognac Futures</ContractName>
+    <ContractID>REMY22Q1</ContractID>
+    <MarketPrice>325.65</MarketPrice>
+    <TradingVolume>12345</TradingVolume>
+    <OpenInterest>6543</OpenInterest>
+    <LastTradeTime>2022-03-22T14:30:00Z</LastTradeTime>
+  </FuturesContract>
+  <TraderDetails>
+    <Name>Teresa E. Fraser</Name>
+    <Address>
+      <Street>3 Villagatan</Street>
+      <City>Varberg</City>
+      <PostalCode>43333</PostalCode>
+    </Address>
+  </TraderDetails>
+</FuturesMarketData>

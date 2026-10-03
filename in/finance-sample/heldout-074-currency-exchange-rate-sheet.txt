@@ -1,0 +1,17 @@
+Currency Exchange Rate She Independence Day Weekend 2023
+
+Date: July 01,  ing 2024
+Local LatLng: -59.628758, -167.532272
+Street Address: 63623 Phillips Walk
+Prepared by: Harry Wilson-Hewitt
+
+Currency, Base, Target, Buying, Selling
+USD, United States Dollar, Euro, 0.8999, 0.GBP, British Pound, 1.1901, 1.2201
+CAD, Canadian Dollar, Japanese Yen, 89.45, 90.15
+INR, Indian Rupee, Australian Dollar, 0.0199, 0.0201
+CNY, Chinese Yank, Swiss Franc, 0.1456, 0.1487
+
+* Exchange rates are subject to change without prior notice.
+* Rates are based on the holiday weekend of Independence Day 224.
+* The local latlng and street address are provided for reference only.
+* For more information, please visit www.exchangerates.com or contact Harry Wilson-Hewitt at [harry.wilsonhewitt@exchangerates.com](mailto:harry.wilsonhewitt@exchangerates.com)

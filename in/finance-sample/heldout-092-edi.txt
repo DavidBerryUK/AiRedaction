@@ -1,0 +1,17 @@
+ISA*00*          *00*          *01*TestVendor*ZZ*TestCustomer*010101*1234*00501*123456*E*VDA*005010X223A1
+GS*PO*TestVendor*TestCustomer*20230101*1234*123456
+ST*810*1234
+BEG*00*CA*20230101*20230131*123456
+REF*IA*123456
+DTM*001*20230101
+N1*BT*TestVendor*SP*TestVendor Name*ST*CA*347 Beth Stream*CITY*Los Angeles*ST*CA*90001*CN*US
+N3*347 Beth Stream
+N4*Los Angeles*CA*90001
+PER*PI*Julien Clément*TE*1234567890
+ITD*1*1000*EA*MXAL72620669578837
+IT1*1*EA*1000*10.0000*1000*USD*1*10.00*EA*MXAL72620669578837
+SE*17*1234
+GE*1*1234
+IEA*1*123456
+
+Note: The above EDI document is a synthetic example for training purposes only and does not represent a real-world transaction.

@@ -1,0 +1,40 @@
+---
+Partnership Tax Return
+
+Partnership Name: Gomez-Martin & Associates
+Employer Identification Number (EIN): 12-3456789
+
+Partnership Agreement:
+The partnership agreement between Jennifer Gomez-Martin and associates states that all income, deductions, and credits will be allocated proportionately based on each partner's ownership percentage.
+
+Profit and Loss Statement:
+Gross Income: $500,000
+Total Expenses: $250,000
+Net Income: $250,000
+
+Balance Sheet:
+Assets:
+- Cash: $50,000
+- Accounts Receivable: $100,000
+- Property, Plant, and Equipment: $200,000
+Total Assets: $350,000
+
+Liabilities and Equity:
+- Accounts Payable: $50,000
+- Long-term Liabilities: $75,000
+- Partner Equity:
+-- Jennifer Gomez-Martin: $175,000
+-- Other Partners: $75,000
+Total Liabilities and Equity: $350,000
+
+Allocation of Income, Deductions, and Credits:
+Jennifer Gomez-Martin:
+- Share of Net Income: $125,000
+- Allocated Income: $125,000
+
+Address for Partner:
+Jennifer Gomez-Martin
+70578 Manning Grove
+
+Form 1065, U.S. Return of Partnership Income, and Schedule K-1 will be filed for Jennifer Gomez-Martin.
+---

@@ -4,7 +4,6 @@ obj/
 .idea/
 *.user
 out/
-in/
 .cache/
 .claude/
 models/

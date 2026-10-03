@@ -1,0 +1,51 @@
+---
+UNITED STATES OF AMERICA
+DEPARTMENT OF THE TREASURY
+INTERNAL REVENUE SERVICE
+
+Tax Year 2021
+
+Form 1125, Schedule A
+Stock Option Plan
+
+Employer Identification Number (EIN): 12-3456789
+Plan Name: Alfred L. Ribeiro Corporation Stock Option Plan
+Plan Number: 987654321
+
+1. Information About the Plan
+
+Plan sponsor: Alfred L. Ribeiro Corporation
+Employer identification number (EIN): 12-3456789
+Plan number: 987654321
+Plan name: Alfred L. Ribeiro Corporation Stock Option Plan
+Plan type: Employee stock purchase plan
+Tax year of the plan: 2021
+
+2. Identification of Employees Who Have Exercised Options
+
+Name of employee: Alfred L. Ribeiro
+Address: 17877 Krueger Branch, Vargasview
+Phone number: 263.528.8045 x1838
+
+Number of shares involved in the transaction: 10,000
+Date of grant: January 1, 2021
+Date of exercise: December 31, 2021
+Exercise price per share: $50
+Fair market value per share on date of exercise: $100
+
+3. Valuation of Stock Transferred
+
+Number of shares transferred: 10,000
+Fair market value per share on date of transfer: $100
+Valuation of stock transferred: $1,000,000
+
+4. Computation of Income From Stock Transferred
+
+A. Ordinary income from exercise of stock options
+Number of shares involved in the transaction: 10,000
+Fair market value per share on date of exercise: $100
+Ordinary income from exercise of stock options: $1,000,000
+
+B. Compensation income
+Number of shares involved in the transaction: 10,000
+Compensation income: $1,000,000

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FpML version="5.5" xmlns="http://www.fpml.org/FpML-5-5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.fpml.org/FpML-5-5 http://www.fpml.org/schema/fpml-main-5-5.xsd">
+   <header>
+      <party id="party1">
+         <name>Barclays Bank PLC</name>
+         <address>1 Churchill Place, London E14 5HP, United Kingdom</address>
+      </party>
+      <party id="party2">
+         <name>ABC Corporation</name>
+         <address>123 Main St, New York, NY 10001, USA</address>
+      </party>
+      <product id="Product1">
+         <productName>Interest Rate Cap</productName>
+      </product>
+   </header>
+   <body>
+      <trade>
+         <tradeId>20220001</tradeId>
+         <tradeDate>2022-01-01</tradeDate>
+         <product>
+            <interestRateCap>
+               <referenceRate>
+                  <rateName>LIBOR</rateName>
+                  <currency>USD</currency>
+                  <fixingDays>2</fixingDays>
+               </referenceRate>
+               <notionalAmount currency="USD">10000000</notionalAmount>
+               <paymentFrequency>Semiannual</paymentFrequency>
+               <capRate>
+                  <strike currency="USD">0.025</strike>
+               </capRate>
+            </interestRateCap>
+         </product>
+      </trade>
+   </body>
+</FpML>

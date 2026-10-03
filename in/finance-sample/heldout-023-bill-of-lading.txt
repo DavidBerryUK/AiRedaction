@@ -1,0 +1,43 @@
+VESSEL CERTIFICATE
+
+BILL OF LADING
+
+Date: 01/06/2023
+
+Vessel Name: MV Ocean Titan
+
+Voyage No.: 007-UKE-23
+
+Port of Loading: Southampton, United Kingdom
+
+Port of Discharge: Rotterdam, Netherlands
+
+Carrier: Maritime Express Lines Ltd.
+Carrier's Address: 45, Dockside Lane, Southampton, SO14 2JQ, United Kingdom
+
+Shipper: Fine Furniture Importers Ltd.
+Shipper's Address: 34, High Street, London, EC4M 7HD, United Kingdom
+
+Consignee: European Luxury Interiors B.V.
+Consignee's Address: 12, Keizersgracht, 1015 CG Amsterdam, Netherlands
+
+Goods Description: Fine wooden furniture (oak, cherry, and mahogany)
+Number of Packages: 210
+Marks and Numbers: FFI-001 to FFI-210
+Gross Weight: 18,340 kg
+Volume: 325 m³
+
+Notes:
+
+1. The goods have been loaded on board in good condition and in apparent order and quantity, as per the Shipper's description and count.
+2. This Bill of Lading is a non-negotiable document of title and serves as a receipt for the goods.
+3. This Vessel Certificate is valid for presentment to the Master, or his agent, for delivery of the goods at the port of discharge.
+
+Carrier: ______________________________ Date: _________________
+Signature: ____________________________ Title: _________________
+
+Shipper: ______________________________ Date: _________________
+Signature: ____________________________ Title: _________________
+
+Consignee: ____________________________ Date: _________________
+Signature: ____________________________ Title: _________________

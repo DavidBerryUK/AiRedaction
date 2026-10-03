@@ -1,0 +1,33 @@
+Travel Loan Application
+
+Application Date: 10:31 AM, Today
+
+Applicant Name: Evi Coret-Coredo
+Address: 2 avenue Faure, [City], [Postal Code], United Kingdom
+
+Loan Details:
+Loan Amount: £5000
+Loan Purpose: Travel Loan
+Destination: Paris, France
+Duration: 10 days
+Estimated Travel Costs: £4500 (hotel, meals, and local transportation)
+
+Credit Card Information:
+Credit Card Number: 3498-2391-8851-275
+Card Holder's Name: Evi Coret-Coredo
+Expiration Date: [MM/YYYY]
+CVV: [CVV]
+
+Employment Details:
+Employer Name: [Employer Name]
+Position: [Position]
+Monthly Income: £[Monthly Income]
+
+I confirm that the above information is true and correct to the best of my knowledge.
+
+Signature: Evi Coret-Coredo
+Date: [Date]
+
+Note: Please attach/upload the required documents for verification.
+
+[End of Document]

@@ -1,0 +1,34 @@
+Currency Exchange Rate Sheet
+---------------------------
+
+Date: 2023-00-00
+
+Cross-Currency Arbitrage Opportunities
+
+| Base Currency | Target Currency | Buying Rate | Selling Rate | Potential Profit Margin |
+| --- | --- | --- | --- | --- |
+ USD | CAD | 1.3000 | 1.3100 | (0.0100) |
+ USD | GBP | 0.8000 | 0.8100 | (0.0100) |
+ USD | EUR | 0.9000 | 0.9100 | (0.0100) |
+
+---
+
+Employee Details
+
+| Employee ID | Name | Address |
+| --- | --- | --- |
+| EMP672995 | Suzanne Leclercq | 591 Barrera Orchard |
+
+---
+
+Geographical Coordinates
+
+| Latitude | Longitude |
+| --- | --- |
+| -55.079215 | 70.908111 |
+
+---
+
+Note: The potential profit margin is calculated as (Selling Rate - Buying Rate). A negative value indicates a loss, while a positive value indicates a profit.
+
+End of Report

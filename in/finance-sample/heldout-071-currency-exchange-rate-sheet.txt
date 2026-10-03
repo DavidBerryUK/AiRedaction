@@ -1,0 +1,12 @@
+Seasonal Currency Trends - January 1994
+
+Date,Base Currency,Target Currency,Buying Rate,Selling Rate
+1994-01-31,USD,CAD,1.3456,1.2898
+1994-01-31,USD,EUR,0.8674,0.9215
+1994-01-31,USD,GBP,0.6129,0.6567
+1994-01-31,USD,JPY,102.34,106.12
+
+Additional Information:
+Data collected at location: -43.591313,-63.440134
+Collector: Victoire A. Pichon
+Collection Address: 43418 Tony Divide Apt. 734

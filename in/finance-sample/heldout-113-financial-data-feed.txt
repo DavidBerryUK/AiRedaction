@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<InterestRateSwapsFeed>
+  <Swap id="123456">
+    <TradeDetails>
+      <TradeId>1001</TradeId>
+      <TradeDate>2022-03-14</TradeDate>
+      <Counterparty>
+        <Name>Gionata M. Baroffio</Name>
+        <Contact>
+          <Phone>001-438-554-1968x78870</Phone>
+        </Contact>
+      </Counterparty>
+      <Instrument>
+        <Product>IRS</Product>
+        <Currency>USD</Currency>
+        <MaturityDate>2027-03-14</MaturityDate>
+        <FixedRate>0.0225</FixedRate>
+        <FloatingRate>1M-LIBOR</FloatingRate>
+      </Instrument>
+      <NotionalPrincipal>10000000</NotionalPrincipal>
+      <TradeType>New</TradeType>
+    </TradeDetails>
+    <MarketData>
+      <ValuationDate>2022-03-15</ValuationDate>
+      <DiscountCurve>
+        <CurveName>OIS</CurveName>
+        <TenorPoints>
+          <TenorPoint>
+            <Tenor>1M</Tenor>
+            <Rate>0.0150</Rate>
+          </TenorPoint>
+          <TenorPoint>
+            <Tenor>3M</Tenor>
+            <Rate>0.0175</Rate>
+          </TenorPoint>
+          <!-- Additional tenor points -->
+        </TenorPoints>
+      </DiscountCurve>
+      <ForecastCurve>
+        <CurveName>1M-LIBOR</CurveName>
+        <TenorPoints>
+          <TenorPoint>
+            <Tenor>1M</Tenor>
+            <Rate>0.0160</Rate>
+          </TenorPoint>
+         

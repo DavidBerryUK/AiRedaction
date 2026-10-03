@@ -1,0 +1,29 @@
+-----------------------------------------------------------------------------------------------------------------
+First Federal Bank of Canada
+Monthly Bank Statement
+Account Name: John Doe
+Account Number: 123456789
+-----------------------------------------------------------------------------------------------------------------
+
+Date | Description | Deposit (CAD) | Withdrawal (CAD) | Balance (CAD)
+
+01-Jan-2023 | Starting Balance | - | - | 5,000.00
+03-Jan-2023 | Salary Deposit | 4,500.00 | - | 9,500.00
+15-Jan-2023 | Tax Withholding | - | 1,200.00 | 8,300.00
+30-Jan-2023 | Utility Payment | - | 250.00 | 8,050.00
+
+Tax Withholding Details:
+Withheld Amount: 1,200.00 CAD
+Tax Year: 2023
+Employer Details:
+- Name: Doe Enterprises Inc.
+- Address: 123 Main Street, Toronto, ON, M5G 1M6
+- Contact: (416) 123-4567
+
+Employee Information:
+- Name: John Doe
+- Address: 456 Elm Street, Toronto, ON, M5H 2L7
+- SIN: 123-456-789
+
+-----------------------------------------------------------------------------------------------------------------
+Please note that this is a simulated bank statement and should be used for illustrative purposes only. For your actual bank statements, please refer to your financial institution's online banking platform or contact them directly.

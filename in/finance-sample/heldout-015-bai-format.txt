@@ -1,0 +1,42 @@
+BAI022
+:62D:BAI022
+:864:!20220315
+:824:!20220315
+:63F:Cash_Concentration
+:64F:GBP
+
+:13A:BEATRIX SENOL GIRSCHNER
+:15A:295 Ashleyhof
+:17A:London
+:19A:EC2V 1LT
+:21A:GB
+
+:29B:20220315
+:25B:GBP
+:32B:125000.00
+:50K:CC001
+:52A:GB29 ABCD1234567890123456
+:53A:BEATRIX SENOL GIRSCHNER
+:54A:295 Ashleyhof
+:59F:GB
+
+:29B:20220315
+:25B:GBP
+:32B:-55000.00
+:50K:CC002
+:52A:GB98 EFGH1234567890123456
+:53A:BEATRIX SENOL GIRSCHNER
+:54A:295 Ashleyhof
+:59F:GB
+
+:863:!20220315
+:64F:GBP
+:63F:Cash_Concentration
+:13A:BEATRIX SENOL GIRSCHNER
+:15A:295 Ashleyhof
+:17A:London
+:19A:EC2V 1LT
+:21A:GB
+:999:
+
+This BAI Format contains cash concentration data for Beatrix Senol Girschner with the address of 295 Ashleyhof, London, EC2V 1LT, UK. The data includes two transactions, one with a credit amount of GBP 125,000.

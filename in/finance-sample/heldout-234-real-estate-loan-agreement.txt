@@ -1,0 +1,29 @@
+SENIOR HOUSING FACILITY FINANCING AGREEMENT
+
+This Senior Housing Facility Financing Agreement (the "Agreement") is entered into as of this 1st day of March, 2023 (the "Effective Date"), by and between Gioele Aulenti, a resident of 474 Justin Dale, Apt. 98126 ("Borrower"), and XYZ Financial Corporation, a corporation organized and existing under the laws of the Province of Ontario, Canada, with its head office located at 1234 Bank Street, Ottawa, Ontario K1P 5K9 ("Lender").
+
+RECITALS
+
+WHEREAS, Borrower is the owner of a senior housing facility located at -63.653143, -39.337449 (the "Property"), which provides independent living, assisted living, and memory care services;
+
+WHEREAS, Borrower desires to borrow funds from Lender for the purpose of financing the Property and related expenses; and
+
+WHEREAS, Lender is willing to provide such financing on the terms and conditions set forth herein.
+
+NOW, THEREFORE, in consideration of the mutual covenants and promises contained herein, the parties hereto agree as follows:
+
+1. LOAN AMOUNT
+
+Lender shall make a loan to Borrower in the principal amount of Ten Million Dollars ($10,000,000.00) (the "Loan Amount").
+
+2. INTEREST RATE
+
+The Loan Amount shall bear interest at a rate of 5.00% per annum.
+
+3. REPAYMENT SCHEDULE
+
+Borrower shall repay the Loan Amount, together with all accrued and unpaid interest thereon, in thirty-six (36) equal monthly installments commencing on the first day of the month next following the date of this Agreement.
+
+4. PROPERTY DETAILS
+
+The Property is a senior housing facility located at -63.653143, -39.337449, consisting of 150 units, of which 50 units are designated for independent living

@@ -1,0 +1,35 @@
+CLaused Bill of Lading
+
+Bill of Lading No.: CL-123456
+
+Date: 24 Sep 1980
+
+Shipper: Zara Backer
+41 Pasadizo Sancho Valbuena, Alicante, Spain
+
+Consignee: [Consignee Name]
+[Consignee Address]
+
+Vessel: [Vessel Name]
+Voyage: [Voyage Number]
+Port of Loading: Alicante, Spain
+Port of Discharge: [Port of Discharge]
+
+Description of Goods:
+
+| Quantity | Description | Marks and Numbers |
+| --- | --- | --- |
+| 10 | [Description of Goods] | [Marks and Numbers] |
+
+Claused: "Shipper's attention is drawn to the fact that this bill of lading contains the following remarks, conditions, stipulations, reservations, or exceptions (hereinafter called "clauses"), which are deemed to be part of the contract of carriage between the shipper and the carrier."
+
+Delivery Instructions:
+
+1. Upon receipt of the cargo, the consignee must provide a clean receipt to the carrier.
+2. The consignee is responsible for any demurrage or detention charges incurred due to delays in collecting the cargo.
+3. The carrier shall not be liable for any loss or damage to the cargo unless notified in writing within three days of delivery.
+
+Carrier: [Carrier Name]
+IPv6 Address: 637b:41bb:6db0:82a4:9d3a:7460:a4c6:6fa8
+
+NOTE: This Bill of Lading is a legal document and forms part of the contract of carriage between the shipper and the carrier. It is issued subject to the terms and conditions of the carrier's applicable tariff and the provisions of any applicable bills of lading and/or waybill regulations.

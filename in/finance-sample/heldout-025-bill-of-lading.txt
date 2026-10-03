@@ -1,0 +1,62 @@
+HOUSE BILL OF LADING
+
+B/L No.: ABCD123456
+
+Vessel: MV Sea Eagle
+Voyage: 001S
+Port of Loading: New York, NY, USA
+Port of Discharge: Southampton, UK
+Date of Shipment: 15th June, 2023
+
+Shipper:
+Margaud O. Weber
+841 Rios Estate, Suite 427
+New York, NY, 10021
+USA
+
+Consignee:
+Global Logistics Ltd.
+Unit 7, Riverside Park
+Southampton, SO15 3TG
+UK
+
+Notify Party:
+Margaud O. Weber
+841 Rios Estate, Suite 427
+New York, NY, 10021
+USA
+
+Goods Description:
+500 cartons of electronic components
+Marks and Numbers: 
+- Passport Number: S87852395
+- Serial Number: EC-2345-6789
+
+Gross Weight: 12,000 kgs
+Measures: 10.00 x 2.40 x 2.20 m
+
+Terms: FOB New York
+
+Special Instructions:
+- Deliver goods to the consignee's address.
+- Provide a copy of the Bill of Lading to the notify party.
+- Maintain proper temperature control during transit.
+
+Carrier:
+Atlantic Shipping Lines Inc.
+
+Steamship Agent:
+Sea Transport Services Ltd.
+
+Dangerous Goods: N/A
+
+Carrier's Remarks:
+- All shipping instructions are subject to the carrier's tariff and conditions of carriage.
+- The carrier shall not be liable for loss or damage caused by delay, strike, or any other cause beyond the carrier's control.
+
+Cargo Acceptance:
+The shipper hereby declares that they have examined the goods and found them to be in good order and condition, and that the particulars given above correctly describe the goods.
+
+Shipper's Signature: 
+Margaud O. Weber
+Date: 1

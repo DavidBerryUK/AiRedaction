@@ -1,0 +1,46 @@
+[Trade Confirmation]
+
+Commodity Trade Confirmation
+
+Date: March 15, 2023
+
+Trade Details:
+
+Securities Traded: 500 bushels of Hard Red Winter Wheat
+Price: $5.00 per bushel
+Total Value: $2,500.00
+
+Delivery Instructions:
+
+Delivery Date: June 10, 2023
+Delivery Location: Grain Elevator #3, 1234 Wheat Fields Lane, Kansas City, MO 64116
+Buyer's Representative: John Doe, [JDoe@buyerco.com](mailto:JDoe@buyerco.com), (123) 456-7890
+Seller's Representative: Jane Smith, [Jane.Smith@sellerco.com](mailto:Jane.Smith@sellerco.com), (987) 654-3210
+
+Payment Instructions:
+
+Buyer: Buyer Co.
+Bank Name: First National Bank
+Bank Address: 123 Main St., Kansas City, MO 64116
+Account Number: 123456789
+ACH Routing Number: 123456789
+
+Seller: Seller Co.
+Bank Name: Second National Bank
+Bank Address: 456 Oak St., Kansas City, MO 64116
+Account Number: 987654321
+ACH Routing Number: 987654321
+
+Additional Information:
+
+This Commodity Trade Confirmation serves as a confirmation of the terms and conditions of the trade between the buyer and the seller. Please review the details carefully and contact the appropriate representative if you have any questions or concerns.
+
+Thank you for choosing our services.
+
+Sincerely,
+
+[Your Name]
+[Your Title]
+[Your Company]
+[Your Email]
+[Your Phone Number]

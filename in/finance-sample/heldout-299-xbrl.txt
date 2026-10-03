@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xbrl xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:link="http://www.xbrl.org/2003/linkbase" xmlns:xbrli="http://www.xbrl.org/2003/instance" xmlns:iso4217="http://www.xbrl.org/2003/iso4217" xmlns:xbrldi="http://xbrl.org/2006/xbrldi" xsi:schemaLocation="http://www.xbrl.org/2003/instance http://www.xbrl.org/2003/xbrl-instance-2003-12-31.xsd">
+ <xbrli:context id="GB36KBZF66720276125880-2021-01-01">
+ <xbrli:entity>
+ <xbrli:identifier scheme="http://www.xbrl.org/2003/iso4217">GB36KBZF66720276125880</xbrli:identifier>
+ </xbrli:entity>
+ <xbrli:period>
+ <xbrli:instant>2021-01-01</xbrli:instant>
+ </xbrli:period>
+ </xbrli:context>
+ <xbrli:unit id="GBP">
+ <iso4217:currency>GBP</iso4217:currency>
+ </xbrli:unit>
+ <xbrli:fact contextRef="GB36KBZF66720276125880-2021-01-01" decimals="-3" unitRef="GBP">
+ <xbrli:exchangeRate>1.000</xbrli:exchangeRate>
+ </xbrli:fact>
+ <xbrli:fact contextRef="GB3

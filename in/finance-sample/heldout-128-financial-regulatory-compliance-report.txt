@@ -1,0 +1,31 @@
+Financial Regulatory Compliance Report
+
+Compliance Training Report
+
+Report Summary:
+This report details the compliance training programs and initiatives conducted by the organization for the period of January 1st, 2022 to December 31st, 2022. The report includes training materials, assessments, and records of employee participation.
+
+Training Materials:
+The organization provided compliance training to all employees through a series of online modules and in-person seminars. The online modules covered various topics including anti-money laundering, data privacy, and insider trading. The in-person seminars were led by subject matter experts and provided employees with an opportunity to ask questions and engage in discussions.
+
+Assessments:
+To ensure that employees understood the training materials, assessments were administered at the end of each module and seminar. The assessments consisted of multiple-choice questions and short answer responses. The passing grade for each assessment was set at 80%.
+
+Participation Records:
+A total of 500 employees were required to complete the compliance training. The following is a summary of the participation records:
+
+• Livia F. d' Heripon ([livia.f.dheripon@company.com](mailto:livia.f.dheripon@company.com)) completed the training on January 10th, 2022 at 10:00:32.
+• 499 out of 500 employees completed the training.
+• 1 employee did not complete the training and will be required to retake the training in its entirety.
+
+Audit Findings:
+A review of the training records and assessments was conducted to identify any areas of concern. The following issues were identified:
+
+• 1 employee failed the data privacy assessment and will be required to retake the assessment.
+• 2 employees did not complete the training within the allotted time frame and will be required to retake the training in its entirety.
+
+Risk Assessments:
+The risk of non-compliance was assessed based on the training records and assessments. The following risks were identified:
+
+• The risk of non-compliance with data privacy regulations is low due to the high passing rate on the data privacy assessment.
+• The risk of non

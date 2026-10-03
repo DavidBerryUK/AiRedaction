@@ -1,0 +1,31 @@
+AUDIT REPORT
+
+Independent Auditor's Report
+
+We have audited the accompanying tax provisions of XYZ Corporation for the year ended December 31, 2021. The tax provisions include federal, state, and local income taxes.
+
+Management's Responsibility
+
+Management is responsible for the preparation and fair presentation of the tax provisions in accordance with U.S. Generally Accepted Accounting Principles and for the design, implementation, and maintenance of internal control relevant to the preparation and fair presentation of the tax provisions that are free from material misstatement, whether due to fraud or error.
+
+Auditor's Responsibility
+
+Our responsibility is to express an opinion on the tax provisions based on our audit. We conducted our audit in accordance with U.S. generally accepted auditing standards. Those standards require that we plan and perform the audit to obtain reasonable assurance about whether the tax provisions are free from material misstatement.
+
+We believe that the audit evidence we have obtained is sufficient and appropriate to provide a basis for our audit opinion.
+
+Opinion
+
+In our opinion, the tax provisions of XYZ Corporation for the year ended December 31, 2021 are prepared and presented, in all material respects, in accordance with U.S. Generally Accepted Accounting Principles.
+
+Report on Tax Compliance
+
+We have examined XYZ Corporation's compliance with certain provisions of the Internal Revenue Code and applicable state and local tax laws and regulations for the year ended December 31, 2021. Our examination was conducted in accordance with attestation standards established by the American Institute of Certified Public Accountants.
+
+Management is responsible for XYZ Corporation's compliance with the aforementioned tax laws and regulations. Our responsibility is to express an opinion on XYZ Corporation's compliance based on our examination.
+
+In our opinion, XYZ Corporation is in compliance, in all material respects, with the Internal Revenue Code and applicable state and local tax laws and regulations, based on the examination of information provided by management and the application of our professional judgment, including the assessment of the risks of material misstatement of the financial statements and controls in place to prevent or detect misstatements.
+
+Location of the Entity
+
+The entity is located at 8854 April Lakes, with a

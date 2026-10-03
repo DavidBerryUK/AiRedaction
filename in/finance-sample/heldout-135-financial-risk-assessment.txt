@@ -1,0 +1,21 @@
+Financial Risk Assessment: Operational Risk Evaluation
+
+Introduction:
+This operational risk evaluation aims to identify and assess potential vulnerabilities in the internal processes and systems of the business. By conducting a thorough analysis, we can determine the impact of these risks on the company's financial stability.
+
+Operational Risk Analysis:
+
+1. Market Risk
+As a part of our operational risk assessment, we analyzed market risk factors such as volatility in interest rates, foreign exchange rates, and commodity prices. Our analysis indicates that the business's exposure to these risks is currently low. However, fluctuations in the market can impact the financial performance of the company. Therefore, continuous monitoring of market conditions is crucial to manage market risk effectively.
+
+2. Credit Risk
+Credit risk refers to the possibility of financial loss due to a counterparty's failure to meet its contractual obligations. Our assessment of the company's credit risk reveals that the risk is currently low, given the robust credit policy and underwriting practices in place. However, ongoing evaluation of customers' creditworthiness is essential to maintain a healthy credit profile.
+
+3. Operational Risk
+Operational risk includes the potential risk of loss resulting from inadequate or failed internal processes, systems, and people or from external events. Our operational risk evaluation identified the following potential vulnerabilities:
+
+   a. Information Security: The company's reliance on digital platforms for data storage and processing exposes it to cyber threats. To mitigate this risk, the company should implement robust cybersecurity measures, including multi-factor authentication, regular software updates, and employee training on information security best practices.
+
+   b. Business Continuity: The company's heavy dependence on a single data center located at 73 rue David Menard, BoucherBourg, poses a risk to business continuity. In case of a disaster or unforeseen event, the company may face significant downtime, leading to financial losses. To address this risk, the company should consider implementing a disaster recovery plan, including data backups and alternative work arrangements.
+
+   c. Fraud: The company's financial transactions involve sensitive information, such as Vicenta D. Martin's account pin (059332) and phone number (3505216216). Unauthorized access to this information could result in financial losses due to fraud. To mitigate this

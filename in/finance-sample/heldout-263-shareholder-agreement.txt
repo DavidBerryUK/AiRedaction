@@ -1,0 +1,25 @@
+SHAREHOLDER AGREEMENT
+
+THIS AGREEMENT is made this ________ day of ___________, 20_____, by and between ________________, a corporation organized and existing under the laws of the ________________, with its head office located at ________________________ (hereinafter referred to as the "Corporation"), and ________________________, a corporation organized and existing under the laws of the ________________, with its head office located at ________________________ (hereinafter referred to as the "Shareholder").
+
+RECITALS
+
+WHEREAS, the Corporation has authorized the issuance of ________ shares of its common stock, par value $0.01 per share (the "Common Stock"); and
+
+WHEREAS, the Shareholder desires to subscribe for and the Corporation desires to issue and sell to the Shareholder ________ shares of Common Stock (the "Shares") at a purchase price of $_______ per Share, for an aggregate purchase price of $_______;
+
+NOW, THEREFORE, in consideration of the mutual covenants and promises contained herein and for other good and valuable consideration, the receipt and sufficiency of which is hereby acknowledged, the parties hereto agree as follows:
+
+1. ISSUANCE AND PURCHASE OF SHARES
+
+The Corporation hereby agrees to issue and sell to the Shareholder, and the Shareholder hereby agrees to purchase from the Corporation, the Shares at the purchase price set forth above.
+
+2. ANTI-DILUTION CLAUSE
+
+In the event that the Corporation issues additional shares of Common Stock at a purchase price per share less than the purchase price per share paid by the Shareholder for the Shares (a "Dilutive Issuance"), then the number of Shares owned by the Shareholder shall be automatically adjusted to reflect such Dilutive Issuance in accordance with the following formula:
+
+Adjusted Number of Shares = (Number of Shares Owned by Shareholder \* Purchase Price Per Share of New Shares) / Purchase Price Per Share Paid by Shareholder
+
+3. VOTING RIGHTS
+
+The Shareholder shall have the right to vote the Shares on all matters submitted to a vote of the shareholders of the Corporation, and the Shareholder shall

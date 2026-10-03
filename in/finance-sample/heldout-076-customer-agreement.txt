@@ -1,0 +1,25 @@
+**SOFTWARE LICENSE AGREEMENT**
+
+This Software License Agreement (the "Agreement") is entered into and effective as of July 13, 2021 (the "Effective Date"), by and between Georgine Vogt, residing at 15169 Michelle Via ("Licensee"), and Acme Software Solutions Inc., a company incorporated under the laws of Canada, with its head office located at 789 King Street East, Toronto, Ontario, Canada ("Licensor").
+
+WHEREAS, Licensor desires to grant to Licensee a license to use the Software, and Licensee desires to obtain such a license, upon the terms and conditions set forth in this Agreement.
+
+NOW, THEREFORE, in consideration of the mutual covenants and promises contained herein and for other good and valuable consideration, the receipt and sufficiency of which is hereby acknowledged, the parties agree as follows:
+
+1. **LICENSE GRANT**
+
+1.1 Licensor hereby grants to Licensee a non-exclusive, non-transferable, revocable license to use the Software, in object code form only, for Licensee's internal business purposes, subject to the terms and conditions of this Agreement.
+
+1.2 Licensee shall not, and shall not permit any third party to: (a) use the Software for any purpose other than as expressly permitted in this Agreement; (b) modify, adapt, translate, rent, lease, loan, resell, distribute, or create derivative works based on the Software; (c) reverse engineer, decompile, or disassemble the Software, except as expressly permitted by applicable law; or (d) remove or alter any proprietary notices or labels on the Software.
+
+2. **LICENSE FEE**
+
+Licensee shall pay Licensor a license fee of [insert amount] for the license granted hereunder.
+
+3. **TERM AND TERMINATION**
+
+3.1 This Agreement shall commence on the Effective Date and shall continue for a term of [insert term], unless earlier terminated in accordance with this Agreement.
+
+3.2 Either party may terminate this Agreement upon written notice if the other party breaches any material term or condition of this Agreement and fails to cure such breach within [insert cure period].
+
+3.3 Upon termination or expiration

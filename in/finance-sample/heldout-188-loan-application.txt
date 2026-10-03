@@ -1,0 +1,58 @@
+---
+Loan Application Form
+
+Loan Applicant Details:
+------------------------
+
+Full Name: Johnathan David Smith
+Date of Birth: 01/02/1980
+National Insurance Number: AB123456C
+Contact Address: 45, Baker Street, London, NW1 6XE
+Phone Number: 020 1234 5678
+Email Address: john.smith@example.com
+
+Employment Details:
+------------------
+
+Employer's Name: XYZ Ltd
+Job Title: IT Manager
+Employment Duration: 10 years
+Monthly Income: £5,000
+
+Loan Details:
+-------------
+
+Loan Amount: £100,000
+Loan Purpose: Business Expansion
+Loan Term: 20 years
+Interest Rate: 5% per annum
+
+Collateral Details:
+------------------
+
+Collateral Type: Property
+Collateral Address: 12, High Street, London, NW1 7XY
+Market Value: £150,000
+Condition: Good
+Mortgage Balance: £50,000
+
+Supporting Documents:
+---------------------
+
+1. Passport
+2. Driving License
+3. Latest 3 months' payslips
+4. Latest P60
+5. Bank Statements (last 6 months)
+6. Property Valuation Report
+7. Mortgage Statement
+
+Declaration:
+-----------
+
+I, Johnathan David Smith, hereby declare that all the information provided in this loan application is true and accurate to the best of my knowledge. I understand that providing false or misleading information may lead to the rejection of my loan application or legal consequences.
+
+Signature: Johnathan David Smith
+Date: 01/03/2023
+
+---

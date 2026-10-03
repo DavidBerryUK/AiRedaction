@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FpML version="5.9" xmlns="http://www.fpml.org/FpML-5-9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.fpml.org/FpML-5-9 http://www.fpml.org/schema/fpml-5-9.xsd">
+   <header>
+      <party id=" PartyA ">
+         <name>Global Investment Bank</name>
+      </party>
+      <party id=" PartyB ">
+         <name>Hedge Fund Inc.</name>
+      </party>
+      <trade>
+         <tradeId>TRA123456-20220901</tradeId>
+         <tradeDateTime>2022-09-01T09:30:00</tradeDateTime>
+      </trade>
+   </header>
+   <body>
+      <product>
+         <security>
+            <securityIdentification>
+               <identificationScheme>430</identificationScheme>
+               <identification>TRA123456</identification>
+            </securityIdentification>
+            <product>
+               <productType>430</productType>
+               <name>Range Accrual Note</name>
+               <instrument>
+                  <interestRate>
+                     <index>
+                        <name>3M Libor</name>
+                     </index>
+                  </interestRate>
+                  <schedule>
+                     <startDate>2022-12-01</startDate>
+                     <endDate>2025-12-01</endDate>
+                     <paymentFrequency>6M</paymentFrequency>
+                  </schedule>
+                  <notionalAmount currencyCode="USD">10000000</notionalAmount>
+                  <rangeAccrual>
+                     <accrualRange>
+                        <pointReference>
+                           <value>

@@ -1,0 +1,35 @@
+Cybersecurity Compliance Assessment Certificate
+
+This is to certify that Sjödin & Andersson HB has undergone a comprehensive cybersecurity compliance assessment and has been found to be in compliance with all relevant industry standards and regulations.
+
+Assessment was conducted in accordance with internationally recognized best practices, including but not limited to, the National Institute of Standards and Technology (NIST) Cybersecurity Framework and the ISO/IEC 27001:2013 standard for Information Security Management Systems.
+
+The assessment included a thorough review of Sjödin & Andersson HB's information security policies, procedures, and controls. Key areas of focus included:
+
+- Access control and authentication
+- Incident management and response
+- Data protection and privacy
+- Vendor management
+- Physical and environmental security
+
+Sjödin & Andersson HB has demonstrated a strong commitment to maintaining the confidentiality, integrity, and availability of its information assets. Specifically, the following controls were found to be in place and operating effectively:
+
+- Multi-factor authentication for remote access
+- Regular vulnerability assessments and penetration testing
+- Encryption of sensitive data in transit and at rest
+- Segregation of duties and least privilege principle
+- Regular backups and offsite storage
+- Incident response plan and regular testing
+
+It was also noted that Sjödin & Andersson HB has appointed a Data Protection Officer and has implemented a comprehensive data protection and privacy program, including regular employee training and awareness programs.
+
+Furthermore, Sjödin & Andersson HB has provided evidence of compliance with the General Data Protection Regulation (GDPR) and the Payment Card Industry Data Security Standard (PCI DSS).
+
+Based on the results of the assessment, it is my professional opinion that Sjödin & Andersson HB has met the applicable cybersecurity compliance requirements.
+
+Certification is valid from the date of this report until the next annual assessment, unless otherwise noted.
+
+Assessor: Claude C. Royer
+Address: Johannesbaan 427
+IBAN: DE39417936227405828401
+Date: [Current Date]

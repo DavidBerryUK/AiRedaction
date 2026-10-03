@@ -1,0 +1,29 @@
+**ISDA NETTING AGREEMENT**
+
+This Netting Agreement (the "Agreement") is entered into as of this 1st day of January, 2023, by and between Ronaldo Giacomo Casadei, a resident of 15598 Laura Corner, Apt. 1592, [City], [State], [Zip Code] ("Casadei"), and [Counterparty Name], a corporation organized and existing under the laws of [State of Incorporation] with its head office located at [Address] ("Counterparty").
+
+**1. DEFINITIONS**
+
+In this Agreement, the following terms shall have the meanings set forth below:
+
+"Account" shall mean the individual account held in the name of Casadei at [Bank Name], with the IBAN number GB24CAHL67306072373596.
+
+**2. NETTING**
+
+(a) Upon the occurrence of an Event of Default, Counterparty shall have the right to set off, combine and liquidate any and all obligations, liabilities and amounts owed by Casadei to Counterparty, whether matured or unmatured, determinable or not, actual or contingent, and whether due or to become due, and to apply the same in reduction of the amounts owed by Counterparty to Casadei, all in accordance with the netting provisions of the ISDA Master Agreement.
+
+(b) Upon the occurrence of an Event of Default, Counterparty shall have the right to transfer, assign, set off, combine, liquidate and deal with any and all property, cash, securities, instruments or other assets held by Counterparty for Casadei, in each case in accordance with the netting provisions of the ISDA Master Agreement.
+
+**3. GOVERNING LAW**
+
+This Agreement shall be governed by and construed in accordance with the laws of the State of New York.
+
+**4. COUNTERPARTies**
+
+This Agreement shall be binding upon and inure to the benefit of the parties hereto and their respective successors and assigns.
+
+IN WITNESS WHEREOF, the parties have executed this Agreement as of the date first above written.
+
+---
+
+Ronaldo Giacomo Cas

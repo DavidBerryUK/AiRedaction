@@ -1,0 +1,50 @@
+**MENTAL HEALTH CLAIM FORM**
+
+Patient Information:
+
+* Full Name: Timothy Marshall
+* Date of Birth: MM/DD/YYYY
+* Social Security Number: 346-93-3732
+* Contact Number: (123) 456-7890
+* Mailing Address: 65210 Ellison Motorway, Lake Sarabury, ST 12345
+
+Healthcare Provider Information:
+
+* Provider Name: Serene Minds Counseling
+* Address: 23 Maple Street, Downtown, ST 12345
+* Contact Number: (987) 654-3210
+* NPI: 1234567890
+
+Claim Details:
+
+* Claim Type: Mental Health
+* Diagnosis Code: [Insert Diagnosis Code]
+* Treatment Start Date: MM/DD/YYYY
+* Treatment End Date: MM/DD/YYYY
+* Total Number of Sessions: 12
+* Session Date & Type:
+
+1. MM/DD/YYYY - Individual Counseling
+2. MM/DD/YYYY - Individual Counseling
+3. MM/DD/YYYY - Individual Counseling
+4. MM/DD/YYYY - Individual Counseling
+5. MM/DD/YYYY - Individual Counseling
+6. MM/DD/YYYY - Individual Counseling
+7. MM/DD/YYYY - Individual Counseling
+8. MM/DD/YYYY - Individual Counseling
+9. MM/DD/YYYY - Individual Counseling
+10. MM/DD/YYYY - Individual Counseling
+11. MM/DD/YYYY - Individual Counseling
+12. MM/DD/YYYY - Individual Counseling
+
+Prescribed Medication:
+
+* Medication Name: [Insert Medication Name]
+* Dosage: [Insert Dosage]
+* Duration: [Insert Duration]
+
+Additional Information:
+
+* [Insert Any Additional Information]
+
+Patient Signature: Timothy Marshall

@@ -1,0 +1,45 @@
+Patient Transaction Confirmation
+
+Patient Name: Pío P. Segura
+Date of Birth: [Redacted]
+Address: 574 Allison Land, Apt. 154
+
+Date & Time of Transaction: 2003-09-28 15: Medical Examination
+
+Medical History: N/A
+Examination Findings: No unusual findings
+Diagnosis: N/A
+Treatment Plan: N/T
+
+Physician Details:
+Name: Dr. Jane Smith
+Specialization: General Practitioner
+License Number: [Redacted]
+
+Payment Summary:
+Transaction Date: 2003-09-28
+Transaction Time: 15:45:58
+Transaction Amount: $150.00
+Payment Method: Insurance
+
+Settlement Instructions:
+A settlement request has been initiated and will be processed within 5-7 business days.
+
+Thank you for choosing our medical services.
+
+Note: This is a computer-generated transaction confirmation.
+
+---
+
+Transaction Confirmation - Additional Details
+
+Transaction Type: Medical Examination
+Transaction ID: 20030928154558-001
+
+Please retain this confirmation for your records.
+
+---
+
+**End of Transaction Confirmation**
+
+*Note: Any personal information that does not pertain to the medical examination or payment details has been redacted to maintain privacy and confidentiality.*

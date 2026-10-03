@@ -1,0 +1,38 @@
+Quantum Computing Trade Confirmation
+
+Trade Date: 12/04/2023
+Security: Quantum Computing Stocks
+Quantity: 500
+Price: £12.50 per share
+
+Dear Mr. Klaus-Ulrich Auguste Kambs,
+
+We are pleased to confirm the successful execution of your recent trade. Below, please find the details of your transaction.
+
+Trade Details:
+- Trade Date: 12/04/2023
+- Security: Quantum Computing Stocks
+- Quantity: 500
+- Price: £12.50 per share
+
+Settlement Instructions:
+Please arrange for the total amount of £6,250 (£12.50 x 500) to be transferred to our account by no later than the settlement date, 26/04/2023. Our account details are as follows:
+
+Bank Name: NatWest
+Account Name: Quantum Computing Investments Ltd
+Account Number: 12345678
+Sort Code: 60-12-34
+
+Please note that this Quantum Computing Confirmation utilizes advanced encryption methods to secure and confirm trade details, ensuring the highest level of security for your personal information.
+
+Yours sincerely,
+
+[Your Name]
+[Your Position]
+Quantum Computing Investments Ltd.
+08 Norahboulevard, Apt. 74
+London, NW1 2LB
+United Kingdom
+
+Employee ID: EMP406537
+Confidentiality Notice: This communication, including attachments, is intended for the exclusive use of the individual or entity to which it is addressed and may contain confidential or privileged information. If you are not the intended recipient, please notify the sender immediately and destroy all copies of the original message.

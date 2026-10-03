@@ -1,0 +1,44 @@
+**CITY OF TORONTO**
+
+**PROPERTY TAX REASSESSMENT NOTICE**
+
+**Property Address:** 123 Maple Street, Toronto, ON, M5J 1K7
+
+**Property Owner:** John Doe
+
+**Assessment Roll Number:** 456789012
+
+**Property Type:** Residential
+
+**Property Classification:** Residential (Class 1)
+
+**Date of Assessment:** January 1, 2023
+
+**Assessment Year:** 2023-2024
+
+**Previous Assessment Amount:** $3,500,000
+
+**New Assessment Amount:** $3,750,000
+
+**Change in Assessment:** 7.14%
+
+**Property Tax Rate:** 0.835312% (2023), 0.856421% (2024)
+
+**Calculation of Taxes:**
+
+* 2023 Taxes: $3,750,000 x 0.835312% = $31,320.31
+* 2024 Taxes: $3,750,000 x 0.856421% = $32,136.64
+
+**Total Taxes for the Assessment Year:** $63,456.95
+
+**Payment Due Dates:**
+
+* Instalment 1: February 28, 2023 - $15,864.24
+* Instalment 2: May 31, 2023 - $15,864.24
+* Instalment 3: August 31, 2023 - $15,864.24
+* Instalment 4: November 30, 2023 - $15,864.23
+
+**Breakdown of Taxable Income and Deductions:**
+
+* Taxable Assessment: $3,750,000
+* Homeowner Grant: -$1,050 (2

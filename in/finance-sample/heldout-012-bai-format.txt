@@ -1,0 +1,68 @@
+BAI021
+Transaction_Reconciliation
+
+Reconciliation_Date: 2023-02-15
+Reconciliation_Status: Matched
+
+Account_Information
+-------------------
+
+Account_Number: 123456789
+Currency: USD
+Bank_Name: Bird Bank
+
+Customer_Information
+--------------------
+
+Name: Micaela R. Barranco
+Passport_Number: 205932082
+Email: angelarojas@bird.com
+
+Address
+-------
+
+Street_Address: 028 Villa Mountain, Suite 594
+City: Mountain View
+State: CA
+Postal_Code: 94043
+
+Balance_Information
+------------------
+
+Opening_Balance: 5000.00
+Closing_Balance: 4500.00
+
+Transaction_Details
+-------------------
+
+Transaction_Type: Debit
+Transaction_Date: 2023-02-10
+Transaction_Amount: 500.00
+Transaction_Description: Rent payment
+
+Transaction_Type: Credit
+Transaction_Date: 2023-02-12
+Transaction_Amount: 100.00
+Transaction_Description: Interest income
+
+Transaction_Type: Debit
+Transaction_Date: 2023-02-13
+Transaction_Amount: 200.00
+Transaction_Description: Grocery shopping
+
+Reconciled_Transaction_Details
+------------------------------
+
+Reconciled_Transaction_Type: Debit
+Reconciled_Transaction_Date: 2023-02-10
+Reconciled_Transaction_Amount: 500.00
+Reconciled_Transaction_Description: Rent payment
+
+Reconciled_Transaction_Type: Credit
+Reconciled_Transaction_Date: 2023-02-12
+Reconciled_Transaction_Amount: 100.00
+Reconciled_Transaction_Description: Interest income
+
+Reconciled_Transaction_Type: Debit
+Reconciled_Transaction_Date: 2023-02-13
+Reconciled_Transaction_Amount:

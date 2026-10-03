@@ -1,0 +1,36 @@
+Bill of Lading
+Compliance Statement
+
+Date: 01/01/2023
+
+Shipper: XYZ Corporation
+Address: 123 Main Street, Toronto, Ontario, M5J 1E3, Canada
+Contact: John Doe
+Email: john.doe@xyzcorp.com
+Phone: +1 123 456 7890
+
+Consignee: ABC Enterprises
+Address: 456 Park Lane, London, W1K 1AA, United Kingdom
+Contact: Jane Smith
+Email: jane.smith@abcent.com
+Phone: +44 20 123 4567
+
+Carrier: Global Shipping Inc.
+Vessel: MV Ocean Titan
+Voyage: 001W
+
+Goods Description:
+Commodity: Electronic equipment
+Number of packages: 500
+Description of packages: Boxes
+Marks and numbers: XYZ-EQ-001 to XYZ-EQ-500
+Gross weight: 15,000 kg
+Shipping marks: Clearly labeled with company name and contact details
+
+Declaration of Compliance:
+The shipper declares that the goods described above comply with all applicable shipping regulations, including but not limited to the International Maritime Dangerous Goods (IMDG) Code, the International Convention for the Safety of Life at Sea (SOLAS), and all relevant customs regulations.
+
+Signature: ______________________
+Name: John Doe
+Title: Shipping Manager
+Date: 01/01/2023

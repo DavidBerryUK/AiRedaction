@@ -1,0 +1,35 @@
+Financial Forecast: Fraud Detection Analysis
+
+Introduction:
+
+The purpose of this financial forecast is to provide an analysis of potential fraud risks for the business of Hugh L. Graham, located at 418 Tina Park. The forecast is generated using machine learning algorithms and anomaly detection techniques to identify unusual patterns and behaviors in financial transactions.
+
+Transactional Data Analysis:
+
+The following table summarizes the transactional data for the past six months, including the number of transactions, the total amount, and the average transaction value.
+
+| Month | Number of Transactions | Total Amount (FJD) | Average Transaction Value (FJD) |
+| --- | --- | --- | --- |
+| April | 120 | 34,560 | 288 |
+| May | 135 | 38,215 | 283 |
+| June | 140 | 41,567 | 297 |
+| July | 150 | 46,200 | 308 |
+| August | 165 | 51,234 | 310 |
+| September | 170 | 55,321 | 326 |
+
+Anomaly Detection:
+
+The following table summarizes the results of the anomaly detection analysis, highlighting any unusual spending patterns, high-risk transactions, or unauthorized access.
+
+| Date | Transaction Amount (FJD) | Risk Score | Description |
+| --- | --- | --- | --- |
+| May 15 | 1,200 | 85 | Unusual spending pattern |
+| June 10 | 5,000 | 95 | High-risk transaction |
+| July 20 | 1,500 | 80 | Unauthorized access |
+
+Conclusion:
+
+Based on the transactional data analysis and anomaly detection results, the following potential fraud risks have been identified:
+
+1. Unusual spending patterns: A transaction of FJD 1,200 on May 15 has been flagged as an unusual spending pattern, with a risk score of 85.
+2. High-risk transaction: A transaction of F

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpml:document xmlns:fpml="http://www.fpml.org/FpML-5/reporting"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="http://www.fpml.org/FpML-5/reporting http://www.fpml.org/spec/2006/FpML-reporting-5-6.xsd">
+   <fpml:header>
+      <fpml:trade>
+         <fpml:party id="party1">
+            <fpml:partyId type="email">
+               <fpml:value>lynne34@martinez.com</fpml:value>
+            </fpml:partyId>
+         </fpml:party>
+         <fpml:party id="party2">
+            <fpml:partyId type="name">
+               <fpml:value>María Fernanda Porras-Vera</fpml:value>
+            </fpml:partyId>
+         </fpml:party>
+         <fpml:product>
+            <fpml:structuredProduct>
+               <fpml:underlyingAsset>
+                  <fpml:commodity name="Gold" />
+               </fpml:underlyingAsset>
+               <fpml:payoff>
+                  <fpml:fixedPayment>
+                     <fpml:amount>100000</fpml:amount>
+                     <fpml:currency>USD</fpml:currency>
+                  </fpml:fixedPayment>
+               </fpml:payoff>
+            </fpml:structuredProduct>
+         </fpml:product>
+         <fpml:tradeDate>2022-03-01</fpml:tradeDate>
+         <fpml:cashFlowPaymentDates>
+            <fpml:date>2023-03-01</fpml:date>
+         </fpml:cashFlowPaymentDates>
+      </fpml:trade>
+   </

@@ -1,0 +1,60 @@
+[Insurance Company Letterhead]
+
+Legal Insurance Claim Form
+
+Claimant Information:
+
+Name: John Doe
+Address: 123 Main Street, Anytown, USA
+Phone: (123) 456-7890
+Email: johndoe@example.com
+Policy Number: L-123456789
+
+Legal Matter Details:
+
+Description of Legal Matter: The claimant is seeking legal representation for a breach of contract dispute with a former business partner.
+
+Date of Service: The legal services began on January 1, 2022.
+
+Attorney Information:
+
+Name: Jane Smith, Esq.
+Firm Name: Smith & Associates
+Address: 456 Elm Street, Anytown, USA
+Phone: (987) 654-3210
+Email: [janesmith@smithassociates.com](mailto:janesmith@smithassociates.com)
+
+Itemized Legal Fees:
+
+Date of Service: January 1, 2022
+Service Description: Initial consultation and case review
+Fee: $500
+
+Date of Service: January 15, 2022
+Service Description: Drafting of demand letter
+Fee: $750
+
+Date of Service: February 15, 2022
+Service Description: Attendance at mediation
+Fee: $1,500
+
+Total Amount Claimed: $2,750
+
+Supporting Documentation:
+
+1. Contract between the claimant and the former business partner
+2. Demand letter
+3. Mediation attendance confirmation
+
+I, John Doe, hereby declare that the information provided in this claim form is true and accurate to the best of my knowledge. I understand that providing false or misleading information may result in the denial of this claim or the termination of my insurance policy.
+
+Signature: John Doe
+Date: March 1, 2022
+
+Please return this completed form, along with all supporting documentation, to:
+
+[Insurance Company Name]
+Claims Department
+PO Box 1234
+Anytown, USA
+12345-67

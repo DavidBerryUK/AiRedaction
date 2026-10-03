@@ -1,0 +1,45 @@
+[Financial Aid Application]
+
+[Fee Waiver Application]
+
+Full Name: Alex Johnson
+
+Date of Birth: 01/01/2001
+
+Mailing Address: 123 Main Street, Anytown, USA, 12345
+
+Phone Number: (123) 456-7890
+
+Email Address: [alex.johnson@email.com](mailto:alex.johnson@email.com)
+
+High School Name: Anytown High School
+
+Expected Graduation Date: May 2022
+
+College/University Name: Anycollege University
+
+Intended Major: Computer Science
+
+Anticipated Enrollment Date: Fall 2022
+
+Household Income:
+
+* Annual gross income: $35,000
+* Number of dependents: 4
+* Other sources of income: None
+
+Explanation of Financial Need:
+
+I am writing to request a fee waiver for my college application due to financial hardship. My family's annual gross income is $35,000, and we have four dependents. Unfortunately, this income is not enough to cover the costs of college applications, and we do not have any other sources of income to rely on.
+
+I have always dreamed of pursuing a degree in Computer Science, and I am excited about the opportunity to attend Anycollege University. However, the cost of the application fee is a significant barrier for me and my family. A fee waiver would greatly alleviate this burden and allow me to pursue my educational goals.
+
+I am committed to my education and have worked hard throughout high school to maintain a strong academic record. I have also been involved in extracurricular activities and community service. I am confident that I have the skills and determination to succeed in college and beyond.
+
+Thank you for considering my request for a fee waiver. I appreciate any assistance you can provide in helping me achieve my educational aspirations.
+
+Sincerely,
+
+Alex Johnson
+
+[End of Financial Aid Application]

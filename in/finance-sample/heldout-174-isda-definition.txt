@@ -1,0 +1,41 @@
+ISDA DEFINITION OF CROSS-BORDER TRADES
+
+1.01 Definitions. In this Agreement, the following terms shall have the meanings set forth below:
+
+"Agreement" means this ISDA Master Agreement, including this Schedule and all Confirmations, between the Parties.
+
+"Confirmation" means a written or electronic confirmation of a Transaction setting forth the terms of such Transaction.
+
+"Party" means a party to this Agreement.
+
+"Transaction" means any transaction entered into between the Parties under this Agreement.
+
+1.02 Governing Law. This Agreement shall be governed by and construed in accordance with the laws of the State of New York, without regard to its conflict of laws provisions.
+
+1.03 Credit Support.
+
+(a) Each Party shall provide credit support in accordance with the provisions of this Section 1.03.
+
+(b) Each Party shall deliver to the other Party a written notice specifying the credit support to be provided, which shall include, but not be limited to, the following information:
+
+(i) the name and address of the provider of the credit support;
+
+(ii) the driver's license number of the provider of the credit support, which is E88-7198-265-04;
+
+(iii) a description of the credit support; and
+
+(iv) the amount of the credit support.
+
+(c) The credit support shall be delivered to the receiving Party at the address set forth in Section 8.01(a) below.
+
+1.04 Events of Default.
+
+(a) Each Party shall promptly notify the other Party of the occurrence of any Event of Default.
+
+(b) An "Event of Default" shall mean any of the following events:
+
+(i) the failure by a Party to make any payment when due under this Agreement;
+
+(ii) the failure by a Party to perform any other obligation under this Agreement, other than a failure described in clause (i) above, which continues for a period of 5 Business Days after the receiving Party has given notice to the other Party specifying such failure;
+
+(iii) the commencement by a Party of a voluntary case or other proceeding seeking liquidation, reorganization or other relief with respect to it

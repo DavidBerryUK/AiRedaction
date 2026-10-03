@@ -1,0 +1,26 @@
+xml
+<FinancialDataFeed>
+  <InterestRateSwaps>
+    <Swap id="1">
+      <InstrumentDetails>
+        <Currency>GBP</Currency>
+        <MaturityDate>2025-01-01</MaturityDate>
+        <NotionalPrincipal>10000000</NotionalPrincipal>
+        <PaymentFrequency>Semi-annual</PaymentFrequency>
+      </InstrumentDetails>
+      <MarketPrices>
+        <BidRate>0.025</BidRate>
+        <AskRate>0.027</AskRate>
+      </MarketPrices>
+      <TradingVolume>1234</TradingVolume>
+      <Valuation>
+        <Value>456789.12</Value>
+        <ModelName>Hull-White Model</ModelName>
+      </Valuation>
+    </Swap>
+    <Swap id="2">
+      <!-- Additional interest rate swap details -->
+    </Swap>
+    <!-- Additional swap elements can be added here -->
+  </InterestRateSwaps>
+</FinancialDataFeed>

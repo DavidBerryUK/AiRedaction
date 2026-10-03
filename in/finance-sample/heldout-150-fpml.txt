@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FpML version="5.3" xmlns="http://www.fpml.org/FpML-5-3">
+    <header>
+        <creationTime>2022-03-01T12:34:56+00:00</creationTime>
+        <tradeId>IRS-20220301-123456</tradeId>
+        <party id="partyA">
+            <name nameType="LegalName">Iker T. Milla</name>
+            <postalAddress>
+                <streetAddress>5/5 Gesche-Trüb-Platz</streetAddress>
+                <buildingNumber>Apt. 7</buildingNumber>
+                <city>London</city>
+                <postcode>EC3V 3PD</postcode>
+                <country>GB</country>
+            </postalAddress>
+        </party>
+    </header>
+    <body>
+        <trade>
+            <tradeHeader>
+                <tradeId>IRS-20220301-123456</tradeId>
+                <tradeDateTime>2022-03-01T12:34:56+00:00</tradeDateTime>
+            </tradeHeader>
+            <interestRateSwap>
+                <fixedRate>0.025</fixedRate>
+                <floatingRate>
+                    <rateIndex>
+                        <name>LIBOR</name>
+                        <currency>GBP</currency>
+                    </rateIndex>
+                    <spread>0.01</spread>
+                </floatingRate>
+                <paymentDates>
+                    <schedule>
+                        <startDate>2022-03-01</startDate>
+                        <endDate>2027-03-01</endDate>
+                        <frequency>Semiannual</frequency>
+                    </schedule>

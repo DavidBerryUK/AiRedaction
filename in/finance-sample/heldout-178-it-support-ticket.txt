@@ -1,0 +1,22 @@
+Title: Outlook Calendar Not Synchronizing on Multiple Workstations
+
+Description:
+We have received reports from several users in the Sales department that their Outlook calendar is not synchronizing properly. This issue appears to be affecting both Windows and Mac workstations. The users have reported that new calendar events created on one device are not appearing on other devices. This has resulted in double bookings and missed appointments.
+
+Steps to Reproduce:
+1. Log in to Outlook on a workstation where the issue has been reported.
+2. Create a new calendar event.
+3. Observe if the new event appears on other devices where the user is logged in.
+
+Priority: High
+This issue is causing significant disruption to the Sales department's workflow and is impacting their ability to manage their schedules effectively.
+
+Resolution Status:
+In Progress
+The IT team is currently investigating the issue. Preliminary findings suggest that there may be a problem with the Exchange server. We are working to resolve the issue as soon as possible.
+
+Next Steps:
+1. Continue to investigate the root cause of the synchronization issue.
+2. Liaise with the Exchange server administrators to identify potential solutions.
+3. Implement a fix for the issue and test to ensure that the synchronization problem has been resolved.
+4. Communicate the resolution to the affected users and provide guidance on how to proceed.

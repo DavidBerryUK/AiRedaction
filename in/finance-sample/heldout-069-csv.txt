@@ -1,0 +1,11 @@
+"CustomerID","FirstName","LastName","Email","Phone","City","Country","Age","Gender","AnnualIncome"
+"1","John","Doe","johndoe@email.com","123-456-7890","New York","USA","35","Male","55000"
+"2","Jane","Smith","janesmith@email.com","234-567-8901","London","UK","42","Female","65000"
+"3","Alice","Johnson","alicejohnson@email.com","345-678-9012","Toronto","Canada","38","Female","75000"
+"4","Bob","Brown","bobbrown@email.com","456-789-0123","Chicago","USA","45","Male","85000"
+"5","Charlie","Davis","charliedavis@email.com","567-890-1234","Manchester","UK","32","Male","50000"
+"6","David","Miller","davidmiller@email.com","678-901-2345","Vancouver","Canada","50","Male","95000"
+"7","Eve","Williams","evewilliams@email.com","789-012-3456","Los Angeles","USA","39","Female","70000"
+"8","Frank","Thomas","frankthomas@email.com","890-123-4567","Birmingham","UK","48","Male","60000"
+"9","Grace","Anderson","graceanderson@email.com","901-234-5678","Montreal","Canada","36","Female","80000"
+"10","Heidi","Taylor","heiditaylor@email.com","012-345-6789","Syd

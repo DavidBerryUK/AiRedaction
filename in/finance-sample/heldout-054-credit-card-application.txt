@@ -1,0 +1,22 @@
+Sports Fan Credit Card Application
+
+Thank you for your interest in our Sports Fan Credit Card! We're excited to learn more about your sports-related spending, favorite teams and events, and rewards preferences. Please provide the following information to help us process your application.
+
+Personal Information:
+- Full Name: Fernanda Arcos Montenegro-Jara
+- Street Address: 096 Römerring
+
+Financial Information:
+- Monthly Income:
+- Current Employer:
+- Credit History:
+
+Sports Fan Information:
+- Favorite Sports:
+- Favorite Teams:
+- Average Monthly Sports-Related Spending:
+- Preferred Rewards: Sports merchandise, event tickets, or both?
+
+By submitting this application, you agree to our terms and conditions. We will review your information and contact you shortly regarding the status of your application. Thank you for choosing our Sports Fan Credit Card!
+
+api\_key: sk\_live\_Ba2WeZEl0NroHt2z3D8HaUNT (For internal use only)

@@ -1,0 +1,37 @@
+---
+Earthquake Insurance Claim Form
+
+Claimant Information:
+Name: Editha K. Beckmann
+Date of Birth: 03/14/1968
+SSN: 750-38-3379
+Contact Number: (123) 456-7890
+Email Address: [editha.beckmann@email.com](mailto:editha.beckmann@email.com)
+Mailing Address: 4952 Wendy Flats Apt. 069, Anytown, CA 12345, USA
+
+Property Information:
+Property Type: Residential
+Address: 4952 Wendy Flats Apt. 069, Anytown, CA 12345, USA
+Date of Construction: 2000
+Description of Property: Three-bedroom apartment on the third floor of a four-story building.
+
+Earthquake Damage Details:
+Date of Earthquake: 06/15/2023
+Time of Earthquake: 11:35 AM
+Estimated Damage Cost: $35,000
+
+Description of Damage:
+The earthquake caused significant structural damage to the apartment. The walls and ceiling have visible cracks, and the floor is uneven. The windows and doors no longer close properly, and there is water damage in the bathroom and kitchen.
+
+Supporting Documents Enclosed:
+1. Structural Damage Assessment Report - Prepared by XYZ Engineering Services
+2. Repair Estimate - Prepared by ABC Construction Services
+3. Seismic Activity Report - Prepared by Local Seismic Monitoring Agency
+
+Declaration:
+I, Editha K. Beckmann, hereby declare that the information provided in this claim form is true and accurate to the best of my knowledge. I understand that any false or misleading statements may result in the denial of this claim or future claims.
+
+Signature: Editha K. Beckmann
+Date: 06/20/2023
+
+---

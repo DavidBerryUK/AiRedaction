@@ -1,0 +1,45 @@
+Title: Request for Assistance with Zoom Installation
+
+Ticket ID: IT-2023-0456
+
+Date Created: 03/14/2023
+
+Category: Software Installation
+
+Priority: Medium
+
+Status: In Progress
+
+Assigned To: IT Support Team
+
+**Problem Description:**
+
+The user is experiencing difficulties installing the latest version of Zoom on their workstation. The user has attempted to download and install the software independently but encountered an error during the installation process.
+
+**Steps Taken by User:**
+
+1. Navigated to the Zoom download center at <https://zoom.us/download>
+2. Downloaded the "Zoom Client for Meetings"
+3. Attempted to launch the installer
+4. Received an error message: "An error occurred while trying to install Zoom. Please restart your computer and try again."
+
+**Requested Action:**
+
+Please provide step-by-step guidance on how to successfully install the Zoom software on the user's workstation.
+
+**Resolution Details:**
+
+1. Confirm that the user has administrative rights on their workstation. If not, escalate the request to the user's system administrator.
+2. Ensure that the user's computer meets the minimum system requirements for Zoom installation:
+   - Windows 7 or later
+   - macOS X with macOS 10.9 or later
+   - Ubuntu 12.04 or higher, Debian 8 or higher, or Fedora 21 or higher
+   - Red Hat Enterprise Linux 6.4 or higher
+3. Instruct the user to restart their computer before attempting the installation again.
+4. Have the user download the Zoom installer once more from the official website: <https://zoom.us/download>
+5. Direct the user to right-click the downloaded installer and select "Run as administrator" to launch the installer with elevated privileges.
+6. Guide the user through the installation process, ensuring that they accept the license agreement and select the desired installation settings.
+
+**Additional Notes:**
+
+If the user continues to experience issues, it may be necessary to investigate further by checking for conflicting software or performing a clean boot.

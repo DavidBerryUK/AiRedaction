@@ -1,0 +1,39 @@
+---
+**United States Internal Revenue Service**
+
+**2021 Form 1040 - U.S. Individual Income Tax Return**
+
+**Schedule E (Form 1040)**
+
+**Supplemental Income and Loss**
+
+**Line 28 - Rental Real Estate, Royalties, Partnerships, S corporations, trusts, etc.**
+
+1. **Name:** Letizia P. Staglieno
+
+   **Passport Number:** S45347676
+
+2. **Address:** 544 Morton Lake, Kaisershire
+
+3. **Type of property:** Residential Rental Property
+
+4. **Description of property:** 3-bedroom, 2-bathroom house
+
+5. **Address of property:** 745 Maplewood Lane, Harmonyville
+
+6. **Income from property:**
+
+   - Rental income: $36,000
+   - Other income: $0
+
+7. **Expenses:**
+
+   - Property management fees: $3,600
+   - Real estate taxes: $4,200
+   - Repairs: $2,500
+   - Depreciation: $6,000
+   - Mortgage interest: $10,000
+
+8. **Net income or (loss):** $9,700
+
+*Note: The above information is for illustrative purposes only and should not be considered as actual tax advice. Please consult a tax professional for your specific situation.*

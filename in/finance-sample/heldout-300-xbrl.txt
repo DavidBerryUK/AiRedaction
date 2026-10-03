@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xbrli="http://www.xbrl.org/2003/instance" xmlns:link="http://www.xbrl.org/2003/linkbase" xmlns:iso4217="http://www.xbrl.org/2003/iso4217" xmlns="http://www.example.com/taxonomy/2022/financialreporting-extension" targetNamespace="http://www.example.com/taxonomy/2022/financialreporting-extension" elementFormDefault="qualified" xml:lang="en">
+
+ <xsd:import namespace="http://www.xbrl.org/2003/instance" schemaLocation="http://www.xbrl.org/2003/xbrl-instance-2003-12-31.xsd"/>
+ <xsd:import namespace="http://www.xbrl.org/2003/linkbase" schemaLocation="http://www.xbrl.org/2003/xbrl-linkbase-2003-12-31.xsd"/>
+ <xsd:import namespace="http://www.xbrl.org/2003/iso4217" schemaLocation="http://www.xbrl.org/2003/iso4217-2003-09-30.xsd"/>
+
+ <xsd:annotation>
+ <xsd:appinfo>
+ <link:schemaRef xlink:href="http://www.xbrl.org/2003/xbrl-instance-2003-12-31.xsd" xbrli:arcrole="http://www.xbrl.org/2003/role/link/arcrole/uba-global-linkbase-role-2003-12-31"/>
+ <link:schemaRef xlink:href="http://www.xbrl.

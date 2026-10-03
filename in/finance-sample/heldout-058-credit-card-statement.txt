@@ -1,0 +1,9 @@
+Credit Card Statement
+
+Account Holder: Marko Pärtzelt
+Address: 870 Joshua Corner, 42199, Port Timothytown
+
+Statement Period: 01/01/2023 - 01/31/2023
+
+Transaction Description																						Amount (GBP)
+Netflix Subscription - 18fd:ca22:8edb:4

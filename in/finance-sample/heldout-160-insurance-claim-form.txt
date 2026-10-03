@@ -1,0 +1,35 @@
+---
+TRAVEL INSURANCE CLAIM FORM
+
+Policyholder Information:
+Name: John Doe
+Address: 123 Maple Street, Anytown, USA
+Phone: (123) 456-7890
+Email: johndoe@example.com
+Policy Number: TP-1234567
+
+Travel Information:
+Departure City: New York, USA
+Arrival City: London, UK
+Travel Dates: March 1, 2023 - March 15, 2023
+Trip Cost: $3,500
+
+Incident Details:
+Incident Type: Trip Cancellation
+Date of Incident: February 20, 2023
+
+Reason for Cancellation:
+My doctor has advised me not to travel due to a sudden medical condition. I have attached a letter from my doctor as supporting documentation.
+
+Supporting Documents:
+1. Trip itinerary from "ABC Travel Agency"
+2. Flight confirmation from "XYZ Airlines"
+3. Hotel booking confirmation from "Luxury Hotels London"
+4. Doctor's letter advising against travel
+
+I hereby declare that the information provided in this claim form is true and accurate to the best of my knowledge. I understand that providing false or misleading information may result in the denial of this claim and/or future claims.
+
+Signature: John Doe
+Date: February 22, 2023
+
+---

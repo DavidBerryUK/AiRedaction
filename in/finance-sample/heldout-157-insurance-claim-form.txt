@@ -1,0 +1,45 @@
+---
+**Medical Insurance Claim Form**
+
+**Patient Information**
+
+Full Name: John Doe
+Address: 123 Maple Street, Anytown, USA
+Date of Birth: 01/01/1980
+Policy Number: 123456789
+
+**Healthcare Provider Information**
+
+Name: Dr. Jane Smith
+Address: 456 Oak Avenue, Anytown, USA
+Phone: (123) 456-7890
+
+**Date of Service**
+
+Date: 05/15/2022
+
+**Type of Treatment**
+
+Procedure: Check-up and consultation
+Diagnosis: Common cold
+
+**Itemized Expenses**
+
+| Description | Cost |
+| --- | --- |
+| Office Visit | $100 |
+| Lab Tests | $200 |
+| Prescription | $50 |
+
+**Supporting Documentation**
+
+* Attached: Medical bills and receipts
+
+**Declaration**
+
+I declare that the information provided in this claim form is true and accurate to the best of my knowledge. I understand that providing false or misleading information is a violation of my policy and may result in the denial of this claim and/or future claims.
+
+Signature: John Doe
+Date: 05/16/2022
+
+---

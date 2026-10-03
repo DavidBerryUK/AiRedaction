@@ -1,0 +1,39 @@
+------------------------------------------------------------------------------------------------------------------
+Credit Card Statement
+------------------------------------------------------------------------------------------------------------------
+
+Account Holder: Valerio Guijarro-Conesa
+Account Number: **** 1234 (last 4 digits)
+Statement Period: 01/01/2023 - 01/31/2023
+
+Transactions:
+
+Date | Description | Amount (GBP) | Balance (GBP)
+------------------------------------------------------------------------------------------------------------------
+01/05/2023 | Netflix - Streaming Service | -9.99 | 0.00
+01/10/2023 | Spotify - Music Streaming | -9.99 | -19.98
+01/15/2023 | New York Times - Digital Subscription | -15.00 | -34.97
+01/20/2023 | The Economist - Digital Subscription | -35.00 | -69.97
+01/25/2023 | Amazon Prime - Membership & Benefits | -7.99 | -77.96
+01/30/2023 | Duolingo Plus - Language Learning | -9.99 | -87.95
+
+Account Activity:
+
+Opening Balance: 0.00 GBP
+Total Payments: 0.00 GBP
+Total Purchases: -87.95 GBP
+Total Finance Charges: 0.00 GBP
+New Balance: -87.95 GBP
+Minimum Payment Due: 5.00 GBP
+Due Date: 02/25/2023
+
+Payment Information:
+
+To make a payment or to set up Auto Pay, please call us at +44 973 771 5733.
+You can also pay online at www.yourbank.com/payments or by mailing your payment to:
+Your Bank
+Payment Processing
+PO Box 542, Chapman Tunnel
+EH12 5DR, United Kingdom
+
+Local Latitude/Longitude: -

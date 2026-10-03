@@ -1,0 +1,34 @@
+Hospitalization Claim Form
+
+Patient Information:
+First Name: Fabrizio
+Last Name: Beth Jackson
+Street Address: 6881 Jordan Drive, East Trevorfurt
+
+Hospitalization Details:
+Hospital Name: Trevorfurt General Hospital
+Admission Date: 03/15/2023
+Discharge Date: 03/21/2023
+
+Diagnosis:
+Primary Diagnosis: Acute Bronchitis
+ICD-10 Code: J20.9
+
+Treatments and Procedures:
+
+* Thoracic CT Scan
+* Bronchodilator Therapy
+* Oxygen Therapy
+* Intravenous Fluid Therapy
+
+Attending Physician:
+Dr. Samuel Johnson, MD
+Specialty: Pulmonology
+
+Healthcare Provider Details:
+Trevorfurt General Hospital
+6769 Main Street
+Trevorfurt, AB T1Y 2S8
+Canada
+
+Please attach all relevant medical bills and invoices.

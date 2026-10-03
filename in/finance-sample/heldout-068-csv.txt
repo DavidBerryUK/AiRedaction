@@ -1,0 +1,7 @@
+"CustomerID","FirstName","LastName","Email","Phone","Address","City","State","ZipCode","Country","BirthDate","Gender","AccountOpenDate","AccountBalance"
+1,"John","Doe","johndoe@gmail.com","555-555-5555","123 Main St","Springfield","IL","62701","USA","1985-05-15","Male","2022-01-01","5000"
+2,"Jane","Smith","janesmith@yahoo.com","555-555-5556","456 Elm St","Chicago","IL","60601","USA","1990-03-03","Female","2021-06-12","12000"
+3,"Bob","Johnson","bjohnson@hotmail.com","555-555-5557","789 Oak St","Los Angeles","CA","90001","USA","1988-11-11","Male","2022-02-15","8000"
+4,"Alice","Williams","alicewilliams@gmail.com","555-555-5558","321 Maple St","New York","NY","10001","USA","1992-07-07","Female","2021-08-24","15000"
+5,"Charlie","Brown","cbrown@yahoo.com","555-555-5559","654 Pine St","Atlanta","GA","30301","USA","1989-12-12","Male","2022-03-10","9000"
+6,"Anna","White","anwhite@hotmail.com","555-555-5560","234 Cedar St","Houston","TX","77001","USA","1991-09-09
