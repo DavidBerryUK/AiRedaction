@@ -1,0 +1,35 @@
+{
+  "id": "heldout-199-mortgage-contract",
+  "title": "Mortgage Contract (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Clark, Moses and Dixon",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "123 Main Street, Anytown, DE 12345",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Erwin Tr\u00FCb-Henck",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "249 Haley Wall",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

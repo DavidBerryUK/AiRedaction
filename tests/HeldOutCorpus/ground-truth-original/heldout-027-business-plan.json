@@ -1,0 +1,23 @@
+{
+  "id": "heldout-027-business-plan",
+  "title": "Business Plan (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Tore P. Linder",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Linder Innovations",
+      "occurrences": 9
+    }
+  ],
+  "mustPreserve": []
+}

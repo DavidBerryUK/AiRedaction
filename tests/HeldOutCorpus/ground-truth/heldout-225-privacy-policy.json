@@ -9,15 +9,21 @@
     {
       "where": "body",
       "type": "ADDRESS",
-      "text": "addresses",
-      "occurrences": 2
-    },
-    {
-      "where": "body",
-      "type": "ADDRESS",
       "text": "[contact information]",
       "occurrences": 3
     }
   ],
-  "mustPreserve": []
+  "mustPreserve": [],
+  "judgedCategories": [
+    "PERSON",
+    "COMPANY",
+    "ADDRESS",
+    "EMAIL",
+    "PHONE",
+    "ID_NUMBER",
+    "DATE_OF_BIRTH",
+    "ONLINE_ID",
+    "SECRET"
+  ],
+  "ignore": []
 }

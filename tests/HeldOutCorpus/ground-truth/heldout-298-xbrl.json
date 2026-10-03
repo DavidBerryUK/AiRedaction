@@ -17,7 +17,33 @@
       "type": "SECRET",
       "text": "gz2\u0026D_aj\u002B\u002Bk5_i@L",
       "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Liliana",
+      "occurrences": 4,
+      "audit": "added"
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Proietti-Trapani",
+      "occurrences": 4,
+      "audit": "added"
     }
   ],
-  "mustPreserve": []
+  "mustPreserve": [],
+  "judgedCategories": [
+    "PERSON",
+    "COMPANY",
+    "ADDRESS",
+    "EMAIL",
+    "PHONE",
+    "ID_NUMBER",
+    "DATE_OF_BIRTH",
+    "ONLINE_ID",
+    "SECRET"
+  ],
+  "ignore": []
 }

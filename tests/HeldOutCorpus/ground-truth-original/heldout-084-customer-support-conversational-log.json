@@ -1,0 +1,23 @@
+{
+  "id": "heldout-084-customer-support-conversational-log",
+  "title": "Customer support conversational log (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Meinolf Tatjana Wiek",
+      "occurrences": 2
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Meinolf",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

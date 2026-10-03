@@ -1,0 +1,41 @@
+{
+  "id": "heldout-012-bai-format",
+  "title": "BAI Format (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Bird Bank",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Micaela R. Barranco",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ID_NUMBER",
+      "text": "205932082",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "EMAIL",
+      "text": "angelarojas@bird.com",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "028 Villa Mountain, Suite 594",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

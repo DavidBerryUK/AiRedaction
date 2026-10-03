@@ -1,0 +1,29 @@
+{
+  "id": "heldout-146-fpml",
+  "title": "FpML (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Barclays Bank PLC",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "ABC Corporation",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "123 Main St, New York, NY 10001, USA",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

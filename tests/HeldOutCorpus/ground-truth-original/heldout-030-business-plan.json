@@ -1,0 +1,35 @@
+{
+  "id": "heldout-030-business-plan",
+  "title": "Business Plan (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Elodia Rey",
+      "occurrences": 2
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "TAOC",
+      "occurrences": 7
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "50785 Contreras Lodge Suite 653",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Anglada-B\u00E1rcena",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

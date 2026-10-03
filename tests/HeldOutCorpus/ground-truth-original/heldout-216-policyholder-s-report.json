@@ -1,0 +1,47 @@
+{
+  "id": "heldout-216-policyholder-s-report",
+  "title": "Policyholder\u0027s Report (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "ID_NUMBER",
+      "text": "LJID19999357259049",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Gavin A. Kerr",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "24422 Edwards Divide, Suite",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "DATE_OF_BIRTH",
+      "text": "date of birth",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PHONE",
+      "text": "1-800-392-6754",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "EXAMPLE INSURANCE",
+      "occurrences": 2
+    }
+  ],
+  "mustPreserve": []
+}

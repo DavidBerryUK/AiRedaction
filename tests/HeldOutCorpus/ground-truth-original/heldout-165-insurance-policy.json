@@ -1,0 +1,47 @@
+{
+  "id": "heldout-165-insurance-policy",
+  "title": "Insurance Policy (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "THE PACIFIC COAST INSURANCE COMPANY",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "The Pacific Coast Insurance Company",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "225 Main Street, San Francisco, CA 94105",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Leah Decker",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Decker\u0027s Designs",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "17272 Nicholas Islands Apt. 681",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

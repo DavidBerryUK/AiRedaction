@@ -23,7 +23,28 @@
       "type": "EMAIL",
       "text": "info@tuckers.com",
       "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "6789, 123 Fake Street\n   Anytown, US",
+      "occurrences": 1,
+      "audit": "added"
     }
   ],
-  "mustPreserve": []
+  "mustPreserve": [],
+  "judgedCategories": [
+    "PERSON",
+    "COMPANY",
+    "ADDRESS",
+    "EMAIL",
+    "PHONE",
+    "ID_NUMBER",
+    "DATE_OF_BIRTH",
+    "ONLINE_ID",
+    "SECRET"
+  ],
+  "ignore": [
+    "TVTSF"
+  ]
 }

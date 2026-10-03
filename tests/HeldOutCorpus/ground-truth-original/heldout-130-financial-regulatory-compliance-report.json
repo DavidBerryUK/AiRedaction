@@ -1,0 +1,29 @@
+{
+  "id": "heldout-130-financial-regulatory-compliance-report",
+  "title": "Financial Regulatory Compliance Report (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "13988 Jason Plains",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Mr. John Doe",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Vanessa Castillo",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

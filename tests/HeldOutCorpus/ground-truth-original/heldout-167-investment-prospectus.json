@@ -1,0 +1,17 @@
+{
+  "id": "heldout-167-investment-prospectus",
+  "title": "Investment Prospectus (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Technology and Innovation Fund",
+      "occurrences": 6
+    }
+  ],
+  "mustPreserve": []
+}

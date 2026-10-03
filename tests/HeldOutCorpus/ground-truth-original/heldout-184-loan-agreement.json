@@ -1,0 +1,35 @@
+{
+  "id": "heldout-184-loan-agreement",
+  "title": "Loan Agreement (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Katherine Elizabeth Gonzalez",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "48584 White Landing",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "XYZ Mortgage Corp.",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "123 Main Street, Anytown, USA",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

@@ -1,0 +1,23 @@
+{
+  "id": "heldout-096-email",
+  "title": "Email (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "at TimeMaster\n\nP",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "EMAIL",
+      "text": "at support@timemaster.",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

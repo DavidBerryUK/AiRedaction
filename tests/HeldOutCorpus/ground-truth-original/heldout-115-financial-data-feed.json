@@ -1,0 +1,29 @@
+{
+  "id": "heldout-115-financial-data-feed",
+  "title": "Financial Data Feed (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "London Stock Exchange",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Barclays PLC",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "HSBC Holdings PLC",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

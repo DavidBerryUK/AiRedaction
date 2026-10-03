@@ -31,5 +31,17 @@
       "occurrences": 2
     }
   ],
-  "mustPreserve": []
+  "mustPreserve": [],
+  "judgedCategories": [
+    "PERSON",
+    "COMPANY",
+    "ADDRESS",
+    "EMAIL",
+    "PHONE",
+    "ID_NUMBER",
+    "DATE_OF_BIRTH",
+    "ONLINE_ID",
+    "SECRET"
+  ],
+  "ignore": []
 }

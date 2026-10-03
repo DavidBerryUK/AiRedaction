@@ -1,0 +1,29 @@
+{
+  "id": "heldout-234-real-estate-loan-agreement",
+  "title": "Real Estate Loan Agreement (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Gioele Aulenti",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "474 Justin Dale, Apt. 98126",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "1234 Bank Street, Ottawa, Ontario K1P 5K9",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

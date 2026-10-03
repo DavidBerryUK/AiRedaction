@@ -4,7 +4,7 @@
 individuals are represented), covering 60 document types, with 938 labelled sensitive items (distinct text per document).
 Imported by `tools/AiDocumentRedactor.HeldOutImporter`; to rebuild, run it from the repository root.
 
-**Why it exists.** No rule, threshold, prompt or answer key in this project was written after looking at these documents, so scores on them
+**Why it exists.** No rule, threshold or prompt in this project was written after looking at these documents (the answer key was audited after the first run: see below), so scores on them
 show how the system does on documents it has not been shaped around. Do not tune against it: if you do, build a fresh one.
 
 **How the answer key was made.** The dataset labels each sensitive span. They are mapped to this project's categories: names to PERSON,
@@ -12,6 +12,8 @@ company to COMPANY, street addresses to ADDRESS, emails to EMAIL, phone numbers 
 licence, bank, card, employee and customer numbers to ID_NUMBER, IP addresses and user names to ONLINE_ID, passwords and API keys to SECRET.
 Generic dates and times, coordinates and bank identifier codes are **not** on the key (they are not sensitive under this project's policy), so a
 model that redacts them counts as over-redacting.
+
+**Audit (3 October 2026).** The generator's labels turned out to be incomplete (many addresses, account numbers, first names and phone numbers are unlabelled) and a few are not sensitive (placeholders, generic words, a row of dashes). After the first evaluation the key was audited by written rules (`AUDIT.md`): 242 sensitive items the models agreed on were added, 34 non-sensitive key items were removed, and 167 texts that a rule could not decide are listed under `ignore` and counted as neither right nor wrong. The key also lists the categories it judges (`judgedCategories`); a redaction of another category (gender, age, job title, domain, company number) is not counted as wrong. The generator's original key is kept in `ground-truth-original/`. The rules were checked against a hand reading of 108 of the disagreements (91% agreement, and nearly all disagreements were cases the rules left undecided). **Limit of the audit:** it only added or removed items that at least 3 of 5 models agreed on, so scores for voting between those models are somewhat flattering; a person should check a random sample.
 
 **Limits.** These are generated finance documents (loan applications, policies, contracts, emails, support tickets, statements and machine
 formats such as SWIFT, FIX and XBRL), not letters, medical notes or scans. The labels come from the generator and were not checked by a

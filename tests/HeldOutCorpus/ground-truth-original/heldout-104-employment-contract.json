@@ -1,0 +1,23 @@
+{
+  "id": "heldout-104-employment-contract",
+  "title": "Employment Contract (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Leanne Connor Brooks",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "DataGen, Inc.",
+      "occurrences": 2
+    }
+  ],
+  "mustPreserve": []
+}

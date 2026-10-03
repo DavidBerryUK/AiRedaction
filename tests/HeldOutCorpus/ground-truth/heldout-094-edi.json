@@ -29,7 +29,33 @@
       "type": "ID_NUMBER",
       "text": "W68435475",
       "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Acme Inc.",
+      "occurrences": 1,
+      "audit": "added"
+    },
+    {
+      "where": "body",
+      "type": "ID_NUMBER",
+      "text": "W6843547",
+      "occurrences": 1,
+      "audit": "added"
     }
   ],
-  "mustPreserve": []
+  "mustPreserve": [],
+  "judgedCategories": [
+    "PERSON",
+    "COMPANY",
+    "ADDRESS",
+    "EMAIL",
+    "PHONE",
+    "ID_NUMBER",
+    "DATE_OF_BIRTH",
+    "ONLINE_ID",
+    "SECRET"
+  ],
+  "ignore": []
 }

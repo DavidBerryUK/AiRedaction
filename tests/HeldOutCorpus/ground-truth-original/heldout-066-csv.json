@@ -1,0 +1,23 @@
+{
+  "id": "heldout-066-csv",
+  "title": "CSV (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Albert Roberts-McLean",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "15 Rambla Miguela Carreras",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

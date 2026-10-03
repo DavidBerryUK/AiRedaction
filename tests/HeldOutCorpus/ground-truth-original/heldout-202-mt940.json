@@ -1,0 +1,17 @@
+{
+  "id": "heldout-202-mt940",
+  "title": "MT940 (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "ABC TRAVEL LTD",
+      "occurrences": 2
+    }
+  ],
+  "mustPreserve": []
+}

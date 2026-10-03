@@ -1,0 +1,23 @@
+{
+  "id": "heldout-270-supply-chain-management-agreement",
+  "title": "Supply Chain Management Agreement (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Anthony Robinson-Hunt",
+      "occurrences": 2
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "32934 Mariah Stravenue, Apt. 196",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

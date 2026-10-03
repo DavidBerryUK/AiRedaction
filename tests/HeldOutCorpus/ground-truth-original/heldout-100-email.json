@@ -1,0 +1,35 @@
+{
+  "id": "heldout-100-email",
+  "title": "Email (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Viviane S. L\u00F6wer",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ID_NUMBER",
+      "text": "GB36DEYQ41247841710650",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "9243 Daniel Curve",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "EMAIL",
+      "text": "support@companyname.com",
+      "occurrences": 2
+    }
+  ],
+  "mustPreserve": []
+}

@@ -17,13 +17,19 @@
       "type": "COMPANY",
       "text": "ABC Limited",
       "occurrences": 2
-    },
-    {
-      "where": "body",
-      "type": "ADDRESS",
-      "text": "Manchester, UK",
-      "occurrences": 1
     }
   ],
-  "mustPreserve": []
+  "mustPreserve": [],
+  "judgedCategories": [
+    "PERSON",
+    "COMPANY",
+    "ADDRESS",
+    "EMAIL",
+    "PHONE",
+    "ID_NUMBER",
+    "DATE_OF_BIRTH",
+    "ONLINE_ID",
+    "SECRET"
+  ],
+  "ignore": []
 }

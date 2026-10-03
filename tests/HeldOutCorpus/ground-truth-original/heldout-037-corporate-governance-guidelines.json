@@ -1,0 +1,29 @@
+{
+  "id": "heldout-037-corporate-governance-guidelines",
+  "title": "Corporate Governance Guidelines (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Alex Peron-Vasseur",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "21024 King Cove",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Macarena",
+      "occurrences": 2
+    }
+  ],
+  "mustPreserve": []
+}

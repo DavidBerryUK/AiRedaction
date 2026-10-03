@@ -1,0 +1,10 @@
+{
+  "id": "heldout-141-fix-protocol",
+  "title": "FIX Protocol (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [],
+  "mustPreserve": []
+}

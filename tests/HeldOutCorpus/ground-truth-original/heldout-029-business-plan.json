@@ -1,0 +1,29 @@
+{
+  "id": "heldout-029-business-plan",
+  "title": "Business Plan (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Laurent\u0027s Community Connect",
+      "occurrences": 2
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Camille Marthe Laurent",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Laurent Enterprises",
+      "occurrences": 5
+    }
+  ],
+  "mustPreserve": []
+}

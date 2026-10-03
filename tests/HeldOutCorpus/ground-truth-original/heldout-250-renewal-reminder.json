@@ -1,0 +1,47 @@
+{
+  "id": "heldout-250-renewal-reminder",
+  "title": "Renewal Reminder (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "\u00C9douard E. Robin",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Hermanos Insurance",
+      "occurrences": 3
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "54 Alameda de Apolonia Pons, Piso 6",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "EMAIL",
+      "text": "dblanch@hermanos.com",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PHONE",
+      "text": "\u002B44 20 3645 6789",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ONLINE_ID",
+      "text": "124.218.203.141",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

@@ -47,7 +47,42 @@
       "type": "ADDRESS",
       "text": "065 Elizabeth Plains, Apt. 84659",
       "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "065 ELIZABETH PLAINS, APT. 84659/CITY/CA/91010-1234/US",
+      "occurrences": 1,
+      "audit": "added"
+    },
+    {
+      "where": "body",
+      "type": "ID_NUMBER",
+      "text": "O1234567890",
+      "occurrences": 2,
+      "audit": "added"
+    },
+    {
+      "where": "body",
+      "type": "ID_NUMBER",
+      "text": "1234567890",
+      "occurrences": 2,
+      "audit": "added"
     }
   ],
-  "mustPreserve": []
+  "mustPreserve": [],
+  "judgedCategories": [
+    "PERSON",
+    "COMPANY",
+    "ADDRESS",
+    "EMAIL",
+    "PHONE",
+    "ID_NUMBER",
+    "DATE_OF_BIRTH",
+    "ONLINE_ID",
+    "SECRET"
+  ],
+  "ignore": [
+    "ABC BANK"
+  ]
 }

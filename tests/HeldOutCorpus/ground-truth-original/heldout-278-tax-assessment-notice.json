@@ -1,0 +1,41 @@
+{
+  "id": "heldout-278-tax-assessment-notice",
+  "title": "Tax Assessment Notice (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Her Majesty\u0027s Customs and Revenue Service",
+      "occurrences": 2
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Fem J. Otte",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ID_NUMBER",
+      "text": "FR4855184678937477672584491",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "6 chemin de Jacques, Apt. 63",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PHONE",
+      "text": "0800-322-9435",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

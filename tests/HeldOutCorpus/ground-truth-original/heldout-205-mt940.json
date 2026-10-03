@@ -1,0 +1,17 @@
+{
+  "id": "heldout-205-mt940",
+  "title": "MT940 (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "B Bank Ltd",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

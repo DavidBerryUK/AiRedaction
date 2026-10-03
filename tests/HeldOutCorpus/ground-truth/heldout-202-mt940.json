@@ -11,7 +11,35 @@
       "type": "COMPANY",
       "text": "ABC TRAVEL LTD",
       "occurrences": 2
+    },
+    {
+      "where": "body",
+      "type": "ID_NUMBER",
+      "text": "191234567890",
+      "occurrences": 17,
+      "audit": "added"
+    },
+    {
+      "where": "body",
+      "type": "ID_NUMBER",
+      "text": "OOFFXXXGB2LXXX0123456789",
+      "occurrences": 1,
+      "audit": "added"
     }
   ],
-  "mustPreserve": []
+  "mustPreserve": [],
+  "judgedCategories": [
+    "PERSON",
+    "COMPANY",
+    "ADDRESS",
+    "EMAIL",
+    "PHONE",
+    "ID_NUMBER",
+    "DATE_OF_BIRTH",
+    "ONLINE_ID",
+    "SECRET"
+  ],
+  "ignore": [
+    "ABC TRAVEL LTD"
+  ]
 }

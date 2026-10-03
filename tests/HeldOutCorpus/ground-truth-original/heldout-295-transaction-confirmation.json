@@ -1,0 +1,35 @@
+{
+  "id": "heldout-295-transaction-confirmation",
+  "title": "Transaction Confirmation (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Severiano O. Porcel",
+      "occurrences": 2
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "48 Vicolo Segr\u00E8, Moio Alcantara",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "van der Spaendonck-Uphaus",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ONLINE_ID",
+      "text": "23b8:3adf:8e87:51e6:9314:3ed1:1544:4e64",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

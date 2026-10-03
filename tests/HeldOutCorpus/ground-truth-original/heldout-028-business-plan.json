@@ -1,0 +1,23 @@
+{
+  "id": "heldout-028-business-plan",
+  "title": "Business Plan (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Daniele Cesarotti-Ruggeri",
+      "occurrences": 2
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Eco-Friendly Cleaning Services",
+      "occurrences": 2
+    }
+  ],
+  "mustPreserve": []
+}

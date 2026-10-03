@@ -1,0 +1,17 @@
+{
+  "id": "heldout-093-edi",
+  "title": "EDI (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "123 Main St.",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

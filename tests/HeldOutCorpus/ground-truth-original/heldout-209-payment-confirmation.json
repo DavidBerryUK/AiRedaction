@@ -1,0 +1,29 @@
+{
+  "id": "heldout-209-payment-confirmation",
+  "title": "Payment Confirmation (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Zoe",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Madeleine M. Legros",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "3379 Hayes Junction, Apt. 807",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

@@ -1,0 +1,17 @@
+{
+  "id": "heldout-260-securities-prospectus",
+  "title": "Securities Prospectus (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Beta Limited",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

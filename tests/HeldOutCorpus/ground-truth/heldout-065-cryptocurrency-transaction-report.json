@@ -5,6 +5,26 @@
     "txt"
   ],
   "scanKinds": [],
-  "entities": [],
-  "mustPreserve": []
+  "entities": [
+    {
+      "where": "body",
+      "type": "ID_NUMBER",
+      "text": "1BvBMSEYstWetqTFn5Au4m4GFg7xJaNVN2",
+      "occurrences": 7,
+      "audit": "added"
+    }
+  ],
+  "mustPreserve": [],
+  "judgedCategories": [
+    "PERSON",
+    "COMPANY",
+    "ADDRESS",
+    "EMAIL",
+    "PHONE",
+    "ID_NUMBER",
+    "DATE_OF_BIRTH",
+    "ONLINE_ID",
+    "SECRET"
+  ],
+  "ignore": []
 }

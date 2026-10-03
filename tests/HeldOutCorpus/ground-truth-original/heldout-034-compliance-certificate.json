@@ -1,0 +1,35 @@
+{
+  "id": "heldout-034-compliance-certificate",
+  "title": "Compliance Certificate (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Sj\u00F6din \u0026 Andersson HB",
+      "occurrences": 6
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Claude C. Royer",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "Johannesbaan 427",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ID_NUMBER",
+      "text": "DE39417936227405828401",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

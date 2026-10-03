@@ -8,3 +8,4 @@ in/
 .cache/
 .claude/
 models/
+eval/*.json

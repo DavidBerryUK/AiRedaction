@@ -17,7 +17,75 @@
       "type": "PHONE",
       "text": "(702)986-0107x4484",
       "occurrences": 2
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "51501 PAUL ESTATES, APT. 08925",
+      "occurrences": 2,
+      "audit": "added"
+    },
+    {
+      "where": "body",
+      "type": "ID_NUMBER",
+      "text": "12345678901234567890",
+      "occurrences": 1,
+      "audit": "added"
+    },
+    {
+      "where": "body",
+      "type": "ID_NUMBER",
+      "text": "1312345678901234567890",
+      "occurrences": 1,
+      "audit": "added"
+    },
+    {
+      "where": "body",
+      "type": "ID_NUMBER",
+      "text": "1412345678901234567890",
+      "occurrences": 1,
+      "audit": "added"
+    },
+    {
+      "where": "body",
+      "type": "ID_NUMBER",
+      "text": "1512345678901234567890",
+      "occurrences": 1,
+      "audit": "added"
+    },
+    {
+      "where": "body",
+      "type": "ID_NUMBER",
+      "text": "1612345678901234567890",
+      "occurrences": 1,
+      "audit": "added"
+    },
+    {
+      "where": "body",
+      "type": "ID_NUMBER",
+      "text": "1712345678901234567890",
+      "occurrences": 1,
+      "audit": "added"
+    },
+    {
+      "where": "body",
+      "type": "ID_NUMBER",
+      "text": "18123456789",
+      "occurrences": 1,
+      "audit": "added"
     }
   ],
-  "mustPreserve": []
+  "mustPreserve": [],
+  "judgedCategories": [
+    "PERSON",
+    "COMPANY",
+    "ADDRESS",
+    "EMAIL",
+    "PHONE",
+    "ID_NUMBER",
+    "DATE_OF_BIRTH",
+    "ONLINE_ID",
+    "SECRET"
+  ],
+  "ignore": []
 }

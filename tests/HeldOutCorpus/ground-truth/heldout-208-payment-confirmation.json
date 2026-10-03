@@ -35,7 +35,40 @@
       "type": "EMAIL",
       "text": "email@company.com",
       "occurrences": 2
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "123 Maple Street, Anytown, USA",
+      "occurrences": 1,
+      "audit": "added"
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "First National Bank",
+      "occurrences": 1,
+      "audit": "added"
+    },
+    {
+      "where": "body",
+      "type": "ID_NUMBER",
+      "text": "123456789",
+      "occurrences": 1,
+      "audit": "added"
     }
   ],
-  "mustPreserve": []
+  "mustPreserve": [],
+  "judgedCategories": [
+    "PERSON",
+    "COMPANY",
+    "ADDRESS",
+    "EMAIL",
+    "PHONE",
+    "ID_NUMBER",
+    "DATE_OF_BIRTH",
+    "ONLINE_ID",
+    "SECRET"
+  ],
+  "ignore": []
 }

@@ -95,7 +95,194 @@
       "type": "EMAIL",
       "text": "heiditaylor@email.com",
       "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Doe",
+      "occurrences": 1,
+      "audit": "added"
+    },
+    {
+      "where": "body",
+      "type": "PHONE",
+      "text": "123-456-7890",
+      "occurrences": 1,
+      "audit": "added"
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Smith",
+      "occurrences": 1,
+      "audit": "added"
+    },
+    {
+      "where": "body",
+      "type": "PHONE",
+      "text": "234-567-8901",
+      "occurrences": 1,
+      "audit": "added"
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Alice",
+      "occurrences": 1,
+      "audit": "added"
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Johnson",
+      "occurrences": 1,
+      "audit": "added"
+    },
+    {
+      "where": "body",
+      "type": "PHONE",
+      "text": "345-678-9012",
+      "occurrences": 1,
+      "audit": "added"
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Brown",
+      "occurrences": 1,
+      "audit": "added"
+    },
+    {
+      "where": "body",
+      "type": "PHONE",
+      "text": "456-789-0123",
+      "occurrences": 1,
+      "audit": "added"
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Davis",
+      "occurrences": 1,
+      "audit": "added"
+    },
+    {
+      "where": "body",
+      "type": "PHONE",
+      "text": "567-890-1234",
+      "occurrences": 1,
+      "audit": "added"
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Miller",
+      "occurrences": 1,
+      "audit": "added"
+    },
+    {
+      "where": "body",
+      "type": "PHONE",
+      "text": "678-901-2345",
+      "occurrences": 1,
+      "audit": "added"
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Eve",
+      "occurrences": 1,
+      "audit": "added"
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Williams",
+      "occurrences": 1,
+      "audit": "added"
+    },
+    {
+      "where": "body",
+      "type": "PHONE",
+      "text": "789-012-3456",
+      "occurrences": 1,
+      "audit": "added"
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Frank",
+      "occurrences": 1,
+      "audit": "added"
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Thomas",
+      "occurrences": 1,
+      "audit": "added"
+    },
+    {
+      "where": "body",
+      "type": "PHONE",
+      "text": "890-123-4567",
+      "occurrences": 1,
+      "audit": "added"
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Grace",
+      "occurrences": 1,
+      "audit": "added"
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Anderson",
+      "occurrences": 1,
+      "audit": "added"
+    },
+    {
+      "where": "body",
+      "type": "PHONE",
+      "text": "901-234-5678",
+      "occurrences": 1,
+      "audit": "added"
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Heidi",
+      "occurrences": 1,
+      "audit": "added"
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Taylor",
+      "occurrences": 1,
+      "audit": "added"
+    },
+    {
+      "where": "body",
+      "type": "PHONE",
+      "text": "012-345-6789",
+      "occurrences": 1,
+      "audit": "added"
     }
   ],
-  "mustPreserve": []
+  "mustPreserve": [],
+  "judgedCategories": [
+    "PERSON",
+    "COMPANY",
+    "ADDRESS",
+    "EMAIL",
+    "PHONE",
+    "ID_NUMBER",
+    "DATE_OF_BIRTH",
+    "ONLINE_ID",
+    "SECRET"
+  ],
+  "ignore": []
 }

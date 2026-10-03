@@ -1,0 +1,10 @@
+{
+  "id": "heldout-091-edi",
+  "title": "EDI (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [],
+  "mustPreserve": []
+}

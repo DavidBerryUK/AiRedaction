@@ -8,22 +8,48 @@
   "entities": [
     {
       "where": "body",
-      "type": "COMPANY",
-      "text": "---------------------",
-      "occurrences": 1
-    },
-    {
-      "where": "body",
-      "type": "PERSON",
-      "text": "--------------",
-      "occurrences": 1
-    },
-    {
-      "where": "body",
       "type": "PERSON",
       "text": "Aitor Iglesias",
       "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "United Bank of Canada",
+      "occurrences": 1,
+      "audit": "added"
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "4251 Nathan St, Patrickton",
+      "occurrences": 1,
+      "audit": "added"
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Royal Bank",
+      "occurrences": 1,
+      "audit": "added"
     }
   ],
-  "mustPreserve": []
+  "mustPreserve": [],
+  "judgedCategories": [
+    "PERSON",
+    "COMPANY",
+    "ADDRESS",
+    "EMAIL",
+    "PHONE",
+    "ID_NUMBER",
+    "DATE_OF_BIRTH",
+    "ONLINE_ID",
+    "SECRET"
+  ],
+  "ignore": [
+    "Tim Hortons",
+    "Canadian Tire",
+    "Loblaws",
+    "Esso"
+  ]
 }

@@ -1,0 +1,35 @@
+{
+  "id": "heldout-249-renewal-reminder",
+  "title": "Renewal Reminder (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "F\u00E9line Mila Hagendoorn",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ID_NUMBER",
+      "text": "408141094",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "DATE_OF_BIRTH",
+      "text": "18/02/1914",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "817 Contrada Gabriele, Piano 4",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

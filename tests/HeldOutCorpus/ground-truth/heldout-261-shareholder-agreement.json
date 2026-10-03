@@ -5,19 +5,18 @@
     "txt"
   ],
   "scanKinds": [],
-  "entities": [
-    {
-      "where": "body",
-      "type": "ADDRESS",
-      "text": "address",
-      "occurrences": 2
-    },
-    {
-      "where": "body",
-      "type": "DATE_OF_BIRTH",
-      "text": "date of birth",
-      "occurrences": 1
-    }
+  "entities": [],
+  "mustPreserve": [],
+  "judgedCategories": [
+    "PERSON",
+    "COMPANY",
+    "ADDRESS",
+    "EMAIL",
+    "PHONE",
+    "ID_NUMBER",
+    "DATE_OF_BIRTH",
+    "ONLINE_ID",
+    "SECRET"
   ],
-  "mustPreserve": []
+  "ignore": []
 }

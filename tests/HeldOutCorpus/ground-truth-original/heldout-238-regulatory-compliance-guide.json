@@ -1,0 +1,23 @@
+{
+  "id": "heldout-238-regulatory-compliance-guide",
+  "title": "Regulatory Compliance Guide (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "health plans",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "healthcare providers",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

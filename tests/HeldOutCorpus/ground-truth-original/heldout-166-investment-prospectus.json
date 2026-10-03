@@ -1,0 +1,17 @@
+{
+  "id": "heldout-166-investment-prospectus",
+  "title": "Investment Prospectus (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "5986 Williams Meadow, Apt. 956",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

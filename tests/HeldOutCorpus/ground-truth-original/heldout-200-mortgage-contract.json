@@ -1,0 +1,10 @@
+{
+  "id": "heldout-200-mortgage-contract",
+  "title": "Mortgage Contract (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [],
+  "mustPreserve": []
+}

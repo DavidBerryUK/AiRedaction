@@ -1,0 +1,29 @@
+{
+  "id": "heldout-050-credit-application",
+  "title": "Credit Application (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Angelica Tamburini-Renzi",
+      "occurrences": 2
+    },
+    {
+      "where": "body",
+      "type": "DATE_OF_BIRTH",
+      "text": "25th November 1990",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "203 Industrigatan, 19100, Ume\u00E5",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

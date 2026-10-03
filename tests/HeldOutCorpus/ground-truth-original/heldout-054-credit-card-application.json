@@ -1,0 +1,29 @@
+{
+  "id": "heldout-054-credit-card-application",
+  "title": "Credit Card Application (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Fernanda Arcos",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Montenegro-Jara",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "096 R\u00F6merring",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

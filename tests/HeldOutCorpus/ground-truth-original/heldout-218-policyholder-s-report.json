@@ -1,0 +1,41 @@
+{
+  "id": "heldout-218-policyholder-s-report",
+  "title": "Policyholder\u0027s Report (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Richards and Sons",
+      "occurrences": 4
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Mr. Pardo-Redondo",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Pardo-Redondo",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "49830 Martin Oval, Randolphfort",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Ann H. Lawrence",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

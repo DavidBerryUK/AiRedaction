@@ -1,0 +1,41 @@
+{
+  "id": "heldout-081-customer-support-conversational-log",
+  "title": "Customer support conversational log (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "John Doe",
+      "occurrences": 2
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Ilaria",
+      "occurrences": 5
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "467 Martinez Summit Apt. 871",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Anne B. Goncalves",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "John",
+      "occurrences": 4
+    }
+  ],
+  "mustPreserve": []
+}

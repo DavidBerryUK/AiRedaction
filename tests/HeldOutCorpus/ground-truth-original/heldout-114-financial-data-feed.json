@@ -1,0 +1,23 @@
+{
+  "id": "heldout-114-financial-data-feed",
+  "title": "Financial Data Feed (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "R\u00E9my",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Teresa E. Fraser",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

@@ -8,12 +8,6 @@
   "entities": [
     {
       "where": "body",
-      "type": "COMPANY",
-      "text": "High-Reach Cleaning Solution",
-      "occurrences": 2
-    },
-    {
-      "where": "body",
       "type": "PERSON",
       "text": "Stefanie S. Staude",
       "occurrences": 1
@@ -31,5 +25,17 @@
       "occurrences": 1
     }
   ],
-  "mustPreserve": []
+  "mustPreserve": [],
+  "judgedCategories": [
+    "PERSON",
+    "COMPANY",
+    "ADDRESS",
+    "EMAIL",
+    "PHONE",
+    "ID_NUMBER",
+    "DATE_OF_BIRTH",
+    "ONLINE_ID",
+    "SECRET"
+  ],
+  "ignore": []
 }

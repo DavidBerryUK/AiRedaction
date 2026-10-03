@@ -1,0 +1,41 @@
+{
+  "id": "heldout-078-customer-agreement",
+  "title": "Customer Agreement (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "ABC Proprietary Limited",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "123 High Street, London, United Kingdom",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "XYZ Enterprises Ltd",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "456 Park Lane, Manchester, United Kingdom",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "789 Oxford Street, London, United Kingdom",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

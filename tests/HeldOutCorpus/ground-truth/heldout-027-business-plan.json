@@ -17,7 +17,26 @@
       "type": "COMPANY",
       "text": "Linder Innovations",
       "occurrences": 9
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Identify Potential Partners",
+      "occurrences": 1,
+      "audit": "added"
     }
   ],
-  "mustPreserve": []
+  "mustPreserve": [],
+  "judgedCategories": [
+    "PERSON",
+    "COMPANY",
+    "ADDRESS",
+    "EMAIL",
+    "PHONE",
+    "ID_NUMBER",
+    "DATE_OF_BIRTH",
+    "ONLINE_ID",
+    "SECRET"
+  ],
+  "ignore": []
 }

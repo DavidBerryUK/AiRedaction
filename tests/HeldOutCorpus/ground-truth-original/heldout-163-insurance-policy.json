@@ -1,0 +1,29 @@
+{
+  "id": "heldout-163-insurance-policy",
+  "title": "Insurance Policy (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "SureGuard Insurance Company",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Nilo Barroso",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "26572 Kyle Gardens, 69581, Benjaminland",
+      "occurrences": 2
+    }
+  ],
+  "mustPreserve": []
+}

@@ -1,0 +1,23 @@
+{
+  "id": "heldout-080-customer-agreement",
+  "title": "Customer Agreement (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Luigina Pizzo-Orlando",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "658 rue Cl\u00E9mence Pereira",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

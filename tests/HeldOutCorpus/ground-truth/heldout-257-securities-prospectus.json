@@ -11,13 +11,21 @@
       "type": "COMPANY",
       "text": "GlobalTech PLC",
       "occurrences": 4
-    },
-    {
-      "where": "body",
-      "type": "ADDRESS",
-      "text": "London, United Kingdom",
-      "occurrences": 1
     }
   ],
-  "mustPreserve": []
+  "mustPreserve": [],
+  "judgedCategories": [
+    "PERSON",
+    "COMPANY",
+    "ADDRESS",
+    "EMAIL",
+    "PHONE",
+    "ID_NUMBER",
+    "DATE_OF_BIRTH",
+    "ONLINE_ID",
+    "SECRET"
+  ],
+  "ignore": [
+    "NYSE"
+  ]
 }

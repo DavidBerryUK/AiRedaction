@@ -1,0 +1,10 @@
+{
+  "id": "heldout-276-tax-assessment-notice",
+  "title": "Tax Assessment Notice (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [],
+  "mustPreserve": []
+}

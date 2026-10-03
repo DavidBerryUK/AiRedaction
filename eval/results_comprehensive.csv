@@ -1,0 +1,36 @@
+document_id,model,format,total_items,recall,precision,f1,missed_sensitive_items,over_redactions,must_keep_damaged,time_seconds
+text/heldout-001-annual-report.txt,rules only,Plain text,1,0.0%,100.0%,33.3%,1,0,-,0.0
+text/heldout-001-annual-report.txt,GLiNER only,Plain text,1,100.0%,78.4%,87.5%,0,19,-,0.1
+text/heldout-001-annual-report.txt,phi4,Plain text,1,100.0%,83.3%,91.7%,0,8,-,12.7
+text/heldout-001-annual-report.txt,gemma4:e4b,Plain text,1,100.0%,100.0%,100.0%,0,2,-,3.1
+text/heldout-001-annual-report.txt,qwen3.6:27b,Plain text,1,100.0%,76.5%,87.5%,0,6,-,8.4
+text/heldout-001-annual-report.txt,gemma4:31b,Plain text,1,100.0%,85.1%,91.7%,0,0,-,8.7
+text/heldout-001-annual-report.txt,gpt-oss,Plain text,1,100.0%,79.9%,87.5%,0,2,-,6.8
+text/heldout-002-annual-report.txt,rules only,Plain text,5,100.0%,100.0%,100.0%,0,0,-,0.0
+text/heldout-002-annual-report.txt,GLiNER only,Plain text,5,100.0%,91.4%,95.7%,0,1,-,0.1
+text/heldout-002-annual-report.txt,phi4,Plain text,5,100.0%,93.5%,96.8%,0,4,-,8.3
+text/heldout-002-annual-report.txt,gemma4:e4b,Plain text,5,100.0%,93.5%,96.8%,0,0,-,1.3
+text/heldout-002-annual-report.txt,qwen3.6:27b,Plain text,5,100.0%,97.8%,98.9%,0,2,-,11.6
+text/heldout-002-annual-report.txt,gemma4:31b,Plain text,5,100.0%,90.2%,95.0%,0,0,-,8.2
+text/heldout-002-annual-report.txt,gpt-oss,Plain text,5,100.0%,79.9%,87.5%,0,0,-,2.7
+text/heldout-003-annual-report.txt,rules only,Plain text,6,83.3%,100.0%,91.7%,1,1,-,0.0
+text/heldout-003-annual-report.txt,GLiNER only,Plain text,6,66.7%,78.4%,72.2%,2,2,-,0.0
+text/heldout-003-annual-report.txt,phi4,Plain text,6,100.0%,93.5%,96.8%,0,1,-,11.0
+text/heldout-003-annual-report.txt,gemma4:e4b,Plain text,6,83.3%,84.6%,84.0%,1,1,-,2.0
+text/heldout-003-annual-report.txt,qwen3.6:27b,Plain text,6,100.0%,97.8%,98.9%,0,2,-,12.4
+text/heldout-003-annual-report.txt,gemma4:31b,Plain text,6,100.0%,90.2%,95.0%,0,1,-,10.4
+text/heldout-003-annual-report.txt,gpt-oss,Plain text,6,100.0%,86.9%,91.7%,0,2,-,20.9
+text/heldout-004-annual-report.txt,rules only,Plain text,6,0.0%,100.0%,0.0%,6,0,-,0.0
+text/heldout-004-annual-report.txt,GLiNER only,Plain text,6,83.3%,91.4%,87.5%,1,3,-,0.0
+text/heldout-004-annual-report.txt,phi4,Plain text,6,100.0%,93.5%,96.8%,0,0,-,7.9
+text/heldout-004-annual-report.txt,gemma4:e4b,Plain text,6,66.7%,84.6%,75.0%,2,4,-,2.5
+text/heldout-004-annual-report.txt,qwen3.6:27b,Plain text,6,100.0%,97.8%,98.9%,0,4,-,16.4
+text/heldout-004-annual-report.txt,gemma4:31b,Plain text,6,100.0%,95.0%,97.5%,0,0,-,15.3
+text/heldout-004-annual-report.txt,gpt-oss,Plain text,6,100.0%,86.9%,91.7%,0,4,-,7.5
+text/heldout-005-annual-report.txt,rules only,Plain text,7,100.0%,100.0%,100.0%,0,0,-,0.0
+text/heldout-005-annual-report.txt,GLiNER only,Plain text,7,57.1%,91.4%,72.2%,3,0,-,0.0
+text/heldout-005-annual-report.txt,phi4,Plain text,7,100.0%,93.5%,96.8%,0,0,-,5.7
+text/heldout-005-annual-report.txt,gemma4:e4b,Plain text,7,100.0%,100.0%,100.0%,0,0,-,1.8
+text/heldout-005-annual-report.txt,qwen3.6:27b,Plain text,7,100.0%,97.8%,98.9%,0,0,-,9.6
+text/heldout-005-annual-report.txt,gemma4:31b,Plain text,7,100.0%,95.0%,97.5%,0,0,-,8.6
+text/heldout-005-annual-report.txt,gpt-oss,Plain text,7,100.0%,79.9%,87.5%,0,0,-,2.9

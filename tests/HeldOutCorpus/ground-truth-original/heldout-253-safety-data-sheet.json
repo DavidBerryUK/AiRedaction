@@ -1,0 +1,17 @@
+{
+  "id": "heldout-253-safety-data-sheet",
+  "title": "Safety Data Sheet (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Logan-Nguyen",
+      "occurrences": 2
+    }
+  ],
+  "mustPreserve": []
+}

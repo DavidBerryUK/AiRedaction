@@ -1,0 +1,17 @@
+{
+  "id": "heldout-203-mt940",
+  "title": "MT940 (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "ABC Bank",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

@@ -1,0 +1,23 @@
+{
+  "id": "heldout-223-privacy-policy",
+  "title": "Privacy Policy (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "GeoTrack",
+      "occurrences": 4
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "geotrack",
+      "occurrences": 2
+    }
+  ],
+  "mustPreserve": []
+}

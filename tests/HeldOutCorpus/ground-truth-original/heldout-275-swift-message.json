@@ -1,0 +1,23 @@
+{
+  "id": "heldout-275-swift-message",
+  "title": "SWIFT Message (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "ABC LIMITED",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "ABC CORPORATE",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

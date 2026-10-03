@@ -1,0 +1,17 @@
+{
+  "id": "heldout-057-credit-card-statement",
+  "title": "Credit Card Statement (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Valerio Guijarro-Conesa",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

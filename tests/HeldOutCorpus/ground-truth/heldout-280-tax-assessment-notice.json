@@ -29,7 +29,42 @@
       "type": "COMPANY",
       "text": "HMRC",
       "occurrences": 3
+    },
+    {
+      "where": "body",
+      "type": "ID_NUMBER",
+      "text": "2023-001234-UK",
+      "occurrences": 2,
+      "audit": "added"
+    },
+    {
+      "where": "body",
+      "type": "ID_NUMBER",
+      "text": "12-34-56",
+      "occurrences": 1,
+      "audit": "added"
+    },
+    {
+      "where": "body",
+      "type": "ID_NUMBER",
+      "text": "12345678",
+      "occurrences": 1,
+      "audit": "added"
     }
   ],
-  "mustPreserve": []
+  "mustPreserve": [],
+  "judgedCategories": [
+    "PERSON",
+    "COMPANY",
+    "ADDRESS",
+    "EMAIL",
+    "PHONE",
+    "ID_NUMBER",
+    "DATE_OF_BIRTH",
+    "ONLINE_ID",
+    "SECRET"
+  ],
+  "ignore": [
+    "Her Majesty\u0027s Revenue and Customs"
+  ]
 }

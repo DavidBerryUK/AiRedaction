@@ -1,0 +1,71 @@
+{
+  "id": "heldout-189-loan-application",
+  "title": "Loan Application (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "John Doe",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "123 Maple Street, Anytown, USA",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "EMAIL",
+      "text": "johndoe@example.com",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PHONE",
+      "text": "(123) 456-7890",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "DATE_OF_BIRTH",
+      "text": "01/01/1980",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ID_NUMBER",
+      "text": "123-45-6789",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "XYZ Corporation",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "National Foundation for Credit Counseling (NFCC)",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Financial Counseling Association of America (FCAA)",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Federal Trade Commission (FTC)",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

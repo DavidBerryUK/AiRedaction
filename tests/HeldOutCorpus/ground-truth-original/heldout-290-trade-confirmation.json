@@ -1,0 +1,59 @@
+{
+  "id": "heldout-290-trade-confirmation",
+  "title": "Trade Confirmation (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "John Doe",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PHONE",
+      "text": "(123) 456-7890",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Jane Smith",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PHONE",
+      "text": "(987) 654-3210",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "123 Main St., Kansas City, MO 64116",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "456 Oak St., Kansas City, MO 64116",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "EMAIL",
+      "text": "JDoe@buyerco.com",
+      "occurrences": 2
+    },
+    {
+      "where": "body",
+      "type": "EMAIL",
+      "text": "Jane.Smith@sellerco.com",
+      "occurrences": 2
+    }
+  ],
+  "mustPreserve": []
+}

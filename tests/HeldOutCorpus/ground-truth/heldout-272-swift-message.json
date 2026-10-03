@@ -17,7 +17,33 @@
       "type": "COMPANY",
       "text": "ABC BANK NEW YORK",
       "occurrences": 3
+    },
+    {
+      "where": "body",
+      "type": "ID_NUMBER",
+      "text": "CDRCUS66XXX1234567890ABCDEFGHIJK",
+      "occurrences": 1,
+      "audit": "added"
+    },
+    {
+      "where": "body",
+      "type": "ID_NUMBER",
+      "text": "OOFFXXX0010123456ABCDEFGHIJ",
+      "occurrences": 1,
+      "audit": "added"
     }
   ],
-  "mustPreserve": []
+  "mustPreserve": [],
+  "judgedCategories": [
+    "PERSON",
+    "COMPANY",
+    "ADDRESS",
+    "EMAIL",
+    "PHONE",
+    "ID_NUMBER",
+    "DATE_OF_BIRTH",
+    "ONLINE_ID",
+    "SECRET"
+  ],
+  "ignore": []
 }

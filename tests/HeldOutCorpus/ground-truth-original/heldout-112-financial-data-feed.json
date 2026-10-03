@@ -1,0 +1,10 @@
+{
+  "id": "heldout-112-financial-data-feed",
+  "title": "Financial Data Feed (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [],
+  "mustPreserve": []
+}

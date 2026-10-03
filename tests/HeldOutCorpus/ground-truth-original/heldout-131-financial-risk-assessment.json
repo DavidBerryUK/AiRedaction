@@ -1,0 +1,29 @@
+{
+  "id": "heldout-131-financial-risk-assessment",
+  "title": "Financial Risk Assessment (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Victoria Faye de Roos",
+      "occurrences": 3
+    },
+    {
+      "where": "body",
+      "type": "ONLINE_ID",
+      "text": "afc9:182a:95cc:bad9:21e9:18b1:a6b2:56ac",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Ms. de Roos",
+      "occurrences": 5
+    }
+  ],
+  "mustPreserve": []
+}

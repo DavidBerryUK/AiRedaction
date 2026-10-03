@@ -1,0 +1,35 @@
+{
+  "id": "heldout-288-trade-confirmation",
+  "title": "Trade Confirmation (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Barclays Investment Bank",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "John Doe",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "DATE_OF_BIRTH",
+      "text": "12/09/1980",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Barclays PLC",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

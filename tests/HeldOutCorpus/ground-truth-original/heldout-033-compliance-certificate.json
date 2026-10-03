@@ -1,0 +1,29 @@
+{
+  "id": "heldout-033-compliance-certificate",
+  "title": "Compliance Certificate (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Milagros Ure\u00F1a",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ID_NUMBER",
+      "text": "K8181639",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "447 James Freeway",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

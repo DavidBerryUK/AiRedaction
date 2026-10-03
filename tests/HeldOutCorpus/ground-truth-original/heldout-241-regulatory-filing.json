@@ -1,0 +1,41 @@
+{
+  "id": "heldout-241-regulatory-filing",
+  "title": "Regulatory Filing (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "XYZ Corporation",
+      "occurrences": 2
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Claudia Santino Sonnino",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "51682 Porter Ways, Apt. 367",
+      "occurrences": 2
+    },
+    {
+      "where": "body",
+      "type": "SECRET",
+      "text": "Q39BFou\u002B_)6quP",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Claudia",
+      "occurrences": 2
+    }
+  ],
+  "mustPreserve": []
+}

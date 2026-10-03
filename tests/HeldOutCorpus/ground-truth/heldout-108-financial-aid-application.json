@@ -8,12 +8,6 @@
   "entities": [
     {
       "where": "body",
-      "type": "COMPANY",
-      "text": "Emergency Fund",
-      "occurrences": 1
-    },
-    {
-      "where": "body",
       "type": "PERSON",
       "text": "Patrick J. Wheeler",
       "occurrences": 2
@@ -23,12 +17,6 @@
       "type": "ADDRESS",
       "text": "49338 Goodman Manors Apt. 601",
       "occurrences": 1
-    },
-    {
-      "where": "body",
-      "type": "COMPANY",
-      "text": "emergency fund",
-      "occurrences": 2
     },
     {
       "where": "body",
@@ -43,5 +31,17 @@
       "occurrences": 1
     }
   ],
-  "mustPreserve": []
+  "mustPreserve": [],
+  "judgedCategories": [
+    "PERSON",
+    "COMPANY",
+    "ADDRESS",
+    "EMAIL",
+    "PHONE",
+    "ID_NUMBER",
+    "DATE_OF_BIRTH",
+    "ONLINE_ID",
+    "SECRET"
+  ],
+  "ignore": []
 }

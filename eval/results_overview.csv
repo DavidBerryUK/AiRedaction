@@ -1,0 +1,24 @@
+model,recall,precision,f1,sensitive_items_missed,over_redactions,must_keep_items_damaged,time_per_document,average_recall_by_model
+rules only,25.1%,70.1%,37.0%,1033 of 1379,147 of 492,-,0:00.0,85.0%
+GLiNER only,85.0%,39.4%,53.8%,207 of 1379,1927 of 3180,-,0:00.0,85.0%
+rules + GLiNER,88.8%,39.4%,54.6%,155 of 1379,1996 of 3296,-,0:00.0,85.0%
+phi4,92.7%,53.7%,68.0%,100 of 1372,1082 of 2335,-,0:07.6,92.7%
+phi4 + GLiNER,92.7%,53.7%,68.0%,100 of 1372,1082 of 2335,-,0:07.7,92.7%
+phi4 + GLiNER (all flags accepted),96.7%,35.2%,51.6%,45 of 1372,2409 of 3719,-,0:07.7,96.7%
+phi4 + GLiNER (correct flags accepted),96.7%,54.8%,69.9%,45 of 1372,1082 of 2392,-,0:07.7,96.7%
+gemma4:e4b,91.8%,58.0%,71.1%,112 of 1365,900 of 2145,-,0:02.4,91.8%
+gemma4:e4b + GLiNER,91.8%,58.0%,71.1%,112 of 1365,900 of 2145,-,0:02.4,91.8%
+gemma4:e4b + GLiNER (all flags accepted),97.1%,37.5%,54.1%,39 of 1365,2221 of 3554,-,0:02.4,97.1%
+gemma4:e4b + GLiNER (correct flags accepted),97.1%,59.7%,73.9%,39 of 1365,900 of 2233,-,0:02.4,97.1%
+qwen3.6:27b,94.6%,55.6%,70.0%,75 of 1379,1041 of 2346,-,0:13.7,94.6%
+qwen3.6:27b + GLiNER,94.6%,55.6%,70.0%,75 of 1379,1041 of 2346,-,0:13.7,94.6%
+qwen3.6:27b + GLiNER (all flags accepted),97.9%,35.7%,52.3%,29 of 1379,2445 of 3802,-,0:13.7,97.9%
+qwen3.6:27b + GLiNER (correct flags accepted),97.9%,56.6%,71.7%,29 of 1379,1041 of 2398,-,0:13.7,97.9%
+gemma4:31b,94.6%,55.8%,70.2%,74 of 1378,1035 of 2342,-,0:12.1,94.6%
+gemma4:31b + GLiNER,94.6%,55.8%,70.2%,74 of 1378,1035 of 2342,-,0:12.1,94.6%
+gemma4:31b + GLiNER (all flags accepted),98.3%,36.0%,52.7%,24 of 1378,2422 of 3785,-,0:12.1,98.3%
+gemma4:31b + GLiNER (correct flags accepted),98.3%,56.8%,72.0%,24 of 1378,1035 of 2398,-,0:12.1,98.3%
+gpt-oss,90.6%,60.5%,72.5%,130 of 1379,813 of 2056,-,0:06.7,90.6%
+gpt-oss + GLiNER,90.6%,60.5%,72.5%,130 of 1379,813 of 2056,-,0:06.8,90.6%
+gpt-oss + GLiNER (all flags accepted),97.3%,37.4%,54.0%,37 of 1379,2242 of 3582,-,0:06.8,97.3%
+gpt-oss + GLiNER (correct flags accepted),97.3%,62.2%,75.9%,37 of 1379,813 of 2153,-,0:06.8,97.3%

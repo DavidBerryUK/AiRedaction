@@ -19,8 +19,23 @@ string? Arg(string name)
 }
 if (args.Contains("--help") || args.Contains("-h"))
 {
-    Console.WriteLine("Evaluates local models on the test corpus and writes a Markdown report.\n\n  --config <file>   settings (default redactor.config.json)\n  --corpus <dir>    test corpus (default tests/TestCorpus)\n  --models a,b      models to compare (default: those with include: true in the config's evaluation.models list)\n  --out <file>      report path (default eval/eval-<date-time>.md; a .json with the raw scores is written beside it)\n  --only <text>     only corpus files whose path contains this text\n  --no-write        score the text only; skip writing and verifying the redacted files (faster)\n  --no-baselines    skip the no-model baseline rows (rules only; with --gliner also GLiNER only and rules + GLiNER)\n  --gliner          also score each model combined with GLiNER by agreement (needs the model files; see gliner in the config)\n  --show-text       list missed and over-redacted strings in the report (synthetic data only)\n  --combine run.scores.json --models a,b[,c]   score real combinations (union, agreement, with GLiNER flags) from the spans saved in an earlier run, without running any model again\n  --merge a,b       rebuild one report from saved runs (the .scores.json beside each report); a model in a later file replaces the same model in earlier ones. Use --out for the report path.");
+    Console.WriteLine("Evaluates local models on the test corpus and writes a Markdown report.\n\n  --config <file>   settings (default redactor.config.json)\n  --corpus <dir>    test corpus (default tests/TestCorpus)\n  --models a,b      models to compare (default: those with include: true in the config's evaluation.models list)\n  --out <file>      report path (default eval/eval-<date-time>.md; a .json with the raw scores is written beside it)\n  --only <text>     only corpus files whose path contains this text\n  --no-write        score the text only; skip writing and verifying the redacted files (faster)\n  --no-baselines    skip the no-model baseline rows (rules only; with --gliner also GLiNER only and rules + GLiNER)\n  --gliner          also score each model combined with GLiNER by agreement (needs the model files; see gliner in the config)\n  --show-text       list missed and over-redacted strings in the report (synthetic data only)\n  --rescore run.scores.json   rebuild a whole report from a saved run against the answer key as it is now (no model is run)\n  --audit-key run.scores.json --models a,b,c   audit the answer key against what most models agree on (a log; add --apply to rewrite the key)\n  --combine run.scores.json --models a,b[,c]   score real combinations (union, agreement, with GLiNER flags) from the spans saved in an earlier run, without running any model again\n  --merge a,b       rebuild one report from saved runs (the .scores.json beside each report); a model in a later file replaces the same model in earlier ones. Use --out for the report path.");
     return 0;
+}
+
+if (Arg("--rescore") is { } rescoreRun)
+{
+    // Rebuild a whole report from a saved run against the answer key as it is now, without running any model.
+    return await Rescore.RunAsync(rescoreRun, Path.GetFullPath(Arg("--out") ?? Path.Combine("eval", $"eval-rescored-{DateTime.Now:yyyyMMdd-HHmm}.md")),
+        Arg("--note") ?? "Rescored from the spans saved in an earlier run against the answer key as it is now. No model was run again.");
+}
+
+if (Arg("--audit-key") is { } auditRun)
+{
+    // Compare the answer key with what most models agree on and decide, by written rules, which is right. Nothing changes without --apply.
+    var plain = (Arg("--models") ?? throw new ArgumentException("--audit-key needs --models a,b,c,d,e")).Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+    var log = Path.GetFullPath(Arg("--out") ?? Path.Combine("eval", "key-audit.md"));
+    return KeyAudit.Run(auditRun, plain, args.Contains("--apply"), log, Path.ChangeExtension(log, ".decisions.json"));
 }
 
 if (Arg("--combine") is { } savedRun)

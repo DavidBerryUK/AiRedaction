@@ -1,0 +1,35 @@
+{
+  "id": "heldout-154-health-insurance-claim-form",
+  "title": "Health Insurance Claim Form (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Camilla G. Karz",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "4454 Tammy Camp Apt. 805",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ONLINE_ID",
+      "text": "e368:16fa:6c71:3dcf:fa90:d00b:7fa:dab0",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "AlphaMed Laboratories",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

@@ -1,0 +1,35 @@
+{
+  "id": "heldout-004-annual-report",
+  "title": "Annual Report (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "2024 Inc.",
+      "occurrences": 3
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Aim\u00E9e Garnier-Dias",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ID_NUMBER",
+      "text": "X-758472-D",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PHONE",
+      "text": "488-430-9265",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

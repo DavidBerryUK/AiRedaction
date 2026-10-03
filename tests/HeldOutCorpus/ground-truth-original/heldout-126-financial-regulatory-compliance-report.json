@@ -1,0 +1,17 @@
+{
+  "id": "heldout-126-financial-regulatory-compliance-report",
+  "title": "Financial Regulatory Compliance Report (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "City National Bank",
+      "occurrences": 2
+    }
+  ],
+  "mustPreserve": []
+}

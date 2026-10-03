@@ -6,5 +6,22 @@
   ],
   "scanKinds": [],
   "entities": [],
-  "mustPreserve": []
+  "mustPreserve": [],
+  "judgedCategories": [
+    "PERSON",
+    "COMPANY",
+    "ADDRESS",
+    "EMAIL",
+    "PHONE",
+    "ID_NUMBER",
+    "DATE_OF_BIRTH",
+    "ONLINE_ID",
+    "SECRET"
+  ],
+  "ignore": [
+    "LOCAL GOVERNMENT EMPLOYEES\u0027 PENSION SCHEME",
+    "Local Government Employees\u0027 Pension Scheme",
+    "Local Government Pension Committee",
+    "Local Government Pension Scheme Advisory Board"
+  ]
 }

@@ -1,0 +1,29 @@
+{
+  "id": "heldout-022-bill-of-lading",
+  "title": "Bill of Lading (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Zara Backer",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "41 Pasadizo Sancho Valbuena, Alicante",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ONLINE_ID",
+      "text": "637b:41bb:6db0:82a4:9d3a:7460:a4c6:6fa8",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

@@ -1,0 +1,17 @@
+{
+  "id": "heldout-230-product-disclosure-statement",
+  "title": "Product Disclosure Statement (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Global AgriFutures Fund",
+      "occurrences": 3
+    }
+  ],
+  "mustPreserve": []
+}

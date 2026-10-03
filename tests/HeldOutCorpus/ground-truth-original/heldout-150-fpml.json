@@ -1,0 +1,17 @@
+{
+  "id": "heldout-150-fpml",
+  "title": "FpML (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Iker T. Milla",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

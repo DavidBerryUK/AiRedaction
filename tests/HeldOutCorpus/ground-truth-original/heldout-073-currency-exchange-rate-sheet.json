@@ -1,0 +1,23 @@
+{
+  "id": "heldout-073-currency-exchange-rate-sheet",
+  "title": "Currency Exchange Rate Sheet (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Isabelle Dumas-Brun",
+      "occurrences": 6
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "558 Mary Glens",
+      "occurrences": 6
+    }
+  ],
+  "mustPreserve": []
+}

@@ -14,12 +14,6 @@
     },
     {
       "where": "body",
-      "type": "ADDRESS",
-      "text": "[Company Address]",
-      "occurrences": 1
-    },
-    {
-      "where": "body",
       "type": "SECRET",
       "text": "610fD9cE9AaD346D29F3876ba3b889eb",
       "occurrences": 1
@@ -31,5 +25,17 @@
       "occurrences": 1
     }
   ],
-  "mustPreserve": []
+  "mustPreserve": [],
+  "judgedCategories": [
+    "PERSON",
+    "COMPANY",
+    "ADDRESS",
+    "EMAIL",
+    "PHONE",
+    "ID_NUMBER",
+    "DATE_OF_BIRTH",
+    "ONLINE_ID",
+    "SECRET"
+  ],
+  "ignore": []
 }

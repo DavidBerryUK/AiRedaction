@@ -80,3 +80,65 @@ public class EvalExtrasTests
         Assert.False(MarkdownReport.IsPlain("rules only"));
     }
 }
+
+/// <summary>Tests for scoring against a key that judges only some categories, and for the rules that audit a generated answer key.</summary>
+public class KeyAuditTests
+{
+    const string Text = "Call Eleanor on 07700 900123. She works at Acme Ltd and he agreed.";
+
+    static RedactionResult Redact(params (string Type, string Text)[] spans) =>
+        Redactor.Apply(Text, spans.SelectMany(s => Scoring.Find(Text, s.Text).Select(p => new DetectedEntity(s.Type, p.Start, p.Length, 1, "test"))), "[REDACTED:{type}]");
+
+    /// <summary>With a key that does not judge GENDER, redacting "She" is neither right nor wrong; an unjudged category stays wrong only when the key judges it.</summary>
+    [Fact]
+    public void Unjudged_categories_and_ignored_text_are_not_counted()
+    {
+        var key = new GroundTruth("t", "t", [new("body", "PHONE", "07700 900123", 1)], [], ["PHONE", "COMPANY"], ["Eleanor"]);
+        var s = Scoring.Score(Text, Redact(("PHONE", "07700 900123"), ("GENDER", "She"), ("PERSON", "Eleanor"), ("COMPANY", "Acme Ltd")), key, "Plain text");
+        Assert.Equal(2, s.Edits);              // the phone number and Acme Ltd
+        Assert.Equal(1, s.TruePositives);      // only the phone number is on the key
+        Assert.Equal(2, s.Unjudged);           // GENDER (not judged) and Eleanor (ignored)
+        Assert.Single(s.FalsePositives);       // Acme Ltd: the key judges COMPANY and does not list it
+        Assert.True(key.Judges("COMPANY"));
+        Assert.False(key.Judges("GENDER"));
+        Assert.True(new GroundTruth("t", "t", [], null).Judges("GENDER"));   // no list: everything is judged
+    }
+
+    /// <summary>Things the models redact that are not sensitive are rejected, real ones added, and what a rule cannot decide is left out.</summary>
+    [Theory]
+    [InlineData("COMPANY", "[Company Name]", AuditDecision.Reject)]
+    [InlineData("COMPANY", "HMRC", AuditDecision.Reject)]
+    [InlineData("COMPANY", "Borrower", AuditDecision.Reject)]
+    [InlineData("COMPANY", "United Bank of Canada", AuditDecision.Add)]
+    [InlineData("COMPANY", "XMYTGBDH508", AuditDecision.Add)]
+    [InlineData("COMPANY", "CHASUS33", AuditDecision.Ignore)]
+    [InlineData("COMPANY", "Netflix", AuditDecision.Ignore)]
+    [InlineData("GENDER", "She", AuditDecision.Ignore)]
+    [InlineData("PHONE", "+44 973 771 5733", AuditDecision.Add)]
+    [InlineData("EMAIL", "a@b.example", AuditDecision.Add)]
+    [InlineData("ID_NUMBER", "12345678", AuditDecision.Add)]
+    [InlineData("ID_NUMBER", "08-32-10", AuditDecision.Add)]
+    [InlineData("ID_NUMBER", "**** 1234", AuditDecision.Reject)]
+    [InlineData("ID_NUMBER", "ABC017", AuditDecision.Reject)]
+    [InlineData("ID_NUMBER", "US1234567890", AuditDecision.Reject)]
+    [InlineData("ADDRESS", "654 Pine St", AuditDecision.Add)]
+    [InlineData("ADDRESS", "London, UK", AuditDecision.Ignore)]
+    [InlineData("PERSON", "Heidi", AuditDecision.Add)]
+    [InlineData("DATE_OF_BIRTH", "1989-12-12", AuditDecision.Add)]
+    [InlineData("DATE_OF_BIRTH", "01 June 2023", AuditDecision.Reject)]
+    [InlineData("ONLINE_ID", "https://accounts.example.com/reset", AuditDecision.Reject)]
+    public void Gap_rules(string type, string text, AuditDecision expected) => Assert.Equal(expected, KeyAudit.ClassifyGap(type, text));
+
+    /// <summary>A key item most models missed is removed when it is noise, and kept when it is a real item.</summary>
+    [Theory]
+    [InlineData("ADDRESS", "address", AuditDecision.Remove)]
+    [InlineData("DATE_OF_BIRTH", "[Date of Birth]", AuditDecision.Remove)]
+    [InlineData("COMPANY", "---------------------", AuditDecision.Remove)]
+    [InlineData("COMPANY", "Educational Institution", AuditDecision.Remove)]
+    [InlineData("COMPANY", "Fernleigh Surgery", AuditDecision.Keep)]
+    [InlineData("ADDRESS", "London, UK", AuditDecision.Remove)]
+    [InlineData("ADDRESS", "San Francisco, CA 94112", AuditDecision.Keep)]
+    [InlineData("ID_NUMBER", "568", AuditDecision.Remove)]
+    [InlineData("ONLINE_ID", "a741:45da:c53e:2f8:835a:e766:162b:4220", AuditDecision.Keep)]
+    public void Miss_rules(string type, string text, AuditDecision expected) => Assert.Equal(expected, KeyAudit.ClassifyMiss(type, text));
+}

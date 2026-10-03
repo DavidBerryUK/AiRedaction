@@ -1,0 +1,10 @@
+{
+  "id": "heldout-067-csv",
+  "title": "CSV (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [],
+  "mustPreserve": []
+}

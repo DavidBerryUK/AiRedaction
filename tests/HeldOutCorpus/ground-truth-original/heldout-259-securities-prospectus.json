@@ -1,0 +1,17 @@
+{
+  "id": "heldout-259-securities-prospectus",
+  "title": "Securities Prospectus (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "ABC Corporation",
+      "occurrences": 3
+    }
+  ],
+  "mustPreserve": []
+}

@@ -1,0 +1,35 @@
+{
+  "id": "heldout-105-employment-contract",
+  "title": "Employment Contract (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "XYZ Corporation",
+      "occurrences": 2
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "123 Main Street, Anytown, USA",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Danielle A. Mend\u00E8s",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "7730 Bethany Dam, Apt. 7119",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

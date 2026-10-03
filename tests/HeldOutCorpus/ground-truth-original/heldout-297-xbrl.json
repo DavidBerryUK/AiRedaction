@@ -1,0 +1,29 @@
+{
+  "id": "heldout-297-xbrl",
+  "title": "XBRL (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "ABC_Corporation",
+      "occurrences": 2
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "ABC_Corporation_20X-03-31",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "John Doe",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

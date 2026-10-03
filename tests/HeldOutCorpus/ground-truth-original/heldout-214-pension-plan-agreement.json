@@ -1,0 +1,17 @@
+{
+  "id": "heldout-214-pension-plan-agreement",
+  "title": "Pension Plan Agreement (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "City of Springfield",
+      "occurrences": 2
+    }
+  ],
+  "mustPreserve": []
+}

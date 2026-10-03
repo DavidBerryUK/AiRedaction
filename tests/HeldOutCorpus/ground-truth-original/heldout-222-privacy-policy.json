@@ -1,0 +1,23 @@
+{
+  "id": "heldout-222-privacy-policy",
+  "title": "Privacy Policy (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Heidemarie Niemeier",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "6023 Lori Motorway",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

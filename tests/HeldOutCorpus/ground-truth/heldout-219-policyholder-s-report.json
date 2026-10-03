@@ -17,7 +17,68 @@
       "type": "ADDRESS",
       "text": "69 Nyv\u00E4gen",
       "occurrences": 3
+    },
+    {
+      "where": "body",
+      "type": "ID_NUMBER",
+      "text": "123456789",
+      "occurrences": 1,
+      "audit": "added"
+    },
+    {
+      "where": "body",
+      "type": "ID_NUMBER",
+      "text": "987654321",
+      "occurrences": 1,
+      "audit": "added"
+    },
+    {
+      "where": "body",
+      "type": "ID_NUMBER",
+      "text": "456123789",
+      "occurrences": 1,
+      "audit": "added"
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Premier Health Insurance",
+      "occurrences": 2,
+      "audit": "added"
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Elite Health Insurance",
+      "occurrences": 2,
+      "audit": "added"
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Supreme Health Insurance",
+      "occurrences": 2,
+      "audit": "added"
+    },
+    {
+      "where": "body",
+      "type": "SECRET",
+      "text": "de42714ebBf36ea6Ce53",
+      "occurrences": 1,
+      "audit": "added"
     }
   ],
-  "mustPreserve": []
+  "mustPreserve": [],
+  "judgedCategories": [
+    "PERSON",
+    "COMPANY",
+    "ADDRESS",
+    "EMAIL",
+    "PHONE",
+    "ID_NUMBER",
+    "DATE_OF_BIRTH",
+    "ONLINE_ID",
+    "SECRET"
+  ],
+  "ignore": []
 }

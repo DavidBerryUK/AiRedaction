@@ -1,0 +1,23 @@
+{
+  "id": "heldout-134-financial-risk-assessment",
+  "title": "Financial Risk Assessment (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Procacci-Bondumier Enterprises",
+      "occurrences": 7
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "39165 Burns Lights, North Victoria",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

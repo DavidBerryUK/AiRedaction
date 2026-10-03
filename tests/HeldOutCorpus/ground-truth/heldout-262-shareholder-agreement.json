@@ -8,12 +8,6 @@
   "entities": [
     {
       "where": "body",
-      "type": "COMPANY",
-      "text": "Corporation",
-      "occurrences": 10
-    },
-    {
-      "where": "body",
       "type": "PERSON",
       "text": "Ugolino Govoni-Corradi",
       "occurrences": 1
@@ -23,7 +17,26 @@
       "type": "ADDRESS",
       "text": "3409 David Roads, Suite 436",
       "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "XMYTGBDH508",
+      "occurrences": 1,
+      "audit": "added"
     }
   ],
-  "mustPreserve": []
+  "mustPreserve": [],
+  "judgedCategories": [
+    "PERSON",
+    "COMPANY",
+    "ADDRESS",
+    "EMAIL",
+    "PHONE",
+    "ID_NUMBER",
+    "DATE_OF_BIRTH",
+    "ONLINE_ID",
+    "SECRET"
+  ],
+  "ignore": []
 }

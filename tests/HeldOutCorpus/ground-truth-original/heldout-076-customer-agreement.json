@@ -1,0 +1,35 @@
+{
+  "id": "heldout-076-customer-agreement",
+  "title": "Customer Agreement (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Georgine Vogt",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "15169 Michelle Via",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Acme Software Solutions Inc.",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "789 King Street East, Toronto, Ontario, Canada",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

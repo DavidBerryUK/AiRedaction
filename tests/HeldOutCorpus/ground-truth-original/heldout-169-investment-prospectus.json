@@ -1,0 +1,23 @@
+{
+  "id": "heldout-169-investment-prospectus",
+  "title": "Investment Prospectus (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Tilmann Martine Loos",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "EMAIL",
+      "text": "api_key@humanitarianfund.org",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

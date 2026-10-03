@@ -59,7 +59,33 @@
       "type": "EMAIL",
       "text": "janesmith@smithassociates.com",
       "occurrences": 2
+    },
+    {
+      "where": "body",
+      "type": "ID_NUMBER",
+      "text": "L-123456789",
+      "occurrences": 1,
+      "audit": "added"
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "PO Box 1234\nAnytown, USA\n12345-67",
+      "occurrences": 1,
+      "audit": "added"
     }
   ],
-  "mustPreserve": []
+  "mustPreserve": [],
+  "judgedCategories": [
+    "PERSON",
+    "COMPANY",
+    "ADDRESS",
+    "EMAIL",
+    "PHONE",
+    "ID_NUMBER",
+    "DATE_OF_BIRTH",
+    "ONLINE_ID",
+    "SECRET"
+  ],
+  "ignore": []
 }

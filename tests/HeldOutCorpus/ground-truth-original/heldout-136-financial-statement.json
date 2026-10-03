@@ -1,0 +1,23 @@
+{
+  "id": "heldout-136-financial-statement",
+  "title": "Financial Statement (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Heinz, Belinda \u0026 Oswald",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "962 Pollard Stravenue Apt. 479",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

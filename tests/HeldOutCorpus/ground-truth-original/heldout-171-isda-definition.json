@@ -1,0 +1,17 @@
+{
+  "id": "heldout-171-isda-definition",
+  "title": "ISDA Definition (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Firm",
+      "occurrences": 7
+    }
+  ],
+  "mustPreserve": []
+}

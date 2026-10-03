@@ -1,0 +1,23 @@
+{
+  "id": "heldout-060-credit-card-statement",
+  "title": "Credit Card Statement (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "John Doe",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ID_NUMBER",
+      "text": "1234-5678-9012-3456",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

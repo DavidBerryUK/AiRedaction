@@ -119,19 +119,20 @@ public static class Combos
                 return sc;
             }
 
-            void Strategy(string name, List<DetectedEntity> spans)
+            void Strategy(string name, List<DetectedEntity> spans, bool hasFlags = false)
             {
                 var auto = Score(spans, name);
+                Add(name, auto);
+                if (!hasFlags)
+                {
+                    return;
+                }
+
                 var accepted = Score(spans.Select(s => s.Flag && (s.Source is "gliner-only" or "single-detector") ? s with { Flag = false } : s), name + " (all flags accepted)");
                 var reviewed = Score(spans.Select(s => s.Flag && (s.Source is "gliner-only" or "single-detector") && Scoring.OverlapsKey(key, s.Start, s.Length) ? s with { Flag = false } : s), name + " (correct flags accepted)");
-                Add(name, auto);
-                var anyFlags = accepted.Edits - auto.Edits;
-                if (anyFlags > 0 || hasGliner)
-                {
-                    Add(name + " (correct flags accepted)", reviewed);
-                    var f = flagCounts.GetValueOrDefault(name);
-                    flagCounts[name] = (f.Raised + anyFlags, f.Correct + accepted.TruePositives - auto.TruePositives);
-                }
+                Add(name + " (correct flags accepted)", reviewed);
+                var f = flagCounts.GetValueOrDefault(name);
+                flagCounts[name] = (f.Raised + accepted.Edits - auto.Edits, f.Correct + accepted.TruePositives - auto.TruePositives);
             }
 
             for (var i = 0; i < models.Length; i++)
@@ -149,15 +150,15 @@ public static class Combos
                     Strategy($"majority ({models.Length / 2 + 1} of {models.Length}): {label}", Vote(perModel, models.Length / 2 + 1, false));
                 }
 
-                Strategy($"singles flagged (2 or more redact, 1 flags): {label}", Vote(perModel, 2, true));
+                Strategy($"singles flagged (2 or more redact, 1 flags): {label}", Vote(perModel, 2, true), hasFlags: true);
             }
 
             if (hasGliner)
             {
                 var union = perModel.SelectMany(x => x).ToList();
-                Strategy($"{(models.Length > 1 ? "union" : models[0])} + GLiNER flags", AgreementCombiner.Combine(union.DistinctBy(s => (s.Start, s.Length)).ToList(), gliner, options));
+                Strategy($"{(models.Length > 1 ? "union" : models[0])} + GLiNER flags", AgreementCombiner.Combine(union.DistinctBy(s => (s.Start, s.Length)).ToList(), gliner, options), hasFlags: true);
                 var voters = perModel.Select(x => (IReadOnlyList<DetectedEntity>)x).Append(gliner).ToList();
-                Strategy($"vote (2 of {voters.Count}, singles flagged): {string.Join(" + ", models)} + GLiNER", Vote(voters, 2, true));
+                Strategy($"vote (2 of {voters.Count}, singles flagged): {string.Join(" + ", models)} + GLiNER", Vote(voters, 2, true), hasFlags: true);
             }
         }
 

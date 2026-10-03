@@ -1,0 +1,17 @@
+{
+  "id": "heldout-299-xbrl",
+  "title": "XBRL (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "ID_NUMBER",
+      "text": "GB36KBZF66720276125880",
+      "occurrences": 3
+    }
+  ],
+  "mustPreserve": []
+}

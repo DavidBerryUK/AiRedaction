@@ -29,7 +29,35 @@
       "type": "PERSON",
       "text": "SABINA \u00C1VILA-BAYO",
       "occurrences": 2
+    },
+    {
+      "where": "body",
+      "type": "ID_NUMBER",
+      "text": "522932ABC12",
+      "occurrences": 1,
+      "audit": "added"
+    },
+    {
+      "where": "body",
+      "type": "ID_NUMBER",
+      "text": "CHASUS3325330728",
+      "occurrences": 1,
+      "audit": "added"
     }
   ],
-  "mustPreserve": []
+  "mustPreserve": [],
+  "judgedCategories": [
+    "PERSON",
+    "COMPANY",
+    "ADDRESS",
+    "EMAIL",
+    "PHONE",
+    "ID_NUMBER",
+    "DATE_OF_BIRTH",
+    "ONLINE_ID",
+    "SECRET"
+  ],
+  "ignore": [
+    "CHASUS33"
+  ]
 }

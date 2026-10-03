@@ -1,0 +1,17 @@
+{
+  "id": "heldout-124-financial-forecast",
+  "title": "Financial Forecast (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "XYZ Manufacturing Ltd.",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

@@ -22,8 +22,23 @@ public record SavedRun(DateTime Started, double ElapsedSeconds, string Machine, 
 
     public string ToJson() => JsonSerializer.Serialize(this, Json);
 
-    public static SavedRun Load(string path) => JsonSerializer.Deserialize<SavedRun>(File.ReadAllText(path), Json)
-        ?? throw new InvalidDataException($"{path} is empty.");
+    /// <summary>Reads a saved run from a .scores.json file, or from a gzip-compressed .scores.json.gz (used for the versioned copies, which are about a tenth of the size).</summary>
+    public static SavedRun Load(string path)
+    {
+        string json;
+        if (path.EndsWith(".gz", StringComparison.OrdinalIgnoreCase))
+        {
+            using var gz = new System.IO.Compression.GZipStream(File.OpenRead(path), System.IO.Compression.CompressionMode.Decompress);
+            using var reader = new StreamReader(gz);
+            json = reader.ReadToEnd();
+        }
+        else
+        {
+            json = File.ReadAllText(path);
+        }
+
+        return JsonSerializer.Deserialize<SavedRun>(json, Json) ?? throw new InvalidDataException($"{path} is empty.");
+    }
 
     /// <summary>Combines runs. A model that appears in a later file replaces the same model from earlier files, with its failures; everything else is kept.</summary>
     public static SavedRun Merge(IReadOnlyList<SavedRun> runs)

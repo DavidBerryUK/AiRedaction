@@ -65,7 +65,145 @@
       "type": "EMAIL",
       "text": "janesmith@yahoo.com",
       "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PHONE",
+      "text": "555-555-5555",
+      "occurrences": 1,
+      "audit": "added"
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "123 Main St",
+      "occurrences": 1,
+      "audit": "added"
+    },
+    {
+      "where": "body",
+      "type": "DATE_OF_BIRTH",
+      "text": "1985-05-15",
+      "occurrences": 1,
+      "audit": "added"
+    },
+    {
+      "where": "body",
+      "type": "PHONE",
+      "text": "555-555-5556",
+      "occurrences": 1,
+      "audit": "added"
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "456 Elm St",
+      "occurrences": 1,
+      "audit": "added"
+    },
+    {
+      "where": "body",
+      "type": "PHONE",
+      "text": "555-555-5557",
+      "occurrences": 1,
+      "audit": "added"
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "789 Oak St",
+      "occurrences": 1,
+      "audit": "added"
+    },
+    {
+      "where": "body",
+      "type": "PHONE",
+      "text": "555-555-5558",
+      "occurrences": 1,
+      "audit": "added"
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "321 Maple St",
+      "occurrences": 1,
+      "audit": "added"
+    },
+    {
+      "where": "body",
+      "type": "PHONE",
+      "text": "555-555-5559",
+      "occurrences": 1,
+      "audit": "added"
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "654 Pine St",
+      "occurrences": 1,
+      "audit": "added"
+    },
+    {
+      "where": "body",
+      "type": "PHONE",
+      "text": "555-555-5560",
+      "occurrences": 1,
+      "audit": "added"
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "234 Cedar St",
+      "occurrences": 1,
+      "audit": "added"
+    },
+    {
+      "where": "body",
+      "type": "DATE_OF_BIRTH",
+      "text": "1990-03-03",
+      "occurrences": 1,
+      "audit": "added"
+    },
+    {
+      "where": "body",
+      "type": "DATE_OF_BIRTH",
+      "text": "1988-11-11",
+      "occurrences": 1,
+      "audit": "added"
+    },
+    {
+      "where": "body",
+      "type": "DATE_OF_BIRTH",
+      "text": "1992-07-07",
+      "occurrences": 1,
+      "audit": "added"
+    },
+    {
+      "where": "body",
+      "type": "DATE_OF_BIRTH",
+      "text": "1989-12-12",
+      "occurrences": 1,
+      "audit": "added"
+    },
+    {
+      "where": "body",
+      "type": "DATE_OF_BIRTH",
+      "text": "1991-09-09",
+      "occurrences": 1,
+      "audit": "added"
     }
   ],
-  "mustPreserve": []
+  "mustPreserve": [],
+  "judgedCategories": [
+    "PERSON",
+    "COMPANY",
+    "ADDRESS",
+    "EMAIL",
+    "PHONE",
+    "ID_NUMBER",
+    "DATE_OF_BIRTH",
+    "ONLINE_ID",
+    "SECRET"
+  ],
+  "ignore": []
 }

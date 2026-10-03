@@ -1,0 +1,41 @@
+{
+  "id": "heldout-287-trade-confirmation",
+  "title": "Trade Confirmation (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Klaus-Ulrich",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Auguste Kambs",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Quantum Computing Investments Ltd",
+      "occurrences": 2
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "08 Norahboulevard, Apt. 74",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ID_NUMBER",
+      "text": "EMP406537",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

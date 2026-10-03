@@ -1,0 +1,23 @@
+{
+  "id": "heldout-240-regulatory-compliance-guide",
+  "title": "Regulatory Compliance Guide (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "certified aviation maintenance technician",
+      "occurrences": 2
+    },
+    {
+      "where": "body",
+      "type": "ONLINE_ID",
+      "text": "185.131.138.249",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

@@ -11,7 +11,40 @@
       "type": "PERSON",
       "text": "Valerio Guijarro-Conesa",
       "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PHONE",
+      "text": "\u002B44 973 771 5733",
+      "occurrences": 1,
+      "audit": "added"
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "PO Box 542, Chapman Tunnel\nEH12 5DR, United Kingdom",
+      "occurrences": 1,
+      "audit": "added"
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Your Bank",
+      "occurrences": 1,
+      "audit": "added"
     }
   ],
-  "mustPreserve": []
+  "mustPreserve": [],
+  "judgedCategories": [
+    "PERSON",
+    "COMPANY",
+    "ADDRESS",
+    "EMAIL",
+    "PHONE",
+    "ID_NUMBER",
+    "DATE_OF_BIRTH",
+    "ONLINE_ID",
+    "SECRET"
+  ],
+  "ignore": []
 }

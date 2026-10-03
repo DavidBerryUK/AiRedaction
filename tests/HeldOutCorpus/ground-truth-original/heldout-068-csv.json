@@ -1,0 +1,71 @@
+{
+  "id": "heldout-068-csv",
+  "title": "CSV (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "John",
+      "occurrences": 2
+    },
+    {
+      "where": "body",
+      "type": "EMAIL",
+      "text": "johndoe@gmail.com",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Jane",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Bob",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "EMAIL",
+      "text": "bjohnson@hotmail.com",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "EMAIL",
+      "text": "alicewilliams@gmail.com",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Charlie",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "EMAIL",
+      "text": "cbrown@yahoo.com",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "EMAIL",
+      "text": "anwhite@hotmail.com",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "EMAIL",
+      "text": "janesmith@yahoo.com",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

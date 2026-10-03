@@ -1,0 +1,35 @@
+{
+  "id": "heldout-039-corporate-governance-guidelines",
+  "title": "Corporate Governance Guidelines (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Derrick Scott",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ONLINE_ID",
+      "text": "derrickscott",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Veronica F. Ortese",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "EMAIL",
+      "text": "vortese@example.com",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

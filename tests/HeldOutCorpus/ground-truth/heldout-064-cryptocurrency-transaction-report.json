@@ -35,7 +35,61 @@
       "type": "ADDRESS",
       "text": "4 Marie-Therese-L\u00F6chel-Allee, Wei\u00DFenfels",
       "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ID_NUMBER",
+      "text": "1BvBMSEYstWetqTFn5Au4m4GFg7xJaNVN2",
+      "occurrences": 1,
+      "audit": "added"
+    },
+    {
+      "where": "body",
+      "type": "ID_NUMBER",
+      "text": "1BvBMSEYstWetqTFn5Au4m4GFg7xJaNVN3",
+      "occurrences": 1,
+      "audit": "added"
+    },
+    {
+      "where": "body",
+      "type": "ID_NUMBER",
+      "text": "1BvBMSEYstWetqTFn5Au4m4GFg7xJaNVN4",
+      "occurrences": 1,
+      "audit": "added"
+    },
+    {
+      "where": "body",
+      "type": "ID_NUMBER",
+      "text": "1BvBMSEYstWetqTFn5Au4m4GFg7xJaNVN5",
+      "occurrences": 1,
+      "audit": "added"
+    },
+    {
+      "where": "body",
+      "type": "ID_NUMBER",
+      "text": "1BvBMSEYstWetqTFn5Au4m4GFg7xJaNVN6",
+      "occurrences": 1,
+      "audit": "added"
+    },
+    {
+      "where": "body",
+      "type": "ID_NUMBER",
+      "text": "1BvBMSEYstWetqTFn5Au4m4GFg7xJaNVN7",
+      "occurrences": 1,
+      "audit": "added"
     }
   ],
-  "mustPreserve": []
+  "mustPreserve": [],
+  "judgedCategories": [
+    "PERSON",
+    "COMPANY",
+    "ADDRESS",
+    "EMAIL",
+    "PHONE",
+    "ID_NUMBER",
+    "DATE_OF_BIRTH",
+    "ONLINE_ID",
+    "SECRET"
+  ],
+  "ignore": []
 }

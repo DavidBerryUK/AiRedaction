@@ -5,8 +5,14 @@ namespace AiDocumentRedactor.Eval;
 /// <summary>One thing that must be redacted: its category, its exact text, and how many times it appears in the source document.</summary>
 public record GtEntity(string Where, string Type, string Text, int Occurrences);
 
-/// <summary>The answer key for one source document: what must be redacted and what must survive.</summary>
-public record GroundTruth(string Id, string Title, List<GtEntity> Entities, List<string>? MustPreserve);
+/// <summary>The answer key for one source document: what must be redacted and what must survive, optionally with the categories it can judge and texts it cannot decide
+/// (<c>Ignore</c>: a redaction of one is counted neither right nor wrong).</summary>
+public record GroundTruth(string Id, string Title, List<GtEntity> Entities, List<string>? MustPreserve, List<string>? JudgedCategories = null, List<string>? Ignore = null)
+{
+    /// <summary>True if this key can judge a redaction of the given category. Without a list, every category is judged (the usual case, where the key was written by hand
+    /// for every category). A key made from a data set that labels only some categories lists those, and a redaction of another category counts as unjudged, not wrong.</summary>
+    public bool Judges(string type) => JudgedCategories is null || JudgedCategories.Contains(type);
+}
 
 /// <summary>Reads the ground-truth files of the test corpus.</summary>
 public static class GroundTruthStore

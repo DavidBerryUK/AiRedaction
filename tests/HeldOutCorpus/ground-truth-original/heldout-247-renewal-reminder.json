@@ -1,0 +1,41 @@
+{
+  "id": "heldout-247-renewal-reminder",
+  "title": "Renewal Reminder (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Michelle Corinne Masse",
+      "occurrences": 2
+    },
+    {
+      "where": "body",
+      "type": "ID_NUMBER",
+      "text": "790506124",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "5 Pasaje de Azahar Navarrete, Piso 0",
+      "occurrences": 2
+    },
+    {
+      "where": "body",
+      "type": "EMAIL",
+      "text": "[company_email@companyname.com]",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "EMAIL",
+      "text": "company_email@companyname.com",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

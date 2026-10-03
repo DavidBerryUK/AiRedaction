@@ -1,0 +1,29 @@
+{
+  "id": "heldout-013-bai-format",
+  "title": "BAI Format (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Ciro",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Robert Mark Riggs",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "5539 Howe Points, South Alanberg",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

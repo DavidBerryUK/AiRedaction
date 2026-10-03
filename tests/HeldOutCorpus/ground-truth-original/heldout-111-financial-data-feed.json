@@ -1,0 +1,41 @@
+{
+  "id": "heldout-111-financial-data-feed",
+  "title": "Financial Data Feed (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "LONDON_EXCHANGE",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ONLINE_ID",
+      "text": "a741:45da:c53e:2f8:835a:e766:162b:4220",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Aroa P. Mate",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ID_NUMBER",
+      "text": "200468649",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ONLINE_ID",
+      "text": "a741:45da:c53e:2f8:835a:e766:162b:4221",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

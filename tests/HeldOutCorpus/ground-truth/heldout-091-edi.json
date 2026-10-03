@@ -5,6 +5,79 @@
     "txt"
   ],
   "scanKinds": [],
-  "entities": [],
-  "mustPreserve": []
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Shipper Name",
+      "occurrences": 1,
+      "audit": "added"
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "Shipper Address Line 1",
+      "occurrences": 1,
+      "audit": "added"
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "Shipper Postal Code",
+      "occurrences": 1,
+      "audit": "added"
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Consignee Name",
+      "occurrences": 1,
+      "audit": "added"
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "Consignee Address Line 1",
+      "occurrences": 1,
+      "audit": "added"
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "Consignee Postal Code",
+      "occurrences": 1,
+      "audit": "added"
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "Carrier Address Line 1",
+      "occurrences": 1,
+      "audit": "added"
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "Carrier Postal Code",
+      "occurrences": 1,
+      "audit": "added"
+    }
+  ],
+  "mustPreserve": [],
+  "judgedCategories": [
+    "PERSON",
+    "COMPANY",
+    "ADDRESS",
+    "EMAIL",
+    "PHONE",
+    "ID_NUMBER",
+    "DATE_OF_BIRTH",
+    "ONLINE_ID",
+    "SECRET"
+  ],
+  "ignore": [
+    "company1",
+    "company2",
+    "Carrier Name"
+  ]
 }

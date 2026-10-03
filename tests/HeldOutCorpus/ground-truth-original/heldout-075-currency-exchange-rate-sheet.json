@@ -1,0 +1,23 @@
+{
+  "id": "heldout-075-currency-exchange-rate-sheet",
+  "title": "Currency Exchange Rate Sheet (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Jennifer Isa\u00EDas Ca\u00F1as",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "348 Industrigr\u00E4nd, Apt. 1",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

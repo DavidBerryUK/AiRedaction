@@ -1,0 +1,29 @@
+{
+  "id": "heldout-026-business-plan",
+  "title": "Business Plan (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Callahan",
+      "occurrences": 6
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "79730 Justin Plaza, Jessicaberg",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Simone Pratesi",
+      "occurrences": 2
+    }
+  ],
+  "mustPreserve": []
+}

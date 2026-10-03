@@ -1,0 +1,29 @@
+{
+  "id": "heldout-003-annual-report",
+  "title": "Annual Report (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "XYZ Corporation",
+      "occurrences": 4
+    },
+    {
+      "where": "body",
+      "type": "EMAIL",
+      "text": "jenny58@ward.net",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ID_NUMBER",
+      "text": "996238618",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

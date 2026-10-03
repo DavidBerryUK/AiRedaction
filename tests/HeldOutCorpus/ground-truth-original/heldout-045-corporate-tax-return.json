@@ -1,0 +1,29 @@
+{
+  "id": "heldout-045-corporate-tax-return",
+  "title": "Corporate Tax Return (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Alfred L. Ribeiro",
+      "occurrences": 4
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "17877 Krueger Branch, Vargasview",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PHONE",
+      "text": "263.528.8045 x1838",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

@@ -5,6 +5,28 @@
     "txt"
   ],
   "scanKinds": [],
-  "entities": [],
-  "mustPreserve": []
+  "entities": [
+    {
+      "where": "body",
+      "type": "ID_NUMBER",
+      "text": "5476-6d60-7b3",
+      "occurrences": 1,
+      "audit": "added"
+    }
+  ],
+  "mustPreserve": [],
+  "judgedCategories": [
+    "PERSON",
+    "COMPANY",
+    "ADDRESS",
+    "EMAIL",
+    "PHONE",
+    "ID_NUMBER",
+    "DATE_OF_BIRTH",
+    "ONLINE_ID",
+    "SECRET"
+  ],
+  "ignore": [
+    "Her Majesty\u0027s Revenue and Customs"
+  ]
 }

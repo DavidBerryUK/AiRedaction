@@ -119,7 +119,7 @@ foreach (var r in chosen)
         .ToList();
     File.WriteAllText(Path.Combine(textDir, id + ".txt"), text, new UTF8Encoding(false));
     File.WriteAllText(Path.Combine(truthDir, id + ".json"), JsonSerializer.Serialize(
-        new { id, title = $"{title} (synthetic finance document)", formats = new[] { "txt" }, scanKinds = Array.Empty<string>(), entities, mustPreserve = Array.Empty<string>() },
+        new { id, title = $"{title} (synthetic finance document)", formats = new[] { "txt" }, scanKinds = Array.Empty<string>(), entities, mustPreserve = Array.Empty<string>(), judgedCategories = map.Values.Distinct().ToArray() },
         new JsonSerializerOptions { WriteIndented = true }), new UTF8Encoding(false));
     byType[title] = byType.GetValueOrDefault(title) + 1;
     totalEntities += entities.Count;
@@ -139,8 +139,10 @@ File.WriteAllText(Path.Combine(outDir, "README.md"), $"""
     **How the answer key was made.** The dataset labels each sensitive span. They are mapped to this project's categories: names to PERSON,
     company to COMPANY, street addresses to ADDRESS, emails to EMAIL, phone numbers to PHONE, dates of birth to DATE_OF_BIRTH, national, passport,
     licence, bank, card, employee and customer numbers to ID_NUMBER, IP addresses and user names to ONLINE_ID, passwords and API keys to SECRET.
-    Generic dates and times, coordinates and bank identifier codes are **not** on the key (they are not sensitive under this project's policy), so a
+    The key only judges these categories (`judgedCategories`): a redaction of any other category (gender, age, job title, domain, company number) is counted as neither right nor wrong. Generic dates and times, coordinates and bank identifier codes are **not** on the key (they are not sensitive under this project's policy), so a
     model that redacts them counts as over-redacting.
+
+    **Audit.** The generator's labels turned out to be incomplete (many addresses, account numbers, first names and phone numbers are unlabelled) and a few are not sensitive (placeholders, generic words, a row of dashes). After the first evaluation the key was audited by written rules, see `AUDIT.md`; the generator's original key is kept in `ground-truth-original/`. Re-running the importer replaces the audited key with the original one.
 
     **Limits.** These are generated finance documents (loan applications, policies, contracts, emails, support tickets, statements and machine
     formats such as SWIFT, FIX and XBRL), not letters, medical notes or scans. The labels come from the generator and were not checked by a

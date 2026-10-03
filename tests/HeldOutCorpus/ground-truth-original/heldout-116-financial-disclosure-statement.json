@@ -1,0 +1,23 @@
+{
+  "id": "heldout-116-financial-disclosure-statement",
+  "title": "Financial Disclosure Statement (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Ingeborg Berglund-Karlsson",
+      "occurrences": 2
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "677 Nyv\u00E4gen, 89225, Falun",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

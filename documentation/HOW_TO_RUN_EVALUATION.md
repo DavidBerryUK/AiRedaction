@@ -159,3 +159,10 @@ dotnet src/AiDocumentRedactor.Eval/bin/Debug/net10.0/AiDocumentRedactor.Eval.dll
 ```
 
 It scores each model alone, their union, agreement (all agree, majority, or two-or-more with singles flagged), and, if the run had `--gliner`, the union with GLiNER's flags and a vote with GLiNER counting as one detector, each with the flags left in the text and with an ideal reviewer accepting only the correct flags.
+
+## Rescoring, auditing the key, and compressed runs
+
+- `--rescore run.scores.json --out report.md`: rebuilds the whole report from the spans saved in a run, against the answer key **as it is now** (for example after the key was corrected). No model is run. Only corpora whose documents can be read without OCR can be rescored.
+- `--audit-key run.scores.json --models a,b,c,d,e [--out log.md] [--apply]`: compares the answer key with what at least 3 of 5 models agree on, and decides by written rules which is right (add to the key, reject, leave out of scoring, remove from the key). It writes a log and changes nothing unless `--apply` is given. The rules and a hand-reading check are described in `tests/HeldOutCorpus/AUDIT.md`.
+- A key file may list `judgedCategories` (a redaction of any other category is counted as neither right nor wrong) and `ignore` (texts no one could decide), which is how the held-out key treats categories its generator never labelled.
+- `.scores.json.gz` files (the versioned copies) can be given to `--combine` and `--rescore` directly.

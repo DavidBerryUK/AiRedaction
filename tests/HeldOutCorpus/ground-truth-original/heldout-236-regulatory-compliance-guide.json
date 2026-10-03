@@ -1,0 +1,17 @@
+{
+  "id": "heldout-236-regulatory-compliance-guide",
+  "title": "Regulatory Compliance Guide (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "Financial Conduct Authority (FCA)",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

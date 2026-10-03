@@ -17,7 +17,45 @@
       "type": "COMPANY",
       "text": "ABC CORPORATE",
       "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ID_NUMBER",
+      "text": "GB29WFIB1234567890",
+      "occurrences": 1,
+      "audit": "added"
     }
   ],
-  "mustPreserve": []
+  "mustPreserve": [],
+  "judgedCategories": [
+    "PERSON",
+    "COMPANY",
+    "ADDRESS",
+    "EMAIL",
+    "PHONE",
+    "ID_NUMBER",
+    "DATE_OF_BIRTH",
+    "ONLINE_ID",
+    "SECRET"
+  ],
+  "ignore": [
+    "ABC001",
+    "ABC002",
+    "ABC003",
+    "ABC004",
+    "ABC005",
+    "ABC006",
+    "ABC007",
+    "ABC008",
+    "ABC009",
+    "ABC010",
+    "ABC011",
+    "ABC012",
+    "ABC013",
+    "ABC014",
+    "ABC015",
+    "ABC016",
+    "ABC017",
+    "ABC018"
+  ]
 }

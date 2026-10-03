@@ -1,0 +1,23 @@
+{
+  "id": "heldout-011-bai-format",
+  "title": "BAI Format (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "ID_NUMBER",
+      "text": "CUST64550460",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ID_NUMBER",
+      "text": "472329181",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

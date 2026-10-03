@@ -1,0 +1,23 @@
+{
+  "id": "heldout-286-trade-confirmation",
+  "title": "Trade Confirmation (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Adelmo Munari",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "78833 Lee Inlet, Andrewshire, 35302",
+      "occurrences": 2
+    }
+  ],
+  "mustPreserve": []
+}

@@ -1,0 +1,29 @@
+{
+  "id": "heldout-072-currency-exchange-rate-sheet",
+  "title": "Currency Exchange Rate Sheet (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "ID_NUMBER",
+      "text": "EMP672995",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Suzanne Leclercq",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "591 Barrera Orchard",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

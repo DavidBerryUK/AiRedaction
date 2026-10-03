@@ -1,0 +1,23 @@
+{
+  "id": "heldout-040-corporate-governance-guidelines",
+  "title": "Corporate Governance Guidelines (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Flor Miguela Barral",
+      "occurrences": 2
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "51340 Allison Point, South Eric",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

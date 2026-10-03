@@ -1,0 +1,29 @@
+{
+  "id": "heldout-059-credit-card-statement",
+  "title": "Credit Card Statement (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Gastone B. Veneziano",
+      "occurrences": 2
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "4099 Evan Coves\nLake Jamieville, [Postal Code]",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PHONE",
+      "text": "1-800-123-4567",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

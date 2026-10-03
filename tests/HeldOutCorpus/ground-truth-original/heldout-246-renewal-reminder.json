@@ -1,0 +1,29 @@
+{
+  "id": "heldout-246-renewal-reminder",
+  "title": "Renewal Reminder (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Rosa Bruno Duodo",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "639 Mary Field Suite 059",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ONLINE_ID",
+      "text": "f466:e5ca:ba7b:12ce:8df0:4592:b6dc:f100",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

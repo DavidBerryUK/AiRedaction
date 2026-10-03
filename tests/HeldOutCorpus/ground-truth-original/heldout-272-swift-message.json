@@ -1,0 +1,23 @@
+{
+  "id": "heldout-272-swift-message",
+  "title": "SWIFT Message (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "SMITH, JOHN DOE",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "ABC BANK NEW YORK",
+      "occurrences": 3
+    }
+  ],
+  "mustPreserve": []
+}

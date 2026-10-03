@@ -1,0 +1,29 @@
+{
+  "id": "heldout-133-financial-risk-assessment",
+  "title": "Financial Risk Assessment (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Geza Weimer",
+      "occurrences": 6
+    },
+    {
+      "where": "body",
+      "type": "ID_NUMBER",
+      "text": "EMP769291",
+      "occurrences": 2
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "828 Michael Route, 94381, Zamorabury",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

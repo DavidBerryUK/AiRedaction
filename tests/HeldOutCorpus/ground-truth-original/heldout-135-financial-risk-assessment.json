@@ -1,0 +1,35 @@
+{
+  "id": "heldout-135-financial-risk-assessment",
+  "title": "Financial Risk Assessment (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "73 rue David Menard, BoucherBourg",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Vicenta D. Martin",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ID_NUMBER",
+      "text": "059332",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PHONE",
+      "text": "3505216216",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

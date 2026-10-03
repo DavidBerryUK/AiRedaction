@@ -1,0 +1,29 @@
+{
+  "id": "heldout-014-bai-format",
+  "title": "BAI Format (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Rhys L. Jones",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "9/2 Fischerstr., 67274, Schongau",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ID_NUMBER",
+      "text": "976481327",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

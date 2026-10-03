@@ -1,0 +1,29 @@
+{
+  "id": "heldout-242-regulatory-filing",
+  "title": "Regulatory Filing (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "XYZ Ltd.",
+      "occurrences": 2
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "4th Floor, 123 Main Street, London, EC3A 4JA",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "ABC \u0026 Co.",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

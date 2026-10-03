@@ -35,7 +35,26 @@
       "type": "PERSON",
       "text": "Claudia",
       "occurrences": 2
+    },
+    {
+      "where": "body",
+      "type": "DATE_OF_BIRTH",
+      "text": "December 24, 1977",
+      "occurrences": 1,
+      "audit": "added"
     }
   ],
-  "mustPreserve": []
+  "mustPreserve": [],
+  "judgedCategories": [
+    "PERSON",
+    "COMPANY",
+    "ADDRESS",
+    "EMAIL",
+    "PHONE",
+    "ID_NUMBER",
+    "DATE_OF_BIRTH",
+    "ONLINE_ID",
+    "SECRET"
+  ],
+  "ignore": []
 }

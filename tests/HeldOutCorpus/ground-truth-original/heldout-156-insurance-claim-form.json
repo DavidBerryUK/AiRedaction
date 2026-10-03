@@ -1,0 +1,29 @@
+{
+  "id": "heldout-156-insurance-claim-form",
+  "title": "Insurance Claim Form (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Denis Besson",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "DATE_OF_BIRTH",
+      "text": "16/07/1918",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "125 Miller Road, Apt. 175",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

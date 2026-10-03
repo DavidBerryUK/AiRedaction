@@ -37,6 +37,8 @@ public class DocScore
     public long PromptTokens, OutputTokens; public int Discarded;
     /// <summary>With GLiNER on: things only GLiNER found that were left in the text for a person to review, and how many of them really were sensitive.</summary>
     public int FlagsRaised, FlagsCorrect;
+    /// <summary>Redactions that match nothing on the key but could not be judged (a category the key does not label, or text the key was unable to decide), so they count as neither right nor wrong.</summary>
+    public int Unjudged;
     /// <summary>Whether the redacted file was written and passed its own safety checks (null = not tried).</summary>
     public bool? OutputOk; public string? OutputError;
 }
@@ -109,11 +111,18 @@ public static class Scoring
         }
         // Precision: every redaction should cover something on the answer key.
         var keySpans = gt.Entities.SelectMany(e => Find(original, e.Text).Select(p => (p.Start, p.Length, e.Type))).ToList();
+        var ignored = (gt.Ignore ?? []).SelectMany(t => Find(original, t)).ToList();
         foreach (var edit in result.Edits.Where(e => e.Status == EditStatus.Active))
         {
-            s.Edits++;
             var hits = keySpans.Where(k => k.Start < edit.OriginalStart + edit.OriginalLength && edit.OriginalStart < k.Start + k.Length).ToList();
             var ok = hits.Count > 0;
+            if (!ok && (!gt.Judges(edit.Type) || ignored.Any(g => g.Start < edit.OriginalStart + edit.OriginalLength && edit.OriginalStart < g.Start + g.Length)))
+            {
+                s.Unjudged++;
+                continue;
+            }
+
+            s.Edits++;
             if (ok)
             {
                 s.TruePositives++;

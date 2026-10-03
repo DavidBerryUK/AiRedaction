@@ -1,0 +1,29 @@
+{
+  "id": "heldout-042-corporate-tax-return",
+  "title": "Corporate Tax Return (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Deanna Adams",
+      "occurrences": 2
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "4156 Kelly Mission, Apt. 0394",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Ida",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

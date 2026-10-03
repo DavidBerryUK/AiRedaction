@@ -1,0 +1,29 @@
+{
+  "id": "heldout-016-bank-statement",
+  "title": "Bank Statement (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "---------------------",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "--------------",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Aitor Iglesias",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

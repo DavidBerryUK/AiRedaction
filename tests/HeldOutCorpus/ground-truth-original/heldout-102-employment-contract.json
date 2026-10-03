@@ -1,0 +1,35 @@
+{
+  "id": "heldout-102-employment-contract",
+  "title": "Employment Contract (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "COMPANY",
+      "text": "XYZ Corporation",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "500 Main Street, Anytown, USA",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Marta Perales-Riera",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "015 Coleman Greens, 12024, Mccartyview",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}

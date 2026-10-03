@@ -1,0 +1,41 @@
+{
+  "id": "heldout-064-cryptocurrency-transaction-report",
+  "title": "Cryptocurrency Transaction Report (synthetic finance document)",
+  "formats": [
+    "txt"
+  ],
+  "scanKinds": [],
+  "entities": [
+    {
+      "where": "body",
+      "type": "ID_NUMBER",
+      "text": "IT75C287907959005626172",
+      "occurrences": 2
+    },
+    {
+      "where": "body",
+      "type": "ID_NUMBER",
+      "text": "IT75C2879079590056261723461",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ID_NUMBER",
+      "text": "C406-8056-806",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "PERSON",
+      "text": "Orhan Seidel",
+      "occurrences": 1
+    },
+    {
+      "where": "body",
+      "type": "ADDRESS",
+      "text": "4 Marie-Therese-L\u00F6chel-Allee, Wei\u00DFenfels",
+      "occurrences": 1
+    }
+  ],
+  "mustPreserve": []
+}
