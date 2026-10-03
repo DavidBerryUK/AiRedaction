@@ -9,3 +9,4 @@ in/
 .claude/
 models/
 eval/*.json
+datasets/

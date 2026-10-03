@@ -10,6 +10,7 @@ using AiDocumentRedactor.Core;
 using AiDocumentRedactor.Detection;
 using AiDocumentRedactor.Documents;
 using AiDocumentRedactor.Eval;
+using AiDocumentRedactor.Eval.Dataset;
 using AiDocumentRedactor.Ocr;
 
 string? Arg(string name)
@@ -19,8 +20,25 @@ string? Arg(string name)
 }
 if (args.Contains("--help") || args.Contains("-h"))
 {
-    Console.WriteLine("Evaluates local models on the test corpus and writes a Markdown report.\n\n  --config <file>   settings (default redactor.config.json)\n  --corpus <dir>    test corpus (default tests/TestCorpus)\n  --models a,b      models to compare (default: those with include: true in the config's evaluation.models list)\n  --out <file>      report path (default eval/eval-<date-time>.md; a .json with the raw scores is written beside it)\n  --only <text>     only corpus files whose path contains this text\n  --no-write        score the text only; skip writing and verifying the redacted files (faster)\n  --no-baselines    skip the no-model baseline rows (rules only; with --gliner also GLiNER only and rules + GLiNER)\n  --gliner          also score each model combined with GLiNER by agreement (needs the model files; see gliner in the config)\n  --show-text       list missed and over-redacted strings in the report (synthetic data only)\n  --rescore run.scores.json   rebuild a whole report from a saved run against the answer key as it is now (no model is run)\n  --audit-key run.scores.json --models a,b,c   audit the answer key against what most models agree on (a log; add --apply to rewrite the key)\n  --combine run.scores.json --models a,b[,c]   score real combinations (union, agreement, with GLiNER flags) from the spans saved in an earlier run, without running any model again\n  --merge a,b       rebuild one report from saved runs (the .scores.json beside each report); a model in a later file replaces the same model in earlier ones. Use --out for the report path.");
+    Console.WriteLine("Evaluates local models on the test corpus and writes a Markdown report.\n\n  --config <file>   settings (default redactor.config.json)\n  --corpus <dir>    test corpus (default tests/TestCorpus)\n  --models a,b      models to compare (default: those with include: true in the config's evaluation.models list)\n  --out <file>      report path (default eval/eval-<date-time>.md; a .json with the raw scores is written beside it)\n  --only <text>     only corpus files whose path contains this text\n  --no-write        score the text only; skip writing and verifying the redacted files (faster)\n  --no-baselines    skip the no-model baseline rows (rules only; with --gliner also GLiNER only and rules + GLiNER)\n  --gliner          also score each model combined with GLiNER by agreement (needs the model files; see gliner in the config)\n  --show-text       list missed and over-redacted strings in the report (synthetic data only)\n  --export-dataset a.scores.json[,b.scores.json]   make an interim dataset (CSV files for the results explorer) from saved runs, without running any model (--out dir, --id name, --input in, --corpus-root tests)\n  --validate-dataset <dir>   check a dataset folder against the format\n  --rescore run.scores.json   rebuild a whole report from a saved run against the answer key as it is now (no model is run)\n  --audit-key run.scores.json --models a,b,c   audit the answer key against what most models agree on (a log; add --apply to rewrite the key)\n  --combine run.scores.json --models a,b[,c]   score real combinations (union, agreement, with GLiNER flags) from the spans saved in an earlier run, without running any model again\n  --merge a,b       rebuild one report from saved runs (the .scores.json beside each report); a model in a later file replaces the same model in earlier ones. Use --out for the report path.");
     return 0;
+}
+
+if (Arg("--export-dataset") is { } exportRuns)
+{
+    // Make an interim dataset (CSV files for the results explorer) from saved runs, without running any model.
+    var id = Arg("--id") ?? $"interim-{DateTime.Now:yyyyMMdd}";
+    return await InterimConverter.RunAsync(exportRuns.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).Select(Path.GetFullPath).ToList(),
+        Path.GetFullPath(Arg("--input") ?? "in"), Path.GetFullPath(Arg("--corpus-root") ?? "tests"), Path.GetFullPath(Arg("--out") ?? Path.Combine("datasets", id)), id, Arg("--note"));
+}
+
+if (Arg("--validate-dataset") is { } datasetDir)
+{
+    // Check a dataset folder against the format (documentation/RESULTS_DATASET_FORMAT.md).
+    var problems = await DatasetValidator.ValidateAsync(Path.GetFullPath(datasetDir));
+    problems.ForEach(p => Console.WriteLine($"invalid: {p}"));
+    Console.WriteLine(problems.Count == 0 ? "The dataset passes the validator." : $"The dataset has {problems.Count} problem(s).");
+    return problems.Count == 0 ? 0 : 1;
 }
 
 if (Arg("--rescore") is { } rescoreRun)

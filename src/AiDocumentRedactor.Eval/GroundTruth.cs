@@ -2,8 +2,9 @@ using System.Text.Json;
 
 namespace AiDocumentRedactor.Eval;
 
-/// <summary>One thing that must be redacted: its category, its exact text, and how many times it appears in the source document.</summary>
-public record GtEntity(string Where, string Type, string Text, int Occurrences);
+/// <summary>One thing that must be redacted: its category, its exact text, and how many times it appears in the source document.
+/// <c>Audit</c> is "added" for an item the key audit added to a generated key, and null for one that was in the key already.</summary>
+public record GtEntity(string Where, string Type, string Text, int Occurrences, string? Audit = null);
 
 /// <summary>The answer key for one source document: what must be redacted and what must survive, optionally with the categories it can judge and texts it cannot decide
 /// (<c>Ignore</c>: a redaction of one is counted neither right nor wrong).</summary>

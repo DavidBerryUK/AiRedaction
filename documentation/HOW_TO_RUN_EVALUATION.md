@@ -166,3 +166,16 @@ It scores each model alone, their union, agreement (all agree, majority, or two-
 - `--audit-key run.scores.json --models a,b,c,d,e [--out log.md] [--apply]`: compares the answer key with what at least 3 of 5 models agree on, and decides by written rules which is right (add to the key, reject, leave out of scoring, remove from the key). It writes a log and changes nothing unless `--apply` is given. The rules and a hand-reading check are described in `tests/HeldOutCorpus/AUDIT.md`.
 - A key file may list `judgedCategories` (a redaction of any other category is counted as neither right nor wrong) and `ignore` (texts no one could decide), which is how the held-out key treats categories its generator never labelled.
 - `.scores.json.gz` files (the versioned copies) can be given to `--combine` and `--rescore` directly.
+
+## Making a dataset for the results explorer
+
+The results explorer reads a dataset: a folder of CSV files plus the document text (the format is in [RESULTS_DATASET_FORMAT.md](RESULTS_DATASET_FORMAT.md)). An interim dataset can be made from saved runs without running any model:
+
+```bash
+dotnet run --project src/AiDocumentRedactor.Eval -c Release -- --export-dataset \
+  documentation/evaluation-reports/v5-20261002-heldout-300docs-generator-key.scores.json.gz,documentation/evaluation-reports/v6-20261003-formats-38docs-5models-gliner.scores.json.gz \
+  --id interim-20261003
+```
+
+It is written to `datasets/<id>` (ignored by git, about 50 MB) and checked by the validator when it finishes; it takes seconds. To check any dataset folder again: `--validate-dataset datasets/<id>`. Options: `--out`, `--input` (the input folder, default `in`) and `--corpus-root` (where the answer keys are, default `tests`).
+

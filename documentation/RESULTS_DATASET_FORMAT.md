@@ -1,6 +1,6 @@
 # Results dataset format
 
-**Status:** Draft v0.1 (design only, nothing built yet)
+**Status:** v0.1. Implemented by the interim converter (`--export-dataset`) and the validator (`--validate-dataset`) in the evaluation project; the final evaluator (Story-002) will write the same files.
 **Used by:** [Story-001 Results Explorer](stories/Story-001-Results-Explorer.md) (reads it), [Story-002 Ultimate Evaluator](stories/Story-002-Ultimate-Evaluator.md) (writes it), and a converter that makes an interim dataset from the existing saved runs.
 
 The dataset is a **folder of plain files**. It is the durable record of an evaluation. The explorer's SQLite database is built from it and can be deleted and rebuilt at any time.
@@ -27,7 +27,7 @@ dataset-<id>/
 | Numbers | Invariant culture (a full stop for decimals), no thousands separators |
 | Dates and times | ISO 8601, UTC (`2026-10-03T14:05:00Z`) |
 | Offsets | `start` and `length` count **UTF-16 code units** (the .NET string index) into the text in `document-text.jsonl`. JavaScript uses the same unit. Tools in other languages must convert |
-| Identifiers | Stable strings, lower case, no spaces. Documents use the document id; other ids are built as shown below |
+| Identifiers | Stable strings. A document's id is its file path relative to the input folder (`in/`), so it is unique even when several files (text, Word, PDF, scans) share one answer key. Other ids are built as shown below |
 | Extra columns | Readers must ignore columns they do not know, so columns can be added without breaking them |
 | Version | `run.json` carries `formatVersion`. A change that removes or renames a column raises the major number |
 
@@ -47,17 +47,17 @@ One object describing the run. Fields marked * are required.
 | `repeats` | How many times each configuration was run (1 if not repeated) |
 | `models`* | List of `{name, digest, parameterSize, quantization, sizeBytes}` for each Ollama model |
 | `gliner` | `{model, threshold, labels, soloAction}` when GLiNER was used |
-| `settings`* | The effect-bearing settings: temperature, seed, context size, chunk size and overlap, `think` per model, timeout, rules on or off, categories and their modes, organisation suffixes |
-| `settingsHash` | Hash of the full configuration used |
-| `corpora`* | List of `{corpus, documentCount, keyVersion, keyChecksum, keyNote}`. `keyVersion` says which answer key scored the run (for example `audited`) |
+| `sources`* | One entry per saved or fresh run that went into the dataset: `{file, corpus, started, elapsedSeconds, ollamaVersion, machine, settingsHash, settings}`. `settings` holds the effect-bearing settings (temperature, seed, context size, chunk size and overlap, `think`, timeout, rules on or off, categories and their modes, organisation suffixes, GLiNER threshold). `results.csv` carries the `settingsHash` of its source |
+| `corpora`* | List of `{corpus, documentCount, keyFiles, keyVersion, keyChecksum, keyNote}`. `keyVersion` says which answer key scored the run (`audited` or `hand-written`), and the checksum covers the key files |
+| `warnings` | How many warnings the converter or evaluator raised while building the dataset |
 | `notes` | Free text |
 
 ## 3. `documents.csv`
 
 | Column | Meaning |
 |---|---|
-| `doc_id`* | Document id (the answer key's id) |
-| `file`* | Path relative to the input folder (`in/`), for example `pdf/01-employee-record.pdf` |
+| `doc_id`* | The file's path relative to the input folder (`in/`), for example `pdf/01-employee-record.pdf` or `finance-sample/heldout-001-annual-report.txt` |
+| `key_id`* | The answer key that applies. Several documents can share one (the same letter as text, Word, PDF and scans) |
 | `corpus`* | `formats` or `heldout` |
 | `format_group`* | Text, Word, PDF with text, or a kind of scan |
 | `doc_type` | The kind of document (from the answer key's title) |
@@ -81,8 +81,8 @@ One row per key item, plus rows for what must be kept and what the key cannot de
 
 | Column | Meaning |
 |---|---|
-| `entity_id`* | `<doc_id>#<n>` |
-| `doc_id`* | |
+| `entity_id`* | `<key_id>#<n>` for items to remove, `<key_id>#keep<n>` for must-keep items, `<key_id>#ignore<n>` for undecidable ones |
+| `key_id`* | The answer key. A key with no items has no rows, and its documents have `entity_count` 0 |
 | `role`* | `entity` (must be removed), `must_preserve` (must survive) or `ignore` (cannot be decided, counted neither right nor wrong) |
 | `type` | Category, such as PERSON. Empty for `must_preserve` and `ignore` |
 | `text`* | The exact text |
@@ -112,7 +112,7 @@ One row per document × configuration × repeat. A **configuration** is a detect
 | `lost_to_extraction` | Key items that never appeared in the text (for example OCR misreads) |
 | `edits`, `true_positives`, `type_correct` | Redactions made, those overlapping the key, and those with the right category |
 | `unjudged` | Redactions that could not be judged |
-| `flags_raised`, `flags_correct` | GLiNER-only flags and how many were really sensitive |
+| `flags_raised`, `flags_correct` | Items only GLiNER found (flagged, or redacted in the "accepted" variants), and how many of them were really sensitive. Empty for setups without GLiNER |
 | `preserve_total`, `preserve_broken` | Must-keep items and how many were wrongly removed |
 | `output_ok`, `output_error` | Whether the written file passed its safety checks (empty if not tried) |
 | `settings_hash` | Allows a live run to be compared with the batch settings |
@@ -129,7 +129,7 @@ What each detector produced, as positions.
 | `result_id`* | |
 | `type`*, `start`*, `length`* | Category and position in the text |
 | `confidence` | 0 to 1, if the detector gave one |
-| `source`* | `rule`, `model`, `gliner`, or a combined label such as `model+gliner` |
+| `source`* | Where the span came from, as recorded by the detector: for example `rule`, `llm`, `llm-variant`, `gliner`, `gliner-only` (only GLiNER found it), or a label with `+gliner` added where both agreed |
 | `flag`* | `true` if left in the text for review, `false` if redacted |
 
 ## 8. `outcomes.csv`
@@ -138,16 +138,16 @@ One row for each judged fact, so category and per-item questions need no re-scor
 
 | Column | Meaning |
 |---|---|
-| `outcome_id`* | |
+| `outcome_id`* | `<result_id>#o<n>` |
 | `result_id`*, `doc_id`* | |
-| `kind`* | `caught`, `missed`, `lost_to_extraction`, `over_redaction`, `unjudged`, `preserve_broken`, `flag_correct` or `flag_wrong` |
+| `kind`* | `caught`, `missed`, `lost_to_extraction`, `over_redaction`, `unjudged`, `preserve_broken`, `flag_correct` or `flag_wrong` (the last two for items GLiNER found alone that were left in the text for review) |
 | `entity_id` | The key item involved, if any |
 | `span_id` | The span involved, if any |
 | `type` | Category |
 | `text` | The text concerned |
 | `start`, `length` | Position, where known |
 
-A `caught` or `missed` row is written for every occurrence of every key item, so recall by category, document or model can be totalled directly.
+A `caught` or `missed` row is written for every occurrence of every key item, so recall by category, document or model can be totalled directly. The totals in `results.csv` decide how many occurrences count as caught; the occurrences most covered by redactions are the ones shown as caught. A redaction that matched the key has a span but no outcome row.
 
 ## 9. Derived by the explorer, not stored
 
@@ -164,17 +164,23 @@ A validator, used in a test for both the interim and the final dataset, fails if
 - a span lies outside the text length, or a `text_hash` does not match;
 - a final dataset has `gitDirty: true`, or a `results.csv` row is missing for a document in a corpus (unless its status says why).
 
-## 11. Making the interim dataset from existing runs
+## 11. The interim dataset
 
-| Interim field | Source in the existing saved runs | Gap |
+`dotnet run --project src/AiDocumentRedactor.Eval -- --export-dataset <run.scores.json[.gz]>[,<more>] --id interim-20261003` makes a dataset from saved runs without running any model, and `--validate-dataset <dir>` checks any dataset. The first interim dataset was made from the held-out run (300 documents) and the formats run (38 documents), both saved as `documentation/evaluation-reports/*.scores.json.gz`.
+
+| Interim field | Where it comes from | Gap |
 |---|---|---|
-| `results.csv` | The per-document scores | `repeat` is 1; `machineBusy` unknown |
-| `spans.csv` | Saved spans (held-out and formats runs only) | Earlier runs have none, so they are not converted |
-| `entities.csv` | The answer keys, using the audited key for the held-out corpus | `origin` available only for audited items |
-| `outcomes.csv` | Rebuilt by scoring the saved spans against the key (the existing rescoring does this) | |
-| `document-text.jsonl` | Re-extracted from `in/` with the current extractor | Must match what the detectors saw; the hash cannot prove this for old runs, so it is recorded as a known risk |
-| `run.json` | Settings, models, Ollama version and machine from the run files | `gitCommit` is empty, `status` is `interim` |
-| Timeout rows | Inferred from the missing document (phi4 on one CSV file) | |
+| `results.csv` | The saved per-document rows, rescored against the answer keys as they are now | `repeat` is 1; `machineBusy` unknown; timings are as saved |
+| `spans.csv` | The saved spans; the combinations with GLiNER are rebuilt from the model's and GLiNER's spans with the same agreement rules | Earlier runs have no spans, so they are not converted |
+| `entities.csv` | The answer keys in `tests/`, the audited key for the held-out corpus | `origin` is `added` only for items the audit added |
+| `outcomes.csv` | Built by the scorer in the same pass as the totals | |
+| `document-text.jsonl` | The documents read again from the corpus files (with OCR for scans) | See the check below |
+| `run.json` | Settings, models, Ollama version and machine from the saved runs | `gitCommit` is empty and `status` is `interim` |
+| Failed rows | The run's "skipped" list: a timeout or an error becomes a row with that status for the model and its GLiNER variants | |
+
+**The check on the text.** Every rescored row is compared with the saved row: the number of redactions and the must-keep count must match. For the first interim dataset all 6,063 comparable rows matched, including every scanned and Word document, which shows the text read again is the text the models saw. (The "correct flags accepted" variant depends on the answer key, which changed after the run, so it is not compared.) The totals also match the audited report exactly.
+
+**The input folder.** The text is read from the corpus files the run used, and `in/` is compared with them. Nine files in `in/` differ from the corpus copies: six Word files and three degraded scans (regenerated at some point). Their text in `in/` may therefore not match the stored text, which matters for live runs.
 
 ## 12. Sensitivity
 
@@ -182,7 +188,8 @@ A validator, used in a test for both the interim and the final dataset, fails if
 
 ## 13. Open questions
 
-1. A single `config` string, or separate columns for detector, model and variant? (Draft: both, with `config` as a convenience.)
-2. Should combination strategies ever be stored? (Draft: no, derived.)
-3. Is one JSON Lines file for all text acceptable at the final size, or should it be split per corpus?
-4. Should the interim converter re-extract text from `in/`, or is the extractor too unreliable for a hash check to be trusted?
+1. A single `config` string, or separate columns for detector, model and variant? (Now: both, with `config` as the setup's name.)
+2. Should combination strategies ever be stored? (Now: no, derived by the explorer.)
+3. Is one JSON Lines file for all text acceptable at the final size, or should it be split per corpus? (The interim file is 0.5 MB for 338 documents.)
+4. Size: the interim `spans.csv` and `outcomes.csv` are about 22 MB and 26 MB. Fine for SQLite and local use, large for git, so generated datasets are not committed; the final one may need compressing.
+5. The nine documents in `in/` that differ from the corpus copies: should `in/` be refreshed from the corpus, or the corpus from `in/`?
