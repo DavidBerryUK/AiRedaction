@@ -231,4 +231,14 @@ public class DatasetTests
         Assert.NotNull(git);
         Assert.True(git!.Value.Commit.Length >= 7);
     }
+
+    /// <summary>A dataset can be finished on a newer commit only if nothing that decides a result changed: the same commit passes, and a commit from before scoring was written does not.</summary>
+    [Fact]
+    public async Task Resume_rule_looks_at_scoring_code()
+    {
+        Assert.True(await FinalEvaluator.ScoringCodeUnchangedAsync("HEAD"));
+        var first = (await Task.Run(() => System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo("git", "rev-list --max-parents=0 HEAD") { RedirectStandardOutput = true, UseShellExecute = false })!.StandardOutput.ReadToEnd())).Trim();
+        Assert.False(await FinalEvaluator.ScoringCodeUnchangedAsync(first));
+        Assert.False(await FinalEvaluator.ScoringCodeUnchangedAsync("not-a-commit"));
+    }
 }

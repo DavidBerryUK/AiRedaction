@@ -14,7 +14,7 @@ namespace AiDocumentRedactor.Eval;
 
 /// <summary>What the final evaluation is asked to do.</summary>
 public record FinalOptions(RedactorOptions Options, string InputRoot, string CorpusRoot, string OutDir, string DatasetId, IReadOnlyList<string> Models, IReadOnlyList<string>? OnlyDocs,
-    bool AllowDirty, bool WriteOutputs, int TimeoutSeconds);
+    bool AllowDirty, bool WriteOutputs, int TimeoutSeconds, bool AcceptFailures = false, bool KeepTimeouts = false);
 
 /// <summary>The final evaluation: every chosen model over every document of every corpus, with the rules and GLiNER, written straight into a dataset (the format in
 /// documentation/RESULTS_DATASET_FORMAT.md). Each document's rows are saved as soon as they are scored, so a run that stops can be started again and carries on where it
@@ -41,6 +41,30 @@ public static class FinalEvaluator
         catch (Exception ex) when (ex is System.ComponentModel.Win32Exception or InvalidOperationException)
         {
             return null;
+        }
+    }
+
+    /// <summary>The code that decides what a result is: detection, the pipeline, the readers, scoring and the config. Anything else (the explorer, the finishing steps of this
+    /// evaluator) cannot change a score.</summary>
+    static readonly string[] ScoringPaths =
+    [
+        "src/AiDocumentRedactor.Core", "src/AiDocumentRedactor.Detection", "src/AiDocumentRedactor.Documents", "src/AiDocumentRedactor.Ocr",
+        "src/AiDocumentRedactor.Eval/Scoring.cs", "src/AiDocumentRedactor.Eval/ResultRows.cs", "src/AiDocumentRedactor.Eval/GroundTruth.cs", "redactor.config.json",
+    ];
+
+    /// <summary>True when none of the code that decides a result has changed between <paramref name="oldCommit"/> and now, so a dataset started on the old commit can be finished on this one.</summary>
+    public static async Task<bool> ScoringCodeUnchangedAsync(string oldCommit)
+    {
+        try
+        {
+            using var p = Process.Start(new ProcessStartInfo("git", $"diff --name-only {oldCommit} HEAD -- {string.Join(' ', ScoringPaths)}") { RedirectStandardOutput = true, RedirectStandardError = true, UseShellExecute = false });
+            var output = await p!.StandardOutput.ReadToEndAsync();
+            await p.WaitForExitAsync();
+            return p.ExitCode == 0 && output.Trim().Length == 0;
+        }
+        catch (Exception ex) when (ex is System.ComponentModel.Win32Exception or InvalidOperationException)
+        {
+            return false;
         }
     }
 
@@ -210,7 +234,7 @@ public static class FinalEvaluator
         }
 
         var prior = state.TryGetValue("elapsedSeconds", out var priorValue) ? priorValue is JsonElement { ValueKind: JsonValueKind.Number } pe ? pe.GetDouble() : priorValue is double pd ? pd : 0 : 0;
-        var done = await LoadDoneAsync(f.OutDir);
+        var done = await LoadDoneAsync(f.OutDir, f.KeepTimeouts);
         var ollama = await OllamaVersionAsync(options.Llm);
         var loads = new List<double>();
         var load = await LoadAverageAsync();
@@ -406,10 +430,31 @@ public static class FinalEvaluator
 
             var existing = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(await File.ReadAllTextAsync(runPath))!;
             var commit = existing.TryGetValue("gitCommit", out var c) && c.ValueKind == JsonValueKind.String ? c.GetString() : null;
+            var resumedOn = new List<object>();
+            if (existing.TryGetValue("resumedOn", out var earlier) && earlier.ValueKind == JsonValueKind.Array)
+            {
+                resumedOn.AddRange(earlier.EnumerateArray().Select(e => (object)JsonSerializer.Deserialize<Dictionary<string, object?>>(e.GetRawText())!));
+            }
+
             if (commit != git.Commit)
             {
-                Console.Error.WriteLine($"The dataset was started on code version {commit} but the code is now {git.Commit}. A dataset must come from one version of the code, so it cannot be resumed. Use a new --id to start again.");
-                return null;
+                // A different commit is fine only if nothing that decides a result changed, and the answer keys are the same.
+                if (commit is null || !await ScoringCodeUnchangedAsync(commit))
+                {
+                    Console.Error.WriteLine($"The dataset was started on code version {commit} and the code that decides results has changed since (now {git.Commit}). A dataset must come from one version of that code, so it cannot be resumed. Use a new --id to start again.");
+                    return null;
+                }
+
+                var keysThen = existing.TryGetValue("corpora", out var cs) ? cs.EnumerateArray().ToDictionary(c => c.GetProperty("corpus").GetString()!, c => c.GetProperty("keyChecksum").GetString()) : [];
+                var keysNow = docs.GroupBy(d => d.Corpus).ToDictionary(g => g.Key, g => ResultRows.KeyChecksum(g.First().CorpusDir));
+                if (keysNow.Any(k => keysThen.GetValueOrDefault(k.Key) != k.Value))
+                {
+                    Console.Error.WriteLine("The answer keys have changed since this dataset was started, so it cannot be resumed.");
+                    return null;
+                }
+
+                Console.WriteLine($"  The code has moved from {commit} to {git.Commit}, but nothing that decides a result changed (detection, pipeline, readers, scoring, config), so the dataset can be finished.");
+                resumedOn.Add(new Dictionary<string, object?> { ["commit"] = git.Commit, ["at"] = DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ssZ"), ["note"] = "No scoring code changed since the dataset was started." });
             }
 
             var (_, rows) = await Csv.ReadAsync(Path.Combine(f.OutDir, Schema.DocumentsFile));
@@ -421,9 +466,15 @@ public static class FinalEvaluator
                 return null;
             }
 
-            await RemoveIncompleteAsync(f.OutDir);
+            await RemoveIncompleteAsync(f.OutDir, f.KeepTimeouts);
             Console.WriteLine($"Resuming {f.OutDir}.");
-            return JsonSerializer.Deserialize<Dictionary<string, object?>>(await File.ReadAllTextAsync(runPath))!;
+            var resumedState = JsonSerializer.Deserialize<Dictionary<string, object?>>(await File.ReadAllTextAsync(runPath))!;
+            if (resumedOn.Count > 0)
+            {
+                resumedState["resumedOn"] = resumedOn;
+            }
+
+            return resumedState;
         }
 
         Directory.CreateDirectory(f.OutDir);
@@ -474,18 +525,18 @@ public static class FinalEvaluator
     }
 
     /// <summary>The ids of results already saved as finished. Failed results are removed so that resuming tries them again.</summary>
-    static async Task<HashSet<string>> LoadDoneAsync(string dir)
+    static async Task<HashSet<string>> LoadDoneAsync(string dir, bool keepTimeouts)
     {
         var (_, rows) = await Csv.ReadAsync(Path.Combine(dir, Schema.ResultsFile));
-        return rows.Where(r => r["status"] == "ok").Select(r => r["result_id"]).ToHashSet();
+        return rows.Where(r => r["status"] == "ok" || keepTimeouts && r["status"] == "timeout").Select(r => r["result_id"]).ToHashSet();
     }
 
     /// <summary>Tidies a dataset that stopped part-way: drops failed results (so they are tried again) and any spans or outcomes whose result row was never written.</summary>
-    static async Task RemoveIncompleteAsync(string dir)
+    static async Task RemoveIncompleteAsync(string dir, bool keepTimeouts)
     {
         var resultsPath = Path.Combine(dir, Schema.ResultsFile);
-        var (resultColumns, results) = await Csv.ReadAsync(resultsPath);
-        var keep = results.Where(r => r["status"] == "ok").ToList();
+        var (_, results) = await Csv.ReadAsync(resultsPath);
+        var keep = results.Where(r => r["status"] == "ok" || keepTimeouts && r["status"] == "timeout").ToList();
         var ids = keep.Select(r => r["result_id"]).ToHashSet();
         var dropped = results.Count - keep.Count;
         if (dropped > 0)
@@ -536,13 +587,16 @@ public static class FinalEvaluator
     {
         Console.WriteLine("\n=== Checking the dataset ===");
         var problems = await DatasetValidator.ValidateAsync(f.OutDir);
-        problems.AddRange(await CompletenessAsync(f.OutDir, docs, f.Models, f.WriteOutputs));
+        var failedNotes = new List<string>();
+        problems.AddRange(await CompletenessAsync(f.OutDir, docs, f.Models, f.WriteOutputs, f.AcceptFailures, failedNotes));
         problems.ForEach(p => Console.WriteLine($"  PROBLEM: {p}"));
+        failedNotes.ForEach(n => Console.WriteLine($"  recorded failure: {n}"));
         var runPath = Path.Combine(f.OutDir, Schema.RunFile);
         var run = JsonSerializer.Deserialize<Dictionary<string, object?>>(await File.ReadAllTextAsync(runPath))!;
         run["status"] = problems.Count == 0 && !git.Dirty ? "final" : "draft";
         run["finishedAt"] = DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ssZ");
         run["warnings"] = problems.Count;
+        run["acceptedFailures"] = failedNotes;
         await File.WriteAllTextAsync(runPath, JsonSerializer.Serialize(run, new JsonSerializerOptions { WriteIndented = true }) + "\n");
         if (problems.Count > 0)
         {
@@ -558,7 +612,7 @@ public static class FinalEvaluator
     }
 
     /// <summary>What the dataset must hold, listed and checked: a result for every document under every setup, scored and complete, with the output checks recorded.</summary>
-    static async Task<List<string>> CompletenessAsync(string dir, List<Doc> docs, IReadOnlyList<string> models, bool outputsChecked)
+    static async Task<List<string>> CompletenessAsync(string dir, List<Doc> docs, IReadOnlyList<string> models, bool outputsChecked, bool acceptFailures, List<string> failedNotes)
     {
         var problems = new List<string>();
         var (_, results) = await Csv.ReadAsync(Path.Combine(dir, Schema.ResultsFile));
@@ -636,7 +690,15 @@ public static class FinalEvaluator
 
         if (notOk > 0)
         {
-            problems.Add($"{notOk} results failed (a timeout or an error). Run again with the same --id to try them again.");
+            if (acceptFailures)
+            {
+                // Accepted failures stay in the dataset as rows with their status and message, and are listed in run.json.
+                failedNotes.AddRange(results.Where(r => r["status"] != "ok" && r["variant"] == "plain").Select(r => $"{r["model"]} on {r["doc_id"]}: {r["status"]} ({r["error"]})"));
+            }
+            else
+            {
+                problems.Add($"{notOk} results failed (a timeout or an error). Run again with the same --id to try them again, or add --accept-failures to keep them as recorded failures.");
+            }
         }
 
         problems.AddRange(incomplete.Take(20));
