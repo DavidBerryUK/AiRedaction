@@ -57,7 +57,7 @@ public static class FinalEvaluator
     {
         try
         {
-            using var p = Process.Start(new ProcessStartInfo("git", $"diff --name-only {oldCommit} HEAD -- {string.Join(' ', ScoringPaths)}") { RedirectStandardOutput = true, RedirectStandardError = true, UseShellExecute = false });
+            using var p = Process.Start(new ProcessStartInfo("git", $"diff --name-only {oldCommit} HEAD -- {string.Join(' ', ScoringPaths.Select(path => ":/" + path))}") { RedirectStandardOutput = true, RedirectStandardError = true, UseShellExecute = false });
             var output = await p!.StandardOutput.ReadToEndAsync();
             await p.WaitForExitAsync();
             return p.ExitCode == 0 && output.Trim().Length == 0;
