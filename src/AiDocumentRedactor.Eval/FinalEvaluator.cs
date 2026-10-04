@@ -164,7 +164,7 @@ public static class FinalEvaluator
             foreach (var file in Directory.EnumerateFiles(dir, "*", SearchOption.AllDirectories).Order(StringComparer.Ordinal))
             {
                 var rel = Path.GetRelativePath(dir, file).Replace('\\', '/');
-                if (rel.StartsWith("ground-truth", StringComparison.Ordinal) || rel is "README.md" or "AUDIT.md")
+                if (rel.StartsWith("ground-truth", StringComparison.Ordinal) || rel is "README.md" or "AUDIT.md" or "manifest.csv")
                 {
                     continue;
                 }
