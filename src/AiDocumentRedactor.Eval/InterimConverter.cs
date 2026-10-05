@@ -315,15 +315,21 @@ public static class InterimConverter
     public static Dictionary<string, object?> KeyInfo(string corpus, string corpusDir, int documents)
     {
         var files = Directory.GetFiles(Path.Combine(corpusDir, "ground-truth"), "*.json");
-        var audited = Directory.Exists(Path.Combine(corpusDir, "ground-truth-original"));
+        var (version, note) = corpus switch
+        {
+            "heldout" => ("audited", "The generator's key corrected by a rule-based audit (items added and removed, judged categories, ignore list); the original is kept in ground-truth-original. See tests/HeldOutCorpus/AUDIT.md."),
+            "external-nemotron" => ("checked", "The dataset's labels mapped to our categories, plus social-security numbers it left unlabelled (the original is kept in ground-truth-original). Checked on 30 documents by hand and by a scan for patterned items; not audited. See tests/ExternalNemotronCorpus/README.md."),
+            "external-gretel" => ("generator-labelled", "The generator's labels mapped to our categories. Not audited: the generator leaves real items unlabelled, so precision is understated. See tests/ExternalGretelCorpus/README.md."),
+            _ => Directory.Exists(Path.Combine(corpusDir, "ground-truth-original"))
+                ? ("audited", "The generator's key corrected by a rule-based audit (items added and removed, judged categories, ignore list); the original is kept in ground-truth-original.")
+                : ("hand-written", "Written by hand with the test documents."),
+        };
         return new Dictionary<string, object?>
         {
             ["corpus"] = corpus, ["documentCount"] = documents, ["keyFiles"] = files.Length,
-            ["keyVersion"] = audited ? "audited" : "hand-written",
+            ["keyVersion"] = version,
             ["keyChecksum"] = ResultRows.KeyChecksum(corpusDir),
-            ["keyNote"] = audited
-                ? "The generator's key corrected by a rule-based audit (items added and removed, judged categories, ignore list); the original is kept in ground-truth-original. See tests/HeldOutCorpus/AUDIT.md."
-                : "Written by hand with the test documents.",
+            ["keyNote"] = note,
         };
     }
 
