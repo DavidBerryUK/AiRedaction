@@ -1,6 +1,7 @@
 # Story-002: Ultimate Evaluator
 
 **Status:** Built and run once (3 October 2026): dataset `final-20261003`, 338 documents, 7,774 results, 4 h 18 min, machine idle, code commit `6062ee0` (finished on `19bfc11` with no scoring code changed). One pass, no repeats, by decision. Six model-and-document failures are recorded in the dataset.
+**Second run (4 to 5 October 2026):** dataset `final-20261004`, the same five models over 750 documents (the first 338 plus 412 unseen Nemotron and Gretel documents), 17,250 results, 7 recorded failures, resumed twice. Both datasets are kept in git as archives in `datasets-archive/`. See section 13 of [FINAL_FINDINGS.md](../FINAL_FINDINGS.md).
 **Related:** [Story-001: Results Explorer](Story-001-Results-Explorer.md) (reads the data this story produces)
 
 ## Summary

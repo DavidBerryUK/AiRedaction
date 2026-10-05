@@ -105,7 +105,7 @@ The app can run a small second detector (GLiNER) next to the language model. Whe
 
 ## The results explorer
 
-Beside the redaction screen, the web app has a **results explorer** at `/explorer` (the **📊 Results** button in the top bar). It reads a dataset from the `datasets` folder (see [HOW_TO_RUN_EVALUATION.md](HOW_TO_RUN_EVALUATION.md) for making one; use `--datasets <folder>` to read another folder) and uses the same access token as the rest of the app. The first time a dataset is opened a SQLite database is built beside it (a few seconds); it is rebuilt automatically if the dataset changes and can be deleted at any time.
+Beside the redaction screen, the web app has a **results explorer** at `/explorer` (the **📊 Results** button in the top bar). On a fresh checkout the `datasets` folder is empty: run `./tools/restore-datasets.sh` first, which unpacks the two evaluation datasets kept in git in `datasets-archive/` (see its [README](../datasets-archive/README.md)). The explorer reads a dataset from the `datasets` folder (see [HOW_TO_RUN_EVALUATION.md](HOW_TO_RUN_EVALUATION.md) for making one; use `--datasets <folder>` to read another folder) and uses the same access token as the rest of the app. The first time a dataset is opened a SQLite database is built beside it (a few seconds); it is rebuilt automatically if the dataset changes and can be deleted at any time.
 
 | Tab | What it shows |
 |---|---|
