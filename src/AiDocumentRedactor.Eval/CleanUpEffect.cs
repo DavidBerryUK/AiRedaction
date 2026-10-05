@@ -28,6 +28,21 @@ public static class CleanUpEffect
     static string P(double v) => (v * 100).ToString("0.0", CultureInfo.InvariantCulture) + "%";
 
     /// <summary>Runs the simulation on a dataset folder and writes a Markdown report. Returns the exit code.</summary>
+    /// <summary>Corpora added after the rules were written: their documents were never seen when the rules were chosen.</summary>
+    static bool IsUnseen(string corpus) => corpus.StartsWith("external-", StringComparison.Ordinal);
+
+    /// <summary>The groups a result is counted in: its own corpus, the combined unseen documents when it is one, and everything.</summary>
+    static IEnumerable<string> Groups(string corpus) => IsUnseen(corpus) ? [corpus, "unseen", "all"] : [corpus, "all"];
+
+    static string Title(string corpus, Dictionary<string, int> counts, int unseenCount) => corpus switch
+    {
+        "all" => "All corpora",
+        "unseen" => $"Unseen documents only (the fair test; {unseenCount} documents)",
+        "heldout" => $"Held-out ({counts[corpus]} documents; rules written after seeing these)",
+        "formats" => $"Formats ({counts[corpus]} documents)",
+        _ => $"{corpus} ({counts[corpus]} documents; not seen when the rules were written)",
+    };
+
     public static async Task<int> RunAsync(string datasetDir, string corpusRoot, string outPath)
     {
         var (_, docRows) = await Csv.ReadAsync(Path.Combine(datasetDir, Schema.DocumentsFile));
@@ -82,7 +97,7 @@ public static class CleanUpEffect
             var saved = spansBy.GetValueOrDefault(r["result_id"]) ?? [];
             var keySpans = Scoring.KeySpans(text, gt);
             var ipv6 = RuleDetector.FindIpv6(text);
-            foreach (var corpus in new[] { info.Corpus, "all" })
+            foreach (var corpus in Groups(info.Corpus))
             {
                 stored.AddOrUpdate((corpus, r["model"]), (int.Parse(r["present"], CultureInfo.InvariantCulture), int.Parse(r["caught"], CultureInfo.InvariantCulture), int.Parse(r["edits"], CultureInfo.InvariantCulture), int.Parse(r["true_positives"], CultureInfo.InvariantCulture)),
                     (_, t) => (t.Present + int.Parse(r["present"], CultureInfo.InvariantCulture), t.Caught + int.Parse(r["caught"], CultureInfo.InvariantCulture), t.Edits + int.Parse(r["edits"], CultureInfo.InvariantCulture), t.Tp + int.Parse(r["true_positives"], CultureInfo.InvariantCulture)));
@@ -93,7 +108,7 @@ public static class CleanUpEffect
                 var (kept, suppressed) = CleanUpRules.Apply(text, saved, scenario.Options);
                 var spans = scenario.Options.Ipv6 ? [.. kept, .. ipv6] : kept;
                 var score = Scoring.Score(text, Redactor.Apply(text, spans, template), gt, info.Format);
-                foreach (var corpus in new[] { info.Corpus, "all" })
+                foreach (var corpus in Groups(info.Corpus))
                 {
                     var t = totals.GetOrAdd((corpus, r["model"], scenario.Name), _ => new Totals());
                     lock (t)
@@ -134,10 +149,19 @@ public static class CleanUpEffect
         var sb = new StringBuilder();
         sb.AppendLine("# What the clean-up rules would do").AppendLine();
         sb.AppendLine($"Worked out from the spans saved in `{Path.GetFileName(datasetDir)}` with no model run: each model's saved answers have each rule applied, and are scored against the answer keys again. Models: {string.Join(", ", models.Select(m => m["model"]).Distinct().Order())}.").AppendLine();
-        sb.AppendLine("**Read this first.** The rules were chosen after looking at these same documents, so the gain shown is an upper estimate. A fair test needs documents the rules were not based on. The figure that matters most is the second table: how many *right* redactions a rule would take away, because that is the risk.").AppendLine();
-        foreach (var corpus in new[] { "heldout", "formats", "all" })
+        sb.AppendLine("**Read this first.** The rules were chosen after looking at the held-out and formats documents, so the gain shown for those is an upper estimate. The `external-*` corpora (and the combined `unseen` table) were added afterwards and were never looked at when the rules were written, so they are the fair test. The figure that matters most is the right redactions a rule would take away, because that is the risk.").AppendLine();
+        var counts = docInfo.Values.GroupBy(d => d.Corpus).ToDictionary(g => g.Key, g => g.Count());
+        var unseenCount = counts.Where(c => IsUnseen(c.Key)).Sum(c => c.Value);
+        var order = new[] { "heldout", "external-nemotron", "external-gretel", "formats" }.Where(counts.ContainsKey).Concat(counts.Keys.Except(["heldout", "external-nemotron", "external-gretel", "formats"]).Order()).ToList();
+        if (unseenCount > 0)
         {
-            sb.AppendLine($"## {(corpus == "all" ? "Both corpora" : corpus == "heldout" ? "Held-out (300 documents)" : "Formats (38 documents)")}").AppendLine();
+            order.Add("unseen");
+        }
+
+        order.Add("all");
+        foreach (var corpus in order)
+        {
+            sb.AppendLine($"## {Title(corpus, counts, unseenCount)}").AppendLine();
             sb.AppendLine("| Model | Rules | Recall | Precision | F1 | Change in precision | Change in recall | Wrong redactions removed | Right redactions lost |");
             sb.AppendLine("|---|---|---:|---:|---:|---:|---:|---:|---:|");
             foreach (var model in models.Select(m => m["model"]).Distinct().Order())
