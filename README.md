@@ -9,9 +9,10 @@ It reads text files, Word documents, PDFs and scans (with local OCR), and writes
 | Part | What it is |
 |---|---|
 | **Web App** | interactive review tool: run a redaction, see every edit with a confidence grade, redact by hand, view PDF pages, compare models |
-| **Evaluation App** | command that scores models on a synthetic test corpus and writes a Markdown report |
+| **Evaluation App** | command-line tool that scores models on synthetic test corpora and writes Markdown reports |
 | **Command-line runner** | redacts a whole folder in one go (`src/AiDocumentRedactor.Cli`) |
-| **Test corpus** | invented documents in many formats, with an answer key (`tests/TestCorpus`) |
+| **Test corpus** | invented documents in many formats, with answer keys (`tests/TestCorpus`, `tests/HeldOutCorpus`) |
+| **Results Explorer** | web-based interface for exploring evaluation results (see `src/AiDocumentRedactor.ResultsExplorer`) |
 
 ## Documentation
 
@@ -29,6 +30,27 @@ It reads text files, Word documents, PDFs and scans (with local OCR), and writes
 - [Phase 2 plan: layered detection with GLiNER, and benchmarking it](documentation/PHASE_2_PLAN.md)
 - [Specification](documentation/SPECIFICATION.md): requirements, approach, security, risks and the delivery plan
 - [Coding standards](CODING_STANDARDS.md)
+
+## Quick evaluation commands
+
+Run a quick trial of one model on plain-text documents:
+
+```bash
+./run-eval.sh --models phi4 --only text/ --no-write
+```
+
+Run on the held-out corpus (300 finance documents):
+
+```bash
+./run-eval.sh --corpus tests/HeldOutCorpus --models phi4,gemma4:e4b --no-write
+```
+
+Combine multiple saved runs:
+
+```bash
+dotnet src/AiDocumentRedactor.Eval/bin/Debug/net10.0/AiDocumentRedactor.Eval.dll \
+  --merge eval/first.scores.json,eval/second.scores.json --out eval/merged.md
+```
 
 ## Quick start
 
