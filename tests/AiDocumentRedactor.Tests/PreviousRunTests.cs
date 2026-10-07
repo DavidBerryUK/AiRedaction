@@ -204,6 +204,41 @@ public class PreviousRunTests : IDisposable
         Assert.Empty(s.PreviousRunsForSelected);   // b.txt is selected, and a.txt's results are not shown on it
     }
 
+    /// <summary>A stored result is read-only: no edit, review change, undo or save does anything, and nothing is written to the output folder.</summary>
+    [Fact]
+    public async Task A_stored_result_cannot_be_changed_or_saved()
+    {
+        var flagged = new DetectedEntity("ORG", Text.IndexOf("Acme", StringComparison.Ordinal), 4, 0.5, "gliner-only", Flag: true);
+        var s = NewSession(new FakeSource(Stored("phi4", [.. Spans(("PERSON", "Sarah Jones")), flagged])));
+        await SelectAsync(s);
+        var stored = s.PreviousRunsForSelected[0];
+        s.SelectResult(stored.Id);
+        var before = s.ActiveResult!.Result;
+        var firstEdit = before.Edits.First(e => e.Status == EditStatus.Active).Id;
+        var flaggedEdit = before.Edits.First(e => e.Status == EditStatus.Flagged).Id;
+
+        Assert.False(s.CanReview);
+        Assert.Equal(0, s.AddManual(0, 5, "PERSON", true));
+        Assert.False(s.AddArea(0, 10, 10, 50, 50));
+        s.RejectEdit(firstEdit);
+        s.AcceptFlag(flaggedEdit);
+        s.RestoreEdit(firstEdit);
+        s.ChangeType(firstEdit, "ORG");
+        s.RemoveArea(Bookmark.AreaIdBase);
+        s.Undo();
+        s.Redo();
+        await s.SaveAsync();
+        await s.UseAsOutputAsync(stored.Id);
+
+        Assert.Same(before, s.ActiveResult!.Result);
+        Assert.Equal(EditStatus.Active, s.ActiveResult!.Result.Edits.First(e => e.Id == firstEdit).Status);
+        Assert.False(s.CanUndo);
+        Assert.False(s.CanRedo);
+        Assert.False(s.IsModified);
+        Assert.Null(s.OutputResultId);
+        Assert.False(Directory.Exists(options.Output.Directory) && Directory.GetFiles(options.Output.Directory, "*", SearchOption.AllDirectories).Length > 0);
+    }
+
     /// <summary>Loading and viewing a stored result never touches the input file or the document the session holds.</summary>
     [Fact]
     public async Task Viewing_a_stored_result_never_changes_the_source_document()

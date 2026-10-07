@@ -767,9 +767,9 @@ public partial class RedactionSession
     /// <summary>Writes the chosen result as the saved output (FR42).</summary>
     public async Task UseAsOutputAsync(Guid id)
     {
-        if (Selected is not { } doc || ResultsForSelected.FirstOrDefault(r => r.Id == id) is not { } mr)
+        if (Selected is not { } doc || ResultsForSelected.FirstOrDefault(r => r.Id == id) is not { IsPreviousRun: false } mr)
         {
-            return;
+            return;   // only a live result can be written; a stored one is never saved
         }
 
         var reader = readers.First(r => r.CanRead(doc.FullPath));
@@ -789,15 +789,15 @@ public partial class RedactionSession
     /// <summary>The selected document's review, or null if none is selected.</summary>
     DocReview? CurrentReview => Selected is { } s ? ReviewOf(s.FullPath) : null;
     /// <summary>True when a person can add, reject and restore edits (a document is loaded and readable).</summary>
-    public bool CanReview => OriginalText is not null && !PreviewOnly && !IsRunning;
+    public bool CanReview => OriginalText is not null && !PreviewOnly && !IsRunning && !IsPreviousRunActive;
     /// <summary>The categories a person can choose when redacting by hand (those switched on in the config).</summary>
     public IReadOnlyList<string> ManualTypes => PromptBuilder.EnabledTypes(options).ToList();
     /// <summary>True if there is a change to undo.</summary>
-    public bool CanUndo => CurrentReview?.Undo.Count > 0;
+    public bool CanUndo => !IsPreviousRunActive && CurrentReview?.Undo.Count > 0;
     /// <summary>True if there is an undone change to redo.</summary>
-    public bool CanRedo => CurrentReview?.Redo.Count > 0;
+    public bool CanRedo => !IsPreviousRunActive && CurrentReview?.Redo.Count > 0;
     /// <summary>True when the reviewer's changes are not yet written to the output file.</summary>
-    public bool IsModified => CurrentReview is { } r && !r.Current.SameAs(r.Saved);
+    public bool IsModified => !IsPreviousRunActive && CurrentReview is { } r && !r.Current.SameAs(r.Saved);
     /// <summary>How many reviewer changes the selected document has (added plus rejected).</summary>
     public int ReviewChangeCount => CurrentReview is { } r ? r.Current.Manual.Count + r.Current.Rejected.Count : 0;
 
@@ -936,7 +936,7 @@ public partial class RedactionSession
     /// <summary>Rejects an edit of the viewed result: an AI edit is left in the text (and can be restored), a manual one is removed.</summary>
     public void RejectEdit(int editId)
     {
-        if (CurrentReview is not { } rv || FindEdit(editId) is not { } e)
+        if (IsPreviousRunActive || CurrentReview is not { } rv || FindEdit(editId) is not { } e)
         {
             return;
         }
@@ -953,7 +953,7 @@ public partial class RedactionSession
     /// model's result for this document). Does nothing for an edit that is not flagged.</summary>
     public void AcceptFlag(int editId)
     {
-        if (CurrentReview is not { } rv || FindEdit(editId) is not { Status: EditStatus.Flagged } e)
+        if (IsPreviousRunActive || CurrentReview is not { } rv || FindEdit(editId) is not { Status: EditStatus.Flagged } e)
         {
             return;
         }
@@ -967,7 +967,7 @@ public partial class RedactionSession
     /// <summary>Puts a rejected AI edit back.</summary>
     public void RestoreEdit(int editId)
     {
-        if (CurrentReview is not { } rv || FindEdit(editId) is not { Status: EditStatus.Rejected } e)
+        if (IsPreviousRunActive || CurrentReview is not { } rv || FindEdit(editId) is not { Status: EditStatus.Rejected } e)
         {
             return;
         }
@@ -980,7 +980,7 @@ public partial class RedactionSession
     /// <summary>Changes an edit's category. A manual edit is updated; an AI edit is replaced by a manual one of the new category.</summary>
     public void ChangeType(int editId, string type)
     {
-        if (CurrentReview is not { } rv || FindEdit(editId) is not { } e || e.Type == type || e.Status == EditStatus.Rejected)
+        if (IsPreviousRunActive || CurrentReview is not { } rv || FindEdit(editId) is not { } e || e.Type == type || e.Status == EditStatus.Rejected)
         {
             return;
         }
@@ -1006,7 +1006,7 @@ public partial class RedactionSession
     /// <summary>Undoes the last review change.</summary>
     public void Undo()
     {
-        if (Selected is not { } doc || CurrentReview is not { Undo.Count: > 0 } rv)
+        if (IsPreviousRunActive || Selected is not { } doc || CurrentReview is not { Undo.Count: > 0 } rv)
         {
             return;
         }
@@ -1018,7 +1018,7 @@ public partial class RedactionSession
     /// <summary>Redoes the last undone review change.</summary>
     public void Redo()
     {
-        if (Selected is not { } doc || CurrentReview is not { Redo.Count: > 0 } rv)
+        if (IsPreviousRunActive || Selected is not { } doc || CurrentReview is not { Redo.Count: > 0 } rv)
         {
             return;
         }
@@ -1030,7 +1030,7 @@ public partial class RedactionSession
     /// <summary>Writes the viewed result, with the reviewer's changes, as the saved output and clears the modified marker.</summary>
     public async Task SaveAsync()
     {
-        if (ActiveResult is { } a)
+        if (ActiveResult is { IsPreviousRun: false } a)
         {
             await UseAsOutputAsync(a.Id);
         }
@@ -1066,7 +1066,7 @@ public partial class RedactionSession
     /// <summary>Removes a hand-drawn rectangle (by its list number).</summary>
     public void RemoveArea(int bookmarkId)
     {
-        if (CurrentReview is not { } rv)
+        if (IsPreviousRunActive || CurrentReview is not { } rv)
         {
             return;
         }
