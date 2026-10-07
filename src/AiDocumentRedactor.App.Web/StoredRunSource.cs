@@ -16,7 +16,7 @@ public sealed class StoredRunSource(ExplorerCatalog catalog) : IPreviousRunSourc
             p.Run.Model,
             p.TextHash,
             [.. p.Run.Spans.Select(s => new DetectedEntity(s.Type, s.Start, s.Length, s.Confidence ?? 0, s.Source, s.Flag))],
-            TimeSpan.FromSeconds(p.Run.DetectSeconds),
+            TimeSpan.FromSeconds(p.Run.Scores.DetectSeconds),
             p.Run.PromptTokens,
             p.Run.OutputTokens,
             p.Run.Discarded) { Scores = Scores(p.Run.Scores) })];
