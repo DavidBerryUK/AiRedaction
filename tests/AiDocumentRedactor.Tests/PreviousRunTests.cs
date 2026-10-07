@@ -239,6 +239,42 @@ public class PreviousRunTests : IDisposable
         Assert.False(Directory.Exists(options.Output.Directory) && Directory.GetFiles(options.Output.Directory, "*", SearchOption.AllDirectories).Length > 0);
     }
 
+    /// <summary>A stored result on a PDF can be shown as page images: the redacted PDF is built in memory from the stored edits, has no text layer, and the source file is left alone.</summary>
+    [Fact]
+    public async Task A_stored_result_on_a_pdf_renders_the_redacted_pages_without_changing_the_file()
+    {
+        var dir = AppContext.BaseDirectory;
+        while (dir != null && !File.Exists(Path.Combine(dir, "tests", "TestCorpus", "pdf", "01-hr-letter.pdf")))
+        {
+            dir = Path.GetDirectoryName(dir);
+        }
+
+        var path = Path.Combine(In, "letter.pdf");
+        File.Copy(Path.Combine(dir ?? throw new FileNotFoundException("01-hr-letter.pdf"), "tests", "TestCorpus", "pdf", "01-hr-letter.pdf"), path);
+        var pdfText = (await new PdfDocumentReader().ReadAsync(path, default)).Text;
+        var at = pdfText.IndexOf("Eleanor Whitcombe", StringComparison.Ordinal);
+        var stored = new PreviousRunData(Info, "phi4", PreviousRunBuilder.HashText(pdfText), [new DetectedEntity("PERSON", at, "Eleanor Whitcombe".Length, 1, "llm")], TimeSpan.FromSeconds(1), 1, 1, 0);
+        var s = new RedactionSession(new RedactorOptions { Input = { Include = ["*.pdf"] }, Output = { Directory = Path.Combine(root, "out") } }, In,
+            [new PdfDocumentReader()], [new PdfDocumentWriter(new PdfOptions())], new SessionTests.FakeCatalog("phi4"), _ => new SessionTests.FakeModel()) { PreviousRunSource = new FakeSource(stored) };
+        var bytesBefore = File.ReadAllBytes(path);
+        s.Refresh();
+        await s.SelectAsync(s.Documents.Items.Single());
+        await s.PreviousRunsReady;
+        var run = Assert.Single(s.PreviousRunsForSelected);
+
+        var rendered = await s.RenderRedactedAsync(run.Id);
+
+        Assert.NotNull(rendered);
+        Assert.Equal("application/pdf", rendered.Value.ContentType);
+        using (var check = UglyToad.PdfPig.PdfDocument.Open(rendered.Value.Bytes))
+        {
+            Assert.Equal(0, check.GetPages().Sum(p => p.GetWords().Count()));   // redacted output has no text layer
+        }
+
+        Assert.NotEqual(0, s.RenderStamp(run.Id));
+        Assert.Equal(bytesBefore, File.ReadAllBytes(path));
+    }
+
     /// <summary>Loading and viewing a stored result never touches the input file or the document the session holds.</summary>
     [Fact]
     public async Task Viewing_a_stored_result_never_changes_the_source_document()

@@ -728,7 +728,7 @@ public partial class RedactionSession
     /// Nothing is written to disk. Returns null if the result is unknown or its format cannot be rendered.</summary>
     public async Task<(byte[] Bytes, string ContentType)?> RenderRedactedAsync(Guid resultId)
     {
-        var entry = results.FirstOrDefault(kv => kv.Value.Any(r => r.Id == resultId));
+        var entry = results.Concat(previousRuns).FirstOrDefault(kv => kv.Value.Any(r => r.Id == resultId));
         if (entry.Value is null)
         {
             return null;
@@ -762,7 +762,7 @@ public partial class RedactionSession
     /// <summary>The last in-memory rendering of each result's redacted document, reused until the result changes (rendering a scan runs OCR, so it is slow).</summary>
     readonly Dictionary<Guid, (RedactionResult Result, byte[] Bytes, string ContentType)> renderCache = new();
     /// <summary>A number that changes whenever a result's redacted output changes, used to make the page images refresh.</summary>
-    public int RenderStamp(Guid resultId) => ResultsForSelected.FirstOrDefault(r => r.Id == resultId) is { } r ? System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(r.Result) : 0;
+    public int RenderStamp(Guid resultId) => ResultsForSelected.Concat(PreviousRunsForSelected).FirstOrDefault(r => r.Id == resultId) is { } r ? System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(r.Result) : 0;
 
     /// <summary>Writes the chosen result as the saved output (FR42).</summary>
     public async Task UseAsOutputAsync(Guid id)
