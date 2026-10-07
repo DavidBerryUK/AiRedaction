@@ -98,3 +98,7 @@ tools/    the corpus generator
 documentation/   specification and how-to guides
 in/ out/  your input documents and the redacted output (not in source control)
 ```
+
+## Licences and attribution
+
+Test documents and answer keys are derived from public datasets (NVIDIA Nemotron-PII, CC BY 4.0; Gretel AI, Apache 2.0). See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
