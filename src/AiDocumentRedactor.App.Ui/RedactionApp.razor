@@ -243,8 +243,8 @@
             @if (shown.Scores is { } sc)
             {
                 @* How the stored run scored against this document's answer key, with the explorer's own terms (recall, precision, missed, over-redactions) *@
-                <div class="previous-card" role="group" aria-label="How this run scored">
-                    <div class="pc-head">How this run scored <span class="muted">against the answer key for this document</span></div>
+                <details class="previous-card" open>
+                    <summary class="pc-head">How this run scored <span class="muted">against the answer key for this document</span></summary>
                     <div class="pc-grid">
                         @Stat("Recall", Pct(sc.Recall), $"{sc.Caught} of {sc.Present} sensitive occurrences removed", sc.Missed == 0 ? "good" : "")
                         @Stat("Missed", sc.Missed.ToString(), "sensitive occurrences left in the text", sc.Missed > 0 ? "bad" : "good")
@@ -269,7 +269,7 @@
                         @Stat("Time", Seconds(sc.DetectSeconds), sc.SecondOpinionSeconds is { } g ? $"detecting, plus {Seconds(g)} for GLiNER" : "to detect the sensitive items")
                         @Stat("Tokens", $"{shown.PromptTokens:N0} in / {shown.OutputTokens:N0} out", shown.Discarded > 0 ? $"{shown.Discarded} non-verbatim answers discarded" : "read and written by the model")
                     </div>
-                </div>
+                </details>
             }
         }
         @if (PagesMode && !Processing && S.ActiveResult is { } pr)

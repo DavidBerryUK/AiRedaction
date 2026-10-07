@@ -77,7 +77,8 @@ select, input[type=search] { font: inherit; padding: 6px 8px; border: 1px solid 
 .seg-note { font-size: 12px; font-weight: 400; letter-spacing: 0; color: var(--muted); }
 .previous-notice { padding: 8px 12px; font-size: 13px; line-height: 1.4; background: var(--panel-2); border-bottom: 1px solid var(--border); border-left: 4px solid var(--brand-blue); color: var(--text); }
 .previous-card { padding: 8px 12px 10px; background: var(--panel); border-bottom: 1px solid var(--border); }
-.pc-head { font-size: 12px; font-weight: 700; letter-spacing: .4px; text-transform: uppercase; color: var(--text); margin-bottom: 6px; }
+.pc-head { font-size: 12px; font-weight: 700; letter-spacing: .4px; text-transform: uppercase; color: var(--text); cursor: pointer; }
+.previous-card[open] > .pc-head { margin-bottom: 6px; }
 .pc-head .muted { font-weight: 400; letter-spacing: 0; text-transform: none; }
 .pc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 6px; }
 .stat { display: flex; flex-direction: column; padding: 6px 8px; border: 1px solid var(--border); border-left-width: 4px; border-radius: var(--radius); background: var(--panel-2); }
