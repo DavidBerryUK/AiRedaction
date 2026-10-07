@@ -1,14 +1,18 @@
 {
-  "$schema": "https://json.schemastore.org/launchsettings.json",
   "profiles": {
     "http": {
       "commandName": "Project",
-      "dotnetRunMessages": true,
-      "launchBrowser": false,
-      "applicationUrl": "http://127.0.0.1:5199",
+      "commandLineArgs": "--config redactor.config.json --port 5199",
+      "workingDirectory": "..\\..",
+      "launchBrowser": true,
+      "launchUrl": "?t=dev-local-token",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "REDACTOR_TOKEN": "dev-local-token"
+      },
+      "dotnetRunMessages": true,
+      "applicationUrl": "http://127.0.0.1:5199"
     }
-  }
+  },
+  "$schema": "https://json.schemastore.org/launchsettings.json"
 }
