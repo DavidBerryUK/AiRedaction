@@ -96,7 +96,8 @@ src/      Core, Detection, Documents, Ocr, App.ViewModels, App.Ui, App.Web, Cli,
 tests/    unit tests and the synthetic test corpus
 tools/    the corpus generator
 documentation/   specification and how-to guides
-in/ out/  your input documents and the redacted output (not in source control)
+in/       the source test documents (synthetic, in source control; never modified by the tools)
+out/      the redacted output (not in source control)
 ```
 
 ## Licences and attribution
