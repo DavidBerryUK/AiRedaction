@@ -5,7 +5,7 @@ namespace AiDocumentRedactor.App.ViewModels;
 
 /// <summary>Everything the UI shows and does: document list, selected document, per-model results,
 /// running a redaction with progress, switching results, choosing the saved output. No UI framework.</summary>
-public class RedactionSession
+public partial class RedactionSession
 {
     readonly RedactorOptions options;
     readonly string inputRoot;
@@ -410,6 +410,7 @@ public class RedactionSession
                     OriginalText = doc.Text;
                     OriginalDoc = doc;
                     OcrConfidence = doc.OcrConfidence;
+                    BeginPreviousRunLookup(item, doc.Text);
                 }
                 catch (NoTextLayerException ex) { PreviewOnly = true; PreviewNote = ex.Message; }   // a scanned PDF: view it, but it needs OCR
                 catch (Exception ex)
@@ -456,7 +457,7 @@ public class RedactionSession
         get; private set;
     }
     /// <summary>The result currently shown.</summary>
-    public ModelResult? ActiveResult => ResultsForSelected.FirstOrDefault(r => r.Id == ActiveResultId);
+    public ModelResult? ActiveResult => ResultsForSelected.Concat(PreviousRunsForSelected).FirstOrDefault(r => r.Id == ActiveResultId);
     /// <summary>The result saved as the output file.</summary>
     public Guid? OutputResultId => Selected is { } s && outputResult.TryGetValue(s.FullPath, out var o) ? o : null;
     /// <summary>Explains why a run did not save an output file.</summary>
@@ -466,10 +467,22 @@ public class RedactionSession
     }
 
     /// <summary>Voters: results from the ticked confidence models, the models run together with the primary, and the active result.</summary>
-    public IReadOnlyList<ModelResult> Voters => ResultsForSelected.Where(r => r.Id == ActiveResultId || options.Confidence.Models.Contains(r.Model)
+    public IReadOnlyList<ModelResult> Voters => ActiveResult is { IsPreviousRun: true } stored ? [stored] : ResultsForSelected.Where(r => r.Id == ActiveResultId || options.Confidence.Models.Contains(r.Model)
         || (Selected is { } d && ranTogether.TryGetValue(d.FullPath, out var set) && set.Contains(r.Model))).ToList();
     /// <summary>Confidence of each edit of the active result.</summary>
-    public Dictionary<int, EditConfidence> Confidence() => ActiveResult is { } a ? ConfidenceGrader.Grade(a, Voters, new ConfidenceContext(OcrConfidenceOf, options.Ocr.MinConfidence, options.Confidence.CategoryCaps)) : new();
+    public Dictionary<int, EditConfidence> Confidence()
+    {
+        if (ActiveResult is not { } a)
+        {
+            return new();
+        }
+
+        var graded = ConfidenceGrader.Grade(a, Voters, new ConfidenceContext(OcrConfidenceOf, options.Ocr.MinConfidence, options.Confidence.CategoryCaps));
+        // A stored run is graded on its own, so the "run more models" advice would be wrong for it.
+        return a.IsPreviousRun
+            ? graded.ToDictionary(g => g.Key, g => g.Value.Total == 1 ? g.Value with { Reason = "From a stored run: agreement between models was not measured here." } : g.Value)
+            : graded;
+    }
 
     /// <summary>The lowest OCR confidence among the words an edit covers, or null if its text did not come from OCR.</summary>
     double? OcrConfidenceOf(RedactionEdit e) =>
