@@ -220,13 +220,14 @@
                     </span>
                 }
             </div>
+            @* The prompt belongs to the run, so it sits with the results: it opens that run's calls when there is one, otherwise the prompt the model would be given *@
+            @if (S.Options.Ui.PromptInspector)
+            {
+                <button class="btn small" title="See the prompt sent to the model and what came back" @onclick='() => OpenPrompt(S.ActiveResult is { IsPreviousRun: false } ? "run" : "prompt", null)'>🔍 Prompt</button>
+            }
             @if (!Processing && S.ActiveResult is { IsPreviousRun: false } ar)
             {
                 <span class="review-tools">
-                    @if (S.Options.Ui.PromptInspector)
-                    {
-                        <button class="btn small" title="See the prompt sent to the model for this result and what came back" @onclick='() => OpenPrompt("prompt", null)'>🔍 Prompt</button>
-                    }
                     <button class="btn small" disabled="@(!S.CanUndo)" title="Undo the last review change" @onclick="Undo">↶ Undo</button>
                     <button class="btn small" disabled="@(!S.CanRedo)" title="Redo" @onclick="Redo">↷ Redo</button>
                     @if (S.IsModified)
