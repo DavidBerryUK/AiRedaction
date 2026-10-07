@@ -202,6 +202,10 @@
                 {
                     <span class="seg-group" role="group" aria-label="Previous runs">
                         <span class="seg-group-label">Previous runs</span>
+                        @if (S.PreviousRunsForSelected.Any(r => r.Scores is not null))
+                        {
+                            <button class="seg chart-btn" disabled="@Processing" title="Compare every previous run of this document in charts and numbers" @onclick="() => showChart = true">📊 Chart</button>
+                        }
                         @foreach (var r in S.PreviousRunsForSelected)
                         {
                             <button role="tab" class="seg previous @(r.Id == S.ActiveResultId ? "active" : "")" aria-selected="@(r.Id == S.ActiveResultId)" disabled="@Processing"
@@ -450,6 +454,10 @@
     {
         <ModelsDialog OnClose="() => { showModels = false; }" />
     }
+    @if (showChart)
+    {
+        <PreviousRunsChart Runs="S.PreviousRunsForSelected" Document="@(S.Selected?.RelativePath.Replace('\\', '/') ?? string.Empty)" OnClose="() => showChart = false" />
+    }
 </div>
 
 @code {
@@ -553,7 +561,7 @@
     int? selectedBookmark;
     /// <summary>Shows the "replace existing results?" confirmation instead of the Redact button.</summary>
     bool viewPages, drawMode;
-    bool confirmReplace, showCategories, showModels, sortByConfidence, showPrompt, showChunks;
+    bool confirmReplace, showCategories, showModels, sortByConfidence, showPrompt, showChunks, showChart;
     string promptTab = "prompt";
     int? selectedCall;
 

@@ -1,0 +1,178 @@
+@* Compares every stored run of one document, side by side: highlights, one small bar chart per measure (a row for each model, each measure on its own scale), and the full numbers.
+   Only reads what the session already holds; nothing is run or saved. *@
+
+<div class="overlay" @onclick="Close">
+    <div class="dialog wide" role="dialog" aria-modal="true" aria-label="Previous runs compared" @onclick:stopPropagation>
+        <div class="dialog-head">
+            <h2>Previous runs compared</h2>
+            <button class="btn icon" @onclick="Close" aria-label="Close">✕</button>
+        </div>
+        <p class="dialog-note">
+            <strong>@Document</strong> · @rows.Count model@(rows.Count == 1 ? "" : "s") · scored against this document's answer key.
+            Each chart has its own scale, so bars are only compared within a chart.
+        </p>
+
+        <div class="viz-root" role="region" aria-label="Charts for @Document">
+            @* The best of each, so the answer is visible before the detail *@
+            <div class="viz-highlights">
+                @foreach (var h in highlights)
+                {
+                    <div class="viz-tile">
+                        <span class="viz-tile-label">@h.Label</span>
+                        <span class="viz-tile-value">@h.Winner</span>
+                        <span class="viz-tile-note">@h.Note</span>
+                    </div>
+                }
+            </div>
+
+            <div class="viz-grid" style="--viz-cols: @Measures.Count" role="table" aria-label="Bar charts, one row per model">
+                <div class="viz-row viz-head" role="row">
+                    <span class="viz-model" role="columnheader">Model</span>
+                    @foreach (var m in Measures)
+                    {
+                        <span class="viz-measure" role="columnheader" title="@m.Help">@m.Title <span class="viz-axis">@m.Axis(rows)</span></span>
+                    }
+                </div>
+                @for (var i = 0; i < rows.Count; i++)
+                {
+                    var row = rows[i];
+                    var colour = Series(i);
+                    <div class="viz-row" role="row">
+                        <span class="viz-model" role="rowheader"><i class="viz-swatch" style="background:@colour" aria-hidden="true"></i>@row.Model</span>
+                        @foreach (var m in Measures)
+                        {
+                            var share = m.Share(row, rows);
+                            var tip = Tip(row, m);
+                            <span class="viz-cell" role="cell" title="@tip">
+                                <span class="viz-track"><span class="viz-bar" style="width:@Width(share); background:@colour"></span></span>
+                                <span class="viz-value">@m.Label(row)</span>
+                            </span>
+                        }
+                    </div>
+                }
+            </div>
+            <p class="viz-foot">Recall, precision and F1 run from 0 to 100%. Missed and over-redactions are counts, and time is in seconds, each scaled to the longest bar in its own chart. Fewer is better for missed, over-redactions and time.</p>
+        </div>
+
+        <div class="viz-table-wrap">
+            <table class="viz-table">
+                <caption>The numbers behind the charts</caption>
+                <thead>
+                    <tr>
+                        <th scope="col">Model</th>
+                        <th scope="col" class="num" title="Sensitive occurrences removed, of those on the key">Recall</th>
+                        <th scope="col" class="num" title="Sensitive occurrences left in the text">Missed</th>
+                        <th scope="col" class="num" title="Removed, but not sensitive per the key">Over-redactions</th>
+                        <th scope="col" class="num" title="Share of redactions that matched the key">Precision</th>
+                        <th scope="col" class="num" title="Recall and precision combined">F1</th>
+                        <th scope="col" class="num" title="Text that had to survive but was removed">Must-keep damaged</th>
+                        <th scope="col" class="num" title="Redactions made">Redactions</th>
+                        <th scope="col" class="num" title="Redactions the key cannot decide either way">Not judged</th>
+                        <th scope="col" class="num" title="Items only GLiNER found, and how many were right">GLiNER flags</th>
+                        <th scope="col" class="num">Time</th>
+                        <th scope="col" class="num">Tokens in / out</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var r in rows)
+                    {
+                        <tr>
+                            <th scope="row">@r.Model</th>
+                            <td class="num">@Pct(r.Scores.Recall) <span class="muted">(@r.Scores.Caught of @r.Scores.Present)</span></td>
+                            <td class="num">@r.Scores.Missed</td>
+                            <td class="num">@r.Scores.OverRedactions</td>
+                            <td class="num">@Pct(r.Scores.Precision) <span class="muted">(@r.Scores.Matching of @r.Scores.Redactions)</span></td>
+                            <td class="num">@Pct(r.Scores.F1)</td>
+                            <td class="num">@r.Scores.MustKeepDamaged of @r.Scores.MustKeepTotal</td>
+                            <td class="num">@r.Scores.Redactions</td>
+                            <td class="num">@r.Scores.NotJudged</td>
+                            <td class="num">@(r.Scores.FlagsRaised is { } f ? $"{f} ({r.Scores.FlagsCorrect ?? 0} right)" : "–")</td>
+                            <td class="num">@Seconds(r.Scores.DetectSeconds)</td>
+                            <td class="num">@r.Run.PromptTokens.ToString("N0") / @r.Run.OutputTokens.ToString("N0")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="dialog-foot"><span class="muted">From @DatasetsText. A stored run is a read-only record.</span><span class="spacer"></span><button class="btn" @onclick="Close">Close</button></div>
+    </div>
+</div>
+
+@code {
+    /// <summary>The stored runs to compare (only those that recorded a score are drawn).</summary>
+    [Parameter, EditorRequired] public IReadOnlyList<ModelResult> Runs { get; set; } = [];
+
+    /// <summary>The document's name, for the heading.</summary>
+    [Parameter] public string Document { get; set; } = string.Empty;
+
+    /// <summary>Raised when the dialog is closed.</summary>
+    [Parameter] public EventCallback OnClose { get; set; }
+
+    /// <summary>One model's stored run with its score, in a fixed order (by name) so a model keeps the same colour in every chart.</summary>
+    sealed record Row(string Model, PreviousRunScores Scores, ModelResult Run);
+
+    /// <summary>One small chart: its title, how to read a model's value, how long its bar is and how to label it.</summary>
+    sealed record Measure(string Title, string Help, Func<Row, double> Value, Func<Row, IReadOnlyList<Row>, double> Share, Func<Row, string> Label, Func<Row, string> Detail, Func<IReadOnlyList<Row>, string> Axis);
+
+    /// <summary>One headline: the best model for a measure.</summary>
+    sealed record Highlight(string Label, string Winner, string Note);
+
+    List<Row> rows = [];
+    List<Highlight> highlights = [];
+
+    /// <summary>The six charts. Percentages share a 0 to 100% scale; counts and time are scaled to the longest bar in their own chart.</summary>
+    static readonly IReadOnlyList<Measure> Measures =
+    [
+        new("Recall", "Sensitive occurrences removed, of those on the key. Higher is better.", r => r.Scores.Recall ?? 0, (r, _) => r.Scores.Recall ?? 0, r => Pct(r.Scores.Recall), r => $"{r.Scores.Caught} of {r.Scores.Present} occurrences", _ => "0–100%"),
+        new("Precision", "Share of redactions that matched the key. Higher is better.", r => r.Scores.Precision ?? 0, (r, _) => r.Scores.Precision ?? 0, r => Pct(r.Scores.Precision), r => $"{r.Scores.Matching} of {r.Scores.Redactions} redactions", _ => "0–100%"),
+        new("F1", "Recall and precision combined. Higher is better.", r => r.Scores.F1 ?? 0, (r, _) => r.Scores.F1 ?? 0, r => Pct(r.Scores.F1), _ => string.Empty, _ => "0–100%"),
+        new("Missed", "Sensitive occurrences left in the text. Fewer is better.", r => r.Scores.Missed, (r, all) => Fraction(r.Scores.Missed, all.Max(x => x.Scores.Missed)), r => r.Scores.Missed.ToString(), _ => string.Empty, all => Axis(all.Max(x => x.Scores.Missed), "0–" + all.Max(x => x.Scores.Missed))),
+        new("Over-redactions", "Removed, but not sensitive per the key. Fewer is better.", r => r.Scores.OverRedactions, (r, all) => Fraction(r.Scores.OverRedactions, all.Max(x => x.Scores.OverRedactions)), r => r.Scores.OverRedactions.ToString(), _ => string.Empty, all => Axis(all.Max(x => x.Scores.OverRedactions), "0–" + all.Max(x => x.Scores.OverRedactions))),
+        new("Time", "Time to detect the sensitive items. Shorter is better.", r => r.Scores.DetectSeconds, (r, all) => Fraction(r.Scores.DetectSeconds, all.Max(x => x.Scores.DetectSeconds)), r => Seconds(r.Scores.DetectSeconds), r => $"{r.Run.PromptTokens:N0} in / {r.Run.OutputTokens:N0} out tokens", all => Axis(all.Max(x => x.Scores.DetectSeconds), "0–" + Seconds(all.Max(x => x.Scores.DetectSeconds)))),
+    ];
+
+    /// <summary>The datasets the runs came from, for the footer.</summary>
+    string DatasetsText => string.Join(", ", Runs.Where(r => r.PreviousRun is not null).Select(r => r.PreviousRun!.DatasetId).Distinct());
+
+    protected override void OnParametersSet()
+    {
+        rows = [.. Runs.Where(r => r.Scores is not null).OrderBy(r => r.Model, StringComparer.Ordinal).Select(r => new Row(r.Model, r.Scores!, r))];
+        highlights = rows.Count == 0 ? [] :
+        [
+            Best("Best overall", "F1", r => r.Scores.F1 ?? 0, higherIsBetter: true, r => Pct(r.Scores.F1)),
+            Best("Fewest missed", "missed", r => r.Scores.Missed, higherIsBetter: false, r => r.Scores.Missed.ToString()),
+            Best("Fewest over-redactions", "over-redacted", r => r.Scores.OverRedactions, higherIsBetter: false, r => r.Scores.OverRedactions.ToString()),
+            Best("Fastest", "to detect", r => r.Scores.DetectSeconds, higherIsBetter: false, r => Seconds(r.Scores.DetectSeconds)),
+        ];
+    }
+
+    /// <summary>The headline for one measure: the model with the best value, or a note that several tie.</summary>
+    Highlight Best(string label, string what, Func<Row, double> value, bool higherIsBetter, Func<Row, string> show)
+    {
+        var best = higherIsBetter ? rows.Max(value) : rows.Min(value);
+        var winners = rows.Where(r => Math.Abs(value(r) - best) < 1e-9).ToList();
+        var winner = winners.Count == rows.Count && rows.Count > 1 ? "All models tie" : winners.Count > 2 ? $"{winners.Count} models tie" : string.Join(" and ", winners.Select(w => w.Model));
+        return new Highlight(label, winner, $"{show(winners[0])} {what}");
+    }
+
+    /// <summary>The axis note for a chart scaled to its longest bar: the range, or "all zero" when every model scored nothing there (so no range is drawn).</summary>
+    static string Axis(double max, string range) => max <= 0 ? "all zero" : range;
+
+    /// <summary>The hover text for one bar: the model, the measure, its value and, where there is one, what it is made of.</summary>
+    static string Tip(Row row, Measure m) => $"{row.Model} · {m.Title}: {m.Label(row)}" + (m.Detail(row) is { Length: > 0 } detail ? $" ({detail})" : string.Empty);
+
+    /// <summary>A model's share of the longest bar (0 when there is nothing to show).</summary>
+    static double Fraction(double value, double max) => max <= 0 ? 0 : value / max;
+
+    /// <summary>A bar's width as CSS. A real value always shows at least a sliver so it is never mistaken for zero.</summary>
+    static string Width(double share) => (share <= 0 ? 0 : Math.Max(share, 0.015) * 100).ToString("0.##", System.Globalization.CultureInfo.InvariantCulture) + "%";
+
+    /// <summary>The colour of the n-th model: the palette's fixed order, never cycled. A ninth model, which the palette cannot tell apart, is drawn in neutral grey.</summary>
+    static string Series(int index) => index < 8 ? $"var(--series-{index + 1})" : "var(--text-muted)";
+
+    static string Pct(double? share) => share is { } s ? (s * 100).ToString("0.0", System.Globalization.CultureInfo.InvariantCulture) + "%" : "–";
+
+    static string Seconds(double seconds) => seconds.ToString("0.0", System.Globalization.CultureInfo.InvariantCulture) + " s";
+
+    Task Close() => OnClose.InvokeAsync();
+}
