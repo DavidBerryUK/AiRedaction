@@ -38,13 +38,29 @@ public class ExplorerStoredRunsTests : IAsyncLifetime
         Assert.Equal("m", run.Model);
         Assert.Equal("text/doc-a.txt|m|1", run.ResultId);
         Assert.Equal(1, run.Repeat);
-        Assert.Equal(1.5, run.DetectSeconds);
+        Assert.Equal(1.5, run.Scores.DetectSeconds);
         Assert.Equal(AiDocumentRedactor.Explorer.Dataset.DatasetWriter.HashText(stored.Text), stored.TextHash);
         var span = Assert.Single(run.Spans);
         Assert.Equal("PERSON", span.Type);
         Assert.Equal("Alice Smith", stored.Text.Substring(span.Start, span.Length));
         Assert.False(span.Flag);
         Assert.Equal(run.EditCount, run.Spans.Count(s => !s.Flag));
+    }
+
+    /// <summary>How the run scored against the answer key comes with it: "Alice Smith" appears twice and one was removed, High Street had to be kept and was.</summary>
+    [Fact]
+    public async Task Returns_how_the_run_scored_against_the_answer_key()
+    {
+        var scores = Assert.Single((await service.StoredRunsAsync("text/doc-a.txt"))!.Runs).Scores;
+
+        Assert.Equal(2, scores.Present);
+        Assert.Equal(1, scores.Caught);
+        Assert.Equal(1, scores.EntitiesPresent);
+        Assert.Equal(1, scores.Edits);
+        Assert.Equal(1, scores.TruePositives);
+        Assert.Equal(0, scores.OverRedactions);
+        Assert.Equal(1, scores.PreserveTotal);
+        Assert.Equal(0, scores.PreserveBroken);
     }
 
     /// <summary>A result that timed out is not a result a user can look at, so a document where the only model timed out has no stored runs.</summary>

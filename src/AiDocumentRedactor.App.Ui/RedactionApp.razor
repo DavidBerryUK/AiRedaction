@@ -240,6 +240,37 @@
                 This is the stored result of <strong>@shown.Model</strong> from the evaluation dataset <em>@from.DatasetId</em> (@PreviousRunDate(from)), not a run just made.
                 It is a read-only record: it cannot be edited or saved.
             </div>
+            @if (shown.Scores is { } sc)
+            {
+                @* How the stored run scored against this document's answer key, with the explorer's own terms (recall, precision, missed, over-redactions) *@
+                <div class="previous-card" role="group" aria-label="How this run scored">
+                    <div class="pc-head">How this run scored <span class="muted">against the answer key for this document</span></div>
+                    <div class="pc-grid">
+                        @Stat("Recall", Pct(sc.Recall), $"{sc.Caught} of {sc.Present} sensitive occurrences removed", sc.Missed == 0 ? "good" : "")
+                        @Stat("Missed", sc.Missed.ToString(), "sensitive occurrences left in the text", sc.Missed > 0 ? "bad" : "good")
+                        @Stat("Over-redactions", sc.OverRedactions.ToString(), "removed, but not sensitive per the key", sc.OverRedactions > 0 ? "warn" : "good")
+                        @Stat("Precision", Pct(sc.Precision), $"{sc.Matching} of {sc.Redactions} redactions matched the key")
+                        @Stat("F1", Pct(sc.F1), "recall and precision combined")
+                        @Stat("Items fully caught", $"{sc.ItemsFullyCaught} of {sc.ItemsPresent}", "distinct items on the key, every occurrence removed")
+                        @Stat("Right category", $"{sc.RightCategory} of {sc.Matching}", "matching redactions given the right category")
+                        @Stat("Must-keep damaged", $"{sc.MustKeepDamaged} of {sc.MustKeepTotal}", "text that had to survive but was removed", sc.MustKeepDamaged > 0 ? "bad" : "")
+                        @if (sc.NotJudged > 0)
+                        {
+                            @Stat("Not judged", sc.NotJudged.ToString(), "redactions the key cannot decide either way")
+                        }
+                        @if (sc.LostToExtraction > 0)
+                        {
+                            @Stat("Lost to extraction", sc.LostToExtraction.ToString(), "key items that never reached the text (for example an OCR misread)")
+                        }
+                        @if (sc.FlagsRaised is { } raised)
+                        {
+                            @Stat("GLiNER flags", $"{raised} ({sc.FlagsCorrect ?? 0} right)", "items only GLiNER found, left for review")
+                        }
+                        @Stat("Time", Seconds(sc.DetectSeconds), sc.SecondOpinionSeconds is { } g ? $"detecting, plus {Seconds(g)} for GLiNER" : "to detect the sensitive items")
+                        @Stat("Tokens", $"{shown.PromptTokens:N0} in / {shown.OutputTokens:N0} out", shown.Discarded > 0 ? $"{shown.Discarded} non-verbatim answers discarded" : "read and written by the model")
+                    </div>
+                </div>
+            }
         }
         @if (PagesMode && !Processing && S.ActiveResult is { } pr)
         {
@@ -550,6 +581,15 @@
 
     /// <summary>Model shown in the banner: the viewed result's model, else the picker's.</summary>
     ModelInfo? BannerModel => S.InfoFor(S.ActiveResult is { IsPreviousRun: false } live ? live.Model : S.SelectedModel);   // a stored run's model may not be installed
+
+    /// <summary>One figure on the score card: the value large, then its name and a plain-English note.</summary>
+    static RenderFragment Stat(string label, string value, string hint, string tone = "") => @<div class="stat @tone"><span class="stat-value">@value</span><span class="stat-label">@label</span><span class="stat-hint">@hint</span></div>;
+
+    /// <summary>A share as a percentage with one decimal, or a dash when it is not defined.</summary>
+    static string Pct(double? share) => share is { } s ? (s * 100).ToString("0.0", System.Globalization.CultureInfo.InvariantCulture) + "%" : "–";
+
+    /// <summary>A duration in seconds, to one decimal place.</summary>
+    static string Seconds(double seconds) => seconds.ToString("0.0", System.Globalization.CultureInfo.InvariantCulture) + " s";
 
     /// <summary>The date a stored run's dataset was made, for display.</summary>
     static string PreviousRunDate(PreviousRunInfo info) =>

@@ -20,6 +20,11 @@ public record ModelResult(Guid Id, string Model, ModelInfo? Info, RedactionResul
     {
         get; init;
     }
+    /// <summary>How a stored result scored against the document's answer key (null for a live result, which has no key to be scored against).</summary>
+    public PreviousRunScores? Scores
+    {
+        get; init;
+    }
     /// <summary>True for a stored result from an earlier run. These are read-only.</summary>
     public bool IsPreviousRun => PreviousRun is not null;
     /// <summary>True for the result a person builds by hand, with no model involved.</summary>

@@ -19,7 +19,10 @@ public sealed class StoredRunSource(ExplorerCatalog catalog) : IPreviousRunSourc
             TimeSpan.FromSeconds(p.Run.DetectSeconds),
             p.Run.PromptTokens,
             p.Run.OutputTokens,
-            p.Run.Discarded))];
+            p.Run.Discarded) { Scores = Scores(p.Run.Scores) })];
+
+    static PreviousRunScores Scores(StoredScores s) => new(s.Present, s.Caught, s.EntitiesPresent, s.EntitiesFullyCaught, s.LostToExtraction, s.Edits, s.TruePositives, s.TypeCorrect, s.Unjudged,
+        s.OverRedactions, s.PreserveTotal, s.PreserveBroken, s.FlagsRaised, s.FlagsCorrect, s.DetectSeconds, s.GlinerSeconds);
 
     /// <summary>Opens every final dataset in the background, so the first document a user picks does not wait for a dataset's database to be built. Any failure is ignored: the
     /// dataset is simply opened (or skipped) when a document needs it.</summary>

@@ -86,6 +86,35 @@ public class PreviousRunTests : IDisposable
         Assert.Equal(Info, built.PreviousRun);
     }
 
+    /// <summary>The score comes through with the rebuilt result, and the shares are worked out the way the explorer works them out: recall is caught over present, precision is the
+    /// matching redactions over all redactions, and missed is what was not caught.</summary>
+    [Fact]
+    public void The_score_comes_through_and_its_shares_are_worked_out()
+    {
+        var scores = new PreviousRunScores(Present: 10, Caught: 9, ItemsPresent: 4, ItemsFullyCaught: 3, LostToExtraction: 0, Redactions: 12, Matching: 9, RightCategory: 8, NotJudged: 1,
+            OverRedactions: 2, MustKeepTotal: 5, MustKeepDamaged: 1, FlagsRaised: null, FlagsCorrect: null, DetectSeconds: 4.5, SecondOpinionSeconds: null);
+
+        var built = PreviousRunBuilder.Build(Stored("phi4", Spans(("PERSON", "Sarah Jones"))) with { Scores = scores }, Text, Template)!;
+
+        Assert.Same(scores, built.Scores);
+        Assert.Equal(1, scores.Missed);
+        Assert.Equal(0.9, scores.Recall!.Value, 6);
+        Assert.Equal(0.75, scores.Precision!.Value, 6);
+        Assert.Equal(2 * 0.9 * 0.75 / (0.9 + 0.75), scores.F1!.Value, 6);
+    }
+
+    /// <summary>When there is nothing to divide by, the shares are not defined rather than zero or an error.</summary>
+    [Fact]
+    public void Shares_are_undefined_when_there_is_nothing_to_divide_by()
+    {
+        var empty = new PreviousRunScores(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, null, null, 0, null);
+
+        Assert.Null(empty.Recall);
+        Assert.Null(empty.Precision);
+        Assert.Null(empty.F1);
+        Assert.Equal(0, empty.Missed);
+    }
+
     /// <summary>A result made from a different text is refused, so nothing can be shown out of line.</summary>
     [Fact]
     public void A_text_that_does_not_match_is_refused()

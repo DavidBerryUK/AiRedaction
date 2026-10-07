@@ -20,7 +20,7 @@ public class PreviousRunFinderTests : IDisposable
     }
 
     static StoredRuns Stored(params string[] models) => new("doc.txt", "text", "hash",
-        [.. models.Select(m => new StoredRun("doc.txt|" + m + "|1", m, 1, 0, 0, 0, 0, 0, []))]);
+        [.. models.Select(m => new StoredRun("doc.txt|" + m + "|1", m, 1, 0, 0, 0, 0, new StoredScores(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, null, null, 0, null), []))]);
 
     static DatasetListing Listing(string id, string created) => new(id, "final", created);
 
