@@ -58,7 +58,12 @@ public partial class RedactionSession
     public IReadOnlyList<CategoryRow> Categories => PromptBuilder.DefaultDescriptions.Keys.Select(t =>
     {
         options.Entities.TryGetValue(t, out var e);
-        return new CategoryRow(t, e?.Enabled ?? true, options.ModeOf(t), e?.RedactPronouns ?? false, e?.Description ?? PromptBuilder.DefaultDescriptions[t]);
+        return new CategoryRow(t, e?.Enabled ?? true, options.ModeOf(t), e?.RedactPronouns ?? false, e?.Description ?? PromptBuilder.DefaultDescriptions[t])
+        {
+            Detection = CategoryDetection.For(t),
+            PromptLines = [PromptBuilder.CategoryLine(options, t), .. PromptBuilder.RulesFor(options, t)],
+            SecondOpinionLabels = options.Gliner.Labels.TryGetValue(t, out var labels) ? labels : [],
+        };
     }).ToList();
     /// <summary>True if the categories or the second-opinion settings differ from the config file.</summary>
     public bool CategoriesChanged => SecondOpinionChanged || CleanUpChanged || Categories.Any(c =>

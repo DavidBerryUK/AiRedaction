@@ -80,6 +80,7 @@ select, input[type=search] { font: inherit; padding: 6px 8px; border: 1px solid 
 .previous-notice { padding: 8px 12px; font-size: 13px; line-height: 1.4; background: var(--panel-2); border-bottom: 1px solid var(--border); border-left: 4px solid var(--brand-blue); color: var(--text); }
 /* Previous runs compared: the data-viz palette (validated light and dark, fixed order, never cycled) on its own surface so the checks hold. */
 .dialog.wide { width: min(1180px, 100%); overflow: auto; }
+.dialog.wide > * { flex-shrink: 0; }   /* the dialog scrolls as a whole; its parts keep their own height */
 .viz-root { --surface-1: #fcfcfb; --text-primary: #0b0b0b; --text-secondary: #52514e; --text-muted: #898781; --gridline: #e1e0d9; --baseline: #c3c2b7; --hairline: rgba(11,11,11,.10);
   --series-1: #2a78d6; --series-2: #eb6834; --series-3: #1baf7a; --series-4: #eda100; --series-5: #e87ba4; --series-6: #008300; --series-7: #4a3aa7; --series-8: #e34948;
   margin: 0 20px; padding: 14px 16px; background: var(--surface-1); color: var(--text-primary); border: 1px solid var(--hairline); border-radius: 10px; overflow-x: auto; color-scheme: light; }
@@ -221,6 +222,24 @@ table.models th:nth-child(1), table.models td:nth-child(1) { width: 110px; text-
 table.models th:nth-child(3) { width: 26%; } table.models th:nth-child(4) { width: 80px; } table.models th:nth-child(5) { width: 150px; }
 table.models tr.unavail td { color: var(--muted); }
 table.models input[type=checkbox] { width: 18px; height: 18px; accent-color: var(--brand-slate); }
+/* Categories table: one real table with fixed column widths, so every heading sits over its column. */
+.cats-scroll { margin: 0 20px; overflow: auto; max-height: 50vh; border-top: 1px solid var(--border); }
+table.cats { width: 100%; border-collapse: collapse; table-layout: fixed; }
+table.cats col.c-on { width: 64px; } table.cats col.c-cat { width: 150px; } table.cats col.c-how { width: 30%; } table.cats col.c-mode { width: 118px; }
+table.cats th { text-align: left; font-size: 11px; letter-spacing: .5px; text-transform: uppercase; color: var(--muted); padding: 6px 8px; border-bottom: 2px solid var(--border); position: sticky; top: 0; background: var(--panel); z-index: 1; }
+table.cats td { padding: 9px 8px; border-bottom: 1px solid var(--border); vertical-align: top; overflow-wrap: anywhere; }
+table.cats th.center, table.cats td.center { text-align: center; }
+table.cats tr.unavail td { color: var(--muted); }
+table.cats input[type=checkbox] { width: 18px; height: 18px; accent-color: var(--brand-slate); }
+table.cats .how .sub { margin-top: 4px; line-height: 1.35; }
+table.cats .so-off { opacity: .55; }
+.how-badge { font-weight: 600; font-size: 12px; }
+.how-badge.rule { background: color-mix(in srgb, var(--brand-blue) 45%, var(--panel)); border-color: var(--brand-blue); color: var(--text); }
+.how-badge.ai { background: var(--panel-2); }
+.prompt-text { margin-top: 6px; } .prompt-text summary, .full-prompt summary { cursor: pointer; font-size: 12px; font-weight: 600; color: var(--muted); }
+.prompt-text pre { margin: 4px 0 2px; padding: 6px 8px; white-space: pre-wrap; font-family: var(--mono); font-size: 12px; background: var(--panel-2); border: 1px solid var(--border); border-radius: 6px; color: var(--text); }
+.full-prompt { margin: 10px 20px 0; } .full-prompt h4 { margin: 8px 0 4px; font-size: 12px; }
+.full-prompt pre.prompt { max-height: 30vh; overflow: auto; margin: 0; padding: 8px 10px; white-space: pre-wrap; font-family: var(--mono); font-size: 12px; background: var(--panel-2); border: 1px solid var(--border); border-radius: 6px; }
 .sub { font-size: 12px; color: var(--muted); margin-top: 2px; } .sub code { font-family: var(--mono); background: var(--panel-2); padding: 1px 5px; border-radius: 4px; }
 .chip.st-ok { background: color-mix(in srgb, var(--brand-green) 55%, var(--panel)); color: var(--text); border-color: var(--brand-green); font-weight: 600; }
 .chip.st-bad { background: color-mix(in srgb, var(--bad) 14%, var(--panel)); color: var(--bad); border-color: var(--bad); font-weight: 600; }
