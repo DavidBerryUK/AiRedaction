@@ -36,6 +36,10 @@ When the user picks a document, look in the evaluation datasets for stored resul
 
 ## 4. Design
 
+### 4.0 Principle: the source document never changes
+
+Previous-run code only **reads**. It never writes to the input folder, never alters the loaded document (`OriginalText`, `OriginalDoc`, word boxes), and never puts dataset text into the Original panel. The dataset text is used for one thing only: the hash check that proves it matches the file on disk. If it does not match, the stored run is unavailable; we do not substitute the dataset's text for the file's. A test asserts the input file bytes and the session's loaded original are identical before and after loading and viewing a previous run.
+
 ### 4.1 Data access: a new query in Explorer
 
 Add to `ExplorerService` a method that returns, for one `doc_id`, the stored plain result of each model:
@@ -103,7 +107,7 @@ Each step leaves the app building and the tests passing.
 | 2 | `PreviousRunFinder`: latest per model across datasets | Two datasets with the same document and model: the newer wins; a model only in the older dataset is still returned; no datasets gives an empty list |
 | 3 | `PreviousRunBuilder` in `ViewModels` | **Rebuilt text and edits equal `Redactor.Apply` and a live `ModelResult` for the same spans** (reuse `FakeModel` from `SessionTests`); flagged spans stay in the text; hash mismatch refuses |
 | 4 | `ModelResult` marker, session dictionary, `PreviousRunsForSelected`, `ActiveResult`/`SelectResult` across both lists, `IPreviousRunSource` wiring in `SelectAsync` | A live re-run of the same model leaves the stored one in place; eviction never removes it; changing document discards a late lookup; no source means nothing changes |
-| 5 | Read-only gating | Each guarded action leaves state, review store and output folder unchanged for a previous run |
+| 5 | Read-only gating and source-unchanged guarantee | Each guarded action leaves state, review store and output folder unchanged for a previous run |
 | 6 | Adapter in `App.Web` and registration in `Program.cs` | Adapter returns runs for a path with `\` separators; honours `--datasets` |
 | 7 | Page view: let `RenderRedactedAsync`, `RenderStamp` and the render cache serve previous runs; keep the Pages/Text toggle | A previous-run result renders a PDF page to PNG with boxes over exactly the edited words; a mismatching document is refused; a live re-run does not reuse a stored render |
 | 8 | UI: button group, preview, notice, hidden tools, footer, Original message, text-only | Manual check in the browser (no component test setup exists); see section 6 |
