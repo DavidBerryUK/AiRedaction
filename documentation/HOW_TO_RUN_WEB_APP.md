@@ -69,6 +69,10 @@ Stop it with `Ctrl+C`.
 5. **PDFs and scans:** the **Pages** button shows the real pages with highlights; **Draw box** blacks out a signature or logo.
 6. **Save.** The first result is saved to the output folder automatically (`name-redacted.ext`). **Use as output** or **Save changes** writes a different or corrected result.
 
+### Previous runs
+
+When you pick a document that the evaluation has already run, a **Previous runs** group of buttons appears beside the result buttons in the Redacted panel, one for each model, with no model run needed. Click one to see that run: the Redacted panel says it is part of a previous run (which model, which dataset and its date), and the Edits list shows every edit it made. PDFs and scans can be shown as pages too. A previous run is a read-only record: it cannot be edited or saved, and it never changes the document. Where several datasets hold a result for the same model, the newest dataset is shown. Previous runs come from the final datasets in the `datasets` folder, so run `./tools/restore-datasets.sh` first (or use `--datasets <folder>`); with no datasets the buttons simply do not appear. The app builds each dataset's database in the background when it starts, so the first start after restoring can take a little while before the buttons appear.
+
 ### Buttons in the top bar
 
 - **🔍 Prompt:** shows exactly what is sent to the model and what came back.

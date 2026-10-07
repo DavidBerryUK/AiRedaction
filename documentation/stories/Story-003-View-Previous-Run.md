@@ -1,6 +1,6 @@
 # Story-003: View a previous run
 
-**Status:** Design agreed, ready to build (no code yet). Developed on branch `story-003-view-previous-run`.
+**Status:** Built on this branch; checked in the browser on a text document and a PDF (7 October 2026). Developed on branch `story-003-view-previous-run`.
 **Related:** [Story-001: Results Explorer](Story-001-Results-Explorer.md), [Story-002: Ultimate Evaluator](Story-002-Ultimate-Evaluator.md)
 
 ## Summary

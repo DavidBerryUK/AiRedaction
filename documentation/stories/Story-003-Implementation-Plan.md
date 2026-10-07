@@ -1,6 +1,6 @@
 # Story-003: Implementation plan
 
-**Status:** Plan for approval. No code written yet. Branch: `story-003-view-previous-run`.
+**Status:** Built on this branch (steps 1 to 10). Checked in the browser on a text document and a PDF. Branch: `story-003-view-previous-run`.
 **Story:** [Story-003: View a previous run](Story-003-View-Previous-Run.md) (the agreed design this plan builds)
 **Standards:** [CODING_STANDARDS.md](../../CODING_STANDARDS.md)
 
