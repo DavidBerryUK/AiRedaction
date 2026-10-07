@@ -34,7 +34,11 @@ The Redacted panel already has one **result button per model** (the tabs at the 
 5. Clicking it loads that run into the Redacted and Edits panels, with the previous-run notice below. The user can still run a model live, and its new button appears beside them.
 6. If a model has both a stored and a live result, both are shown and labelled, not merged.
 
-**Questions this raises** (see the table below): what to show when a dataset holds several results for one model (repeats, variants such as rules, GLiNER or "with GLiNER") and how to keep the row readable when there are many.
+**Several results for one model (decided): show the latest.** Where the datasets hold more than one result for the same document and model (repeats, or the same document in more than one dataset such as the 3 and 4 October runs), only the **most recent** is shown, one button per model. Recency is the run's date and time. Older results are not shown.
+
+**To confirm:** a dataset also holds variants per document (rules only, GLiNER alone, "with GLiNER" and its accepted-flags forms). The proposal is that a model's button shows its latest **plain** result (the model on its own, matching what the user gets when running a model live today), and that rules-only, GLiNER-only and combined variants are not shown in this story.
+
+**Still open:** how to keep the row readable when there are many buttons (see the table below).
 
 ## What the user sees
 
@@ -47,6 +51,7 @@ The Redacted panel already has one **result button per model** (the tabs at the 
 
 - [ ] The Redacted text is rebuilt from the dataset's document text and spans, and the document text is verified against its `text_hash` before display; a mismatch shows a message, not wrong highlights.
 - [ ] Picking a document with stored results shows one pre-populated result button per stored model, without running anything.
+- [ ] At most one stored button per model is shown, and it is the most recent result for that document and model.
 - [ ] Each such button has preview text (model, edit count, dataset and date, "previous run").
 - [ ] A document with no stored results looks and behaves exactly as today.
 - [ ] Clicking a pre-populated button loads that run into the Redacted and Edits panels.
@@ -63,9 +68,7 @@ The Redacted panel already has one **result button per model** (the tabs at the 
 
 | Question | Notes |
 |---|---|
-| Several stored results for one model | Repeats and variants (plain, with GLiNER, rules only, GLiNER alone) exist per document. Show one button per model with a choice of variant, or one per configuration? Which repeat? |
 | Many buttons | Five models can already make the row long. Proposal: group or scroll, and show the previous-run ones in their own labelled group. |
-| Which dataset wins | If two datasets (for example the 3 and 4 October runs) both hold a result for the same document and model, show both, newest first, or only the latest? |
 | Read-only or editable? | Proposal: read-only, with manual redaction and accept/reject disabled, so a past run is a faithful record. |
 | Does the Original panel need the source file? | If the original has moved or changed, the panel should say so rather than show misaligned highlights. |
 | Is saving or exporting from a previous run allowed? | Proposal: no, in this story. |
