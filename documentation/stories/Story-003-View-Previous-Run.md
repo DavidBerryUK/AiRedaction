@@ -62,7 +62,7 @@ The Redacted panel already has one **result button per model** (the tabs at the 
 - [ ] Edit highlighting in the Redacted and Original panels works as for a live run.
 - [ ] Manual redaction, accept/reject and save/export are disabled while a previous run is shown.
 - [ ] If the original file has moved or changed, the Original panel says so.
-- [ ] The source document content never changes: the original file is never written, and the Original panel always shows the document as loaded from disk, never text taken from a dataset.
+- [ ] The source documents in the `in/` folder never change (by this feature or otherwise), so every stored result recorded against them stays valid. The feature never writes to `in/`, and the Original panel always shows the document as loaded from disk, never text taken from a dataset.
 - [ ] Viewing a previous run never changes it, never re-runs a model, and never modifies or deletes the original documents or saved results.
 - [ ] If the saved run is missing or unreadable, the user sees a plain message and the live view is left unchanged.
 - [ ] Local-only: nothing is sent off the machine; the same access token protects the view.

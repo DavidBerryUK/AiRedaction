@@ -31,14 +31,14 @@ When the user picks a document, look in the evaluation datasets for stored resul
 6. **Live runs replace results by model name** and evict old ones. Stored results kept in the same list would be overwritten or evicted by a live run of the same model, which breaks "both shown, not merged".
 7. **Most review actions do not check `CanReview`** (reject, accept flag, restore, change category, undo, redo, remove area, save, "Redact anyway"). Read-only needs explicit gating.
 8. **The Razor components cannot be unit tested** (the test project has no bUnit and no UI reference). Logic must live in `ViewModels` or `Explorer`, with the `.razor` kept thin.
-9. **Nine files in `in/` read differently from the stored text** (six Word documents and three degraded scans). The hash check will correctly refuse these.
+9. **A known data fault.** `RESULTS_DATASET_FORMAT.md` (section 11) records nine files in `in/` (six Word documents and three degraded scans) that differ from the corpus copies the interim dataset was built from, and lists it as an open question (item 5). Whether the two final datasets are affected has not been checked. If they are, those nine documents get no previous-run buttons. Since `in/` is fixed, the right cure is to fix the data (or rebuild the dataset from `in/`), not to add workarounds in the app. **Step 1 of the build checks this first**, by comparing the text hashes in the final datasets with `in/`.
 10. **`RedactionSession.cs` is 1,078 lines and `RedactionApp.razor` is 688**, over the 400-line guideline. New session logic goes in a new partial class file.
 
 ## 4. Design
 
-### 4.0 Principle: the source document never changes
+### 4.0 Principle: the documents in `in/` never change
 
-Previous-run code only **reads**. It never writes to the input folder, never alters the loaded document (`OriginalText`, `OriginalDoc`, word boxes), and never puts dataset text into the Original panel. The dataset text is used for one thing only: the hash check that proves it matches the file on disk. If it does not match, the stored run is unavailable; we do not substitute the dataset's text for the file's. A test asserts the input file bytes and the session's loaded original are identical before and after loading and viewing a previous run.
+The documents in `in/` are fixed, so a result stored against one stays valid. Previous-run code only **reads**. It never writes to the input folder, never alters the loaded document (`OriginalText`, `OriginalDoc`, word boxes), and never puts dataset text into the Original panel. The dataset text is used for one thing only: the hash check that proves it matches the file on disk. Because `in/` is fixed, a mismatch is not expected in normal use. It means a data fault (a dataset built from a different copy, or a reader that now extracts differently), so the check stays as a safety net: the stored run is shown as unavailable with a plain reason, and we never substitute the dataset's text for the file's. A test asserts the input file bytes and the session's loaded original are identical before and after loading and viewing a previous run.
 
 ### 4.1 Data access: a new query in Explorer
 
@@ -103,7 +103,7 @@ Each step leaves the app building and the tests passing.
 
 | # | Step | Tests (xUnit, synthetic data) |
 |---|---|---|
-| 1 | `StoredRun` and the new `ExplorerService` query | Using `DatasetTests.MakeCorpus` and `InterimConverter`: returns the plain `ok` batch result per model with its spans; ignores variants, baselines, live rows, and non-`ok` rows |
+| 1 | Check every document in the two final datasets against `in/` (hash of extracted text) and report any that differ. Then `StoredRun` and the new `ExplorerService` query | Using `DatasetTests.MakeCorpus` and `InterimConverter`: returns the plain `ok` batch result per model with its spans; ignores variants, baselines, live rows, and non-`ok` rows |
 | 2 | `PreviousRunFinder`: latest per model across datasets | Two datasets with the same document and model: the newer wins; a model only in the older dataset is still returned; no datasets gives an empty list |
 | 3 | `PreviousRunBuilder` in `ViewModels` | **Rebuilt text and edits equal `Redactor.Apply` and a live `ModelResult` for the same spans** (reuse `FakeModel` from `SessionTests`); flagged spans stay in the text; hash mismatch refuses |
 | 4 | `ModelResult` marker, session dictionary, `PreviousRunsForSelected`, `ActiveResult`/`SelectResult` across both lists, `IPreviousRunSource` wiring in `SelectAsync` | A live re-run of the same model leaves the stored one in place; eviction never removes it; changing document discards a late lookup; no source means nothing changes |
@@ -146,7 +146,7 @@ Each step leaves the app building and the tests passing.
 1. **"Latest" is decided by dataset date**, since results have no timestamp of their own.
 2. **Live explorer results (`source = live`) are not shown** as previous runs. Only batch evaluation results are.
 3. **Page view is supported for PDFs and scans**, only when the stored text matches the loaded file.
-4. **A mismatched original disables the button** rather than showing misaligned highlights.
+4. **A text mismatch disables the button** with a reason, as a safety net, rather than showing misaligned highlights. `in/` is fixed, so this should not happen in normal use.
 5. **Stored runs do not vote** in confidence grading with live runs.
 6. **Warm the datasets in the background** at session start.
 
