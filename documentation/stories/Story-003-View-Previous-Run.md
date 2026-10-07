@@ -1,6 +1,6 @@
 # Story-003: View a previous run
 
-**Status:** Draft (design only, no code yet). Developed on branch `story-003-view-previous-run`.
+**Status:** Design agreed, ready to build (no code yet). Developed on branch `story-003-view-previous-run`.
 **Related:** [Story-001: Results Explorer](Story-001-Results-Explorer.md), [Story-002: Ultimate Evaluator](Story-002-Ultimate-Evaluator.md)
 
 ## Summary
@@ -36,9 +36,9 @@ The Redacted panel already has one **result button per model** (the tabs at the 
 
 **Several results for one model (decided): show the latest.** Where the datasets hold more than one result for the same document and model (repeats, or the same document in more than one dataset such as the 3 and 4 October runs), only the **most recent** is shown, one button per model. Recency is the run's date and time. Older results are not shown.
 
-**To confirm:** a dataset also holds variants per document (rules only, GLiNER alone, "with GLiNER" and its accepted-flags forms). The proposal is that a model's button shows its latest **plain** result (the model on its own, matching what the user gets when running a model live today), and that rules-only, GLiNER-only and combined variants are not shown in this story.
+**Decided:** a dataset also holds variants per document (rules only, GLiNER alone, "with GLiNER" and its accepted-flags forms). The proposal is that a model's button shows its latest **plain** result (the model on its own, matching what the user gets when running a model live today), and that rules-only, GLiNER-only and combined variants are not shown in this story.
 
-**Still open:** how to keep the row readable when there are many buttons (see the table below).
+
 
 ## What the user sees
 
@@ -60,18 +60,21 @@ The Redacted panel already has one **result button per model** (the tabs at the 
 - [ ] The notice is not shown for a live run, and disappears when the user starts a new run or returns to the live result.
 - [ ] Every edit from the previous run appears in the Edits panel, and the heading count equals the number listed.
 - [ ] Edit highlighting in the Redacted and Original panels works as for a live run.
+- [ ] Manual redaction, accept/reject and save/export are disabled while a previous run is shown.
+- [ ] If the original file has moved or changed, the Original panel says so.
 - [ ] Viewing a previous run never changes it, never re-runs a model, and never modifies or deletes the original documents or saved results.
 - [ ] If the saved run is missing or unreadable, the user sees a plain message and the live view is left unchanged.
 - [ ] Local-only: nothing is sent off the machine; the same access token protects the view.
 
-## Open questions (to agree before building)
+## Further decisions
 
-| Question | Notes |
+| Question | Decision |
 |---|---|
-| Many buttons | Five models can already make the row long. Proposal: group or scroll, and show the previous-run ones in their own labelled group. |
-| Read-only or editable? | Proposal: read-only, with manual redaction and accept/reject disabled, so a past run is a faithful record. |
-| Does the Original panel need the source file? | If the original has moved or changed, the panel should say so rather than show misaligned highlights. |
-| Is saving or exporting from a previous run allowed? | Proposal: no, in this story. |
+| Which variant per model | The latest **plain** result. Rules-only, GLiNER-only and combined variants are not shown |
+| Many buttons | The previous-run buttons sit in their own labelled group, scrolling if the row is too long |
+| Read-only or editable? | **Read-only.** Manual redaction and accept/reject are disabled, so a past run is a faithful record |
+| Original panel | If the source file has moved or changed, the panel says so rather than showing misaligned highlights |
+| Save or export | **Not allowed** from a previous run, in this story |
 
 ## Out of scope
 
@@ -83,4 +86,4 @@ The Redacted panel already has one **result button per model** (the tabs at the 
 ## Notes
 
 - Follows the standing constraints: synthetic documents only, local-only processing.
-- No code is written until the design and open questions above are agreed.
+- The design is agreed. Build on this branch.
