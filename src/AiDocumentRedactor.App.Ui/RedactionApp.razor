@@ -194,8 +194,30 @@
                 {
                     <button class="seg running" disabled>@S.RunningModel <span class="spin-dot" aria-hidden="true"></span></button>
                 }
+                @* Results stored by earlier evaluation runs: one button per model, read-only, in their own group so they are never mistaken for a run just made *@
+                @if (S.PreviousRunsForSelected.Count > 0 || S.PreviousRunsLoading || S.PreviousRunsRefused > 0)
+                {
+                    <span class="seg-group" role="group" aria-label="Previous runs">
+                        <span class="seg-group-label">Previous runs</span>
+                        @foreach (var r in S.PreviousRunsForSelected)
+                        {
+                            <button role="tab" class="seg previous @(r.Id == S.ActiveResultId ? "active" : "")" aria-selected="@(r.Id == S.ActiveResultId)" disabled="@Processing"
+                                    title="@PreviousRunTitle(r)" @onclick="() => S.SelectResult(r.Id)">
+                                @r.Model <span class="count">@r.EditCount</span> <span class="prev-tag">previous</span>
+                            </button>
+                        }
+                        @if (S.PreviousRunsLoading)
+                        {
+                            <span class="seg-note">Looking for previous runs…</span>
+                        }
+                        @if (S.PreviousRunsRefused > 0)
+                        {
+                            <span class="seg-note" title="The stored result was made from a different reading of this document, so showing it would mark the wrong words.">@S.PreviousRunsRefused stored @(S.PreviousRunsRefused == 1 ? "result is" : "results are") not shown: this document no longer reads as it did.</span>
+                        }
+                    </span>
+                }
             </div>
-            @if (!Processing && S.ActiveResult is { } ar)
+            @if (!Processing && S.ActiveResult is { IsPreviousRun: false } ar)
             {
                 <span class="review-tools">
                     <button class="btn small" disabled="@(!S.CanUndo)" title="Undo the last review change" @onclick="Undo">↶ Undo</button>
@@ -211,6 +233,14 @@
                 </span>
             }
         </div>
+        @if (!Processing && S.ActiveResult is { IsPreviousRun: true, PreviousRun: { } from } shown)
+        {
+            <div class="previous-notice" role="status">
+                <strong>Part of a previous run.</strong>
+                This is the stored result of <strong>@shown.Model</strong> from the evaluation dataset <em>@from.DatasetId</em> (@PreviousRunDate(from)), not a run just made.
+                It is a read-only record: it cannot be edited or saved.
+            </div>
+        }
         @if (PagesMode && !Processing && S.ActiveResult is { } pr)
         {
             @* The redacted PDF exactly as it will be saved: black boxes over redacted words, no text layer. Rendered in memory on request. *@
@@ -342,7 +372,7 @@
                 {
                     <span class="muted"> · @r.Discarded non-verbatim answers discarded</span>
                 }
-                · @(r.Id == S.OutputResultId ? "saved to output ✔" : "not the saved output")</span>
+                · @(r.IsPreviousRun ? "previous run (read-only)" : r.Id == S.OutputResultId ? "saved to output ✔" : "not the saved output")</span>
             <span class="muted"> · confidence: @ConfText</span>
             @if (S.SavedNote is not null)
             {
@@ -519,7 +549,17 @@
         : (S.PlannedModels.Count > 1 ? $"▶ Redact with {S.SelectedModel} + {S.PlannedModels.Count - 1} for confidence" : $"▶ Redact with {S.SelectedModel}");
 
     /// <summary>Model shown in the banner: the viewed result's model, else the picker's.</summary>
-    ModelInfo? BannerModel => S.InfoFor(S.ActiveResult?.Model ?? S.SelectedModel);
+    ModelInfo? BannerModel => S.InfoFor(S.ActiveResult is { IsPreviousRun: false } live ? live.Model : S.SelectedModel);   // a stored run's model may not be installed
+
+    /// <summary>The date a stored run's dataset was made, for display.</summary>
+    static string PreviousRunDate(PreviousRunInfo info) =>
+        DateTime.TryParse(info.DatasetCreatedAt, System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.AdjustToUniversal | System.Globalization.DateTimeStyles.AssumeUniversal, out var d)
+            ? d.ToString("d MMM yyyy HH:mm 'UTC'", System.Globalization.CultureInfo.InvariantCulture)
+            : info.DatasetCreatedAt;
+
+    /// <summary>The hover text for a stored run's button: what it is without opening it.</summary>
+    static string PreviousRunTitle(ModelResult r) =>
+        $"Previous run · {r.Model} · {r.EditCount} edits · dataset {r.PreviousRun?.DatasetId} ({PreviousRunDate(r.PreviousRun!)}) · {r.Elapsed.ToString(@"mm\:ss")} · {r.PromptTokens} in / {r.OutputTokens} out · read-only";
     /// <summary>Why Redact is unavailable right now (null when it can run). Shown next to the button so it is never a mystery.</summary>
     string? RunBlocked =>
         S.IsRunning ? "A run is in progress." :

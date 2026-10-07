@@ -95,6 +95,18 @@ public class PreviousRunTests : IDisposable
         Assert.Null(PreviousRunBuilder.Build(stored, Text, Template));
     }
 
+    /// <summary>A stored result made from a different reading of the document is left out and counted, so the page can say why it is missing.</summary>
+    [Fact]
+    public async Task A_stored_result_that_does_not_match_is_counted_not_shown()
+    {
+        var s = NewSession(new FakeSource(Stored("phi4", Spans(("PERSON", "Sarah Jones"))), Stored("gemma", Spans(("PERSON", "Sarah Jones")), hash: "not-this-text")));
+
+        await SelectAsync(s);
+
+        Assert.Equal(["phi4"], s.PreviousRunsForSelected.Select(r => r.Model));
+        Assert.Equal(1, s.PreviousRunsRefused);
+    }
+
     /// <summary>Flagged spans stay in the text and become Flagged edits, as in a live run.</summary>
     [Fact]
     public void Flagged_spans_stay_in_the_text()

@@ -69,6 +69,13 @@ select, input[type=search] { font: inherit; padding: 6px 8px; border: 1px solid 
 .seg { font: inherit; font-size: 12.5px; font-weight: 600; letter-spacing: 0; padding: 4px 10px; border: 1px solid var(--border); background: var(--panel-2); color: var(--text); border-radius: var(--radius); cursor: pointer; }
 .seg.active { background: var(--brand-yellow); color: var(--brand-slate); border-color: var(--brand-yellow); }
 .seg .count { opacity: .75; font-weight: 400; margin-left: 4px; } .seg .saved { margin-left: 4px; }
+/* Stored results from earlier evaluation runs: a labelled group of dashed buttons, so they are never mistaken for a run just made. */
+.seg-group { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 4px; margin-left: 8px; padding-left: 10px; border-left: 2px solid var(--border); }
+.seg-group-label { font-size: 11px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; color: var(--muted); }
+.seg.previous { border-style: dashed; }
+.seg.previous .prev-tag { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .4px; opacity: .7; margin-left: 4px; }
+.seg-note { font-size: 12px; font-weight: 400; letter-spacing: 0; color: var(--muted); }
+.previous-notice { padding: 8px 12px; font-size: 13px; line-height: 1.4; background: var(--panel-2); border-bottom: 1px solid var(--border); border-left: 4px solid var(--brand-blue); color: var(--text); }
 .seg.running { opacity: .8; } .spin { display: inline-block; animation: spin 1s linear infinite; } @keyframes spin { to { transform: rotate(360deg); } }
 
 .doc-scroll { overflow: auto; flex: 1; min-height: 0; padding: 14px 16px; }

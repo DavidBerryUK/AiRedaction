@@ -24,6 +24,12 @@ public partial class RedactionSession
         get; private set;
     } = Task.CompletedTask;
 
+    /// <summary>How many stored results for the selected document were left out because the document no longer reads the way it did when they were made. Normally 0: the documents
+    /// in the input folder do not change.</summary>
+    public int PreviousRunsRefused => Selected is { } s && previousRunsRefused.TryGetValue(s.FullPath, out var n) ? n : 0;
+
+    readonly Dictionary<string, int> previousRunsRefused = new();
+
     /// <summary>The stored results for the selected document, one per model, shown beside the live ones.</summary>
     public IReadOnlyList<ModelResult> PreviousRunsForSelected =>
         Selected is { } s && previousRuns.TryGetValue(s.FullPath, out var l) ? l : [];
@@ -49,15 +55,21 @@ public partial class RedactionSession
         try
         {
             var found = await PreviousRunSource!.FindAsync(item.RelativePath.Replace('\\', '/'), CancellationToken.None);
+            var refused = 0;
             foreach (var data in found)
             {
                 if (PreviousRunBuilder.Build(data, originalText, options.Redaction.PlaceholderTemplate) is { } result)
                 {
                     built.Add(result);
                 }
+                else
+                {
+                    refused++;
+                }
             }
 
             previousRuns[item.FullPath] = built;
+            previousRunsRefused[item.FullPath] = refused;
         }
         catch (Exception ex) when (ex is not OperationCanceledException)
         {
