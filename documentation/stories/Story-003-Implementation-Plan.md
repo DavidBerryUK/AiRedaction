@@ -84,7 +84,7 @@ Add `IsReadOnlyView => ActiveResult is { IsPreviousRun: true }` in the session a
 - **Edits panel.** Unchanged for the count and list. The per-edit action panel and "Redact anyway" are hidden because `CanReview` is false.
 - **Footer.** Uses the stored timings and tokens, and says "previous run" instead of "saved to output".
 - **Moved original.** When the hash does not match, the Original panel shows a short message that the file differs from the one the stored run used, so no previous-run highlights are shown.
-- **Pages (PDF and scans).** Previous runs are **text view only** in this story. While one is active, the Pages/Text toggle is hidden and the text view is used. Page rendering from a stored run is out of scope (it needs the redacted-page route to know about stored results, and the extracted text of PDFs is the most likely to differ).
+- **Pages (PDFs and scans).** Page view is supported for previous runs. The Pages/Text toggle stays available, and the redacted page images come from the stored run: the page route (`/results/{id}/page/{n}`) and `RenderRedactedAsync` look in the previous-run list as well as the live results, then draw black boxes from the rebuilt edits and the word boxes of the loaded document, as for a live run. This is safe because a previous-run button is only enabled when the stored text matches the loaded file (section 4.3), so the edit positions line up with the page words. `RenderStamp` and the render cache must cover previous runs too. Page view is **not** offered when the text does not match (the button is already disabled).
 - **Banner for model info.** The "model not installed" banner reads `Info` from the live model list. A previous run's model may not be installed, so the banner must not show for a previous run.
 
 ### 4.7 Latency and failure
@@ -105,9 +105,10 @@ Each step leaves the app building and the tests passing.
 | 4 | `ModelResult` marker, session dictionary, `PreviousRunsForSelected`, `ActiveResult`/`SelectResult` across both lists, `IPreviousRunSource` wiring in `SelectAsync` | A live re-run of the same model leaves the stored one in place; eviction never removes it; changing document discards a late lookup; no source means nothing changes |
 | 5 | Read-only gating | Each guarded action leaves state, review store and output folder unchanged for a previous run |
 | 6 | Adapter in `App.Web` and registration in `Program.cs` | Adapter returns runs for a path with `\` separators; honours `--datasets` |
-| 7 | UI: button group, preview, notice, hidden tools, footer, Original message, text-only | Manual check in the browser (no component test setup exists); see section 6 |
-| 8 | Background warm-up and the "looking" indicator | Warm-up failure is swallowed and logged |
-| 9 | Documentation: a short section in `HOW_TO_RUN_WEB_APP.md` (restore the datasets, the `--datasets` flag), a status update in the story | n/a |
+| 7 | Page view: let `RenderRedactedAsync`, `RenderStamp` and the render cache serve previous runs; keep the Pages/Text toggle | A previous-run result renders a PDF page to PNG with boxes over exactly the edited words; a mismatching document is refused; a live re-run does not reuse a stored render |
+| 8 | UI: button group, preview, notice, hidden tools, footer, Original message, text-only | Manual check in the browser (no component test setup exists); see section 6 |
+| 9 | Background warm-up and the "looking" indicator | Warm-up failure is swallowed and logged |
+| 10 | Documentation: a short section in `HOW_TO_RUN_WEB_APP.md` (restore the datasets, the `--datasets` flag), a status update in the story | n/a |
 
 ## 6. Verification
 
@@ -118,8 +119,9 @@ Each step leaves the app building and the tests passing.
   3. Try to edit, reject, save: nothing changes. Undo, Redo and Save are hidden.
   4. Run a model live: its own button appears beside the stored ones, and the stored one is unchanged.
   5. Pick a document with no stored results: identical to today.
-  6. Pick one of the nine documents that differ: the button is disabled with the reason, and the Original panel explains.
-  7. Run with no `datasets` folder: no buttons, no errors.
+  6. On a PDF and on a scan with stored results: switch to page view, and the redacted pages show black boxes over the same words listed in the Edits panel. Switch back to text view and the highlights agree.
+  7. Pick one of the nine documents that differ: the button is disabled with the reason, and the Original panel explains.
+  8. Run with no `datasets` folder: no buttons, no errors.
 - Compare one stored run on screen with the same document and model in the explorer page, to check the edit counts agree.
 
 ## 7. Risks
@@ -131,6 +133,7 @@ Each step leaves the app building and the tests passing.
 | First dataset open is slow | Background warm-up, and the lookup never blocks the page |
 | Stored runs leak into live behaviour (voting, saving, eviction) | Separate dictionary, read-only gating, tests for each |
 | `RedactionSession.cs` grows further | New partial class file for all previous-run logic |
+| Page images drawn from the wrong words if the text differs | Hash check gates the button; test that a mismatch is refused; manual check on a PDF and a scan |
 | No component tests for the Razor changes | Logic lives in `ViewModels` and `Explorer`, `.razor` kept thin, manual checklist in section 6 |
 | `ConfidenceGrader` surprises on a single stored result | Read the grader at step 4 and add a test before wiring the UI |
 
@@ -138,11 +141,11 @@ Each step leaves the app building and the tests passing.
 
 1. **"Latest" is decided by dataset date**, since results have no timestamp of their own.
 2. **Live explorer results (`source = live`) are not shown** as previous runs. Only batch evaluation results are.
-3. **Previous runs are text view only**, with no page rendering for PDFs and scans.
+3. **Page view is supported for PDFs and scans**, only when the stored text matches the loaded file.
 4. **A mismatched original disables the button** rather than showing misaligned highlights.
 5. **Stored runs do not vote** in confidence grading with live runs.
 6. **Warm the datasets in the background** at session start.
 
 ## 9. Out of scope (as in the story)
 
-Comparing runs, editing or re-scoring a stored run, exporting from one, variant results (rules, GLiNER, combined), showing answer-key scoring, and any change to how Eval writes datasets.
+Comparing runs, saving a redacted file from a stored run, editing or re-scoring a stored run, exporting from one, variant results (rules, GLiNER, combined), showing answer-key scoring, and any change to how Eval writes datasets.
