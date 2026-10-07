@@ -23,6 +23,19 @@ One previous run = one row of `results.csv` (a document, a detector configuratio
 
 **The redacted text is not stored.** It must be rebuilt by applying the spans to the document text, using the same replacement rules as a live run. Flagged spans stay in the text, as in a live run. A check that the rebuilt text matches a live run of the same spans belongs in the acceptance criteria.
 
+## How a previous run is picked (decided)
+
+The Redacted panel already has one **result button per model** (the tabs at the top of the panel). Each time the user runs a model on the selected document, a new button appears, showing the model name and its edit count. This story extends that, so no new picker is needed:
+
+1. When the user **picks a document**, the app checks which datasets hold results for it (matched on the document's path relative to the input folder, the dataset's `doc_id`).
+2. For every model with a stored result, the app **pre-populates a result button**, in the same row as the buttons for live runs, before the user runs anything.
+3. Each pre-populated button carries a **preview**: a short hover or inline text showing what the run is, without opening it. Proposed content: model, edit count, the dataset and run date, and that it is from a previous run. The existing buttons already show model, count and timing on hover; the previous-run preview follows the same pattern.
+4. A previous-run button is **visibly distinct** from a live one (for example a "previous run" marker or different style) so the two are never confused.
+5. Clicking it loads that run into the Redacted and Edits panels, with the previous-run notice below. The user can still run a model live, and its new button appears beside them.
+6. If a model has both a stored and a live result, both are shown and labelled, not merged.
+
+**Questions this raises** (see the table below): what to show when a dataset holds several results for one model (repeats, variants such as rules, GLiNER or "with GLiNER") and how to keep the row readable when there are many.
+
 ## What the user sees
 
 - The **Redacted** panel shows the redacted text from the previous run.
@@ -33,7 +46,11 @@ One previous run = one row of `results.csv` (a document, a detector configuratio
 ## Acceptance criteria
 
 - [ ] The Redacted text is rebuilt from the dataset's document text and spans, and the document text is verified against its `text_hash` before display; a mismatch shows a message, not wrong highlights.
-- [ ] A user can choose a previous run for a document and have it load into the Redacted and Edits panels.
+- [ ] Picking a document with stored results shows one pre-populated result button per stored model, without running anything.
+- [ ] Each such button has preview text (model, edit count, dataset and date, "previous run").
+- [ ] A document with no stored results looks and behaves exactly as today.
+- [ ] Clicking a pre-populated button loads that run into the Redacted and Edits panels.
+- [ ] Running a model live still adds its own button next to the previous-run ones.
 - [ ] The Redacted panel displays a clear "previous run" notice with the identity (date/time, model) of the run, for as long as that run is shown.
 - [ ] The notice is not shown for a live run, and disappears when the user starts a new run or returns to the live result.
 - [ ] Every edit from the previous run appears in the Edits panel, and the heading count equals the number listed.
@@ -46,7 +63,9 @@ One previous run = one row of `results.csv` (a document, a detector configuratio
 
 | Question | Notes |
 |---|---|
-| How is a run picked? | A per-document "previous runs" list or dropdown, or opened from the explorer results grid. |
+| Several stored results for one model | Repeats and variants (plain, with GLiNER, rules only, GLiNER alone) exist per document. Show one button per model with a choice of variant, or one per configuration? Which repeat? |
+| Many buttons | Five models can already make the row long. Proposal: group or scroll, and show the previous-run ones in their own labelled group. |
+| Which dataset wins | If two datasets (for example the 3 and 4 October runs) both hold a result for the same document and model, show both, newest first, or only the latest? |
 | Read-only or editable? | Proposal: read-only, with manual redaction and accept/reject disabled, so a past run is a faithful record. |
 | Does the Original panel need the source file? | If the original has moved or changed, the panel should say so rather than show misaligned highlights. |
 | Is saving or exporting from a previous run allowed? | Proposal: no, in this story. |
