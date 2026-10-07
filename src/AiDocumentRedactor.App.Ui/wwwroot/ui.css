@@ -35,6 +35,8 @@ html, body { margin: 0; height: 100%; background: var(--bg); color: var(--text);
 .chip.ok { color: var(--ok); border-color: var(--ok); } .chip.bad { color: #fff; background: var(--bad); border-color: var(--bad); }
 .warn { color: var(--warn); }
 .run-controls { display: flex; align-items: flex-start; gap: 10px; }
+.topnav { display: flex; align-items: center; gap: 8px; }
+.settings-group { display: inline-flex; gap: 6px; padding-right: 12px; margin-right: 2px; border-right: 1px solid rgba(255,255,255,.28); }
 .run-action { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
 .run-action .estimate, .run-action .blocked-hint { text-align: right; }
 .picker { display: flex; align-items: center; gap: 6px; color: var(--muted); font-size: 12px; }

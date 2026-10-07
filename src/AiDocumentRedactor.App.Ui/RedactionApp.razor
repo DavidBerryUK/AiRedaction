@@ -11,6 +11,11 @@
     <header class="topbar">
         <div class="brand"><svg viewBox="0 0 31 29" aria-hidden="true" focusable="false"><path clip-rule="evenodd" fill-rule="evenodd" d="m6.50179 12.808c-.343.812-6.114997 14.372-6.376997 14.961-.361.816.113 1.231.724 1.231h5.112997c.565 0 1.178-.297 1.422-.837.154-.34 2.016-4.704 2.016-4.704.341-.75.566-.969 1.96801-.969h4.57c.633 0 1.048-.346.742-1.064-.247-.583-3.435-8.09-3.706-8.725-.294-.61-.814-.814-1.357-.814h-3.73001c-.6 0-1.064.159-1.385.921zm13.01001-12.046c-.224-.462-.667-.762-1.154-.762h-5.555c-.68 0-1.031.393-1.405 1.247 0 0-2.09301 5.096-2.34001 5.631-.27.59-.022 1.088.77 1.112.034.006 4.41101 0 4.41101 0 .953.008 1.173.605 1.543 1.41l7.832 18.404c.338.758.86 1.196 1.675 1.196h4.891c.94 0 1.053-.721.724-1.48-.296-.685-11.119-26.144-11.392-26.759"/></svg><span>Redaction Demo</span></div>
 
+        @* Navigation to the other page, next to the app name *@
+        <nav class="topnav" aria-label="Pages">
+            <a class="btn icon models-btn" href="/explorer" title="Explore the evaluation results: models, documents and categories">📊 Results</a>
+        </nav>
+
         <div class="model-banner" aria-label="Models in use">
             @if (S.ModelsError is not null)
             {
@@ -34,13 +39,11 @@
         </div>
 
         <div class="run-controls">
-            @if (S.Options.Ui.PromptInspector)
-            {
-                <button class="btn icon models-btn" title="See the prompt sent to the model and what came back" @onclick='() => OpenPrompt("prompt", null)'>🔍 Prompt</button>
-            }
-            <a class="btn icon models-btn" href="/explorer" title="Explore the evaluation results: models, documents and categories">📊 Results</a>
-            <button class="btn icon models-btn" title="Choose what kinds of sensitive data are looked for, for this session" @onclick="() => showCategories = true">☰ Categories@(S.CategoriesChanged ? " ●" : "")</button>
-            <button class="btn icon models-btn" title="Choose which models run for confidence, and see which are downloaded" @onclick="() => showModels = true">⚙ Models</button>
+            @* Settings for the next run, kept together and apart from the picker and Redact button *@
+            <span class="settings-group" role="group" aria-label="Settings for the next run">
+                <button class="btn icon models-btn" title="Choose what kinds of sensitive data are looked for, for this session" @onclick="() => showCategories = true">☰ Categories@(S.CategoriesChanged ? " ●" : "")</button>
+                <button class="btn icon models-btn" title="Choose which models run for confidence, and see which are downloaded" @onclick="() => showModels = true">⚙ Models</button>
+            </span>
             <label class="picker">Next run
                 <select @onchange="OnModelChanged" value="@S.SelectedModel" aria-label="Model for the next run">
                     @foreach (var c in S.Choices)
@@ -220,6 +223,10 @@
             @if (!Processing && S.ActiveResult is { IsPreviousRun: false } ar)
             {
                 <span class="review-tools">
+                    @if (S.Options.Ui.PromptInspector)
+                    {
+                        <button class="btn small" title="See the prompt sent to the model for this result and what came back" @onclick='() => OpenPrompt("prompt", null)'>🔍 Prompt</button>
+                    }
                     <button class="btn small" disabled="@(!S.CanUndo)" title="Undo the last review change" @onclick="Undo">↶ Undo</button>
                     <button class="btn small" disabled="@(!S.CanRedo)" title="Redo" @onclick="Redo">↷ Redo</button>
                     @if (S.IsModified)
