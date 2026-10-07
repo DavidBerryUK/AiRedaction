@@ -11,15 +11,28 @@ As a person reviewing redaction work, I want to open the results of a run that h
 
 At present the Redacted and Edits panels only show a run made in the current session. A run that has already finished (a saved or earlier run) cannot be looked at again without repeating it, which takes time and may give different results. Reusing the existing panels keeps the review experience the same for live and past runs.
 
+## Where previous runs come from (decided)
+
+A previous run is a result recorded by the evaluation program `AiDocumentRedactor.Eval`, which has run hundreds of evaluations. They are held in the results dataset (see [RESULTS_DATASET_FORMAT.md](../RESULTS_DATASET_FORMAT.md)), archived in `datasets-archive/` and read into the explorer's SQLite store (Story-001).
+
+One previous run = one row of `results.csv` (a document, a detector configuration such as a model or rules or GLiNER, and a repeat). What the dataset holds for it:
+
+- The text the detectors saw: `document-text.jsonl`.
+- Every redaction or flag it produced: `spans.csv` (category, position, confidence, source, and whether it was redacted or only flagged). These become the Edits.
+- The judged outcomes (caught, missed, over-redacted): `outcomes.csv`.
+
+**The redacted text is not stored.** It must be rebuilt by applying the spans to the document text, using the same replacement rules as a live run. Flagged spans stay in the text, as in a live run. A check that the rebuilt text matches a live run of the same spans belongs in the acceptance criteria.
+
 ## What the user sees
 
 - The **Redacted** panel shows the redacted text from the previous run.
-- A clear, always-visible notice at the top of the Redacted panel says that this is **part of a previous run**, so it cannot be mistaken for the result of a run just made. It should say which run it is (date and time, and the model where known).
+- A clear, always-visible notice at the top of the Redacted panel says that this is **part of a previous run**, so it cannot be mistaken for the result of a run just made. It should say which run it is (date and time of the run, the model or detector configuration, and the dataset it came from).
 - The **Edits (n)** panel lists every edit from that run, with the same category, confidence grade and status shown for a live run. The count in the heading matches the number of edits listed.
 - The Original panel shows the source document alongside, as in a live run, where it is still available.
 
 ## Acceptance criteria
 
+- [ ] The Redacted text is rebuilt from the dataset's document text and spans, and the document text is verified against its `text_hash` before display; a mismatch shows a message, not wrong highlights.
 - [ ] A user can choose a previous run for a document and have it load into the Redacted and Edits panels.
 - [ ] The Redacted panel displays a clear "previous run" notice with the identity (date/time, model) of the run, for as long as that run is shown.
 - [ ] The notice is not shown for a live run, and disappears when the user starts a new run or returns to the live result.
@@ -33,7 +46,6 @@ At present the Redacted and Edits panels only show a run made in the current ses
 
 | Question | Notes |
 |---|---|
-| What counts as a "previous run"? | Candidates: results saved by the Web App to the `out` folder, live runs saved by the explorer (Story-001), or the evaluation dataset (Story-002). The story needs one source named. |
 | How is a run picked? | A per-document "previous runs" list or dropdown, or opened from the explorer results grid. |
 | Read-only or editable? | Proposal: read-only, with manual redaction and accept/reject disabled, so a past run is a faithful record. |
 | Does the Original panel need the source file? | If the original has moved or changed, the panel should say so rather than show misaligned highlights. |
@@ -43,7 +55,8 @@ At present the Redacted and Edits panels only show a run made in the current ses
 
 - Comparing two runs side by side.
 - Editing or re-scoring a previous run.
-- Changing how runs are produced or stored (unless the open question above shows saved runs lack the edit detail needed).
+- Changing how Eval produces or stores results. The dataset already holds the spans needed.
+- Showing the answer key or scoring in the panels (a possible later addition, since `outcomes.csv` has it).
 
 ## Notes
 
