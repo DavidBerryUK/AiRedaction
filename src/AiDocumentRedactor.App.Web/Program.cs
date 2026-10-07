@@ -1,6 +1,7 @@
 // Local web host for the Redaction Demo UI. Binds to 127.0.0.1 only and requires a per-launch token,
 // so documents are only reachable from this machine. The UI itself lives in AiDocumentRedactor.App.Ui.
 using AiDocumentRedactor.App.ViewModels;
+using AiDocumentRedactor.App.Web;
 using AiDocumentRedactor.App.Web.Components;
 using AiDocumentRedactor.Core;
 using AiDocumentRedactor.Detection;
@@ -55,6 +56,11 @@ builder.Services.AddRazorComponents().AddInteractiveServerComponents();
 // OCR engine for scanned PDFs and images (local, models load on first use). Null if switched off in the config.
 IOcrEngine? ocr = options.Ocr.Enabled ? new RapidOcrEngine() : null;
 
+// The results explorer reads datasets (CSV files made by the evaluation) from this folder, and shows the methodology document beside them.
+var explorerCatalog = new ExplorerCatalog(Path.GetFullPath(Arg("--datasets") ?? "datasets"), Path.GetFullPath(Path.Combine("documentation", "METHODOLOGY.md")));
+// A document's earlier evaluation results, offered as read-only buttons beside the live ones.
+var storedRuns = new StoredRunSource(explorerCatalog);
+
 // One session per browser (found by a cookie), so several browsers or people never share documents or results.
 // Create the one shared session that holds results and runs redactions (detectors are created per model on demand).
 builder.Services.AddSingleton(sp => new SessionRegistry(() =>
@@ -66,11 +72,10 @@ builder.Services.AddSingleton(sp => new SessionRegistry(() =>
         new ReviewStore(Path.GetFullPath(Path.Combine(".cache", "review"))))   // review changes are kept as offsets only
     {
         ConfigPath = Path.GetFullPath(configPath),
-        OcrEngineName = ocr?.Name
+        OcrEngineName = ocr?.Name,
+        PreviousRunSource = storedRuns
     };
 }));
-// The results explorer reads datasets (CSV files made by the evaluation) from this folder, and shows the methodology document beside them.
-var explorerCatalog = new ExplorerCatalog(Path.GetFullPath(Arg("--datasets") ?? "datasets"), Path.GetFullPath(Path.Combine("documentation", "METHODOLOGY.md")));
 builder.Services.AddSingleton(explorerCatalog);
 // "Try with another model" on the explorer's document page: runs the real pipeline with a local Ollama model and adds the scored result to the dataset's live results.
 builder.Services.AddSingleton<ILiveRunner>(new LiveRunner(options, inputRoot, Path.GetFullPath(Arg("--corpus-root") ?? "tests"), explorerCatalog, new SharedOcr(ocr)));
@@ -79,6 +84,7 @@ builder.Services.AddScoped<SessionHolder>();
 builder.Services.AddScoped(sp => sp.GetRequiredService<SessionHolder>().Current ?? throw new InvalidOperationException("No session for this browser."));
 
 var app = builder.Build();
+storedRuns.WarmUp();   // build the datasets' databases now, off the page, so the first document does not wait for them
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error", createScopeForErrors: true);

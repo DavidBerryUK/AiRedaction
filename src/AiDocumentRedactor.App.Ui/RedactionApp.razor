@@ -11,6 +11,11 @@
     <header class="topbar">
         <div class="brand"><svg viewBox="0 0 31 29" aria-hidden="true" focusable="false"><path clip-rule="evenodd" fill-rule="evenodd" d="m6.50179 12.808c-.343.812-6.114997 14.372-6.376997 14.961-.361.816.113 1.231.724 1.231h5.112997c.565 0 1.178-.297 1.422-.837.154-.34 2.016-4.704 2.016-4.704.341-.75.566-.969 1.96801-.969h4.57c.633 0 1.048-.346.742-1.064-.247-.583-3.435-8.09-3.706-8.725-.294-.61-.814-.814-1.357-.814h-3.73001c-.6 0-1.064.159-1.385.921zm13.01001-12.046c-.224-.462-.667-.762-1.154-.762h-5.555c-.68 0-1.031.393-1.405 1.247 0 0-2.09301 5.096-2.34001 5.631-.27.59-.022 1.088.77 1.112.034.006 4.41101 0 4.41101 0 .953.008 1.173.605 1.543 1.41l7.832 18.404c.338.758.86 1.196 1.675 1.196h4.891c.94 0 1.053-.721.724-1.48-.296-.685-11.119-26.144-11.392-26.759"/></svg><span>Redaction Demo</span></div>
 
+        @* Navigation to the other page, next to the app name *@
+        <nav class="topnav" aria-label="Pages">
+            <a class="btn icon models-btn" href="/explorer" title="Explore the evaluation results: models, documents and categories">📊 Results</a>
+        </nav>
+
         <div class="model-banner" aria-label="Models in use">
             @if (S.ModelsError is not null)
             {
@@ -34,13 +39,11 @@
         </div>
 
         <div class="run-controls">
-            @if (S.Options.Ui.PromptInspector)
-            {
-                <button class="btn icon models-btn" title="See the prompt sent to the model and what came back" @onclick='() => OpenPrompt("prompt", null)'>🔍 Prompt</button>
-            }
-            <a class="btn icon models-btn" href="/explorer" title="Explore the evaluation results: models, documents and categories">📊 Results</a>
-            <button class="btn icon models-btn" title="Choose what kinds of sensitive data are looked for, for this session" @onclick="() => showCategories = true">☰ Categories@(S.CategoriesChanged ? " ●" : "")</button>
-            <button class="btn icon models-btn" title="Choose which models run for confidence, and see which are downloaded" @onclick="() => showModels = true">⚙ Models</button>
+            @* Settings for the next run, kept together and apart from the picker and Redact button *@
+            <span class="settings-group" role="group" aria-label="Settings for the next run">
+                <button class="btn icon models-btn" title="Choose what kinds of sensitive data are looked for, for this session" @onclick="() => showCategories = true">☰ Categories@(S.CategoriesChanged ? " ●" : "")</button>
+                <button class="btn icon models-btn" title="Choose which models run for confidence, and see which are downloaded" @onclick="() => showModels = true">⚙ Models</button>
+            </span>
             <label class="picker">Next run
                 <select @onchange="OnModelChanged" value="@S.SelectedModel" aria-label="Model for the next run">
                     @foreach (var c in S.Choices)
@@ -194,8 +197,39 @@
                 {
                     <button class="seg running" disabled>@S.RunningModel <span class="spin-dot" aria-hidden="true"></span></button>
                 }
+                @* Results stored by earlier evaluation runs: one button per model, read-only, in their own group so they are never mistaken for a run just made *@
+                @if (S.PreviousRunsForSelected.Count > 0 || S.PreviousRunsLoading || S.PreviousRunsRefused > 0)
+                {
+                    <span class="seg-group" role="group" aria-label="Previous runs">
+                        <span class="seg-group-label">Previous runs</span>
+                        @if (S.PreviousRunsForSelected.Any(r => r.Scores is not null))
+                        {
+                            <button class="seg chart-btn" disabled="@Processing" title="Compare every previous run of this document in charts and numbers" @onclick="() => showChart = true">📊 Chart</button>
+                        }
+                        @foreach (var r in S.PreviousRunsForSelected)
+                        {
+                            <button role="tab" class="seg previous @(r.Id == S.ActiveResultId ? "active" : "")" aria-selected="@(r.Id == S.ActiveResultId)" disabled="@Processing"
+                                    title="@PreviousRunTitle(r)" @onclick="() => S.SelectResult(r.Id)">
+                                @r.Model <span class="count">@r.EditCount</span> <span class="prev-tag">previous</span>
+                            </button>
+                        }
+                        @if (S.PreviousRunsLoading)
+                        {
+                            <span class="seg-note">Looking for previous runs…</span>
+                        }
+                        @if (S.PreviousRunsRefused > 0)
+                        {
+                            <span class="seg-note" title="The stored result was made from a different reading of this document, so showing it would mark the wrong words.">@S.PreviousRunsRefused stored @(S.PreviousRunsRefused == 1 ? "result is" : "results are") not shown: this document no longer reads as it did.</span>
+                        }
+                    </span>
+                }
             </div>
-            @if (!Processing && S.ActiveResult is { } ar)
+            @* The prompt belongs to the run, so it sits with the results: it opens that run's calls when there is one, otherwise the prompt the model would be given *@
+            @if (S.Options.Ui.PromptInspector)
+            {
+                <button class="btn small" title="See the prompt sent to the model and what came back" @onclick='() => OpenPrompt(S.ActiveResult is { IsPreviousRun: false } ? "run" : "prompt", null)'>🔍 Prompt</button>
+            }
+            @if (!Processing && S.ActiveResult is { IsPreviousRun: false } ar)
             {
                 <span class="review-tools">
                     <button class="btn small" disabled="@(!S.CanUndo)" title="Undo the last review change" @onclick="Undo">↶ Undo</button>
@@ -211,6 +245,45 @@
                 </span>
             }
         </div>
+        @if (!Processing && S.ActiveResult is { IsPreviousRun: true, PreviousRun: { } from } shown)
+        {
+            <div class="previous-notice" role="status">
+                <strong>Part of a previous run.</strong>
+                This is the stored result of <strong>@shown.Model</strong> from the evaluation dataset <em>@from.DatasetId</em> (@PreviousRunDate(from)), not a run just made.
+                It is a read-only record: it cannot be edited or saved.
+            </div>
+            @if (shown.Scores is { } sc)
+            {
+                @* How the stored run scored against this document's answer key, with the explorer's own terms (recall, precision, missed, over-redactions) *@
+                <details class="previous-card" open>
+                    <summary class="pc-head">How this run scored <span class="muted">against the answer key for this document</span></summary>
+                    <div class="pc-grid">
+                        @Stat("Recall", Pct(sc.Recall), $"{sc.Caught} of {sc.Present} sensitive occurrences removed", sc.Missed == 0 ? "good" : "")
+                        @Stat("Missed", sc.Missed.ToString(), "sensitive occurrences left in the text", sc.Missed > 0 ? "bad" : "good")
+                        @Stat("Over-redactions", sc.OverRedactions.ToString(), "removed, but not sensitive per the key", sc.OverRedactions > 0 ? "warn" : "good")
+                        @Stat("Precision", Pct(sc.Precision), $"{sc.Matching} of {sc.Redactions} redactions matched the key")
+                        @Stat("F1", Pct(sc.F1), "recall and precision combined")
+                        @Stat("Items fully caught", $"{sc.ItemsFullyCaught} of {sc.ItemsPresent}", "distinct items on the key, every occurrence removed")
+                        @Stat("Right category", $"{sc.RightCategory} of {sc.Matching}", "matching redactions given the right category")
+                        @Stat("Must-keep damaged", $"{sc.MustKeepDamaged} of {sc.MustKeepTotal}", "text that had to survive but was removed", sc.MustKeepDamaged > 0 ? "bad" : "")
+                        @if (sc.NotJudged > 0)
+                        {
+                            @Stat("Not judged", sc.NotJudged.ToString(), "redactions the key cannot decide either way")
+                        }
+                        @if (sc.LostToExtraction > 0)
+                        {
+                            @Stat("Lost to extraction", sc.LostToExtraction.ToString(), "key items that never reached the text (for example an OCR misread)")
+                        }
+                        @if (sc.FlagsRaised is { } raised)
+                        {
+                            @Stat("GLiNER flags", $"{raised} ({sc.FlagsCorrect ?? 0} right)", "items only GLiNER found, left for review")
+                        }
+                        @Stat("Time", Seconds(sc.DetectSeconds), sc.SecondOpinionSeconds is { } g ? $"detecting, plus {Seconds(g)} for GLiNER" : "to detect the sensitive items")
+                        @Stat("Tokens", $"{shown.PromptTokens:N0} in / {shown.OutputTokens:N0} out", shown.Discarded > 0 ? $"{shown.Discarded} non-verbatim answers discarded" : "read and written by the model")
+                    </div>
+                </details>
+            }
+        }
         @if (PagesMode && !Processing && S.ActiveResult is { } pr)
         {
             @* The redacted PDF exactly as it will be saved: black boxes over redacted words, no text layer. Rendered in memory on request. *@
@@ -342,7 +415,7 @@
                 {
                     <span class="muted"> · @r.Discarded non-verbatim answers discarded</span>
                 }
-                · @(r.Id == S.OutputResultId ? "saved to output ✔" : "not the saved output")</span>
+                · @(r.IsPreviousRun ? "previous run (read-only)" : r.Id == S.OutputResultId ? "saved to output ✔" : "not the saved output")</span>
             <span class="muted"> · confidence: @ConfText</span>
             @if (S.SavedNote is not null)
             {
@@ -380,6 +453,10 @@
     @if (showModels)
     {
         <ModelsDialog OnClose="() => { showModels = false; }" />
+    }
+    @if (showChart)
+    {
+        <PreviousRunsChart Runs="S.PreviousRunsForSelected" Document="@(S.Selected?.RelativePath.Replace('\\', '/') ?? string.Empty)" OnClose="() => showChart = false" />
     }
 </div>
 
@@ -484,7 +561,7 @@
     int? selectedBookmark;
     /// <summary>Shows the "replace existing results?" confirmation instead of the Redact button.</summary>
     bool viewPages, drawMode;
-    bool confirmReplace, showCategories, showModels, sortByConfidence, showPrompt, showChunks;
+    bool confirmReplace, showCategories, showModels, sortByConfidence, showPrompt, showChunks, showChart;
     string promptTab = "prompt";
     int? selectedCall;
 
@@ -519,7 +596,26 @@
         : (S.PlannedModels.Count > 1 ? $"▶ Redact with {S.SelectedModel} + {S.PlannedModels.Count - 1} for confidence" : $"▶ Redact with {S.SelectedModel}");
 
     /// <summary>Model shown in the banner: the viewed result's model, else the picker's.</summary>
-    ModelInfo? BannerModel => S.InfoFor(S.ActiveResult?.Model ?? S.SelectedModel);
+    ModelInfo? BannerModel => S.InfoFor(S.ActiveResult is { IsPreviousRun: false } live ? live.Model : S.SelectedModel);   // a stored run's model may not be installed
+
+    /// <summary>One figure on the score card: the value large, then its name and a plain-English note.</summary>
+    static RenderFragment Stat(string label, string value, string hint, string tone = "") => @<div class="stat @tone"><span class="stat-value">@value</span><span class="stat-label">@label</span><span class="stat-hint">@hint</span></div>;
+
+    /// <summary>A share as a percentage with one decimal, or a dash when it is not defined.</summary>
+    static string Pct(double? share) => share is { } s ? (s * 100).ToString("0.0", System.Globalization.CultureInfo.InvariantCulture) + "%" : "–";
+
+    /// <summary>A duration in seconds, to one decimal place.</summary>
+    static string Seconds(double seconds) => seconds.ToString("0.0", System.Globalization.CultureInfo.InvariantCulture) + " s";
+
+    /// <summary>The date a stored run's dataset was made, for display.</summary>
+    static string PreviousRunDate(PreviousRunInfo info) =>
+        DateTime.TryParse(info.DatasetCreatedAt, System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.AdjustToUniversal | System.Globalization.DateTimeStyles.AssumeUniversal, out var d)
+            ? d.ToString("d MMM yyyy HH:mm 'UTC'", System.Globalization.CultureInfo.InvariantCulture)
+            : info.DatasetCreatedAt;
+
+    /// <summary>The hover text for a stored run's button: what it is without opening it.</summary>
+    static string PreviousRunTitle(ModelResult r) =>
+        $"Previous run · {r.Model} · {r.EditCount} edits · dataset {r.PreviousRun?.DatasetId} ({PreviousRunDate(r.PreviousRun!)}) · {r.Elapsed.ToString(@"mm\:ss")} · {r.PromptTokens} in / {r.OutputTokens} out · read-only";
     /// <summary>Why Redact is unavailable right now (null when it can run). Shown next to the button so it is never a mystery.</summary>
     string? RunBlocked =>
         S.IsRunning ? "A run is in progress." :

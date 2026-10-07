@@ -15,6 +15,18 @@ public record ModelResult(Guid Id, string Model, ModelInfo? Info, RedactionResul
     {
         get; init;
     }
+    /// <summary>Where this result came from if it is a stored result from an earlier evaluation run (null for a live result).</summary>
+    public PreviousRunInfo? PreviousRun
+    {
+        get; init;
+    }
+    /// <summary>How a stored result scored against the document's answer key (null for a live result, which has no key to be scored against).</summary>
+    public PreviousRunScores? Scores
+    {
+        get; init;
+    }
+    /// <summary>True for a stored result from an earlier run. These are read-only.</summary>
+    public bool IsPreviousRun => PreviousRun is not null;
     /// <summary>True for the result a person builds by hand, with no model involved.</summary>
     public bool IsManual => Model == ManualModelName;
     /// <summary>The name shown for the hand-made result.</summary>

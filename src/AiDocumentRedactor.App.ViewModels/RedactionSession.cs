@@ -5,7 +5,7 @@ namespace AiDocumentRedactor.App.ViewModels;
 
 /// <summary>Everything the UI shows and does: document list, selected document, per-model results,
 /// running a redaction with progress, switching results, choosing the saved output. No UI framework.</summary>
-public class RedactionSession
+public partial class RedactionSession
 {
     readonly RedactorOptions options;
     readonly string inputRoot;
@@ -58,7 +58,12 @@ public class RedactionSession
     public IReadOnlyList<CategoryRow> Categories => PromptBuilder.DefaultDescriptions.Keys.Select(t =>
     {
         options.Entities.TryGetValue(t, out var e);
-        return new CategoryRow(t, e?.Enabled ?? true, options.ModeOf(t), e?.RedactPronouns ?? false, e?.Description ?? PromptBuilder.DefaultDescriptions[t]);
+        return new CategoryRow(t, e?.Enabled ?? true, options.ModeOf(t), e?.RedactPronouns ?? false, e?.Description ?? PromptBuilder.DefaultDescriptions[t])
+        {
+            Detection = CategoryDetection.For(t),
+            PromptLines = [PromptBuilder.CategoryLine(options, t), .. PromptBuilder.RulesFor(options, t)],
+            SecondOpinionLabels = options.Gliner.Labels.TryGetValue(t, out var labels) ? labels : [],
+        };
     }).ToList();
     /// <summary>True if the categories or the second-opinion settings differ from the config file.</summary>
     public bool CategoriesChanged => SecondOpinionChanged || CleanUpChanged || Categories.Any(c =>
@@ -410,6 +415,7 @@ public class RedactionSession
                     OriginalText = doc.Text;
                     OriginalDoc = doc;
                     OcrConfidence = doc.OcrConfidence;
+                    BeginPreviousRunLookup(item, doc.Text);
                 }
                 catch (NoTextLayerException ex) { PreviewOnly = true; PreviewNote = ex.Message; }   // a scanned PDF: view it, but it needs OCR
                 catch (Exception ex)
@@ -456,7 +462,7 @@ public class RedactionSession
         get; private set;
     }
     /// <summary>The result currently shown.</summary>
-    public ModelResult? ActiveResult => ResultsForSelected.FirstOrDefault(r => r.Id == ActiveResultId);
+    public ModelResult? ActiveResult => ResultsForSelected.Concat(PreviousRunsForSelected).FirstOrDefault(r => r.Id == ActiveResultId);
     /// <summary>The result saved as the output file.</summary>
     public Guid? OutputResultId => Selected is { } s && outputResult.TryGetValue(s.FullPath, out var o) ? o : null;
     /// <summary>Explains why a run did not save an output file.</summary>
@@ -466,10 +472,22 @@ public class RedactionSession
     }
 
     /// <summary>Voters: results from the ticked confidence models, the models run together with the primary, and the active result.</summary>
-    public IReadOnlyList<ModelResult> Voters => ResultsForSelected.Where(r => r.Id == ActiveResultId || options.Confidence.Models.Contains(r.Model)
+    public IReadOnlyList<ModelResult> Voters => ActiveResult is { IsPreviousRun: true } stored ? [stored] : ResultsForSelected.Where(r => r.Id == ActiveResultId || options.Confidence.Models.Contains(r.Model)
         || (Selected is { } d && ranTogether.TryGetValue(d.FullPath, out var set) && set.Contains(r.Model))).ToList();
     /// <summary>Confidence of each edit of the active result.</summary>
-    public Dictionary<int, EditConfidence> Confidence() => ActiveResult is { } a ? ConfidenceGrader.Grade(a, Voters, new ConfidenceContext(OcrConfidenceOf, options.Ocr.MinConfidence, options.Confidence.CategoryCaps)) : new();
+    public Dictionary<int, EditConfidence> Confidence()
+    {
+        if (ActiveResult is not { } a)
+        {
+            return new();
+        }
+
+        var graded = ConfidenceGrader.Grade(a, Voters, new ConfidenceContext(OcrConfidenceOf, options.Ocr.MinConfidence, options.Confidence.CategoryCaps));
+        // A stored run is graded on its own, so the "run more models" advice would be wrong for it.
+        return a.IsPreviousRun
+            ? graded.ToDictionary(g => g.Key, g => g.Value.Total == 1 ? g.Value with { Reason = "From a stored run: agreement between models was not measured here." } : g.Value)
+            : graded;
+    }
 
     /// <summary>The lowest OCR confidence among the words an edit covers, or null if its text did not come from OCR.</summary>
     double? OcrConfidenceOf(RedactionEdit e) =>
@@ -715,7 +733,7 @@ public class RedactionSession
     /// Nothing is written to disk. Returns null if the result is unknown or its format cannot be rendered.</summary>
     public async Task<(byte[] Bytes, string ContentType)?> RenderRedactedAsync(Guid resultId)
     {
-        var entry = results.FirstOrDefault(kv => kv.Value.Any(r => r.Id == resultId));
+        var entry = results.Concat(previousRuns).FirstOrDefault(kv => kv.Value.Any(r => r.Id == resultId));
         if (entry.Value is null)
         {
             return null;
@@ -749,14 +767,14 @@ public class RedactionSession
     /// <summary>The last in-memory rendering of each result's redacted document, reused until the result changes (rendering a scan runs OCR, so it is slow).</summary>
     readonly Dictionary<Guid, (RedactionResult Result, byte[] Bytes, string ContentType)> renderCache = new();
     /// <summary>A number that changes whenever a result's redacted output changes, used to make the page images refresh.</summary>
-    public int RenderStamp(Guid resultId) => ResultsForSelected.FirstOrDefault(r => r.Id == resultId) is { } r ? System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(r.Result) : 0;
+    public int RenderStamp(Guid resultId) => ResultsForSelected.Concat(PreviousRunsForSelected).FirstOrDefault(r => r.Id == resultId) is { } r ? System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(r.Result) : 0;
 
     /// <summary>Writes the chosen result as the saved output (FR42).</summary>
     public async Task UseAsOutputAsync(Guid id)
     {
-        if (Selected is not { } doc || ResultsForSelected.FirstOrDefault(r => r.Id == id) is not { } mr)
+        if (Selected is not { } doc || ResultsForSelected.FirstOrDefault(r => r.Id == id) is not { IsPreviousRun: false } mr)
         {
-            return;
+            return;   // only a live result can be written; a stored one is never saved
         }
 
         var reader = readers.First(r => r.CanRead(doc.FullPath));
@@ -776,15 +794,15 @@ public class RedactionSession
     /// <summary>The selected document's review, or null if none is selected.</summary>
     DocReview? CurrentReview => Selected is { } s ? ReviewOf(s.FullPath) : null;
     /// <summary>True when a person can add, reject and restore edits (a document is loaded and readable).</summary>
-    public bool CanReview => OriginalText is not null && !PreviewOnly && !IsRunning;
+    public bool CanReview => OriginalText is not null && !PreviewOnly && !IsRunning && !IsPreviousRunActive;
     /// <summary>The categories a person can choose when redacting by hand (those switched on in the config).</summary>
     public IReadOnlyList<string> ManualTypes => PromptBuilder.EnabledTypes(options).ToList();
     /// <summary>True if there is a change to undo.</summary>
-    public bool CanUndo => CurrentReview?.Undo.Count > 0;
+    public bool CanUndo => !IsPreviousRunActive && CurrentReview?.Undo.Count > 0;
     /// <summary>True if there is an undone change to redo.</summary>
-    public bool CanRedo => CurrentReview?.Redo.Count > 0;
+    public bool CanRedo => !IsPreviousRunActive && CurrentReview?.Redo.Count > 0;
     /// <summary>True when the reviewer's changes are not yet written to the output file.</summary>
-    public bool IsModified => CurrentReview is { } r && !r.Current.SameAs(r.Saved);
+    public bool IsModified => !IsPreviousRunActive && CurrentReview is { } r && !r.Current.SameAs(r.Saved);
     /// <summary>How many reviewer changes the selected document has (added plus rejected).</summary>
     public int ReviewChangeCount => CurrentReview is { } r ? r.Current.Manual.Count + r.Current.Rejected.Count : 0;
 
@@ -923,7 +941,7 @@ public class RedactionSession
     /// <summary>Rejects an edit of the viewed result: an AI edit is left in the text (and can be restored), a manual one is removed.</summary>
     public void RejectEdit(int editId)
     {
-        if (CurrentReview is not { } rv || FindEdit(editId) is not { } e)
+        if (IsPreviousRunActive || CurrentReview is not { } rv || FindEdit(editId) is not { } e)
         {
             return;
         }
@@ -940,7 +958,7 @@ public class RedactionSession
     /// model's result for this document). Does nothing for an edit that is not flagged.</summary>
     public void AcceptFlag(int editId)
     {
-        if (CurrentReview is not { } rv || FindEdit(editId) is not { Status: EditStatus.Flagged } e)
+        if (IsPreviousRunActive || CurrentReview is not { } rv || FindEdit(editId) is not { Status: EditStatus.Flagged } e)
         {
             return;
         }
@@ -954,7 +972,7 @@ public class RedactionSession
     /// <summary>Puts a rejected AI edit back.</summary>
     public void RestoreEdit(int editId)
     {
-        if (CurrentReview is not { } rv || FindEdit(editId) is not { Status: EditStatus.Rejected } e)
+        if (IsPreviousRunActive || CurrentReview is not { } rv || FindEdit(editId) is not { Status: EditStatus.Rejected } e)
         {
             return;
         }
@@ -967,7 +985,7 @@ public class RedactionSession
     /// <summary>Changes an edit's category. A manual edit is updated; an AI edit is replaced by a manual one of the new category.</summary>
     public void ChangeType(int editId, string type)
     {
-        if (CurrentReview is not { } rv || FindEdit(editId) is not { } e || e.Type == type || e.Status == EditStatus.Rejected)
+        if (IsPreviousRunActive || CurrentReview is not { } rv || FindEdit(editId) is not { } e || e.Type == type || e.Status == EditStatus.Rejected)
         {
             return;
         }
@@ -993,7 +1011,7 @@ public class RedactionSession
     /// <summary>Undoes the last review change.</summary>
     public void Undo()
     {
-        if (Selected is not { } doc || CurrentReview is not { Undo.Count: > 0 } rv)
+        if (IsPreviousRunActive || Selected is not { } doc || CurrentReview is not { Undo.Count: > 0 } rv)
         {
             return;
         }
@@ -1005,7 +1023,7 @@ public class RedactionSession
     /// <summary>Redoes the last undone review change.</summary>
     public void Redo()
     {
-        if (Selected is not { } doc || CurrentReview is not { Redo.Count: > 0 } rv)
+        if (IsPreviousRunActive || Selected is not { } doc || CurrentReview is not { Redo.Count: > 0 } rv)
         {
             return;
         }
@@ -1017,7 +1035,7 @@ public class RedactionSession
     /// <summary>Writes the viewed result, with the reviewer's changes, as the saved output and clears the modified marker.</summary>
     public async Task SaveAsync()
     {
-        if (ActiveResult is { } a)
+        if (ActiveResult is { IsPreviousRun: false } a)
         {
             await UseAsOutputAsync(a.Id);
         }
@@ -1053,7 +1071,7 @@ public class RedactionSession
     /// <summary>Removes a hand-drawn rectangle (by its list number).</summary>
     public void RemoveArea(int bookmarkId)
     {
-        if (CurrentReview is not { } rv)
+        if (IsPreviousRunActive || CurrentReview is not { } rv)
         {
             return;
         }

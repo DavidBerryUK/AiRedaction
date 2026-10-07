@@ -4,7 +4,7 @@
 @inject RedactionSession S
 
 <div class="overlay" @onclick="Close">
-    <div class="dialog" role="dialog" aria-modal="true" aria-label="Categories" @onclick:stopPropagation>
+    <div class="dialog wide" role="dialog" aria-modal="true" aria-label="Categories" @onclick:stopPropagation>
         <div class="dialog-head">
             <h2>Categories</h2>
             <button class="btn icon" @onclick="Close" aria-label="Close">✕</button>
@@ -13,8 +13,11 @@
             Choose what the model looks for. <strong>Redact</strong> removes what is found; <strong>Flag</strong> lists it for review and leaves it in the text.
             Changes apply to the next <em>Redact</em> and last for this session only. They are not saved to <code>redactor.config.json</code>.
         </p>
-        <table class="models">
-            <thead><tr><th>On</th><th>Category</th><th>What it covers</th><th>When found</th></tr></thead>
+        @* One table, so the headings are always over their columns; the wrapper scrolls and the heading row stays in view *@
+        <div class="cats-scroll">
+        <table class="cats">
+            <colgroup><col class="c-on" /><col class="c-cat" /><col class="c-covers" /><col class="c-how" /><col class="c-mode" /></colgroup>
+            <thead><tr><th class="center">On</th><th>Category</th><th>What it covers, and the prompt text</th><th>How it's found</th><th>When found</th></tr></thead>
             <tbody>
             @foreach (var c in S.Categories)
             {
@@ -31,6 +34,21 @@
                         {
                             <div class="sub"><label><input type="checkbox" checked="@c.RedactPronouns" disabled="@(!c.Enabled)" @onchange="e => S.SetPronouns((bool)(e.Value ?? false))" /> Also redact pronouns (he, him, his, she, her, hers)</label></div>
                         }
+                        @* The exact lines of the system prompt that mention this category, so it is clear what the model is actually told *@
+                        <details class="prompt-text">
+                            <summary>Prompt text</summary>
+                            <pre>@string.Join("\n", c.PromptLines)</pre>
+                            <div class="sub">@(c.Enabled ? "Sent to the model with every chunk of a document." : "Not sent while this category is off.")</div>
+                        </details>
+                    </td>
+                    <td class="how">
+                        <span class="chip how-badge @(c.Detection.HasRule ? "rule" : "ai")" title="@HowTooltip(c)">@(c.Detection.HasRule ? "Fixed rule + AI" : "AI only")</span>
+                        @if (c.Detection.HasRule)
+                        {
+                            <div class="sub"><strong>Rule:</strong> @c.Detection.Rule</div>
+                        }
+                        <div class="sub"><strong>AI:</strong> @c.Detection.ModelAdds</div>
+                        <div class="sub @(S.SecondOpinionOn ? "" : "so-off")" title="@(S.SecondOpinionOn ? "GLiNER is on for the next Redact" : "GLiNER, the second opinion, is switched off")"><strong>GLiNER:</strong> @(c.SecondOpinionLabels.Count > 0 ? "looks for “" + string.Join("”, “", c.SecondOpinionLabels) + "”" : "not asked about this")</div>
                     </td>
                     <td>
                         <select aria-label="Mode for @c.Type" disabled="@(!c.Enabled)" @onchange='e => S.SetCategoryMode(c.Type, e.Value?.ToString() ?? "redact")'>
@@ -42,6 +60,16 @@
             }
             </tbody>
         </table>
+        </div>
+        @* The whole of what the model is told, as it stands with the switches above *@
+        <details class="full-prompt">
+            <summary>The full prompt sent to the model <span class="muted">(as it stands with the switches above)</span></summary>
+            @{ var prompt = S.Prompt(); }
+            <h4>System message <span class="muted">(same for every chunk)</span></h4>
+            <pre class="prompt">@prompt.SystemPrompt</pre>
+            <h4>User message <span class="muted">(one per chunk)</span></h4>
+            <pre class="prompt">@prompt.UserMessageTemplate</pre>
+        </details>
         <div class="second-opinion @(S.SecondOpinionAvailable ? "" : "unavail")">
             <label class="switch" title="@(S.SecondOpinionAvailable ? "Also ask a small second model, and compare" : "The GLiNER model files are not installed")">
                 <input type="checkbox" role="switch" aria-label="Second opinion (GLiNER)" checked="@S.SecondOpinionOn" disabled="@(!S.SecondOpinionAvailable)" @onchange="e => S.SetSecondOpinion((bool)(e.Value ?? false))" />
@@ -90,6 +118,11 @@
 @code {
     /// <summary>Called when the dialog should close.</summary>
     [Parameter] public EventCallback OnClose { get; set; }
+    /// <summary>The hover text for a category's "how it's found" badge: the rule (if any) and what the AI model adds.</summary>
+    static string HowTooltip(CategoryRow c) => c.Detection.HasRule
+        ? $"A fixed rule finds {c.Detection.Rule} It never forgets and is instant. The AI model, told by the prompt text, also looks: {c.Detection.ModelAdds}"
+        : $"No fixed rule. {c.Detection.ModelAdds} What it looks for is the prompt text shown under the description.";
+
     /// <summary>Closes the dialog.</summary>
     Task Close() => OnClose.InvokeAsync();
 }

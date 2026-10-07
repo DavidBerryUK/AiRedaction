@@ -1,3 +1,5 @@
+using AiDocumentRedactor.Core;
+
 namespace AiDocumentRedactor.App.ViewModels;
 
 /// <summary>A forecast shown before Redact is pressed: how big the document is and roughly how long the run will take.</summary>
@@ -10,7 +12,17 @@ public record RunEstimate(int Pages, int Chars, int Chunks, int Models, double S
 }
 
 /// <summary>One category in the Categories dialog: its switch, mode, whether pronouns are redacted (GENDER only) and its definition.</summary>
-public record CategoryRow(string Type, bool Enabled, string Mode, bool RedactPronouns, string Description);
+public record CategoryRow(string Type, bool Enabled, string Mode, bool RedactPronouns, string Description)
+{
+    /// <summary>How this category is found: by a fixed rule, by the AI model from the prompt, or both.</summary>
+    public CategoryDetectionInfo Detection { get; init; } = new(null, string.Empty);
+
+    /// <summary>The exact lines of the system prompt about this category: its definition, then any rule that mentions it. They are sent to the model only while the category is on.</summary>
+    public IReadOnlyList<string> PromptLines { get; init; } = [];
+
+    /// <summary>What the second-opinion model (GLiNER) is asked to look for for this category (empty if it is not asked about it).</summary>
+    public IReadOnlyList<string> SecondOpinionLabels { get; init; } = [];
+}
 
 /// <summary>A clean-up rule as the Categories dialog shows it: its key, a short name, what it does, and whether it is on.</summary>
 public record CleanUpRuleRow(string Key, string Name, string Description, bool On);
