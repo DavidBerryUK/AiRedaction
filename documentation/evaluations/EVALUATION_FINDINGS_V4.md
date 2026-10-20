@@ -1,12 +1,12 @@
 # Version 4 findings: agreement with GLiNER
 
 **Version:** 4 (follows [version 3](EVALUATION_FINDINGS_V3.md))
-**Report:** [v4-20261002-1804-gliner-agreement-2-models](evaluation-reports/v4-20261002-1804-gliner-agreement-2-models.md)
+**Report:** [v4-20261002-1804-gliner-agreement-2-models](../evaluation-reports/v4-20261002-1804-gliner-agreement-2-models.md)
 **Run:** phi4 and qwen3.6:27b, 38 documents, 358 occurrences, each scored alone, with GLiNER, and with GLiNER's flags accepted. Files were not written, so no output-safety check was run.
 
 ## What was built
 
-GLiNER (`gliner-pii-edge`, quantised, short everyday labels, threshold 0.3) now runs in-process as a second opinion next to the language model and the rules. Where both find something, the main span is marked agreed. Something **only GLiNER found is flagged for review and left in the text**, and a reviewer decides. Adding GLiNER cannot remove a redaction (see requirement FR73 and the [phase 2 plan](PHASE_2_PLAN.md)).
+GLiNER (`gliner-pii-edge`, quantised, short everyday labels, threshold 0.3) now runs in-process as a second opinion next to the language model and the rules. Where both find something, the main span is marked agreed. Something **only GLiNER found is flagged for review and left in the text**, and a reviewer decides. Adding GLiNER cannot remove a redaction (see requirement FR73 and the [phase 2 plan](../historical/PHASE_2_PLAN.md)).
 
 ## Results
 

@@ -169,7 +169,7 @@ It scores each model alone, their union, agreement (all agree, majority, or two-
 
 ## Making a dataset for the results explorer
 
-The results explorer reads a dataset: a folder of CSV files plus the document text (the format is in [RESULTS_DATASET_FORMAT.md](RESULTS_DATASET_FORMAT.md)). An interim dataset can be made from saved runs without running any model:
+The results explorer reads a dataset: a folder of CSV files plus the document text (the format is in [RESULTS_DATASET_FORMAT.md](../specifications/RESULTS_DATASET_FORMAT.md)). An interim dataset can be made from saved runs without running any model:
 
 ```bash
 dotnet run --project src/AiDocumentRedactor.Eval -c Release -- --export-dataset \

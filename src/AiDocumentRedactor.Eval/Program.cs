@@ -77,7 +77,7 @@ if (Arg("--build-database") is { } databaseDir)
 
 if (Arg("--validate-dataset") is { } datasetDir)
 {
-    // Check a dataset folder against the format (documentation/RESULTS_DATASET_FORMAT.md).
+    // Check a dataset folder against the format (documentation/specifications/RESULTS_DATASET_FORMAT.md).
     var problems = await DatasetValidator.ValidateAsync(Path.GetFullPath(datasetDir));
     problems.ForEach(p => Console.WriteLine($"invalid: {p}"));
     Console.WriteLine(problems.Count == 0 ? "The dataset passes the validator." : $"The dataset has {problems.Count} problem(s).");

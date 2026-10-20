@@ -7,7 +7,7 @@ The evaluation datasets that the results explorer shows, kept in git as compress
 | `final-20261004.tar.gz` | The second evaluation: 5 models over 750 documents (the first 338, plus 232 Nemotron and 180 Gretel), 17,250 results. **The one to show.** Includes `cleanup-effect.md` and `report.md`. |
 | `final-20261003.tar.gz` | The first evaluation: 5 models over 338 documents, 7,774 results. Kept for comparison. |
 
-Each archive holds the CSV files, `document-text.jsonl` and `run.json` of one dataset (format: [RESULTS_DATASET_FORMAT.md](../documentation/RESULTS_DATASET_FORMAT.md)). It does not hold the SQLite database the explorer reads from; that is built automatically the first time a dataset is opened.
+Each archive holds the CSV files, `document-text.jsonl` and `run.json` of one dataset (format: [RESULTS_DATASET_FORMAT.md](../documentation/specifications/RESULTS_DATASET_FORMAT.md)). It does not hold the SQLite database the explorer reads from; that is built automatically the first time a dataset is opened.
 
 To restore them, from the repository root:
 

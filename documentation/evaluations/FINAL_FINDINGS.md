@@ -6,7 +6,7 @@
 
 > **Update, 5 October 2026.** A second evaluation, `final-20261004`, ran the same five models over the same 338 documents again plus 412 new documents the system was never shaped around (a different generator, Nemotron-PII, and new Gretel documents). Sections 1 to 12 describe the first dataset and are unchanged, except for pointers. **Section 13 describes the second and, where the two differ, it is the later word.** The headline held.
 
-This replaces the earlier version-by-version findings as the account to quote. The earlier documents ([V1](EVALUATION_FINDINGS_V1.md) to [V5](EVALUATION_FINDINGS_V5.md)) record how the approach was developed. The reasoning behind each design choice is in [METHODOLOGY.md](METHODOLOGY.md).
+This replaces the earlier version-by-version findings as the account to quote. The earlier documents ([V1](EVALUATION_FINDINGS_V1.md) to [V5](EVALUATION_FINDINGS_V5.md)) record how the approach was developed. The reasoning behind each design choice is in [METHODOLOGY.md](../METHODOLOGY.md).
 
 ---
 
@@ -226,9 +226,9 @@ Some "over-redactions" are policy, not error: job titles, ages and public bodies
 ## 12. How to check or reproduce this
 
 - **Check:** start the web app (`./run-web.sh`), choose **📊 Results**, and use the final dataset (it is opened first). Every figure here comes from it, and every document can be opened.
-- **Restoring the datasets from git:** both datasets are kept as compressed archives in [`datasets-archive/`](../datasets-archive/README.md); `./tools/restore-datasets.sh` unpacks them into `datasets/`, and the explorer rebuilds its database on first use.
-- **Second dataset:** `datasets/final-20261004` (750 documents, 17,250 results, about 7 hours of run time, resumed twice) holds the same files. Its tables are saved in [evaluation-reports/final-20261004-summary.md](evaluation-reports/final-20261004-summary.md), and the clean-up simulation in [evaluation-reports/cleanup-effect-final-20261004.md](evaluation-reports/cleanup-effect-final-20261004.md). To rebuild the tables: `python3 tools/eval/summarise_run.py datasets/final-20261004 --compare datasets/final-20261003`.
-- **Data:** `datasets/final-20261003` holds `run.json` (code version, environment, settings, answer-key checksums, failures), the CSV files and the document text. The format is described in [RESULTS_DATASET_FORMAT.md](RESULTS_DATASET_FORMAT.md).
+- **Restoring the datasets from git:** both datasets are kept as compressed archives in [`datasets-archive/`](../../datasets-archive/README.md); `./tools/restore-datasets.sh` unpacks them into `datasets/`, and the explorer rebuilds its database on first use.
+- **Second dataset:** `datasets/final-20261004` (750 documents, 17,250 results, about 7 hours of run time, resumed twice) holds the same files. Its tables are saved in [evaluation-reports/final-20261004-summary.md](../evaluation-reports/final-20261004-summary.md), and the clean-up simulation in [evaluation-reports/cleanup-effect-final-20261004.md](../evaluation-reports/cleanup-effect-final-20261004.md). To rebuild the tables: `python3 tools/eval/summarise_run.py datasets/final-20261004 --compare datasets/final-20261003`.
+- **Data:** `datasets/final-20261003` holds `run.json` (code version, environment, settings, answer-key checksums, failures), the CSV files and the document text. The format is described in [RESULTS_DATASET_FORMAT.md](../specifications/RESULTS_DATASET_FORMAT.md).
 - **Reproduce:** [HOW_TO_RUN_EVALUATION.md](HOW_TO_RUN_EVALUATION.md) describes the final evaluator (about 4 hours 20 minutes, resumable) and the preflight check.
 
 ---

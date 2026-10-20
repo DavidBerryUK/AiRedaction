@@ -1,7 +1,7 @@
 # Story-001: Results Explorer
 
 **Status:** In progress (proof of concept). Built so far: the dataset format, the interim dataset and validator, the SQLite import, and the explorer page with leaderboard, results grid, documents and difficulty ratings, document view, categories, combinations, methodology, CSV export and help dialogs. The live "try with another model" run is also built. Still to do: the evaluator writing the final dataset (Story-002), and a review of the explorer with the final data.
-**Related:** [Story-002: Ultimate Evaluator](Story-002-Ultimate-Evaluator.md) (produces the data this story reads), [HOW_TO_RUN_EVALUATION.md](../HOW_TO_RUN_EVALUATION.md), [EVALUATION_FINDINGS_V5.md](../EVALUATION_FINDINGS_V5.md)
+**Related:** [Story-002: Ultimate Evaluator](Story-002-Ultimate-Evaluator.md) (produces the data this story reads), [HOW_TO_RUN_EVALUATION.md](../evaluations/HOW_TO_RUN_EVALUATION.md), [EVALUATION_FINDINGS_V5.md](../evaluations/EVALUATION_FINDINGS_V5.md)
 
 ## Summary
 
@@ -23,7 +23,7 @@ This is a proof-of-concept explorer for demonstrations and quality assurance. It
 
 ## Data model
 
-The dataset is a folder of CSV files, plus one JSON Lines file holding the extracted text of each document, so the coloured view needs neither the original file nor a repeat of the extraction. The exact files, columns and checks are in [RESULTS_DATASET_FORMAT.md](../RESULTS_DATASET_FORMAT.md). Documents are referenced by a path relative to the `in/` folder.
+The dataset is a folder of CSV files, plus one JSON Lines file holding the extracted text of each document, so the coloured view needs neither the original file nor a repeat of the extraction. The exact files, columns and checks are in [RESULTS_DATASET_FORMAT.md](../specifications/RESULTS_DATASET_FORMAT.md). Documents are referenced by a path relative to the `in/` folder.
 
 Planned order of work: (1) agree the format, (2) make an interim dataset from the existing runs with a converter, (3) build the explorer against it, (4) change the evaluator to write the final dataset in the same format, with a validator that checks both.
 

@@ -5,7 +5,7 @@ using System.Text.Json;
 
 namespace AiDocumentRedactor.Explorer.Dataset;
 
-/// <summary>Writes a dataset folder: run.json, the five CSV files and document-text.jsonl (see documentation/RESULTS_DATASET_FORMAT.md).</summary>
+/// <summary>Writes a dataset folder: run.json, the five CSV files and document-text.jsonl (see documentation/specifications/RESULTS_DATASET_FORMAT.md).</summary>
 public static class DatasetWriter
 {
     static readonly JsonSerializerOptions Pretty = new() { WriteIndented = true, PropertyNamingPolicy = JsonNamingPolicy.CamelCase, Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping };

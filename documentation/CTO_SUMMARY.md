@@ -35,4 +35,4 @@
 4. **Make client policy configurable** (term lists for codenames, job titles, public bodies) so judgement calls are the client's decisions, not model errors.
 5. Investigate a **calibrated validation step** that scores each candidate redaction, to cut over-redaction and rank what the reviewer sees (listed in `INVESTIGATIONS.md`).
 
-**Where to look.** Full account: `documentation/FINAL_FINDINGS.md` (section 13 is the latest run). Reasoning behind each design choice: `documentation/METHODOLOGY.md`. Data: `datasets-archive/` (restore with `./tools/restore-datasets.sh`), shown in the web app's **📊 Results** page.
+**Where to look.** Full account: `documentation/evaluations/FINAL_FINDINGS.md` (section 13 is the latest run). Reasoning behind each design choice: `documentation/METHODOLOGY.md`. Data: `datasets-archive/` (restore with `./tools/restore-datasets.sh`), shown in the web app's **📊 Results** page.

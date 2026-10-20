@@ -57,4 +57,4 @@ This is a stronger position than "100%": it says what is true, shows the evidenc
 ## 7. Related
 
 - [FINAL_FINDINGS.md](FINAL_FINDINGS.md): every figure above, and what can and cannot be claimed.
-- [METHODOLOGY.md](METHODOLOGY.md): how the process works and why each choice was made.
+- [METHODOLOGY.md](../METHODOLOGY.md): how the process works and why each choice was made.

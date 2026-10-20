@@ -17,18 +17,18 @@ It reads text files, Word documents, PDFs and scans (with local OCR), and writes
 ## Documentation
 
 - [How to run the Web App](documentation/HOW_TO_RUN_WEB_APP.md)
-- [How to run the Evaluation App](documentation/HOW_TO_RUN_EVALUATION.md)
-- [**Final findings: one evaluation, every model, every document**](documentation/FINAL_FINDINGS.md) (the account to quote; the version findings below record how the approach was developed)
-- [Can redaction be 100% accurate? (position paper)](documentation/ACCURACY_AND_PERFECTION.md)
-- [Version 1 findings: evaluation results and the road to production](documentation/EVALUATION_FINDINGS_V1.md)
-- [Version 2 findings: effect of the phase 1 accuracy changes](documentation/EVALUATION_FINDINGS_V2.md)
-- [Version 3 findings: five models after phase 1 and the organisation rule](documentation/EVALUATION_FINDINGS_V3.md)
+- [How to run the Evaluation App](documentation/evaluations/HOW_TO_RUN_EVALUATION.md)
+- [**Final findings: one evaluation, every model, every document**](documentation/evaluations/FINAL_FINDINGS.md) (the account to quote; the version findings below record how the approach was developed)
+- [Can redaction be 100% accurate? (position paper)](documentation/evaluations/ACCURACY_AND_PERFECTION.md)
+- [Version 1 findings: evaluation results and the road to production](documentation/evaluations/EVALUATION_FINDINGS_V1.md)
+- [Version 2 findings: effect of the phase 1 accuracy changes](documentation/evaluations/EVALUATION_FINDINGS_V2.md)
+- [Version 3 findings: five models after phase 1 and the organisation rule](documentation/evaluations/EVALUATION_FINDINGS_V3.md)
 - [Versioned evaluation reports (v1, v2, v3)](documentation/evaluation-reports/README.md)
 - [Held-out corpus: 300 synthetic finance documents with answer keys](tests/HeldOutCorpus/README.md)
-- [Version 5 findings: held-out test, corrected answer key, combinations](documentation/EVALUATION_FINDINGS_V5.md)
-- [Version 4 findings: agreement with GLiNER](documentation/EVALUATION_FINDINGS_V4.md)
-- [Phase 2 plan: layered detection with GLiNER, and benchmarking it](documentation/PHASE_2_PLAN.md)
-- [Specification](documentation/SPECIFICATION.md): requirements, approach, security, risks and the delivery plan
+- [Version 5 findings: held-out test, corrected answer key, combinations](documentation/evaluations/EVALUATION_FINDINGS_V5.md)
+- [Version 4 findings: agreement with GLiNER](documentation/evaluations/EVALUATION_FINDINGS_V4.md)
+- [Phase 2 plan: layered detection with GLiNER, and benchmarking it](documentation/historical/PHASE_2_PLAN.md)
+- [Specification](documentation/specifications/SPECIFICATION.md): requirements, approach, security, risks and the delivery plan
 - [Coding standards](CODING_STANDARDS.md)
 
 ## Quick evaluation commands

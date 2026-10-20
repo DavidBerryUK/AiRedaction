@@ -13,7 +13,7 @@ At present the Redacted and Edits panels only show a run made in the current ses
 
 ## Where previous runs come from (decided)
 
-A previous run is a result recorded by the evaluation program `AiDocumentRedactor.Eval`, which has run hundreds of evaluations. They are held in the results dataset (see [RESULTS_DATASET_FORMAT.md](../RESULTS_DATASET_FORMAT.md)), archived in `datasets-archive/` and read into the explorer's SQLite store (Story-001).
+A previous run is a result recorded by the evaluation program `AiDocumentRedactor.Eval`, which has run hundreds of evaluations. They are held in the results dataset (see [RESULTS_DATASET_FORMAT.md](../specifications/RESULTS_DATASET_FORMAT.md)), archived in `datasets-archive/` and read into the explorer's SQLite store (Story-001).
 
 One previous run = one row of `results.csv` (a document, a detector configuration such as a model or rules or GLiNER, and a repeat). What the dataset holds for it:
 

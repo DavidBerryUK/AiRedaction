@@ -1,8 +1,8 @@
 # Phase 2 plan: layered detection with GLiNER, and benchmarking it
 
-**Status:** in progress. GLiNER spike done and agreement scoring built and measured ([version 4 findings](EVALUATION_FINDINGS_V4.md)); the review-screen reasons, held-out set, per-category thresholds and second-pass check remain
+**Status:** historical. Largely complete; the results are in [FINAL_FINDINGS](../evaluations/FINAL_FINDINGS.md). Still open: the second-pass check (4.6), per-category thresholds, and the large-model port question.
 **Owner:** David Berry
-**Follows:** [Version 1 findings](EVALUATION_FINDINGS_V1.md) and [Version 2 findings](EVALUATION_FINDINGS_V2.md)
+**Follows:** [Version 1 findings](../evaluations/EVALUATION_FINDINGS_V1.md) and [Version 2 findings](../evaluations/EVALUATION_FINDINGS_V2.md)
 
 *Terminology:* "phase 2" here is the second step of the **accuracy roadmap** in the version 1 findings (section 8). It is not the same as the document-format phases 2, 2b and 2c in the specification's delivery plan (section 11), which are already built.
 

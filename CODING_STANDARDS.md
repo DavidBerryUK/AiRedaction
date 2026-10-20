@@ -41,7 +41,7 @@ src/
 └── AiDocumentRedactor.Detection/    # LlmDetector (Ollama), prompt builder, span locator/merger
 
 tests/        - Test projects
-documentation/ - Project documentation (SPECIFICATION.md); CODING_STANDARDS.md is in the repository root
+documentation/ - Project documentation (specifications/SPECIFICATION.md); CODING_STANDARDS.md is in the repository root
 tools/        - Helper tools
 in/           - Input documents (for testing)
 out/          - Output documents and run reports

@@ -9,7 +9,7 @@ public enum ColumnKind
 /// <summary>One column of a dataset file. A required column must be present and never empty.</summary>
 public record Column(string Name, bool Required = false, ColumnKind Kind = ColumnKind.Text);
 
-/// <summary>The files of a dataset and their columns, as written in documentation/RESULTS_DATASET_FORMAT.md. The writer and the validator both use this.</summary>
+/// <summary>The files of a dataset and their columns, as written in documentation/specifications/RESULTS_DATASET_FORMAT.md. The writer and the validator both use this.</summary>
 public static class Schema
 {
     public const string FormatVersion = "0.1";

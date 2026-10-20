@@ -17,7 +17,7 @@ public record FinalOptions(RedactorOptions Options, string InputRoot, string Cor
     bool AllowDirty, bool WriteOutputs, int TimeoutSeconds, bool AcceptFailures = false, bool KeepTimeouts = false);
 
 /// <summary>The final evaluation: every chosen model over every document of every corpus, with the rules and GLiNER, written straight into a dataset (the format in
-/// documentation/RESULTS_DATASET_FORMAT.md). Each document's rows are saved as soon as they are scored, so a run that stops can be started again and carries on where it
+/// documentation/specifications/RESULTS_DATASET_FORMAT.md). Each document's rows are saved as soon as they are scored, so a run that stops can be started again and carries on where it
 /// left off. It records the code version and refuses to run on uncommitted code, and it checks the finished dataset for anything missing.</summary>
 public static class FinalEvaluator
 {

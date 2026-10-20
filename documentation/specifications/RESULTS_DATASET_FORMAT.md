@@ -1,7 +1,7 @@
 # Results dataset format
 
 **Status:** v0.1. Implemented by the interim converter (`--export-dataset`) and the validator (`--validate-dataset`) in the evaluation project; the final evaluator (Story-002) will write the same files.
-**Used by:** [Story-001 Results Explorer](stories/Story-001-Results-Explorer.md) (reads it), [Story-002 Ultimate Evaluator](stories/Story-002-Ultimate-Evaluator.md) (writes it), and a converter that makes an interim dataset from the existing saved runs.
+**Used by:** [Story-001 Results Explorer](../stories/Story-001-Results-Explorer.md) (reads it), [Story-002 Ultimate Evaluator](../stories/Story-002-Ultimate-Evaluator.md) (writes it), and a converter that makes an interim dataset from the existing saved runs.
 
 The dataset is a **folder of plain files**. It is the durable record of an evaluation. The explorer's SQLite database is built from it and can be deleted and rebuilt at any time.
 

@@ -1,7 +1,7 @@
 # Version 5 findings: the held-out test, a corrected answer key, real combinations
 
 **Version:** 5 (follows [version 4](EVALUATION_FINDINGS_V4.md))
-**Reports:** [v5 as first scored](evaluation-reports/v5-20261002-heldout-300docs-generator-key.md) · [v5b with the audited key](evaluation-reports/v5b-20261003-heldout-300docs-audited-key.md) · [key audit](evaluation-reports/v5b-key-audit.md) · combinations ([gemma4:31b + gpt-oss](evaluation-reports/v5b-combos-gemma4-31b-gpt-oss.md), [three models](evaluation-reports/v5b-combos-gemma4-31b-qwen3.6-27b-gpt-oss.md), [phi4 + qwen3.6:27b](evaluation-reports/v5b-combos-phi4-qwen3.6-27b.md)) · [formats re-run (v6)](evaluation-reports/v6-20261003-formats-38docs-5models-gliner.md)
+**Reports:** [v5 as first scored](../evaluation-reports/v5-20261002-heldout-300docs-generator-key.md) · [v5b with the audited key](../evaluation-reports/v5b-20261003-heldout-300docs-audited-key.md) · [key audit](../evaluation-reports/v5b-key-audit.md) · combinations ([gemma4:31b + gpt-oss](../evaluation-reports/v5b-combos-gemma4-31b-gpt-oss.md), [three models](../evaluation-reports/v5b-combos-gemma4-31b-qwen3.6-27b-gpt-oss.md), [phi4 + qwen3.6:27b](../evaluation-reports/v5b-combos-phi4-qwen3.6-27b.md)) · [formats re-run (v6)](../evaluation-reports/v6-20261003-formats-38docs-5models-gliner.md)
 **Runs:** 300 documents the system had never been shaped around (3 h 48 min, five models, with and without GLiNER, plus no-model baselines), and the 38-document format corpus again (1 h 47 min).
 
 ---
@@ -27,7 +27,7 @@ I took every item that at least 3 of the 5 models redacted and the key did not l
 
 ## 3. The audit, and how far to trust it
 
-Written rules (listed in the [audit log](evaluation-reports/v5b-key-audit.md)) decided each disagreement where at least 3 of 5 models agreed: **242 sensitive items added to the key, 34 non-sensitive items removed, 58 real over-redactions left standing, and 167 texts a rule could not decide left out of scoring**. The key now also says which categories it judges: a redaction of gender, age, job title, domain or company number is no longer counted as wrong, because the generator never labelled them. The generator's original key is kept alongside.
+Written rules (listed in the [audit log](../evaluation-reports/v5b-key-audit.md)) decided each disagreement where at least 3 of 5 models agreed: **242 sensitive items added to the key, 34 non-sensitive items removed, 58 real over-redactions left standing, and 167 texts a rule could not decide left out of scoring**. The key now also says which categories it judges: a redaction of gender, age, job title, domain or company number is no longer counted as wrong, because the generator never labelled them. The generator's original key is kept alongside.
 
 The rules agreed with my hand reading of 108 disagreements **91% of the time**, and nearly all of the differences were cases the rules left undecided, not wrong calls. Two things limit the audit:
 

@@ -1,6 +1,6 @@
 # How we got here: methodology and design decisions
 
-**Status:** Draft for review. Figures are deliberately left out of this document. They are in [FINAL_FINDINGS.md](FINAL_FINDINGS.md), from the single final evaluation dataset, and shown in the Results Explorer. This document explains **what the tool does, why each choice was made, and how the results are measured**.
+**Status:** Draft for review. Figures are deliberately left out of this document. They are in [FINAL_FINDINGS.md](evaluations/FINAL_FINDINGS.md), from the single final evaluation dataset, and shown in the Results Explorer. This document explains **what the tool does, why each choice was made, and how the results are measured**.
 
 Each decision has the same four parts: **what we do**, **why**, **the evidence**, and **the limit** (what the decision does not give you).
 
@@ -39,7 +39,7 @@ For each document, in order:
 - **What we do:** fixed rules, a language model, and optionally a second detector, combined and then reviewed.
 - **Why:** each kind of detector is good at something different. Rules are exact and repeatable for structured items. Language models handle names and context. No single model found everything.
 - **Evidence:** across all the models tested, a small set of items was missed by every one, and no single model was both the most thorough and the most precise. Combining detectors raised recall and, when they had to agree, precision too. See the findings reports for the measurements.
-- **Limit:** layering does not give a perfect score. Policy-dependent items (for example a project codename) are decisions for the client, not detection problems.
+- **Limit:** layering does not give a perfect score. Note that GLiNER and the clean-up rules (3.12, 3.15) are **switched off in the shipped configuration**; the gains described here appear only when they are enabled. Policy-dependent items (for example a project codename) are decisions for the client, not detection problems.
 
 ### 3.2 Local models only
 
@@ -122,7 +122,8 @@ The model must answer in a fixed **JSON structure** (type, text, context), which
 - **What it is:** a different kind of detector. Instead of a chat model answering a question, it marks spans of text directly. It is small, fast and runs locally.
 - **What we do:** it runs inside the application (ONNX Runtime, no separate process and no Python), alongside the language model. Where both find something, the item is marked as agreed. Something only GLiNER finds is **flagged for review and left in the text**.
 - **Why it only flags:** adding a second detector must never be able to weaken the redaction, and its precision is not high enough to redact on its own. A flag costs a reviewer a few seconds. A wrong automatic redaction damages a document.
-- **Choices made:** a small, fast model was chosen over the large one. Plain, short label wording worked better than long labels. The threshold was set at 0.3.
+- **Choices made:** a small, fast model was chosen over the large one. Plain, short label wording worked better than long labels. The threshold was set at 0.3. GLiNER is off by default.
+- **Configuration:** the solo action is `flag`. A `SoloRedactMinScore` option would let GLiNER-only finds above a given score be redacted, but it is set above 1.0, so it never fires and the "only flags" behaviour holds as shipped.
 - **Evidence:** on its own it is a useful cheap first pass, not a redactor. On documents it had not been tuned on, its flags were noisy, and almost nothing it flagged was new once two models voted.
 - **Limit:** it needs per-category thresholds to be useful as a review queue. This is open work.
 
@@ -137,14 +138,16 @@ The model must answer in a fixed **JSON structure** (type, text, context), which
 
 - **What we do:** each redacted file is checked before it is released: PDFs for recoverable text, Word files for hidden content and metadata, and scanned or image-only PDFs by reading them again with OCR.
 - **Why:** a redaction that only covers text, but leaves it in the file, is not a redaction. This is the "proof" step, and it works the same however good the detector is.
+- **In the code:** `PdfDocument` verifies there is no text layer left, `DocxDocument` verifies the secrets are gone from the saved file, and PDFs and images re-read the output with OCR when the verify-output option is on.
 - **Evidence:** every redacted file produced in the evaluations passed these checks.
 
 ### 3.15 Clean-up rules after the model
 
-- **What we do:** a small set of fixed checks, each a switch that is off by default, removes the model's predictable mistakes after it answers: template placeholders such as "[Company Name]", masked values, generic contract roles such as "Borrower", and dates with no birth wording near them read as dates of birth. One further rule adds IPv6 addresses. A rule only ever removes a model's (or GLiNER's) redaction, never one from the fixed rules, a custom list or a person, and whatever it leaves out is listed in the review screen with a "Redact anyway" button.
+- **What we do:** a small set of fixed checks, each a switch that is **off by default** (in the code and in the shipped `redactor.config.json`, so a client must turn them on), removes the model's predictable mistakes after it answers: template placeholders such as "[Company Name]", masked values, generic contract roles such as "Borrower", and dates with no birth wording near them read as dates of birth. One further rule adds IPv6 addresses. A rule only ever removes a model's (or GLiNER's) redaction, never one from the fixed rules, a custom list or a person, and whatever it leaves out is listed in the review screen with a "Redact anyway" button.
 - **Why they are code and not part of the prompt:** a prompt is a request that a model may follow differently each time, and the models already ignored the date-of-birth definition in the prompt hundreds of times. Code behaves the same every time, can be tested, and can be shown to a reviewer.
 - **Evidence:** measured on each model's saved answers with no model run ([cleanup-effect-final-20261003.md](evaluation-reports/cleanup-effect-final-20261003.md)). The first draft of two rules was too blunt (it would have removed real emails and names that sit in brackets, and a sort code of repeated digits) and was tightened after that measurement. With the tightened rules together, precision on the held-out documents rises for every model (phi4 74.3% to 89.8%, qwen3.6:27b 81.6% to 88.7%) at a recall cost of 0.2 to 0.6 points, and the rules take away 936 wrong redactions and 37 right ones across the five models.
-- **Limit:** the rules were chosen after looking at these same documents, so those gains are an upper estimate until they are tried on documents the rules were not based on. Some rules are policy (whether a title or a public body is sensitive), and belong in a client's configuration.
+- **Unseen documents:** the rules were then tried on 232 Nemotron documents they were not written from ([FINAL_FINDINGS.md](evaluations/FINAL_FINDINGS.md), section 13.4). Precision rose for phi4, qwen3.6:27b and gemma4:e4b (by 5 to 10 points) for a recall loss of 0.4 points or less, and across the five models 743 wrong redactions were removed against 15 right ones lost. The gain is much smaller for gemma4:31b and gpt-oss.
+- **Limit:** the figures above, from the held-out set, are an upper estimate because the rules were chosen after looking at those documents; the unseen-document figures are the safer ones to quote. Some rules are policy (whether a title or a public body is sensitive), and belong in a client's configuration.
 
 ---
 
@@ -199,9 +202,10 @@ Recording these matters as much as the successes.
 ## 6. Limits and open items
 
 - **Synthetic data only.** No real personal data was used. Real documents are messier.
-- **The held-out set is text-only, finance-themed.** Word, PDF and scan versions of unseen documents, and UK-style letters and forms, still need adding.
+- **Unseen documents are still mostly text and finance-themed.** The 300 held-out documents have no Word, PDF or scan versions. A further 412 unseen documents (Nemotron and Gretel) were added later, but the Gretel key is not audited. UK-style letters and forms, and Word, PDF and scan versions of unseen documents, still need adding.
 - **The audit needs a person.** A random sample of the audit decisions should be checked before the held-out figures are quoted externally.
-- **Clean-up rules not yet built.** The remaining model errors cluster into a few patterns (masked values such as `XXXX`, bracketed placeholders, generic defined terms such as "Borrower", ordinary dates read as dates of birth, IPv6 addresses). Deterministic rules would fix most of them.
+- **Clean-up rules are built but off by default.** They address the main patterns of model error (masked values such as `XXXX`, bracketed placeholders, generic defined terms such as "Borrower", ordinary dates read as dates of birth, IPv6 addresses). The recommendation in the final findings is to switch them on for phi4, qwen3.6:27b and gemma4:e4b.
+- **Per-category GLiNER thresholds** are not built; there is one threshold.
 - **Human reviewer accuracy is not yet measured.**
 - **Policy-dependent items** (project codenames, job titles, ages) are client decisions, handled through configuration and term lists.
 - **Timings** depend on the machine and are only reliable on an idle one.
@@ -212,12 +216,12 @@ Recording these matters as much as the successes.
 
 | Topic | Document |
 |---|---|
-| Original ten-model comparison and why items were missed | [EVALUATION_FINDINGS_V1.md](EVALUATION_FINDINGS_V1.md) |
-| Effect of the rules layer | [EVALUATION_FINDINGS_V2.md](EVALUATION_FINDINGS_V2.md), [EVALUATION_FINDINGS_V3.md](EVALUATION_FINDINGS_V3.md) |
-| GLiNER agreement | [EVALUATION_FINDINGS_V4.md](EVALUATION_FINDINGS_V4.md), [PHASE_2_PLAN.md](PHASE_2_PLAN.md) |
-| Held-out test, audited key, combinations | [EVALUATION_FINDINGS_V5.md](EVALUATION_FINDINGS_V5.md) |
-| Requirements | [SPECIFICATION.md](SPECIFICATION.md) |
-| How to run the evaluation | [HOW_TO_RUN_EVALUATION.md](HOW_TO_RUN_EVALUATION.md) |
-| **The final results, with every figure** | [FINAL_FINDINGS.md](FINAL_FINDINGS.md) |
+| Original ten-model comparison and why items were missed | [EVALUATION_FINDINGS_V1.md](evaluations/EVALUATION_FINDINGS_V1.md) |
+| Effect of the rules layer | [EVALUATION_FINDINGS_V2.md](evaluations/EVALUATION_FINDINGS_V2.md), [EVALUATION_FINDINGS_V3.md](evaluations/EVALUATION_FINDINGS_V3.md) |
+| GLiNER agreement | [EVALUATION_FINDINGS_V4.md](evaluations/EVALUATION_FINDINGS_V4.md), [FINAL_FINDINGS.md](evaluations/FINAL_FINDINGS.md) section 7; the original plan is archived as [PHASE_2_PLAN.md](historical/PHASE_2_PLAN.md) |
+| Held-out test, audited key, combinations | [EVALUATION_FINDINGS_V5.md](evaluations/EVALUATION_FINDINGS_V5.md) |
+| Requirements | [SPECIFICATION.md](specifications/SPECIFICATION.md) |
+| How to run the evaluation | [HOW_TO_RUN_EVALUATION.md](evaluations/HOW_TO_RUN_EVALUATION.md) |
+| **The final results, with every figure** | [FINAL_FINDINGS.md](evaluations/FINAL_FINDINGS.md) |
 | The final dataset | The Results Explorer (Story-001), produced by the final evaluator (Story-002) |
-| Dataset format | [RESULTS_DATASET_FORMAT.md](RESULTS_DATASET_FORMAT.md) |
+| Dataset format | [RESULTS_DATASET_FORMAT.md](specifications/RESULTS_DATASET_FORMAT.md) |

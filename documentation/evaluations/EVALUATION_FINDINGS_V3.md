@@ -1,7 +1,7 @@
 # Version 3 findings: five models after the phase 1 changes and the organisation rule
 
 **Version:** 3 (follows [version 1](EVALUATION_FINDINGS_V1.md) and [version 2](EVALUATION_FINDINGS_V2.md))
-**Report:** [v3-20261002-1715-phase1-5-models](evaluation-reports/v3-20261002-1715-phase1-5-models.md) (2 October 2026; the full report, with its `.scores.json`, is kept in [evaluation-reports](evaluation-reports/README.md))
+**Report:** [v3-20261002-1715-phase1-5-models](../evaluation-reports/v3-20261002-1715-phase1-5-models.md) (2 October 2026; the full report, with its `.scores.json`, is kept in [evaluation-reports](../evaluation-reports/README.md))
 **Run:** 5 models, 38 documents, 358 occurrences on the answer key, 32 minutes in total
 
 ---
@@ -78,7 +78,7 @@ Must-keep items damaged: 2 or 3 for three models, and **0 for gpt-oss and gemma4
 
 ## 7. Next steps
 
-1. **Phase 2:** the GLiNER spike in .NET, agreement scoring and the second-pass check ([phase 2 plan](PHASE_2_PLAN.md)).
+1. **Phase 2:** the GLiNER spike in .NET, agreement scoring and the second-pass check ([phase 2 plan](../historical/PHASE_2_PLAN.md)).
 2. **Build a held-out test set** (new documents, never used to write rules) so that the next figures are honest.
 3. **Add client term lists and policy options** (job titles, ages, project codenames, public bodies) as configuration, so the policy-shaped over-redactions and the "Kestrel" case are decisions a client makes, not model errors.
 4. **Re-run all models** that remain interesting on the held-out set, and keep each run as a numbered version in `documentation/evaluation-reports`.
